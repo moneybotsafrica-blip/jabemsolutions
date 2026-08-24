@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "storages",
 
     # local apps
     "accounts",
@@ -107,6 +108,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Configure storage backend
 if DEBUG:
     # Local filesystem storage for development
@@ -116,18 +118,20 @@ if DEBUG:
             "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
         },
     }
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 else:
-    # For Vercel production, use a simple approach that works with read-only filesystem
-    # Images will be served as static files or external URLs
+    # For Vercel production - serve media files through WhiteNoise
+    # Media files are copied to staticfiles during build
     STORAGES = {
         "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
         "staticfiles": {
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
         },
     }
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+    # Serve media files as static files on Vercel
+    MEDIA_URL = "/static/media/"
+    MEDIA_ROOT = BASE_DIR / "staticfiles" / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
