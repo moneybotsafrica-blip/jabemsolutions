@@ -529,11 +529,14 @@
             {% for product in products %}
             <div class="product-card" data-product="{{ product.id }}" data-category="{{ product.category.slug }}">
                 <div class="product-image">
-                    {% if product.image %}
-                    <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy">
+                    {% if product.get_display_image %}
+                    <img src="{{ product.get_display_image }}" alt="{{ product.name }}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-icon" style="display: none;">
+                        <i class="bi {{ product.icon|default:'bi-box-seam' }}"></i>
+                    </div>
                     {% else %}
                     <div class="product-icon">
-                        <i class="bi {{ product.icon }}"></i>
+                        <i class="bi {{ product.icon|default:'bi-box-seam' }}"></i>
                     </div>
                     {% endif %}
                 </div>

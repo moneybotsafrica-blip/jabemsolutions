@@ -375,10 +375,16 @@ class POSCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(POSProduct)
 class POSProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "sku", "category", "price", "stock_quantity", "is_active", "order")
+    list_display = ("image_preview", "name", "sku", "category", "price", "stock_quantity", "is_active", "order")
     list_filter = ("category", "is_active")
     search_fields = ("name", "sku", "description")
     list_editable = ("is_active", "order", "stock_quantity")
+    
+    def image_preview(self, obj):
+        if obj.get_display_image():
+            return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />', obj.get_display_image())
+        return format_html('<span style="color: #999;">No image</span>')
+    image_preview.short_description = "Image"
 
 
 @admin.register(POSCustomer)

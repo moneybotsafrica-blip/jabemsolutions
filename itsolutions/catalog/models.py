@@ -333,6 +333,12 @@ class POSProduct(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.sku})"
+    
+    def get_display_image(self):
+        """Return the best available image URL for POS product display."""
+        if self.image:
+            return self.image
+        return None
 
 
 class POSCustomer(models.Model):
