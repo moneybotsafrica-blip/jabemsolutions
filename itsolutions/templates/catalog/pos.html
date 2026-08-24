@@ -10,6 +10,7 @@
     .pos-container {
         padding: 8px !important;
         min-height: 100vh !important;
+        padding-bottom: 80px !important;
     }
     
     .pos-header {
@@ -42,6 +43,8 @@
         width: 36px !important;
         height: 36px !important;
         font-size: 1rem !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
     }
     
     .mode-dots {
@@ -51,6 +54,8 @@
     .mode-dot {
         width: 8px !important;
         height: 8px !important;
+        min-width: 8px !important;
+        min-height: 8px !important;
     }
     
     /* Mobile category scroll */
@@ -70,6 +75,7 @@
         border-radius: 8px !important;
         scroll-snap-align: start !important;
         flex-shrink: 0 !important;
+        min-height: 70px !important;
     }
     
     .category-card i {
@@ -102,6 +108,7 @@
         min-height: 140px !important;
         display: flex !important;
         flex-direction: column !important;
+        min-height: 140px !important;
     }
     
     .product-image {
@@ -220,6 +227,7 @@
         flex-direction: column !important;
         align-items: center !important;
         gap: 2px !important;
+        min-height: 40px !important;
     }
     
     .btn-hold i, .btn-resume i, .btn-clear i, .btn-checkout i {
@@ -228,13 +236,14 @@
     
     /* Add bottom padding to prevent content from being hidden behind order card */
     .pos-products {
-        padding-bottom: 300px !important;
+        padding-bottom: 320px !important;
     }
 }
 
 @media (max-width: 576px) {
     .pos-container {
         padding: 4px !important;
+        padding-bottom: 80px !important;
     }
     
     .pos-header {
@@ -254,6 +263,8 @@
         width: 32px !important;
         height: 32px !important;
         font-size: 0.9rem !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
     }
     
     .pos-categories {
@@ -265,6 +276,7 @@
         min-width: 60px !important;
         padding: 6px 4px !important;
         border-radius: 6px !important;
+        min-height: 60px !important;
     }
     
     .category-card i {
@@ -279,7 +291,7 @@
     .pos-products {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 6px !important;
-        padding-bottom: 280px !important;
+        padding-bottom: 340px !important;
     }
     
     .product-card {
@@ -320,6 +332,7 @@
     .current-order-card {
         padding: 10px !important;
         border-radius: 12px 12px 0 0 !important;
+        max-height: 65vh !important;
     }
     
     .current-order-card h6 {
@@ -352,6 +365,7 @@
     .btn-hold, .btn-resume, .btn-clear, .btn-checkout {
         padding: 6px 3px !important;
         font-size: 0.65rem !important;
+        min-height: 36px !important;
     }
     
     .btn-hold i, .btn-resume i, .btn-clear i, .btn-checkout i {
@@ -373,7 +387,7 @@
     
     /* Add mobile order card toggle button */
     .mobile-order-toggle {
-        display: none !important;
+        display: flex !important;
         position: fixed !important;
         bottom: 16px !important;
         right: 16px !important;
@@ -390,8 +404,8 @@
         font-size: 1.5rem !important;
     }
     
-    .mobile-order-toggle:not(.d-none) {
-        display: flex !important;
+    .mobile-order-toggle.d-none {
+        display: none !important;
     }
     
     .mobile-order-toggle:hover {
@@ -491,6 +505,10 @@
 
     <!-- Categories -->
     <div class="pos-categories">
+        <div class="category-card selected" data-category="all">
+            <i class="bi bi-grid"></i>
+            <span>All</span>
+        </div>
         {% for category in categories %}
         <div class="category-card" data-category="{{ category.slug }}">
             <i class="bi {{ category.icon }}"></i>
@@ -509,7 +527,7 @@
         <!-- Products Grid -->
         <div class="pos-products">
             {% for product in products %}
-            <div class="product-card" data-product="{{ product.id }}">
+            <div class="product-card" data-product="{{ product.id }}" data-category="{{ product.category.slug }}">
                 <div class="product-image">
                     {% if product.image %}
                     <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy">
@@ -744,11 +762,25 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.category-card:hover {
+.category-card:hover,
+.category-card:active {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-card.selected {
+    background: var(--mode-primary, #667eea);
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-card.selected i,
+.category-card.selected span {
+    color: white;
 }
 
 .category-card i {
@@ -1107,11 +1139,26 @@ div#currentOrderCard table td {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.product-card:hover {
+.product-card:hover,
+.product-card:active {
     transform: translateY(-8px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.product-card.selected {
+    background: var(--mode-primary, #667eea);
+    color: white;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.product-card.selected .product-info h4,
+.product-card.selected .product-price,
+.product-card.selected .product-stock {
+    color: white;
 }
 
 .product-image {
@@ -1330,6 +1377,91 @@ document.addEventListener('keydown', (e) => {
 
 // Initialize
 updateMode();
+
+// Mobile order toggle functionality
+const mobileOrderToggle = document.getElementById('mobileOrderToggle');
+const currentOrderCard = document.getElementById('currentOrderCard');
+let orderCardVisible = true;
+
+if (mobileOrderToggle && currentOrderCard) {
+    // Show the toggle button on mobile
+    if (window.innerWidth <= 576) {
+        mobileOrderToggle.classList.remove('d-none');
+        currentOrderCard.classList.add('visible-mobile');
+    }
+
+    mobileOrderToggle.addEventListener('click', function() {
+        orderCardVisible = !orderCardVisible;
+        
+        if (orderCardVisible) {
+            currentOrderCard.classList.remove('hidden-mobile');
+            currentOrderCard.classList.add('visible-mobile');
+            mobileOrderToggle.innerHTML = '<i class="bi bi-cart3"></i>';
+        } else {
+            currentOrderCard.classList.remove('visible-mobile');
+            currentOrderCard.classList.add('hidden-mobile');
+            mobileOrderToggle.innerHTML = '<i class="bi bi-cart-x"></i>';
+        }
+    });
+
+    // Update toggle button on window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 576) {
+            mobileOrderToggle.classList.remove('d-none');
+        } else {
+            mobileOrderToggle.classList.add('d-none');
+            currentOrderCard.classList.remove('hidden-mobile', 'visible-mobile');
+        }
+    });
+}
+
+// Category selection functionality
+const categoryCards = document.querySelectorAll('.category-card');
+categoryCards.forEach(card => {
+    card.addEventListener('click', function() {
+        // Remove selected class from all categories
+        categoryCards.forEach(c => c.classList.remove('selected'));
+        // Add selected class to clicked category
+        this.classList.add('selected');
+        
+        // Filter products by category
+        const categorySlug = this.getAttribute('data-category');
+        const productCards = document.querySelectorAll('.product-card');
+        
+        productCards.forEach(product => {
+            if (categorySlug === 'all') {
+                product.style.display = '';
+            } else {
+                const productCategory = product.getAttribute('data-category');
+                if (productCategory === categorySlug) {
+                    product.style.display = '';
+                } else {
+                    product.style.display = 'none';
+                }
+            }
+        });
+    });
+});
+
+// Product selection functionality
+const productCards = document.querySelectorAll('.product-card');
+productCards.forEach(card => {
+    card.addEventListener('click', function() {
+        // Visual feedback
+        this.classList.add('selected');
+        setTimeout(() => {
+            this.classList.remove('selected');
+        }, 200);
+        
+        // Add to cart logic would go here
+        const productId = this.getAttribute('data-product');
+        const productName = this.querySelector('h4').textContent;
+        const productPrice = this.querySelector('.product-price').textContent;
+        
+        // Add visual feedback that item was added
+        console.log(`Added ${productName} (${productPrice}) to cart`);
+    });
+});
 
 // Force initial background set
 document.addEventListener('DOMContentLoaded', function() {
