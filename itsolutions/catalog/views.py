@@ -19,7 +19,7 @@ class ProductListView(ListView):
         kind = self.request.GET.get("type")
         category_slug = self.request.GET.get("category")
         q = self.request.GET.get("q")
-        if kind in {"hardware", "software", "bundle"}:
+        if kind in {"hardware", "software"}:
             qs = qs.filter(product_type=kind)
         if category_slug:
             qs = qs.filter(category__slug=category_slug)

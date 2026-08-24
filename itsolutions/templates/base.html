@@ -57,7 +57,6 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?type=hardware"><i class="bi bi-hdd-stack me-2"></i>Hardware</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?type=software"><i class="bi bi-window me-2"></i>Software</a></li>
-                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?type=bundle"><i class="bi bi-box-seam me-2"></i>POS Bundles</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -80,6 +79,9 @@
                     </button>
                 </div>
             </form>
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-sm me-3">
+                <i class="bi bi-cart-fill me-1"></i>Shop
+            </a>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link text-dark position-relative" href="{% url 'catalog:cart' %}" aria-label="Shopping cart">

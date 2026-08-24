@@ -1,21 +1,5 @@
 [
   {
-    "name": "Complete POS Starter Kit",
-    "slug": "complete-pos-starter-kit",
-    "sku": "POS-BUNDLE-STARTER",
-    "price": 65000.0,
-    "description": "Complete POS Starter Kit - Everything you need to get started with point of sale operations. Includes 15-inch touchscreen terminal, thermal receipt printer, barcode scanner, and cash drawer. Professional grade hardware perfect for retail stores, restaurants, and small businesses.",
-    "short_description": "Terminal, printer, scanner, and cash drawer bundle.",
-    "product_type": "bundle",
-    "is_active": true,
-    "track_inventory": true,
-    "reorder_level": 5,
-    "category_name": "POS Bundles",
-    "brand_name": "Mustek",
-    "stock_quantity": 5,
-    "warehouse_location": "Main Store"
-  },
-  {
     "name": "POS Software Premium",
     "slug": "pos-software-premium",
     "sku": "POS-SOFT-PREMIUM",

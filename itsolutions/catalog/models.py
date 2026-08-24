@@ -54,7 +54,6 @@ class Product(models.Model):
     PRODUCT_TYPE_CHOICES = [
         ("hardware", "Hardware"),
         ("software", "Software License"),
-        ("bundle", "POS Bundle"),
     ]
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True, blank=True)

@@ -196,11 +196,57 @@ a:hover {
     box-shadow: 0 .5rem 1rem rgba(10,38,71,.12);
 }
 
+.card-product .card-img-wrapper {
+    overflow: hidden;
+    border-bottom: 1px solid #e9ecef;
+}
+
 .card-product .card-img-top {
-    height: 180px;
+    max-height: 100%;
+    max-width: 100%;
     object-fit: contain;
-    background: #f8f9fa;
-    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.card-product:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+/* Compact product cards for homepage */
+.card-product .card-body {
+    padding: 0.75rem !important;
+}
+
+.card-product h6 {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.25rem;
+}
+
+.card-product p {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem;
+}
+
+/* Better responsive grid for compact cards */
+@media (min-width: 992px) {
+    .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media (max-width: 767px) {
+    .col-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
 }
 
 .badge-stock-low {
@@ -797,6 +843,46 @@ footer.bg-white {
     /* Mobile input focus */
     input:focus, select:focus, textarea:focus {
         font-size: 16px !important; /* Prevent iOS zoom */
+    }
+    
+    /* POS Demo mobile adjustments */
+    #pos-sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #0d6efd !important;
+        padding: 0.5rem !important;
+    }
+    
+    #pos-sidebar .nav {
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    #pos-sidebar .nav-link {
+        flex: 0 0 auto;
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+    
+    .pos-module {
+        padding-bottom: 60px; /* Space for bottom nav */
+    }
+    
+    #pos-header h6 {
+        font-size: 0.85rem !important;
+    }
+    
+    .product-btn {
+        font-size: 0.7rem !important;
+        padding: 0.4rem !important;
+    }
+    
+    .product-btn span:first-child {
+        font-size: 1.2rem !important;
     }
 }
 

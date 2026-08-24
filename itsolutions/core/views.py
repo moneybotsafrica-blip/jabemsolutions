@@ -9,20 +9,66 @@ from .models import ContactMessage
 
 
 def home(request):
-    featured_products = Product.objects.filter(is_active=True)[:6]
-    # Get featured POS products specifically for the product grid
+    # Get specific featured products for the homepage
+    featured_products = Product.objects.filter(
+        slug__in=[
+            'pos-software-premium',
+            'thermal-receipt-printer',
+            'pos-terminal-pro',
+            'iphone-17-pro-256gb',
+            'ipad-pro-13-m4-8gb-512gb-ipados-18-13',
+            'cisco-catalyst-ws-c3750-48ps-s-48-port-poe-managed-switch',
+            'mustek-cash-drawer-m4052',
+            'epos-cash-drawer',
+            'posiflex-cr-4000-cash-drawer',
+            'posiflex-cr-3100-cash-drawer',
+            'barcode-scanner-2d',
+            'customer-display-pole',
+            'pos-keyboard-programmable',
+            'pos-stand-touchscreen'
+        ],
+        is_active=True
+    )
+    
+    # Get additional POS products for the product grid
     featured_pos_products = Product.objects.filter(
         slug__in=[
-            'cash-drawer-m4052',
-            'pos-solutions-waiter-app',
-            'cloud-based-pos-software',
-            'pos-head-office-module',
-            'pos-payment-integration'
-        ]
+            'mustek-cash-drawer-m4052',
+            'posiflex-cr-4000-cash-drawer',
+            'epos-cash-drawer',
+            'posiflex-cr-3100-cash-drawer',
+            'barcode-scanner-2d',
+            'customer-display-pole',
+            'pos-keyboard-programmable',
+            'pos-stand-touchscreen'
+        ],
+        is_active=True
     )
+    
+    # Get more products for extended listing
+    latest_products = Product.objects.filter(is_active=True).exclude(
+        slug__in=[
+            'pos-software-premium',
+            'thermal-receipt-printer',
+            'pos-terminal-pro',
+            'iphone-17-pro-256gb',
+            'ipad-pro-13-m4-8gb-512gb-ipados-18-13',
+            'cisco-catalyst-ws-c3750-48ps-s-48-port-poe-managed-switch',
+            'mustek-cash-drawer-m4052',
+            'epos-cash-drawer',
+            'posiflex-cr-4000-cash-drawer',
+            'posiflex-cr-3100-cash-drawer',
+            'barcode-scanner-2d',
+            'customer-display-pole',
+            'pos-keyboard-programmable',
+            'pos-stand-touchscreen'
+        ]
+    )[:20]
+    
     return render(request, "core/home.html", {
         "featured_products": featured_products,
-        "featured_pos_products": featured_pos_products
+        "featured_pos_products": featured_pos_products,
+        "latest_products": latest_products
     })
 
 

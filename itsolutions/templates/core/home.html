@@ -35,9 +35,10 @@
                 <h1 class="h4 fw-bold mb-2 text-dark">Unlock hidden profits with Jabem Solutions Ltd's POS restaurant software</h1>
                 <p class="mb-3 text-muted">Turn data into profit. Automatically. Complete POS solutions for Kenyan businesses.</p>
                 <div class="mb-3">
-                    <a href="{% url 'core:contact' %}" class="btn btn-light btn-sm me-2">Get a demo <i class="bi bi-arrow-right ms-1"></i></a>
-                    <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-sm me-2">Shop</a>
-                    <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-light btn-sm">Browse Products</a>
+                    <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-lg me-2">
+                        <i class="bi bi-cart-fill me-1"></i>Shop Now
+                    </a>
+                    <a href="{% url 'core:contact' %}" class="btn btn-outline-primary btn-lg me-2">Get a demo <i class="bi bi-arrow-right ms-1"></i></a>
                 </div>
                 <div class="row mt-3">
                     <div class="col-6">
@@ -83,7 +84,9 @@
                                             <span class="badge bg-light text-dark mb-2 align-self-start">DIVE IN</span>
                                             <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">DEALS ZONE</h3>
                                             <p class="mb-0 text-white">Up to 30% off on selected POS hardware</p>
-                                            <a href="{% url 'catalog:product_list' %}" class="btn btn-light mt-3 align-self-start">Shop Deals</a>
+                                            <a href="{% url 'catalog:product_list' %}" class="btn btn-light mt-3 align-self-start">
+                                                <i class="bi bi-cart-fill me-1"></i>Shop Deals
+                                            </a>
                                         </div>
                                         <div class="col-md-4">
                                             <img src="{% static 'images/advert-1.png' %}" alt="Deals Zone" class="h-100 w-100" style="object-fit: cover;">
@@ -100,7 +103,9 @@
                                             <span class="badge bg-warning text-dark mb-2 align-self-start">TAP INTO</span>
                                             <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">ONLINE EXCLUSIVES</h3>
                                             <p class="mb-0 text-white">Special offers available only online</p>
-                                            <a href="{% url 'catalog:product_list' %}" class="btn btn-warning mt-3 align-self-start">Explore Now</a>
+                                            <a href="{% url 'catalog:product_list' %}" class="btn btn-warning mt-3 align-self-start">
+                                                <i class="bi bi-cart-fill me-1"></i>Explore Now
+                                            </a>
                                         </div>
                                         <div class="col-md-4">
                                             <img src="{% static 'images/advert-2.png' %}" alt="Online Exclusives" class="h-100 w-100" style="object-fit: cover;">
@@ -117,27 +122,12 @@
                                             <span class="badge bg-light text-dark mb-2 align-self-start">SIP & SAVOR</span>
                                             <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">SOFTWARE SPECIAL</h3>
                                             <p class="mb-0 text-white">Get more features, spend less</p>
-                                            <a href="{% url 'catalog:product_list' %}?type=software" class="btn btn-light mt-3 align-self-start">View Software</a>
+                                            <a href="{% url 'catalog:product_list' %}?type=software" class="btn btn-light mt-3 align-self-start">
+                                                <i class="bi bi-cart-fill me-1"></i>View Software
+                                            </a>
                                         </div>
                                         <div class="col-md-4">
                                             <img src="{% static 'images/advert-3.png' %}" alt="Software Special" class="h-100 w-100" style="object-fit: cover;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Card 4 - Complete Bundle -->
-                            <div class="carousel-item">
-                                <div class="card border-0 shadow-sm overflow-hidden" style="min-height: 200px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-8 p-4 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
-                                            <span class="badge bg-light text-dark mb-2 align-self-start">FOR YOUR BUSINESS</span>
-                                            <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">COMPLETE BUNDLE</h3>
-                                            <p class="mb-0 text-white">Everything you need to get started</p>
-                                            <a href="{% url 'catalog:product_list' %}?type=bundle" class="btn btn-light mt-3 align-self-start">Shop Bundles</a>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <img src="{% static 'images/advert-1.png' %}" alt="Complete Bundle" class="h-100 w-100" style="object-fit: cover;">
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +159,6 @@
                                 <button class="btn btn-sm filter-btn active text-start" data-filter="all">All Products</button>
                                 <button class="btn btn-sm btn-outline-secondary filter-btn text-start" data-filter="hardware">Hardware</button>
                                 <button class="btn btn-sm btn-outline-secondary filter-btn text-start" data-filter="software">Software</button>
-                                <button class="btn btn-sm btn-outline-secondary filter-btn text-start" data-filter="bundle">POS Bundles</button>
                             </div>
                         </div>
                         
@@ -191,29 +180,33 @@
                         
                         <button class="btn btn-primary btn-sm w-100" id="apply-filters">Apply Filters</button>
                         <button class="btn btn-outline-secondary btn-sm w-100 mt-2" id="reset-filters">Reset</button>
+                        <a href="{% url 'catalog:product_list' %}" class="btn btn-success btn-sm w-100 mt-2">
+                            <i class="bi bi-cart-fill me-1"></i>Shop All Products
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="row g-4" id="productGrid">
-            {% for product in featured_products|slice:":4" %}
-            <div class="col-sm-6 col-lg-3 product-card" data-category="{{ product.product_type|default:'all' }}">
+        <div class="row g-3" id="productGrid">
+            {% for product in featured_products|slice:":12" %}
+            <div class="col-6 col-md-4 col-lg-3 product-card" data-category="{{ product.product_type|default:'all' }}">
                 <div class="card card-product shadow-sm h-100">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% if product.get_image_url %}
+                    <img src="{{ product.get_image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 160px; object-fit: contain; background: #f8f9fa; padding: 0.5rem;">
                     {% else %}
-                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary">
-                        <i class="bi bi-image" style="font-size:2rem"></i>
+                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 160px;">
+                        <i class="bi bi-image" style="font-size:1.5rem"></i>
                     </div>
                     {% endif %}
-                    <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">{{ product.get_product_type_display }}</span>
-                        <h6 class="card-title">{{ product.name }}</h6>
-                        <p class="card-text text-muted small flex-grow-1">{{ product.short_description|default:"" }}</p>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <strong>KES {{ product.price|floatformat:0 }}</strong>
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success">
+                    <div class="card-body d-flex flex-column p-2">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge bg-secondary-subtle text-secondary-emphasis align-self-start" style="font-size: 0.65rem;">{{ product.get_product_type_display }}</span>
+                            <strong style="font-size: 0.85rem;">KES {{ product.price|floatformat:0 }}</strong>
+                        </div>
+                        <h6 class="card-title mb-0" style="font-size: 0.8rem; line-height: 1.1;">{{ product.name|truncatewords:4 }}</h6>
+                        <div class="mt-auto pt-1">
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success w-100" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
                                 <i class="bi bi-chat-dots me-1"></i>Quote
                             </a>
                         </div>
@@ -224,22 +217,23 @@
             
             <!-- Featured POS Products -->
             {% for product in featured_pos_products %}
-            <div class="col-sm-6 col-lg-3 product-card" data-category="{{ product.product_type }}">
+            <div class="col-6 col-md-4 col-lg-3 product-card" data-category="{{ product.product_type }}">
                 <div class="card card-product shadow-sm h-100">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% if product.get_image_url %}
+                    <img src="{{ product.get_image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 160px; object-fit: contain; background: #f8f9fa; padding: 0.5rem;">
                     {% else %}
-                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary bg-light">
-                        <i class="bi bi-image" style="font-size:2rem"></i>
+                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 160px;">
+                        <i class="bi bi-image" style="font-size:1.5rem"></i>
                     </div>
                     {% endif %}
-                    <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">{{ product.get_product_type_display }}</span>
-                        <h6 class="card-title">{{ product.name }}</h6>
-                        <p class="card-text text-muted small flex-grow-1">{{ product.short_description|default:"" }}</p>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <strong>KES {{ product.price|floatformat:0 }}</strong>
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success">
+                    <div class="card-body d-flex flex-column p-2">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge bg-secondary-subtle text-secondary-emphasis align-self-start" style="font-size: 0.65rem;">{{ product.get_product_type_display }}</span>
+                            <strong style="font-size: 0.85rem;">KES {{ product.price|floatformat:0 }}</strong>
+                        </div>
+                        <h6 class="card-title mb-0" style="font-size: 0.8rem; line-height: 1.1;">{{ product.name|truncatewords:4 }}</h6>
+                        <div class="mt-auto pt-1">
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success w-100" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
                                 <i class="bi bi-chat-dots me-1"></i>Quote
                             </a>
                         </div>
@@ -251,25 +245,6 @@
                 <p class="text-muted">No featured products available.</p>
             </div>
             {% endfor %}
-            
-            <div class="col-sm-6 col-lg-3 product-card" data-category="bundle">
-                <div class="card card-product shadow-sm h-100">
-                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary bg-light">
-                        <i class="bi bi-box-seam" style="font-size:2rem"></i>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">POS Bundle</span>
-                        <h6 class="card-title">Complete POS Starter Kit</h6>
-                        <p class="card-text text-muted small flex-grow-1">Terminal, printer, scanner, and cash drawer bundle.</p>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <strong>KES 65,000</strong>
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: Complete POS Starter Kit. Price: KES 65,000. Terminal, printer, scanner, and cash drawer bundle." target="_blank" class="btn btn-sm btn-success">
-                                <i class="bi bi-chat-dots me-1"></i>Quote
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -353,21 +328,21 @@
     </div>
 </section>
 
-<section class="py-3 bg-white">
+<section class="py-2 bg-white">
     <div class="container">
-        <div class="text-center mb-3">
-            <h2 class="h5 fw-bold">Try Our POS Demo</h2>
-            <p class="small text-muted mb-0">Experience our full-featured POS system with sales, inventory, customers, and reports</p>
+        <div class="text-center mb-2">
+            <h2 class="h6 fw-bold">Try Our POS Demo</h2>
+            <p class="small text-muted mb-0">Experience our full-featured POS system</p>
         </div>
         
         <div class="row justify-content-center">
             <div class="col-12">
-                <div class="card shadow" style="border-radius: 10px; overflow: hidden; min-height: 500px; border: 3px solid #0d6efd;">
-                    <div class="card-header text-white py-2" id="pos-header" style="background-color: #0d6efd;">
+                <div class="card shadow" style="border-radius: 10px; overflow: hidden; min-height: 350px; border: 3px solid #0d6efd;">
+                    <div class="card-header text-white py-1" id="pos-header" style="background-color: #0d6efd;">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center gap-2">
                                 <button class="btn btn-sm btn-light" id="prev-pos-type"><i class="bi bi-arrow-left"></i></button>
-                                <h6 class="mb-0" id="pos-type-name"><i class="bi bi-cpu-fill me-2"></i>Restaurant POS</h6>
+                                <h6 class="mb-0 small" id="pos-type-name"><i class="bi bi-cpu-fill me-2"></i>Restaurant POS</h6>
                                 <button class="btn btn-sm btn-light" id="next-pos-type"><i class="bi bi-arrow-right"></i></button>
                             </div>
                             <div class="d-flex align-items-center gap-2">
@@ -377,7 +352,7 @@
                         </div>
                     </div>
                     <div class="card-body p-0">
-                        <div class="row g-0" style="min-height: 450px;">
+                        <div class="row g-0" style="min-height: 300px;">
                             <!-- Sidebar Navigation -->
                             <div class="col-2 text-white p-2" id="pos-sidebar" style="background-color: #0d6efd;">
                                 <nav class="nav flex-column">
@@ -2557,26 +2532,28 @@ document.addEventListener('DOMContentLoaded', function() {
 <section class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="h3 mb-0">Featured Products</h2>
-        <a href="{% url 'catalog:product_list' %}" class="btn btn-sm btn-outline-primary">View all</a>
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-cart-fill me-1"></i>Shop All
+        </a>
     </div>
-    <div class="row g-4">
-        {% for product in featured_products %}
-        <div class="col-sm-6 col-lg-4">
-            <div class="card card-product shadow-sm">
+    <div class="row g-3">
+        {% for product in featured_products|slice:":8" %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card card-product shadow-sm h-100">
                 {% if product.image %}
-                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 120px; object-fit: cover;">
                 {% else %}
-                <div class="card-img-top d-flex align-items-center justify-content-center text-secondary">
-                    <i class="bi bi-image" style="font-size:2rem"></i>
+                <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 120px;">
+                    <i class="bi bi-image" style="font-size:1.5rem"></i>
                 </div>
                 {% endif %}
-                <div class="card-body d-flex flex-column">
-                    <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">{{ product.get_product_type_display }}</span>
-                    <h6 class="card-title">{{ product.name }}</h6>
-                    <p class="card-text text-muted small flex-grow-1">{{ product.short_description|default:"" }}</p>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <strong>KES {{ product.price|floatformat:0 }}</strong>
-                        <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success">
+                <div class="card-body d-flex flex-column p-2">
+                    <span class="badge bg-secondary-subtle text-secondary-emphasis mb-1 align-self-start" style="font-size: 0.7rem;">{{ product.get_product_type_display }}</span>
+                    <h6 class="card-title mb-1" style="font-size: 0.85rem; line-height: 1.2;">{{ product.name|truncatewords:6 }}</h6>
+                    <p class="card-text text-muted small flex-grow-1 mb-1" style="font-size: 0.75rem;">{{ product.short_description|default:""|truncatewords:8 }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-1">
+                        <strong style="font-size: 0.9rem;">KES {{ product.price|floatformat:0 }}</strong>
+                        <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                             <i class="bi bi-chat-dots me-1"></i>Quote
                         </a>
                     </div>
@@ -2584,6 +2561,48 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
         {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if latest_products %}
+<section class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0">More Products</h2>
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-cart-fill me-1"></i>Shop All Products
+        </a>
+    </div>
+    <div class="row g-3">
+        {% for product in latest_products|slice:":16" %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card card-product shadow-sm h-100">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 120px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 120px;">
+                    <i class="bi bi-image" style="font-size:1.5rem"></i>
+                </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column p-2">
+                    <span class="badge bg-secondary-subtle text-secondary-emphasis mb-1 align-self-start" style="font-size: 0.7rem;">{{ product.get_product_type_display }}</span>
+                    <h6 class="card-title mb-1" style="font-size: 0.85rem; line-height: 1.2;">{{ product.name|truncatewords:6 }}</h6>
+                    <p class="card-text text-muted small flex-grow-1 mb-1" style="font-size: 0.75rem;">{{ product.short_description|default:""|truncatewords:8 }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-1">
+                        <strong style="font-size: 0.9rem;">KES {{ product.price|floatformat:0 }}</strong>
+                        <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
+                            <i class="bi bi-chat-dots me-1"></i>Quote
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-primary">
+            <i class="bi bi-cart-fill me-1"></i>View All Products
+        </a>
     </div>
 </section>
 {% endif %}
