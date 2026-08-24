@@ -35,6 +35,8 @@ static_dir = os.path.join(itsolutions_dir, 'staticfiles')
 
 if os.path.exists(media_dir):
     print("Copying media files to static files for Vercel deployment...")
+    media_files_count = 0
+    
     for root, dirs, files in os.walk(media_dir):
         for file in files:
             source_path = os.path.join(root, file)
@@ -46,8 +48,11 @@ if os.path.exists(media_dir):
             
             # Copy the file
             shutil.copy2(source_path, dest_path)
-            print(f"Copied: {relative_path}")
+            media_files_count += 1
+            if media_files_count <= 10:
+                print(f"Copied: {relative_path}")
     
+    print(f"Total media files copied: {media_files_count}")
     print("Media files copied successfully!")
 else:
     print("No media directory found, skipping media file copy.")
