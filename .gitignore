@@ -65,3 +65,6 @@ node_modules/
 # Images folder (if large)
 # itsolutions/media/
 # itsolutions/static/images/
+
+# Glantix extraction files
+glantix_extracted/

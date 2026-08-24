@@ -14,9 +14,9 @@
                             <thead>
                                 <tr>
                                     <th>Product</th>
-                                    <th>Price</th>
+                                    <th class="d-none d-md-table-cell">Price</th>
                                     <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th class="d-none d-md-table-cell">Total</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -26,26 +26,29 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             {% if item.product.image %}
-                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded me-3" style="width:60px; height:60px; object-fit:cover;">
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded me-2 me-md-3" style="width:50px; height:50px; object-fit:cover;">
                                             {% else %}
-                                            <div class="rounded me-3 bg-light d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
+                                            <div class="rounded me-2 me-md-3 bg-light d-flex align-items-center justify-content-center" style="width:50px; height:50px;">
                                                 <i class="bi bi-image text-secondary"></i>
                                             </div>
                                             {% endif %}
                                             <div>
-                                                <h6 class="mb-0">{{ item.product.name }}</h6>
-                                                <small class="text-muted">SKU: {{ item.product.sku }}</small>
+                                                <h6 class="mb-0 small">{{ item.product.name }}</h6>
+                                                <small class="text-muted d-none d-md-inline">SKU: {{ item.product.sku }}</small>
+                                                <div class="d-md-none">
+                                                    <small class="text-muted">KES {{ item.product.price|floatformat:0 }}</small>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>KES {{ item.product.price|floatformat:0 }}</td>
+                                    <td class="d-none d-md-table-cell">KES {{ item.product.price|floatformat:0 }}</td>
                                     <td>
                                         <form method="post" action="{% url 'catalog:update_cart' item.id %}" class="d-inline">
                                             {% csrf_token %}
-                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control form-control-sm" style="width:70px;">
+                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control form-control-sm" style="width:60px;">
                                         </form>
                                     </td>
-                                    <td><strong>KES {{ item.total_price|floatformat:0 }}</strong></td>
+                                    <td class="d-none d-md-table-cell"><strong>KES {{ item.total_price|floatformat:0 }}</strong></td>
                                     <td>
                                         <a href="{% url 'catalog:remove_from_cart' item.id %}" class="btn btn-sm btn-outline-danger">
                                             <i class="bi bi-trash"></i>
@@ -76,11 +79,11 @@
                         <span class="h5">Total</span>
                         <span class="h5">KES {{ cart.total_price|add:500|floatformat:0 }}</span>
                     </div>
-                    <a href="{% url 'catalog:checkout' %}" class="btn btn-primary w-100 btn-lg">Proceed to Checkout</a>
-                    <a href="{% url 'catalog:whatsapp_checkout' %}" class="btn btn-success w-100 btn-lg mt-2">
+                    <a href="{% url 'catalog:checkout' %}" class="btn btn-primary w-100 btn-lg mb-2">Proceed to Checkout</a>
+                    <a href="{% url 'catalog:whatsapp_checkout' %}" class="btn btn-success w-100 btn-lg mb-2">
                         <i class="bi bi-whatsapp me-2"></i>Checkout via WhatsApp
                     </a>
-                    <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary w-100 mt-2">Continue Shopping</a>
+                    <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary w-100">Continue Shopping</a>
                 </div>
             </div>
         </div>
