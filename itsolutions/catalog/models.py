@@ -56,6 +56,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=12, decimal_places=2)
     image = models.ImageField(upload_to="products/", blank=True, null=True)
+    external_image_url = models.URLField(max_length=500, blank=True, help_text="External image URL for products")
     is_active = models.BooleanField(default=True)
     track_inventory = models.BooleanField(
         default=True, help_text="Software licenses may not need stock tracking."
