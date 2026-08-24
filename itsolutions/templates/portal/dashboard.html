@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">
+            {% if user.is_staff %}Staff Dashboard{% else %}Welcome, {{ user.get_full_name|default:user.username }}{% endif %}
+        </h1>
+        <div>
+            <a href="{% url 'portal:ticket_create' %}" class="btn btn-primary btn-sm me-2">New Support Ticket</a>
+            <a href="{% url 'portal:service_request_create' %}" class="btn btn-outline-primary btn-sm">New Service Request</a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between">
+                    <span>Recent Support Tickets</span>
+                    <a href="{% url 'portal:ticket_list' %}" class="small">View all</a>
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for ticket in tickets %}
+                    <a href="{{ ticket.get_absolute_url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span>
+                            #{{ ticket.pk }} — {{ ticket.subject }}
+                            {% if user.is_staff %}<br><small class="text-muted">{{ ticket.client }}</small>{% endif %}
+                        </span>
+                        <span class="badge bg-primary status-badge">{{ ticket.get_status_display }}</span>
+                    </a>
+                    {% empty %}
+                    <div class="list-group-item text-muted">No support tickets yet.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between">
+                    <span>Recent Service Requests</span>
+                    <a href="{% url 'portal:service_request_list' %}" class="small">View all</a>
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for req in service_requests %}
+                    <a href="{{ req.get_absolute_url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <span>
+                            #{{ req.pk }} — {{ req.subject }}
+                            {% if user.is_staff %}<br><small class="text-muted">{{ req.client }}</small>{% endif %}
+                        </span>
+                        <span class="badge bg-info text-dark status-badge">{{ req.get_status_display }}</span>
+                    </a>
+                    {% empty %}
+                    <div class="list-group-item text-muted">No service requests yet.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

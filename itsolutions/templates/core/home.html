@@ -1,0 +1,2743 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ SITE_NAME }} — POS Software & Hardware Solutions{% endblock %}
+
+{% block extra_head %}
+<style>
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .hero {
+        padding: 1rem 0 !important;
+    }
+    .hero h1 {
+        font-size: 1.2rem !important;
+    }
+    .hero p {
+        font-size: 0.85rem !important;
+    }
+    .hero .btn {
+        font-size: 0.75rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+    .stat-item h5 {
+        font-size: 1rem !important;
+    }
+    .stat-item p {
+        font-size: 0.7rem !important;
+    }
+    .card-product {
+        margin-bottom: 1rem;
+    }
+    .card-product .card-body {
+        padding: 1rem !important;
+    }
+    .card-product h6 {
+        font-size: 0.9rem !important;
+    }
+    .card-product p {
+        font-size: 0.75rem !important;
+    }
+    .card-product .btn {
+        font-size: 0.75rem !important;
+        padding: 0.3rem 0.6rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 0.8rem 0 !important;
+    }
+    .hero h1 {
+        font-size: 1rem !important;
+    }
+    .hero p {
+        font-size: 0.8rem !important;
+    }
+    .hero .btn {
+        font-size: 0.7rem !important;
+        padding: 0.3rem 0.6rem !important;
+        margin: 0.2rem !important;
+    }
+    .hero .mb-3 .btn {
+        display: block;
+        width: 100%;
+        margin: 0.3rem 0 !important;
+    }
+    .stat-item h5 {
+        font-size: 0.9rem !important;
+    }
+    .stat-item p {
+        font-size: 0.65rem !important;
+    }
+    .card-product {
+        margin-bottom: 0.8rem;
+    }
+    .card-product .card-body {
+        padding: 0.8rem !important;
+    }
+    .card-product h6 {
+        font-size: 0.85rem !important;
+    }
+    .card-product p {
+        font-size: 0.7rem !important;
+    }
+    .card-product .btn {
+        font-size: 0.7rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero py-4" style="background-image: url('{% static 'images/hero-bg.png' %}'); background-size: 25%; background-position: right center; background-repeat: no-repeat; position: relative;">
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="h4 fw-bold mb-2 text-dark">Unlock hidden profits with Jabem Solutions Ltd's POS restaurant software</h1>
+                <p class="mb-3 text-muted">Turn data into profit. Automatically. Complete POS solutions for Kenyan businesses.</p>
+                <div class="mb-3">
+                    <a href="{% url 'core:contact' %}" class="btn btn-light btn-sm me-2">Get a demo <i class="bi bi-arrow-right ms-1"></i></a>
+                    <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-sm me-2">Shop</a>
+                    <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-light btn-sm">Browse Products</a>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <div class="stat-item">
+                            <h5 class="fw-bold mb-0 text-dark">50+</h5>
+                            <p class="small mb-0 text-muted">Businesses Served</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-item">
+                            <h5 class="fw-bold mb-0 text-dark">10,000+</h5>
+                            <p class="small mb-0 text-muted">Products Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="h4 fw-bold mb-1">Shop Our Products</h2>
+                <p class="text-muted mb-0">Browse our complete range of POS hardware and software</p>
+            </div>
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-primary">View All Products</a>
+        </div>
+        
+        <div class="row">
+            <!-- Left Column - Products -->
+            <div class="col-lg-9">
+                <!-- Advert Cards Carousel -->
+                <div class="mb-4 position-relative">
+                    <div id="advertCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Card 1 - Deals Zone -->
+                            <div class="carousel-item active">
+                                <div class="card border-0 shadow-sm overflow-hidden" style="min-height: 200px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-8 p-4 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                                            <span class="badge bg-light text-dark mb-2 align-self-start">DIVE IN</span>
+                                            <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">DEALS ZONE</h3>
+                                            <p class="mb-0 text-white">Up to 30% off on selected POS hardware</p>
+                                            <a href="{% url 'catalog:product_list' %}" class="btn btn-light mt-3 align-self-start">Shop Deals</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="{% static 'images/advert-1.png' %}" alt="Deals Zone" class="h-100 w-100" style="object-fit: cover;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 2 - Online Exclusives -->
+                            <div class="carousel-item">
+                                <div class="card border-0 shadow-sm overflow-hidden" style="min-height: 200px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-8 p-4 d-flex flex-column justify-content-center" style="background: radial-gradient(circle, #007bff 0%, #0056b3 100%);">
+                                            <span class="badge bg-warning text-dark mb-2 align-self-start">TAP INTO</span>
+                                            <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">ONLINE EXCLUSIVES</h3>
+                                            <p class="mb-0 text-white">Special offers available only online</p>
+                                            <a href="{% url 'catalog:product_list' %}" class="btn btn-warning mt-3 align-self-start">Explore Now</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="{% static 'images/advert-2.png' %}" alt="Online Exclusives" class="h-100 w-100" style="object-fit: cover;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 3 - Software Special -->
+                            <div class="carousel-item">
+                                <div class="card border-0 shadow-sm overflow-hidden" style="min-height: 200px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-8 p-4 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #6f42c1 0%, #563d7c 100%);">
+                                            <span class="badge bg-light text-dark mb-2 align-self-start">SIP & SAVOR</span>
+                                            <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">SOFTWARE SPECIAL</h3>
+                                            <p class="mb-0 text-white">Get more features, spend less</p>
+                                            <a href="{% url 'catalog:product_list' %}?type=software" class="btn btn-light mt-3 align-self-start">View Software</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="{% static 'images/advert-3.png' %}" alt="Software Special" class="h-100 w-100" style="object-fit: cover;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 4 - Complete Bundle -->
+                            <div class="carousel-item">
+                                <div class="card border-0 shadow-sm overflow-hidden" style="min-height: 200px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-8 p-4 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
+                                            <span class="badge bg-light text-dark mb-2 align-self-start">FOR YOUR BUSINESS</span>
+                                            <h3 class="fw-bold mb-2 text-white" style="font-size: 1.5rem;">COMPLETE BUNDLE</h3>
+                                            <p class="mb-0 text-white">Everything you need to get started</p>
+                                            <a href="{% url 'catalog:product_list' %}?type=bundle" class="btn btn-light mt-3 align-self-start">Shop Bundles</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="{% static 'images/advert-1.png' %}" alt="Complete Bundle" class="h-100 w-100" style="object-fit: cover;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Custom Arrows -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#advertCarousel" data-bs-slide="prev" style="width: 40px; height: 40px; background-color: #6c757d; border-radius: 50%; top: 50%; transform: translateY(-50%); left: 10px; opacity: 0.8;">
+                            <span class="carousel-control-prev-icon" style="filter: brightness(0) invert(1);"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#advertCarousel" data-bs-slide="next" style="width: 40px; height: 40px; background-color: #6c757d; border-radius: 50%; top: 50%; transform: translateY(-50%); right: 10px; opacity: 0.8;">
+                            <span class="carousel-control-next-icon" style="filter: brightness(0) invert(1);"></span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="row g-4" id="productCarousel">
+                </div>
+            </div>
+            
+            <!-- Right Column - Filters -->
+            <div class="col-lg-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h6 class="mb-3">Filter Products</h6>
+                        
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Category</label>
+                            <div class="d-flex flex-column gap-2">
+                                <button class="btn btn-sm filter-btn active text-start" data-filter="all">All Products</button>
+                                <button class="btn btn-sm btn-outline-secondary filter-btn text-start" data-filter="hardware">Hardware</button>
+                                <button class="btn btn-sm btn-outline-secondary filter-btn text-start" data-filter="software">Software</button>
+                                <button class="btn btn-sm btn-outline-secondary filter-btn text-start" data-filter="bundle">POS Bundles</button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Price Range</label>
+                            <div class="d-flex gap-2">
+                                <input type="number" class="form-control form-control-sm" placeholder="Min" id="price-min">
+                                <input type="number" class="form-control form-control-sm" placeholder="Max" id="price-max">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Availability</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="in-stock">
+                                <label class="form-check-label small" for="in-stock">In Stock Only</label>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-sm w-100" id="apply-filters">Apply Filters</button>
+                        <button class="btn btn-outline-secondary btn-sm w-100 mt-2" id="reset-filters">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4" id="productGrid">
+            {% for product in featured_products|slice:":4" %}
+            <div class="col-sm-6 col-lg-3 product-card" data-category="{{ product.product_type|default:'all' }}">
+                <div class="card card-product shadow-sm h-100">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% else %}
+                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary">
+                        <i class="bi bi-image" style="font-size:2rem"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">{{ product.get_product_type_display }}</span>
+                        <h6 class="card-title">{{ product.name }}</h6>
+                        <p class="card-text text-muted small flex-grow-1">{{ product.short_description|default:"" }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <strong>KES {{ product.price|floatformat:0 }}</strong>
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success">
+                                <i class="bi bi-chat-dots me-1"></i>Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Featured POS Products -->
+            {% for product in featured_pos_products %}
+            <div class="col-sm-6 col-lg-3 product-card" data-category="{{ product.product_type }}">
+                <div class="card card-product shadow-sm h-100">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% else %}
+                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary bg-light">
+                        <i class="bi bi-image" style="font-size:2rem"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">{{ product.get_product_type_display }}</span>
+                        <h6 class="card-title">{{ product.name }}</h6>
+                        <p class="card-text text-muted small flex-grow-1">{{ product.short_description|default:"" }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <strong>KES {{ product.price|floatformat:0 }}</strong>
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success">
+                                <i class="bi bi-chat-dots me-1"></i>Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">No featured products available.</p>
+            </div>
+            {% endfor %}
+            
+            <div class="col-sm-6 col-lg-3 product-card" data-category="bundle">
+                <div class="card card-product shadow-sm h-100">
+                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary bg-light">
+                        <i class="bi bi-box-seam" style="font-size:2rem"></i>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">POS Bundle</span>
+                        <h6 class="card-title">Complete POS Starter Kit</h6>
+                        <p class="card-text text-muted small flex-grow-1">Terminal, printer, scanner, and cash drawer bundle.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <strong>KES 65,000</strong>
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: Complete POS Starter Kit. Price: KES 65,000. Terminal, printer, scanner, and cash drawer bundle." target="_blank" class="btn btn-sm btn-success">
+                                <i class="bi bi-chat-dots me-1"></i>Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="h4 fw-bold">Solutions for Every Restaurant Type</h2>
+            <p class="lead text-muted">Tailored POS solutions for your specific business needs</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon-box mx-auto mb-3">
+                            <i class="bi bi-pizza"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Pizzeria</h5>
+                        <div class="accent-line mb-3" style="background-color: #e74c3c;"></div>
+                        <ul class="list-unstyled text-start small text-muted">
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Table management</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Delivery tracking</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Kitchen display</li>
+                            <li><i class="bi bi-check-circle me-2 text-success"></i>Loyalty programs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon-box mx-auto mb-3">
+                            <i class="bi bi-cup-hot"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Bars, Pubs & Clubs</h5>
+                        <div class="accent-line mb-3" style="background-color: #3498db;"></div>
+                        <ul class="list-unstyled text-start small text-muted">
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Tab management</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Age verification</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Inventory control</li>
+                            <li><i class="bi bi-check-circle me-2 text-success"></i>Staff scheduling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon-box mx-auto mb-3">
+                            <i class="bi bi-lightning"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Quick Service</h5>
+                        <div class="accent-line mb-3" style="background-color: #f39c12;"></div>
+                        <ul class="list-unstyled text-start small text-muted">
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Fast ordering</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Drive-thru support</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Kiosk integration</li>
+                            <li><i class="bi bi-check-circle me-2 text-success"></i>Queue management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon-box mx-auto mb-3">
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Chains & Multi-Site</h5>
+                        <div class="accent-line mb-3" style="background-color: #9b59b6;"></div>
+                        <ul class="list-unstyled text-start small text-muted">
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Centralized control</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Multi-location reporting</li>
+                            <li class="mb-2"><i class="bi bi-check-circle me-2 text-success"></i>Standardized menus</li>
+                            <li><i class="bi bi-check-circle me-2 text-success"></i>Enterprise support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-3 bg-white">
+    <div class="container">
+        <div class="text-center mb-3">
+            <h2 class="h5 fw-bold">Try Our POS Demo</h2>
+            <p class="small text-muted mb-0">Experience our full-featured POS system with sales, inventory, customers, and reports</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow" style="border-radius: 10px; overflow: hidden; min-height: 500px; border: 3px solid #0d6efd;">
+                    <div class="card-header text-white py-2" id="pos-header" style="background-color: #0d6efd;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-sm btn-light" id="prev-pos-type"><i class="bi bi-arrow-left"></i></button>
+                                <h6 class="mb-0" id="pos-type-name"><i class="bi bi-cpu-fill me-2"></i>Restaurant POS</h6>
+                                <button class="btn btn-sm btn-light" id="next-pos-type"><i class="bi bi-arrow-right"></i></button>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-white-50 small" id="current-time"></span>
+                                <span class="badge bg-success small">Live Demo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="row g-0" style="min-height: 450px;">
+                            <!-- Sidebar Navigation -->
+                            <div class="col-2 text-white p-2" id="pos-sidebar" style="background-color: #0d6efd;">
+                                <nav class="nav flex-column">
+                                    <button class="nav-link text-white active mb-1 pos-nav-btn small" data-module="sales">
+                                        <i class="bi bi-cart3 me-1"></i>Sales
+                                    </button>
+                                    <button class="nav-link text-white mb-1 pos-nav-btn small" data-module="inventory">
+                                        <i class="bi bi-box-seam me-1"></i>Inventory
+                                    </button>
+                                    <button class="nav-link text-white mb-1 pos-nav-btn small" data-module="customers">
+                                        <i class="bi bi-people me-1"></i>Customers
+                                    </button>
+                                    <button class="nav-link text-white mb-1 pos-nav-btn small" data-module="loyalty">
+                                        <i class="bi bi-star me-1"></i>Loyalty
+                                    </button>
+                                    <button class="nav-link text-white mb-1 pos-nav-btn small" data-module="hr">
+                                        <i class="bi bi-person-badge me-1"></i>HR
+                                    </button>
+                                    <button class="nav-link text-white mb-1 pos-nav-btn small" data-module="profitloss">
+                                        <i class="bi bi-graph-up-arrow me-1"></i>P&L
+                                    </button>
+                                    <button class="nav-link text-white mb-1 pos-nav-btn small" data-module="dayend">
+                                        <i class="bi bi-moon me-1"></i>Day End
+                                    </button>
+                                    <button class="nav-link text-white mb-1 pos-nav-btn small" data-module="reports">
+                                        <i class="bi bi-file-earmark-bar-graph me-1"></i>Reports
+                                    </button>
+                                </nav>
+                            </div>
+                            
+                            <!-- Main Content Area -->
+                            <div class="col-10 p-0">
+                                <!-- Sales Module -->
+                                <div class="pos-module active" id="module-sales">
+                                    <div class="row g-0 h-100">
+                                        <div class="col-lg-7 p-3">
+                                            <div class="mb-2">
+                                                <div class="row g-2">
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control form-control-sm" id="pos-search" placeholder="Search products...">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-select form-select-sm" id="pos-category-filter">
+                                                            <option value="all">All Categories</option>
+                                                            <option value="food">Food</option>
+                                                            <option value="drinks">Drinks</option>
+                                                            <option value="desserts">Desserts</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control form-control-sm" id="pos-barcode" placeholder="Scan barcode...">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-2" id="pos-products">
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Beef Burger" data-price="850" data-category="food" data-icon="bi-egg-fried">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🍔</span>
+                                                        <small class="d-block">Beef Burger</small>
+                                                        <div class="fw-bold small">KES 850</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Chicken Pizza" data-price="1200" data-category="food" data-icon="bi-cup-hot">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🍕</span>
+                                                        <small class="d-block">Chicken Pizza</small>
+                                                        <div class="fw-bold small">KES 1,200</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Grilled Chicken" data-price="1500" data-category="food" data-icon="bi-fire">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🍗</span>
+                                                        <small class="d-block">Grilled Chicken</small>
+                                                        <div class="fw-bold small">KES 1,500</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="French Fries" data-price="400" data-category="food" data-icon="bi-grid">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🍟</span>
+                                                        <small class="d-block">French Fries</small>
+                                                        <div class="fw-bold small">KES 400</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Soft Drink" data-price="150" data-category="drinks" data-icon="bi-cup-straw">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🥤</span>
+                                                        <small class="d-block">Soft Drink</small>
+                                                        <div class="fw-bold small">KES 150</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Fresh Juice" data-price="300" data-category="drinks" data-icon="bi-cup">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🧃</span>
+                                                        <small class="d-block">Fresh Juice</small>
+                                                        <div class="fw-bold small">KES 300</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Coffee" data-price="250" data-category="drinks" data-icon="bi-cup-hot">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">☕</span>
+                                                        <small class="d-block">Coffee</small>
+                                                        <div class="fw-bold small">KES 250</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Caesar Salad" data-price="650" data-category="food" data-icon="bi-flower1">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🥗</span>
+                                                        <small class="d-block">Caesar Salad</small>
+                                                        <div class="fw-bold small">KES 650</div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6 col-md-4">
+                                                    <button class="btn btn-outline-primary w-100 h-100 product-btn" data-name="Ice Cream" data-price="350" data-category="desserts" data-icon="bi-snow">
+                                                        <span class="d-block mb-1" style="font-size: 2rem;">🍦</span>
+                                                        <small class="d-block">Ice Cream</small>
+                                                        <div class="fw-bold small">KES 350</div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5 bg-dark text-white p-3">
+                                            <h6 class="mb-2"><i class="bi bi-cart3 me-2"></i>Current Order</h6>
+                                            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                                <table class="table table-dark table-sm mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item</th>
+                                                            <th class="text-center">Qty</th>
+                                                            <th class="text-end">Price</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="pos-cart-items">
+                                                        <tr>
+                                                            <td colspan="4" class="text-center text-muted small">No items added</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr class="my-2">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span class="small">Subtotal:</span>
+                                                <span class="small" id="pos-subtotal">KES 0</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span class="small">Discount:</span>
+                                                <div class="d-flex gap-1">
+                                                    <select class="form-select form-select-sm" style="width: 80px;" id="pos-discount-type">
+                                                        <option value="fixed">KES</option>
+                                                        <option value="percent">%</option>
+                                                    </select>
+                                                    <input type="number" class="form-control form-control-sm" style="width: 70px;" id="pos-discount" value="0" min="0">
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span class="small">Tax (16%):</span>
+                                                <span class="small" id="pos-tax">KES 0</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="fw-bold">Total:</span>
+                                                <span class="fw-bold text-success" id="pos-total">KES 0</span>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label small mb-1">Order Notes:</label>
+                                                <textarea class="form-control form-control-sm" id="pos-notes" rows="1" placeholder="Add notes..."></textarea>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label small mb-1">Customer:</label>
+                                                <select class="form-select form-select-sm" id="pos-customer">
+                                                    <option value="">Walk-in Customer</option>
+                                                    <option value="1">John Kamau</option>
+                                                    <option value="2">Mary Wanjiku</option>
+                                                    <option value="3">Peter Ochieng</option>
+                                                    <option value="4">Grace Akinyi</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label small mb-1">Payment Method:</label>
+                                                <select class="form-select form-select-sm" id="pos-payment">
+                                                    <option value="cash">Cash</option>
+                                                    <option value="card">Card</option>
+                                                    <option value="mpesa">M-Pesa</option>
+                                                    <option value="bank">Bank Transfer</option>
+                                                    <option value="split">Split Payment</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-2 d-none" id="split-payment-section">
+                                                <label class="form-label small mb-1">Split Payment:</label>
+                                                <div class="row g-1 mb-1">
+                                                    <div class="col-4">
+                                                        <input type="number" class="form-control form-control-sm split-amount" data-method="Cash" placeholder="Cash">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="number" class="form-control form-control-sm split-amount" data-method="Card" placeholder="Card">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="number" class="form-control form-control-sm split-amount" data-method="M-Pesa" placeholder="M-Pesa">
+                                                    </div>
+                                                </div>
+                                                <small class="text-muted" id="split-remaining">Remaining: KES 0</small>
+                                            </div>
+                                            <div class="row g-2 mb-2">
+                                                <div class="col-3">
+                                                    <button class="btn btn-outline-light btn-sm w-100" id="pos-hold">
+                                                        <i class="bi bi-pause me-1"></i>Hold
+                                                    </button>
+                                                </div>
+                                                <div class="col-3">
+                                                    <button class="btn btn-outline-light btn-sm w-100" id="pos-resume" disabled>
+                                                        <i class="bi bi-play me-1"></i>Resume
+                                                    </button>
+                                                </div>
+                                                <div class="col-3">
+                                                    <button class="btn btn-outline-light btn-sm w-100" id="pos-clear">
+                                                        <i class="bi bi-trash me-1"></i>Clear
+                                                    </button>
+                                                </div>
+                                                <div class="col-3">
+                                                    <button class="btn btn-success btn-sm w-100" id="pos-checkout" disabled>
+                                                        <i class="bi bi-printer me-1"></i>Pay
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <small class="text-muted">Held Orders:</small>
+                                                <div id="held-orders-list" class="d-flex flex-wrap gap-1 mt-1"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Inventory Module -->
+                                <div class="pos-module d-none" id="module-inventory">
+                                    <div class="p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h6 class="mb-0"><i class="bi bi-box-seam me-2"></i>Inventory Management</h6>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#inventoryModal">
+                                                <i class="bi bi-plus me-1"></i>Add Product
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm" id="inventory-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>SKU</th>
+                                                        <th>Stock</th>
+                                                        <th>Price</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="inventory-body">
+                                                    <tr>
+                                                        <td>Beef Burger</td>
+                                                        <td>FOOD-001</td>
+                                                        <td>45</td>
+                                                        <td>KES 850</td>
+                                                        <td><span class="badge bg-success">In Stock</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-inventory" data-sku="FOOD-001"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-inventory" data-sku="FOOD-001"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Chicken Pizza</td>
+                                                        <td>FOOD-002</td>
+                                                        <td>28</td>
+                                                        <td>KES 1,200</td>
+                                                        <td><span class="badge bg-success">In Stock</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-inventory" data-sku="FOOD-002"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-inventory" data-sku="FOOD-002"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Grilled Chicken</td>
+                                                        <td>FOOD-003</td>
+                                                        <td>12</td>
+                                                        <td>KES 1,500</td>
+                                                        <td><span class="badge bg-warning">Low Stock</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-inventory" data-sku="FOOD-003"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-inventory" data-sku="FOOD-003"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>French Fries</td>
+                                                        <td>FOOD-004</td>
+                                                        <td>150</td>
+                                                        <td>KES 400</td>
+                                                        <td><span class="badge bg-success">In Stock</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-inventory" data-sku="FOOD-004"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-inventory" data-sku="FOOD-004"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Soft Drink</td>
+                                                        <td>DRINK-001</td>
+                                                        <td>200</td>
+                                                        <td>KES 150</td>
+                                                        <td><span class="badge bg-success">In Stock</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-inventory" data-sku="DRINK-001"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-inventory" data-sku="DRINK-001"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Fresh Juice</td>
+                                                        <td>DRINK-002</td>
+                                                        <td>50</td>
+                                                        <td>KES 300</td>
+                                                        <td><span class="badge bg-success">In Stock</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-inventory" data-sku="DRINK-002"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-inventory" data-sku="DRINK-002"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Customers Module -->
+                                <div class="pos-module d-none" id="module-customers">
+                                    <div class="p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h6 class="mb-0"><i class="bi bi-people me-2"></i>Customer Management</h6>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#customerModal">
+                                                <i class="bi bi-plus me-1"></i>Add Customer
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm" id="customers-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th>Phone</th>
+                                                        <th>Total Orders</th>
+                                                        <th>Total Spent</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="customers-body">
+                                                    <tr>
+                                                        <td>John Kamau</td>
+                                                        <td>john@email.com</td>
+                                                        <td>0722-123456</td>
+                                                        <td>5</td>
+                                                        <td>KES 125,000</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-customer" data-email="john@email.com"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-customer" data-email="john@email.com"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mary Wanjiku</td>
+                                                        <td>mary@email.com</td>
+                                                        <td>0733-987654</td>
+                                                        <td>3</td>
+                                                        <td>KES 78,000</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-customer" data-email="mary@email.com"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-customer" data-email="mary@email.com"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Peter Ochieng</td>
+                                                        <td>peter@email.com</td>
+                                                        <td>0711-456789</td>
+                                                        <td>8</td>
+                                                        <td>KES 210,000</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-customer" data-email="peter@email.com"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-customer" data-email="peter@email.com"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Grace Akinyi</td>
+                                                        <td>grace@email.com</td>
+                                                        <td>0744-321654</td>
+                                                        <td>2</td>
+                                                        <td>KES 45,000</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary edit-customer" data-email="grace@email.com"><i class="bi bi-pencil"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger delete-customer" data-email="grace@email.com"><i class="bi bi-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Loyalty Module -->
+                                <div class="pos-module d-none" id="module-loyalty">
+                                    <div class="p-3">
+                                        <h6 class="mb-3"><i class="bi bi-star me-2"></i>Loyalty Program</h6>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4">
+                                                <div class="card bg-warning text-dark">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Active Members</h6>
+                                                        <h5 class="mb-0">128</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card bg-success text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Points Issued</h6>
+                                                        <h5 class="mb-0">45,230</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card bg-info text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Rewards Redeemed</h6>
+                                                        <h5 class="mb-0">89</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Customer</th>
+                                                        <th>Tier</th>
+                                                        <th>Points</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>John Kamau</td>
+                                                        <td><span class="badge bg-warning text-dark">Gold</span></td>
+                                                        <td>2,450</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mary Wanjiku</td>
+                                                        <td><span class="badge bg-secondary">Silver</span></td>
+                                                        <td>1,200</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Peter Ochieng</td>
+                                                        <td><span class="badge bg-warning text-dark">Gold</span></td>
+                                                        <td>3,800</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Grace Akinyi</td>
+                                                        <td><span class="badge bg-primary">Bronze</span></td>
+                                                        <td>450</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- HR Module -->
+                                <div class="pos-module d-none" id="module-hr">
+                                    <div class="p-3">
+                                        <h6 class="mb-3"><i class="bi bi-person-badge me-2"></i>HR Management</h6>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-3">
+                                                <div class="card bg-primary text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Total Staff</h6>
+                                                        <h5 class="mb-0">12</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-success text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">On Duty</h6>
+                                                        <h5 class="mb-0">8</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-warning text-dark">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">On Leave</h6>
+                                                        <h5 class="mb-0">2</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-info text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Today's Shifts</h6>
+                                                        <h5 class="mb-0">4</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Employee</th>
+                                                        <th>Role</th>
+                                                        <th>Shift</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>James Mwangi</td>
+                                                        <td>Manager</td>
+                                                        <td>8AM - 5PM</td>
+                                                        <td><span class="badge bg-success">On Duty</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Susan Njoroge</td>
+                                                        <td>Cashier</td>
+                                                        <td>9AM - 6PM</td>
+                                                        <td><span class="badge bg-success">On Duty</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>David Kimani</td>
+                                                        <td>Waiter</td>
+                                                        <td>10AM - 7PM</td>
+                                                        <td><span class="badge bg-warning">On Leave</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ruth Wanjiku</td>
+                                                        <td>Cashier</td>
+                                                        <td>12PM - 9PM</td>
+                                                        <td><span class="badge bg-secondary">Off Duty</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Profit & Loss Module -->
+                                <div class="pos-module d-none" id="module-profitloss">
+                                    <div class="p-3">
+                                        <h6 class="mb-3"><i class="bi bi-graph-up-arrow me-2"></i>Profit & Loss</h6>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-3">
+                                                <div class="card bg-success text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Revenue</h6>
+                                                        <h5 class="mb-0" id="pl-revenue">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-danger text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Expenses</h6>
+                                                        <h5 class="mb-0" id="pl-expenses">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-primary text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Gross Profit</h6>
+                                                        <h5 class="mb-0" id="pl-gross">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-info text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Net Profit</h6>
+                                                        <h5 class="mb-0" id="pl-net">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Category</th>
+                                                        <th>Amount</th>
+                                                        <th>Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sales Revenue</td>
+                                                        <td>KES 125,000</td>
+                                                        <td><span class="badge bg-success">Income</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cost of Goods</td>
+                                                        <td>KES 45,000</td>
+                                                        <td><span class="badge bg-danger">Expense</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Staff Salaries</td>
+                                                        <td>KES 35,000</td>
+                                                        <td><span class="badge bg-danger">Expense</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Utilities</td>
+                                                        <td>KES 8,000</td>
+                                                        <td><span class="badge bg-danger">Expense</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Rent</td>
+                                                        <td>KES 20,000</td>
+                                                        <td><span class="badge bg-danger">Expense</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Day End Module -->
+                                <div class="pos-module d-none" id="module-dayend">
+                                    <div class="p-3">
+                                        <h6 class="mb-3"><i class="bi bi-moon me-2"></i>Day End Summary</h6>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4">
+                                                <div class="card bg-primary text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Total Sales</h6>
+                                                        <h5 class="mb-0" id="dayend-sales">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card bg-success text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Cash Count</h6>
+                                                        <h5 class="mb-0" id="dayend-cash">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card bg-info text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Card Sales</h6>
+                                                        <h5 class="mb-0" id="dayend-card">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4">
+                                                <div class="card bg-warning text-dark">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">M-Pesa</h6>
+                                                        <h5 class="mb-0" id="dayend-mpesa">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card bg-secondary text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Orders</h6>
+                                                        <h5 class="mb-0" id="dayend-orders">0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card bg-danger text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Refunds</h6>
+                                                        <h5 class="mb-0" id="dayend-refunds">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label small mb-1">Closing Cash Count:</label>
+                                            <input type="number" class="form-control form-control-sm" id="closing-cash" placeholder="Enter cash count...">
+                                        </div>
+                                        <button class="btn btn-success btn-sm w-100" id="close-register">
+                                            <i class="bi bi-check-circle me-1"></i>Close Register
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Reports Module -->
+                                <div class="pos-module d-none" id="module-reports">
+                                    <div class="p-2" style="max-height: 380px; overflow-y: auto;">
+                                        <h6 class="mb-2"><i class="bi bi-graph-up me-2"></i>Sales Reports</h6>
+                                        <div class="row g-2 mb-2">
+                                            <div class="col-md-3">
+                                                <div class="card bg-primary text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Today's Sales</h6>
+                                                        <h5 class="mb-0" style="font-size: 14px;" id="report-today-sales">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-success text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">This Week</h6>
+                                                        <h5 class="mb-0" style="font-size: 14px;" id="report-week-sales">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-warning text-dark">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">This Month</h6>
+                                                        <h5 class="mb-0" style="font-size: 14px;" id="report-month-sales">KES 0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="card bg-info text-white">
+                                                    <div class="card-body p-2">
+                                                        <h6 class="card-title small mb-1">Total Orders</h6>
+                                                        <h5 class="mb-0" style="font-size: 14px;" id="report-total-orders">0</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Charts Section -->
+                                        <div class="row g-2 mb-2">
+                                            <div class="col-md-6">
+                                                <div class="card" style="height: 100px; overflow: hidden;">
+                                                    <div class="card-body p-1" style="height: 100%; display: flex; flex-direction: column;">
+                                                        <h6 class="small mb-0" style="font-size: 8px;">Sales Trend</h6>
+                                                        <div style="flex: 1; min-height: 0; position: relative;">
+                                                            <canvas id="salesChart" style="position: absolute; inset: 0;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card" style="height: 100px; overflow: hidden;">
+                                                    <div class="card-body p-1" style="height: 100%; display: flex; flex-direction: column;">
+                                                        <h6 class="small mb-0" style="font-size: 8px;">Payment Methods</h6>
+                                                        <div style="flex: 1; min-height: 0; position: relative;">
+                                                            <canvas id="paymentChart" style="position: absolute; inset: 0;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row g-2 mb-2">
+                                            <div class="col-md-6">
+                                                <div class="card" style="height: 100px; overflow: hidden;">
+                                                    <div class="card-body p-1" style="height: 100%; display: flex; flex-direction: column;">
+                                                        <h6 class="small mb-0" style="font-size: 8px;">Top Products</h6>
+                                                        <div style="flex: 1; min-height: 0; position: relative;">
+                                                            <canvas id="productsChart" style="position: absolute; inset: 0;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card" style="height: 100px; overflow: hidden;">
+                                                    <div class="card-body p-1" style="height: 100%; display: flex; flex-direction: column;">
+                                                        <h6 class="small mb-0" style="font-size: 8px;">Hourly Sales</h6>
+                                                        <div style="flex: 1; min-height: 0; position: relative;">
+                                                            <canvas id="hourlyChart" style="position: absolute; inset: 0;"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Order ID</th>
+                                                        <th>Items</th>
+                                                        <th>Total</th>
+                                                        <th>Payment</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="report-orders-body">
+                                                    <tr>
+                                                        <td>Today, 10:30 AM</td>
+                                                        <td>#ORD-001</td>
+                                                        <td>3</td>
+                                                        <td>KES 45,000</td>
+                                                        <td><span class="badge bg-success">Paid</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Today, 09:15 AM</td>
+                                                        <td>#ORD-002</td>
+                                                        <td>2</td>
+                                                        <td>KES 28,000</td>
+                                                        <td><span class="badge bg-success">Paid</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Yesterday, 4:45 PM</td>
+                                                        <td>#ORD-003</td>
+                                                        <td>5</td>
+                                                        <td>KES 78,500</td>
+                                                        <td><span class="badge bg-success">Paid</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Yesterday, 2:20 PM</td>
+                                                        <td>#ORD-004</td>
+                                                        <td>1</td>
+                                                        <td>KES 15,000</td>
+                                                        <td><span class="badge bg-warning">Pending</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Receipt Printer Modal -->
+<div class="modal fade" id="receiptModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-printer me-2"></i>Printing Receipt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="receipt-container" style="font-family: 'Courier New', monospace; background: #fff; padding: 20px; border: 2px dashed #ccc; max-height: 400px; overflow-y: auto;">
+                    <div style="text-align: center; border-bottom: 1px dashed #000; padding-bottom: 10px; margin-bottom: 10px;">
+                        <h4 style="margin: 0;">{{ SITE_NAME }}</h4>
+                        <p style="margin: 5px 0;">Jabem Solutions Ltd</p>
+                        <p style="margin: 5px 0;">Tel: +254 736 794594</p>
+                    </div>
+                    <div id="receipt-content">
+                        <p style="margin: 5px 0;">--------------------------------</p>
+                        <p style="margin: 5px 0;">Date: <span id="receipt-date"></span></p>
+                        <p style="margin: 5px 0;">Order #: <span id="receipt-order"></span></p>
+                        <p style="margin: 5px 0;">--------------------------------</p>
+                        <div id="receipt-items"></div>
+                        <p style="margin: 5px 0;">--------------------------------</p>
+                        <p style="margin: 5px 0;">Subtotal: <span id="receipt-subtotal"></span></p>
+                        <p style="margin: 5px 0;">Tax (16%): <span id="receipt-tax"></span></p>
+                        <p style="margin: 5px 0; font-weight: bold; font-size: 1.2em;">TOTAL: <span id="receipt-total"></span></p>
+                        <p style="margin: 5px 0;">--------------------------------</p>
+                        <p style="margin: 5px 0;">Payment: CASH</p>
+                        <p style="margin: 5px 0;">Change: KES 0.00</p>
+                        <p style="margin: 15px 0 5px 0; text-align: center;">Thank you for your business!</p>
+                        <p style="margin: 5px 0; text-align: center;">{{ SITE_NAME }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inventory Modal -->
+<div class="modal fade" id="inventoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inventoryModalTitle"><i class="bi bi-box-seam me-2"></i>Add Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="inventoryForm">
+                    <input type="hidden" id="inventory-sku">
+                    <div class="mb-3">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="inventory-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">SKU</label>
+                        <input type="text" class="form-control" id="inventory-sku-input" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock Quantity</label>
+                        <input type="number" class="form-control" id="inventory-stock" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Price (KES)</label>
+                        <input type="number" class="form-control" id="inventory-price" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveInventory">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Modal -->
+<div class="modal fade" id="customerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalTitle"><i class="bi bi-person me-2"></i>Add Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customerForm">
+                    <input type="hidden" id="customer-email-hidden">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" id="customer-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="customer-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="text" class="form-control" id="customer-phone" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveCustomer">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let cart = [];
+    
+    // Update time
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('current-time').textContent = now.toLocaleString();
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+    
+    // Navigation between modules
+    const navBtns = document.querySelectorAll('.pos-nav-btn');
+    const modules = document.querySelectorAll('.pos-module');
+    
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            navBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const moduleName = this.dataset.module;
+            modules.forEach(m => {
+                m.classList.add('d-none');
+                m.classList.remove('active');
+            });
+            document.getElementById('module-' + moduleName).classList.remove('d-none');
+            document.getElementById('module-' + moduleName).classList.add('active');
+        });
+    });
+    
+    const productBtns = document.querySelectorAll('.product-btn');
+    const cartItems = document.getElementById('pos-cart-items');
+    const subtotalEl = document.getElementById('pos-subtotal');
+    const taxEl = document.getElementById('pos-tax');
+    const totalEl = document.getElementById('pos-total');
+    const checkoutBtn = document.getElementById('pos-checkout');
+    const clearBtn = document.getElementById('pos-clear');
+    const holdBtn = document.getElementById('pos-hold');
+    const resumeBtn = document.getElementById('pos-resume');
+    const discountInput = document.getElementById('pos-discount');
+    const discountTypeSelect = document.getElementById('pos-discount-type');
+    const searchInput = document.getElementById('pos-search');
+    const categoryFilter = document.getElementById('pos-category-filter');
+    const barcodeInput = document.getElementById('pos-barcode');
+    
+    // POS Type Configuration
+    const posTypes = [
+        {
+            name: 'Restaurant POS',
+            themeColor: '#0d6efd',
+            icon: 'bi-cpu-fill',
+            products: [
+                { name: 'Beef Burger', price: 850, category: 'food', emoji: '🍔' },
+                { name: 'Chicken Pizza', price: 1200, category: 'food', emoji: '🍕' },
+                { name: 'Grilled Chicken', price: 1500, category: 'food', emoji: '🍗' },
+                { name: 'French Fries', price: 400, category: 'food', emoji: '🍟' },
+                { name: 'Soft Drink', price: 150, category: 'drinks', emoji: '🥤' },
+                { name: 'Fresh Juice', price: 300, category: 'drinks', emoji: '🧃' },
+                { name: 'Coffee', price: 250, category: 'drinks', emoji: '☕' },
+                { name: 'Caesar Salad', price: 650, category: 'food', emoji: '🥗' },
+                { name: 'Ice Cream', price: 350, category: 'desserts', emoji: '🍦' }
+            ],
+            categories: ['food', 'drinks', 'desserts']
+        },
+        {
+            name: 'Supermarket POS',
+            themeColor: '#198754',
+            icon: 'bi-cart3',
+            products: [
+                { name: 'Bread Loaf', price: 60, category: 'bakery', emoji: '🍞' },
+                { name: 'Milk 1L', price: 120, category: 'dairy', emoji: '🥛' },
+                { name: 'Rice 2kg', price: 350, category: 'grains', emoji: '🍚' },
+                { name: 'Cooking Oil 1L', price: 450, category: 'cooking', emoji: '🫗' },
+                { name: 'Sugar 1kg', price: 280, category: 'cooking', emoji: '🧂' },
+                { name: 'Eggs 12pcs', price: 320, category: 'dairy', emoji: '🥚' },
+                { name: 'Tomatoes 1kg', price: 180, category: 'vegetables', emoji: '🍅' },
+                { name: 'Onions 1kg', price: 120, category: 'vegetables', emoji: '🧅' },
+                { name: 'Apples 1kg', price: 450, category: 'fruits', emoji: '🍎' }
+            ],
+            categories: ['bakery', 'dairy', 'grains', 'cooking', 'vegetables', 'fruits']
+        },
+        {
+            name: 'Retail Shop POS',
+            themeColor: '#dc3545',
+            icon: 'bi-shop',
+            products: [
+                { name: 'T-Shirt', price: 1500, category: 'clothing', emoji: '👕' },
+                { name: 'Jeans', price: 3500, category: 'clothing', emoji: '👖' },
+                { name: 'Sneakers', price: 4500, category: 'footwear', emoji: '👟' },
+                { name: 'Watch', price: 8000, category: 'accessories', emoji: '⌚' },
+                { name: 'Sunglasses', price: 2500, category: 'accessories', emoji: '🕶️' },
+                { name: 'Backpack', price: 3000, category: 'bags', emoji: '🎒' },
+                { name: 'Cap', price: 800, category: 'accessories', emoji: '🧢' },
+                { name: 'Socks', price: 200, category: 'clothing', emoji: '🧦' },
+                { name: 'Belt', price: 600, category: 'accessories', emoji: '👔' }
+            ],
+            categories: ['clothing', 'footwear', 'accessories', 'bags']
+        },
+        {
+            name: 'Cafe POS',
+            themeColor: '#6f42c1',
+            icon: 'bi-cup-hot',
+            products: [
+                { name: 'Espresso', price: 250, category: 'coffee', emoji: '☕' },
+                { name: 'Cappuccino', price: 350, category: 'coffee', emoji: '☕' },
+                { name: 'Latte', price: 380, category: 'coffee', emoji: '☕' },
+                { name: 'Mocha', price: 400, category: 'coffee', emoji: '☕' },
+                { name: 'Green Tea', price: 280, category: 'tea', emoji: '🍵' },
+                { name: 'Croissant', price: 320, category: 'pastry', emoji: '🥐' },
+                { name: 'Muffin', price: 280, category: 'pastry', emoji: '🧁' },
+                { name: 'Sandwich', price: 550, category: 'food', emoji: '🥪' },
+                { name: 'Cake Slice', price: 450, category: 'desserts', emoji: '🍰' }
+            ],
+            categories: ['coffee', 'tea', 'pastry', 'food', 'desserts']
+        },
+        {
+            name: 'Club POS',
+            themeColor: '#212529',
+            icon: 'bi-music-note',
+            products: [
+                { name: 'Cocktail', price: 1200, category: 'drinks', emoji: '🍸' },
+                { name: 'Beer (Draft)', price: 500, category: 'drinks', emoji: '🍺' },
+                { name: 'Whiskey', price: 1500, category: 'drinks', emoji: '🥃' },
+                { name: 'Wine (Glass)', price: 800, category: 'drinks', emoji: '🍷' },
+                { name: 'Vodka', price: 1000, category: 'drinks', emoji: '🍾' },
+                { name: 'Mixed Drink', price: 900, category: 'drinks', emoji: '🍹' },
+                { name: 'Nuts', price: 350, category: 'snacks', emoji: '🥜' },
+                { name: 'Chips', price: 400, category: 'snacks', emoji: '🍟' },
+                { name: 'Water', price: 200, category: 'drinks', emoji: '💧' }
+            ],
+            categories: ['drinks', 'snacks']
+        }
+    ];
+    
+    let currentPosIndex = 0;
+    
+    function switchPosType(direction) {
+        currentPosIndex += direction;
+        if (currentPosIndex < 0) currentPosIndex = posTypes.length - 1;
+        if (currentPosIndex >= posTypes.length) currentPosIndex = 0;
+        
+        const posType = posTypes[currentPosIndex];
+        
+        // Update header
+        document.getElementById('pos-type-name').innerHTML = `<i class="bi ${posType.icon} me-2"></i>${posType.name}`;
+        document.getElementById('pos-header').style.backgroundColor = posType.themeColor;
+        document.getElementById('pos-sidebar').style.backgroundColor = posType.themeColor;
+        document.querySelector('.card.shadow').style.borderColor = posType.themeColor;
+        
+        // Update categories
+        const categorySelect = document.getElementById('pos-category-filter');
+        categorySelect.innerHTML = '<option value="all">All Categories</option>';
+        posType.categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+            categorySelect.appendChild(option);
+        });
+        
+        // Update products
+        const productsContainer = document.getElementById('pos-products');
+        productsContainer.innerHTML = '';
+        
+        posType.products.forEach(product => {
+            const col = document.createElement('div');
+            col.className = 'col-6 col-md-4';
+            col.innerHTML = `
+                <button class="btn btn-outline-primary w-100 h-100 product-btn" 
+                        data-name="${product.name}" 
+                        data-price="${product.price}" 
+                        data-category="${product.category}" 
+                        data-icon="${product.emoji}">
+                    <span class="d-block mb-1" style="font-size: 2rem;">${product.emoji}</span>
+                    <small class="d-block">${product.name}</small>
+                    <div class="fw-bold small">KES ${product.price.toLocaleString()}</div>
+                </button>
+            `;
+            productsContainer.appendChild(col);
+        });
+        
+        // Re-attach event listeners to new product buttons
+        attachProductListeners();
+        
+        // Clear cart
+        cart = [];
+        updateCart();
+    }
+    
+    function attachProductListeners() {
+        const productBtns = document.querySelectorAll('.product-btn');
+        productBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const name = this.dataset.name;
+                const price = parseInt(this.dataset.price);
+                
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name, price, quantity: 1 });
+                }
+                
+                updateCart();
+                
+                // Visual feedback
+                this.classList.add('btn-primary');
+                this.classList.remove('btn-outline-primary');
+                setTimeout(() => {
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-outline-primary');
+                }, 200);
+            });
+        });
+    }
+    
+    // Initialize POS type switching
+    document.getElementById('prev-pos-type').addEventListener('click', () => switchPosType(-1));
+    document.getElementById('next-pos-type').addEventListener('click', () => switchPosType(1));
+    
+    // Initialize with first POS type
+    switchPosType(0);
+    
+    let heldOrders = [];
+    let currentHeldOrderIndex = null;
+    
+    function updateCart() {
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<tr><td colspan="4" class="text-center text-muted small">No items added</td></tr>';
+            checkoutBtn.disabled = true;
+            holdBtn.disabled = true;
+        } else {
+            cartItems.innerHTML = cart.map((item, index) => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-secondary qty-minus" data-index="${index}" style="padding: 2px 6px;">-</button>
+                        <span class="mx-1">${item.quantity}</span>
+                        <button class="btn btn-sm btn-outline-secondary qty-plus" data-index="${index}" style="padding: 2px 6px;">+</button>
+                    </td>
+                    <td class="text-end">KES ${(item.price * item.quantity).toLocaleString()}</td>
+                    <td><button class="btn btn-sm btn-outline-danger remove-item" data-index="${index}">×</button></td>
+                </tr>
+            `).join('');
+            
+            // Add remove functionality
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    cart.splice(index, 1);
+                    updateCart();
+                });
+            });
+            
+            // Add quantity adjustment
+            document.querySelectorAll('.qty-minus').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity--;
+                        updateCart();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.qty-plus').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    cart[index].quantity++;
+                    updateCart();
+                });
+            });
+            
+            checkoutBtn.disabled = false;
+            holdBtn.disabled = false;
+        }
+        
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const discountValue = parseInt(discountInput.value) || 0;
+        const discountType = discountTypeSelect.value;
+        let discount = 0;
+        
+        if (discountType === 'percent') {
+            discount = Math.round(subtotal * (discountValue / 100));
+        } else {
+            discount = discountValue;
+        }
+        
+        const taxableAmount = Math.max(0, subtotal - discount);
+        const tax = Math.round(taxableAmount * 0.16);
+        const total = taxableAmount + tax;
+        
+        subtotalEl.textContent = 'KES ' + subtotal.toLocaleString();
+        taxEl.textContent = 'KES ' + tax.toLocaleString();
+        totalEl.textContent = 'KES ' + total.toLocaleString();
+    }
+    
+    // Payment method change - show/hide split payment
+    document.getElementById('pos-payment').addEventListener('change', function() {
+        const splitSection = document.getElementById('split-payment-section');
+        if (this.value === 'split') {
+            splitSection.classList.remove('d-none');
+            updateSplitPaymentRemaining();
+        } else {
+            splitSection.classList.add('d-none');
+        }
+    });
+    
+    // Split payment amount inputs
+    document.querySelectorAll('.split-amount').forEach(input => {
+        input.addEventListener('input', updateSplitPaymentRemaining);
+    });
+    
+    function updateSplitPaymentRemaining() {
+        const total = parseInt(totalEl.textContent.replace('KES ', '').replace(/,/g, '')) || 0;
+        let paid = 0;
+        
+        document.querySelectorAll('.split-amount').forEach(input => {
+            paid += parseInt(input.value) || 0;
+        });
+        
+        const remaining = total - paid;
+        document.getElementById('split-remaining').textContent = 'Remaining: KES ' + remaining.toLocaleString();
+        
+        // Enable checkout if fully paid
+        checkoutBtn.disabled = remaining > 0;
+    }
+    
+    // Barcode scanner
+    barcodeInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const barcode = this.value.trim().toLowerCase();
+            const productBtn = Array.from(productBtns).find(btn => 
+                btn.dataset.name.toLowerCase().includes(barcode) || 
+                btn.dataset.name.toLowerCase() === barcode
+            );
+            if (productBtn) {
+                productBtn.click();
+                this.value = '';
+            }
+        }
+    });
+    
+    // Hold order
+    holdBtn.addEventListener('click', function() {
+        if (cart.length === 0) return;
+        
+        const orderNotes = document.getElementById('pos-notes').value;
+        const customerSelect = document.getElementById('pos-customer');
+        const customerName = customerSelect.options[customerSelect.selectedIndex].text;
+        
+        heldOrders.push({
+            cart: [...cart],
+            notes: orderNotes,
+            customer: customerName,
+            timestamp: new Date().toLocaleTimeString()
+        });
+        
+        cart = [];
+        document.getElementById('pos-notes').value = '';
+        updateCart();
+        updateHeldOrdersList();
+        
+        resumeBtn.disabled = heldOrders.length === 0;
+    });
+    
+    // Resume order
+    resumeBtn.addEventListener('click', function() {
+        if (heldOrders.length === 0) return;
+        
+        // Resume the most recently held order
+        const lastOrder = heldOrders.pop();
+        cart = lastOrder.cart;
+        document.getElementById('pos-notes').value = lastOrder.notes;
+        
+        updateCart();
+        updateHeldOrdersList();
+        
+        resumeBtn.disabled = heldOrders.length === 0;
+    });
+    
+    function updateHeldOrdersList() {
+        const list = document.getElementById('held-orders-list');
+        if (heldOrders.length === 0) {
+            list.innerHTML = '<span class="text-muted small">None</span>';
+        } else {
+            list.innerHTML = heldOrders.map((order, index) => `
+                <button class="btn btn-sm btn-outline-light" onclick="resumeSpecificOrder(${index})">
+                    Order ${index + 1} (${order.timestamp})
+                </button>
+            `).join('');
+        }
+    }
+    
+    // Resume specific order (global function for onclick)
+    window.resumeSpecificOrder = function(index) {
+        const order = heldOrders.splice(index, 1)[0];
+        cart = order.cart;
+        document.getElementById('pos-notes').value = order.notes;
+        
+        updateCart();
+        updateHeldOrdersList();
+        
+        resumeBtn.disabled = heldOrders.length === 0;
+    };
+    
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const currentProductBtns = document.querySelectorAll('.product-btn');
+        currentProductBtns.forEach(btn => {
+            const name = btn.dataset.name.toLowerCase();
+            btn.parentElement.style.display = name.includes(searchTerm) ? '' : 'none';
+        });
+    });
+    
+    // Category filter
+    categoryFilter.addEventListener('change', function() {
+        const category = this.value;
+        const currentProductBtns = document.querySelectorAll('.product-btn');
+        currentProductBtns.forEach(btn => {
+            const productCategory = btn.dataset.category;
+            if (category === 'all' || productCategory === category) {
+                btn.parentElement.style.display = '';
+            } else {
+                btn.parentElement.style.display = 'none';
+            }
+        });
+    });
+    
+    clearBtn.addEventListener('click', function() {
+        cart = [];
+        updateCart();
+    });
+    
+    checkoutBtn.addEventListener('click', function() {
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const discountValue = parseInt(discountInput.value) || 0;
+        const discountType = discountTypeSelect.value;
+        let discount = 0;
+        
+        if (discountType === 'percent') {
+            discount = Math.round(subtotal * (discountValue / 100));
+        } else {
+            discount = discountValue;
+        }
+        
+        const taxableAmount = Math.max(0, subtotal - discount);
+        const tax = Math.round(taxableAmount * 0.16);
+        const total = taxableAmount + tax;
+        
+        const customerSelect = document.getElementById('pos-customer');
+        const customerName = customerSelect.options[customerSelect.selectedIndex].text;
+        
+        const paymentSelect = document.getElementById('pos-payment');
+        const paymentMethod = paymentSelect.options[paymentSelect.selectedIndex].text;
+        
+        const orderNotes = document.getElementById('pos-notes').value;
+        
+        // Handle split payment
+        let paymentDetails = paymentMethod;
+        if (paymentSelect.value === 'split') {
+            const splitPayments = [];
+            document.querySelectorAll('.split-amount').forEach(input => {
+                const amount = parseInt(input.value) || 0;
+                if (amount > 0) {
+                    splitPayments.push(`${input.dataset.method}: KES ${amount.toLocaleString()}`);
+                }
+            });
+            paymentDetails = splitPayments.join(', ');
+        }
+        
+        // Generate receipt
+        const now = new Date();
+        const orderId = 'ORD-' + Math.floor(Math.random() * 10000);
+        document.getElementById('receipt-date').textContent = now.toLocaleString();
+        document.getElementById('receipt-order').textContent = orderId;
+        document.getElementById('receipt-subtotal').textContent = 'KES ' + subtotal.toLocaleString();
+        document.getElementById('receipt-tax').textContent = 'KES ' + tax.toLocaleString();
+        document.getElementById('receipt-total').textContent = 'KES ' + total.toLocaleString();
+        
+        let receiptItemsHTML = cart.map(item => `
+            <p style="margin: 5px 0;">${item.name} x${item.quantity}</p>
+            <p style="margin: 5px 0; text-align: right;">KES ${(item.price * item.quantity).toLocaleString()}</p>
+        `).join('');
+        
+        if (discount > 0) {
+            receiptItemsHTML += `
+                <p style="margin: 5px 0;">--------------------------------</p>
+                <p style="margin: 5px 0;">Discount (${discountType === 'percent' ? discountValue + '%' : 'KES ' + discountValue})</p>
+                <p style="margin: 5px 0; text-align: right;">-KES ${discount.toLocaleString()}</p>
+            `;
+        }
+        
+        if (orderNotes) {
+            receiptItemsHTML += `
+                <p style="margin: 5px 0;">--------------------------------</p>
+                <p style="margin: 5px 0;">Notes: ${orderNotes}</p>
+            `;
+        }
+        
+        document.getElementById('receipt-items').innerHTML = receiptItemsHTML;
+        
+        // Update payment info in receipt
+        const receiptContent = document.getElementById('receipt-content');
+        const paymentHTML = `
+            <p style="margin: 5px 0;">--------------------------------</p>
+            <p style="margin: 5px 0;">Customer: ${customerName}</p>
+            <p style="margin: 5px 0;">Payment: ${paymentDetails}</p>
+            <p style="margin: 5px 0;">Change: KES 0.00</p>
+        `;
+        
+        // Replace payment section
+        receiptContent.innerHTML = `
+            <p style="margin: 5px 0;">--------------------------------</p>
+            <p style="margin: 5px 0;">Date: <span id="receipt-date">${now.toLocaleString()}</span></p>
+            <p style="margin: 5px 0;">Order #: <span id="receipt-order">${orderId}</span></p>
+            <p style="margin: 5px 0;">--------------------------------</p>
+            <div id="receipt-items">${receiptItemsHTML}</div>
+            <p style="margin: 5px 0;">--------------------------------</p>
+            <p style="margin: 5px 0;">Subtotal: KES ${subtotal.toLocaleString()}</p>
+            ${discount > 0 ? '<p style="margin: 5px 0;">Discount: -KES ' + discount.toLocaleString() + '</p>' : ''}
+            <p style="margin: 5px 0;">Tax (16%): KES ${tax.toLocaleString()}</p>
+            <p style="margin: 5px 0; font-weight: bold; font-size: 1.2em;">TOTAL: KES ${total.toLocaleString()}</p>
+            <p style="margin: 5px 0;">--------------------------------</p>
+            <p style="margin: 5px 0;">Customer: ${customerName}</p>
+            <p style="margin: 5px 0;">Payment: ${paymentDetails}</p>
+            <p style="margin: 5px 0;">Change: KES 0.00</p>
+            <p style="margin: 15px 0 5px 0; text-align: center;">Thank you for your business!</p>
+            <p style="margin: 5px 0; text-align: center;">{{ SITE_NAME }}</p>
+        `;
+        
+        // Add order to reports
+        ordersData.unshift({
+            date: 'Today, ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            id: orderId,
+            items: cart.reduce((sum, item) => sum + item.quantity, 1),
+            total: total,
+            payment: 'Paid'
+        });
+        updateReports();
+        
+        // Show receipt modal
+        const receiptModal = new bootstrap.Modal(document.getElementById('receiptModal'));
+        receiptModal.show();
+        
+        cart = [];
+        document.getElementById('pos-notes').value = '';
+        document.querySelectorAll('.split-amount').forEach(input => input.value = '');
+        document.getElementById('split-payment-section').classList.add('d-none');
+        document.getElementById('pos-payment').value = 'cash';
+        updateCart();
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Don't trigger shortcuts when typing in inputs
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+            return;
+        }
+        
+        // F2 - Focus search
+        if (e.key === 'F2') {
+            e.preventDefault();
+            document.getElementById('pos-search').focus();
+        }
+        
+        // F3 - Focus barcode
+        if (e.key === 'F3') {
+            e.preventDefault();
+            document.getElementById('pos-barcode').focus();
+        }
+        
+        // F4 - Hold order
+        if (e.key === 'F4') {
+            e.preventDefault();
+            if (!holdBtn.disabled) {
+                holdBtn.click();
+            }
+        }
+        
+        // F5 - Resume order
+        if (e.key === 'F5') {
+            e.preventDefault();
+            if (!resumeBtn.disabled) {
+                resumeBtn.click();
+            }
+        }
+        
+        // F6 - Clear cart
+        if (e.key === 'F6') {
+            e.preventDefault();
+            clearBtn.click();
+        }
+        
+        // F9 - Checkout
+        if (e.key === 'F9') {
+            e.preventDefault();
+            if (!checkoutBtn.disabled) {
+                checkoutBtn.click();
+            }
+        }
+        
+        // Escape - Close modals
+        if (e.key === 'Escape') {
+            const modals = document.querySelectorAll('.modal.show');
+            modals.forEach(modal => {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            });
+        }
+        
+        // 1-8 - Switch modules
+        if (e.key === '1') {
+            document.querySelector('[data-module="sales"]').click();
+        }
+        if (e.key === '2') {
+            document.querySelector('[data-module="inventory"]').click();
+        }
+        if (e.key === '3') {
+            document.querySelector('[data-module="customers"]').click();
+        }
+        if (e.key === '4') {
+            document.querySelector('[data-module="loyalty"]').click();
+        }
+        if (e.key === '5') {
+            document.querySelector('[data-module="hr"]').click();
+        }
+        if (e.key === '6') {
+            document.querySelector('[data-module="profitloss"]').click();
+        }
+        if (e.key === '7') {
+            document.querySelector('[data-module="dayend"]').click();
+        }
+        if (e.key === '8') {
+            document.querySelector('[data-module="reports"]').click();
+        }
+    });
+    
+    // Day End - Close Register
+    document.getElementById('close-register').addEventListener('click', function() {
+        const totalSales = ordersData.reduce((sum, order) => sum + order.total, 0);
+        const closingCash = parseInt(document.getElementById('closing-cash').value) || 0;
+        
+        document.getElementById('dayend-sales').textContent = 'KES ' + totalSales.toLocaleString();
+        document.getElementById('dayend-cash').textContent = 'KES ' + closingCash.toLocaleString();
+        document.getElementById('dayend-card').textContent = 'KES ' + Math.round(totalSales * 0.4).toLocaleString();
+        document.getElementById('dayend-mpesa').textContent = 'KES ' + Math.round(totalSales * 0.5).toLocaleString();
+        document.getElementById('dayend-orders').textContent = ordersData.length;
+        document.getElementById('dayend-refunds').textContent = 'KES 0';
+        
+        // Update Profit & Loss
+        document.getElementById('pl-revenue').textContent = 'KES ' + totalSales.toLocaleString();
+        const expenses = Math.round(totalSales * 0.6);
+        document.getElementById('pl-expenses').textContent = 'KES ' + expenses.toLocaleString();
+        const grossProfit = totalSales - Math.round(totalSales * 0.4);
+        document.getElementById('pl-gross').textContent = 'KES ' + grossProfit.toLocaleString();
+        const netProfit = totalSales - expenses;
+        document.getElementById('pl-net').textContent = 'KES ' + netProfit.toLocaleString();
+        
+        alert('Register closed successfully!');
+    });
+    
+    // Shop Filters
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => {
+                b.classList.remove('active');
+                b.classList.add('btn-outline-secondary');
+            });
+            this.classList.add('active');
+            this.classList.remove('btn-outline-secondary');
+            
+            const filter = this.dataset.filter;
+            productCards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Apply Filters button
+    document.getElementById('apply-filters').addEventListener('click', function() {
+        const minPrice = parseInt(document.getElementById('price-min').value) || 0;
+        const maxPrice = parseInt(document.getElementById('price-max').value) || Infinity;
+        const inStockOnly = document.getElementById('in-stock').checked;
+        
+        productCards.forEach(card => {
+            const priceText = card.querySelector('strong').textContent.replace('KES ', '').replace(/,/g, '');
+            const price = parseInt(priceText);
+            
+            if (price >= minPrice && price <= maxPrice) {
+                if (!inStockOnly || card.dataset.stock !== '0') {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+    
+    // Reset Filters button
+    document.getElementById('reset-filters').addEventListener('click', function() {
+        document.getElementById('price-min').value = '';
+        document.getElementById('price-max').value = '';
+        document.getElementById('in-stock').checked = false;
+        
+        filterBtns.forEach(b => {
+            b.classList.remove('active');
+            b.classList.add('btn-outline-secondary');
+        });
+        document.querySelector('[data-filter="all"]').classList.add('active');
+        document.querySelector('[data-filter="all"]').classList.remove('btn-outline-secondary');
+        
+        productCards.forEach(card => {
+            card.style.display = '';
+        });
+    });
+    
+    // Initialize Charts for Reports Module
+    function initCharts() {
+        // Sales Trend Chart (Line Chart)
+        const salesCtx = document.getElementById('salesChart');
+        if (salesCtx) {
+            new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Sales (KES)',
+                        data: [45000, 52000, 48000, 61000, 55000, 72000, 68000],
+                        borderColor: '#0d6efd',
+                        backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { display: false },
+                        x: { display: false }
+                    }
+                }
+            });
+        }
+        
+        // Payment Methods Chart (Doughnut Chart)
+        const paymentCtx = document.getElementById('paymentChart');
+        if (paymentCtx) {
+            new Chart(paymentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cash', 'Card', 'M-Pesa', 'Bank Transfer'],
+                    datasets: [{
+                        data: [35, 25, 30, 10],
+                        backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#6c757d']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 8, font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+        
+        // Top Products Chart (Bar Chart)
+        const productsCtx = document.getElementById('productsChart');
+        if (productsCtx) {
+            new Chart(productsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Beef Burger', 'Chicken Pizza', 'Grilled Chicken', 'French Fries', 'Soft Drink'],
+                    datasets: [{
+                        label: 'Units Sold',
+                        data: [65, 48, 35, 82, 95],
+                        backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6c757d']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { ticks: { font: { size: 9 } } }
+                    }
+                }
+            });
+        }
+        
+        // Hourly Sales Chart (Bar Chart)
+        const hourlyCtx = document.getElementById('hourlyChart');
+        if (hourlyCtx) {
+            new Chart(hourlyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM'],
+                    datasets: [{
+                        label: 'Sales (KES)',
+                        data: [5000, 12000, 18000, 25000, 32000, 28000, 22000, 19000, 15000, 8000],
+                        backgroundColor: '#0d6efd'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: { ticks: { font: { size: 9 } } }
+                    }
+                }
+            });
+        }
+    }
+    
+    // Initialize charts when Reports module is opened
+    document.querySelector('[data-module="reports"]').addEventListener('click', function() {
+        setTimeout(initCharts, 100);
+    });
+    
+    // Handle POS product image fallbacks
+    document.querySelectorAll('.pos-product-img').forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            const icon = this.nextElementSibling;
+            if (icon && icon.classList.contains('pos-product-icon')) {
+                icon.style.display = 'block';
+            }
+        });
+    });
+    
+    // Inventory Management
+    let inventoryData = [
+        { name: 'Beef Burger', sku: 'FOOD-001', stock: 45, price: 850 },
+        { name: 'Chicken Pizza', sku: 'FOOD-002', stock: 28, price: 1200 },
+        { name: 'Grilled Chicken', sku: 'FOOD-003', stock: 12, price: 1500 },
+        { name: 'French Fries', sku: 'FOOD-004', stock: 150, price: 400 },
+        { name: 'Soft Drink', sku: 'DRINK-001', stock: 200, price: 150 },
+        { name: 'Fresh Juice', sku: 'DRINK-002', stock: 50, price: 300 }
+    ];
+    
+    const inventoryModal = new bootstrap.Modal(document.getElementById('inventoryModal'));
+    const inventoryModalTitle = document.getElementById('inventoryModalTitle');
+    const inventoryForm = document.getElementById('inventoryForm');
+    
+    // Add inventory button
+    document.querySelector('[data-bs-target="#inventoryModal"]').addEventListener('click', function() {
+        inventoryModalTitle.textContent = '<i class="bi bi-box-seam me-2"></i>Add Product';
+        document.getElementById('inventory-sku').value = '';
+        document.getElementById('inventory-name').value = '';
+        document.getElementById('inventory-sku-input').value = '';
+        document.getElementById('inventory-stock').value = '';
+        document.getElementById('inventory-price').value = '';
+    });
+    
+    // Edit inventory buttons
+    document.querySelectorAll('.edit-inventory').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const sku = this.dataset.sku;
+            const product = inventoryData.find(p => p.sku === sku);
+            if (product) {
+                inventoryModalTitle.textContent = '<i class="bi bi-box-seam me-2"></i>Edit Product';
+                document.getElementById('inventory-sku').value = sku;
+                document.getElementById('inventory-name').value = product.name;
+                document.getElementById('inventory-sku-input').value = product.sku;
+                document.getElementById('inventory-stock').value = product.stock;
+                document.getElementById('inventory-price').value = product.price;
+                inventoryModal.show();
+            }
+        });
+    });
+    
+    // Delete inventory buttons
+    document.querySelectorAll('.delete-inventory').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const sku = this.dataset.sku;
+            if (confirm('Are you sure you want to delete this product?')) {
+                inventoryData = inventoryData.filter(p => p.sku !== sku);
+                updateInventoryTable();
+            }
+        });
+    });
+    
+    // Save inventory
+    document.getElementById('saveInventory').addEventListener('click', function() {
+        const sku = document.getElementById('inventory-sku').value;
+        const name = document.getElementById('inventory-name').value;
+        const skuInput = document.getElementById('inventory-sku-input').value;
+        const stock = parseInt(document.getElementById('inventory-stock').value);
+        const price = parseInt(document.getElementById('inventory-price').value);
+        
+        if (sku) {
+            // Edit existing
+            const index = inventoryData.findIndex(p => p.sku === sku);
+            if (index !== -1) {
+                inventoryData[index] = { name, sku: skuInput, stock, price };
+            }
+        } else {
+            // Add new
+            inventoryData.push({ name, sku: skuInput, stock, price });
+        }
+        
+        updateInventoryTable();
+        inventoryModal.hide();
+    });
+    
+    function updateInventoryTable() {
+        const tbody = document.getElementById('inventory-body');
+        tbody.innerHTML = inventoryData.map(item => {
+            let statusBadge = '';
+            if (item.stock === 0) statusBadge = '<span class="badge bg-danger">Out of Stock</span>';
+            else if (item.stock < 5) statusBadge = '<span class="badge bg-warning">Low Stock</span>';
+            else statusBadge = '<span class="badge bg-success">In Stock</span>';
+            
+            return `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.sku}</td>
+                    <td>${item.stock}</td>
+                    <td>KES ${item.price.toLocaleString()}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary edit-inventory" data-sku="${item.sku}"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-outline-danger delete-inventory" data-sku="${item.sku}"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+        
+        // Re-attach event listeners
+        document.querySelectorAll('.edit-inventory').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const sku = this.dataset.sku;
+                const product = inventoryData.find(p => p.sku === sku);
+                if (product) {
+                    inventoryModalTitle.textContent = '<i class="bi bi-box-seam me-2"></i>Edit Product';
+                    document.getElementById('inventory-sku').value = sku;
+                    document.getElementById('inventory-name').value = product.name;
+                    document.getElementById('inventory-sku-input').value = product.sku;
+                    document.getElementById('inventory-stock').value = product.stock;
+                    document.getElementById('inventory-price').value = product.price;
+                    inventoryModal.show();
+                }
+            });
+        });
+        
+        document.querySelectorAll('.delete-inventory').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const sku = this.dataset.sku;
+                if (confirm('Are you sure you want to delete this product?')) {
+                    inventoryData = inventoryData.filter(p => p.sku !== sku);
+                    updateInventoryTable();
+                }
+            });
+        });
+    }
+    
+    // Customer Management
+    let customersData = [
+        { name: 'John Kamau', email: 'john@email.com', phone: '0722-123456', orders: 5, spent: 125000 },
+        { name: 'Mary Wanjiku', email: 'mary@email.com', phone: '0733-987654', orders: 3, spent: 78000 },
+        { name: 'Peter Ochieng', email: 'peter@email.com', phone: '0711-456789', orders: 8, spent: 210000 },
+        { name: 'Grace Akinyi', email: 'grace@email.com', phone: '0744-321654', orders: 2, spent: 45000 }
+    ];
+    
+    // Reports Management
+    let ordersData = [
+        { date: 'Today, 10:30 AM', id: 'ORD-001', items: 3, total: 45000, payment: 'Paid' },
+        { date: 'Today, 09:15 AM', id: 'ORD-002', items: 2, total: 28000, payment: 'Paid' },
+        { date: 'Yesterday, 4:45 PM', id: 'ORD-003', items: 5, total: 78500, payment: 'Paid' },
+        { date: 'Yesterday, 2:20 PM', id: 'ORD-004', items: 1, total: 15000, payment: 'Pending' }
+    ];
+    
+    function updateReports() {
+        const today = new Date();
+        const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+        
+        let todaySales = 0;
+        let weekSales = 0;
+        let monthSales = 0;
+        
+        ordersData.forEach(order => {
+            const orderDate = new Date(order.date.replace('Today, ', '').replace('Yesterday, ', ''));
+            todaySales += order.total;
+            weekSales += order.total;
+            monthSales += order.total;
+        });
+        
+        document.getElementById('report-today-sales').textContent = 'KES ' + todaySales.toLocaleString();
+        document.getElementById('report-week-sales').textContent = 'KES ' + weekSales.toLocaleString();
+        document.getElementById('report-month-sales').textContent = 'KES ' + monthSales.toLocaleString();
+        document.getElementById('report-total-orders').textContent = ordersData.length;
+        
+        const tbody = document.getElementById('report-orders-body');
+        tbody.innerHTML = ordersData.map(order => `
+            <tr>
+                <td>${order.date}</td>
+                <td>#${order.id}</td>
+                <td>${order.items}</td>
+                <td>KES ${order.total.toLocaleString()}</td>
+                <td><span class="badge ${order.payment === 'Paid' ? 'bg-success' : 'bg-warning'}">${order.payment}</span></td>
+            </tr>
+        `).join('');
+    }
+    
+    // Initialize reports
+    updateReports();
+    
+    const customerModal = new bootstrap.Modal(document.getElementById('customerModal'));
+    const customerModalTitle = document.getElementById('customerModalTitle');
+    const customerForm = document.getElementById('customerForm');
+    
+    // Add customer button
+    document.querySelector('[data-bs-target="#customerModal"]').addEventListener('click', function() {
+        customerModalTitle.textContent = '<i class="bi bi-person me-2"></i>Add Customer';
+        document.getElementById('customer-email-hidden').value = '';
+        document.getElementById('customer-name').value = '';
+        document.getElementById('customer-email').value = '';
+        document.getElementById('customer-phone').value = '';
+    });
+    
+    // Edit customer buttons
+    document.querySelectorAll('.edit-customer').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const email = this.dataset.email;
+            const customer = customersData.find(c => c.email === email);
+            if (customer) {
+                customerModalTitle.textContent = '<i class="bi bi-person me-2"></i>Edit Customer';
+                document.getElementById('customer-email-hidden').value = email;
+                document.getElementById('customer-name').value = customer.name;
+                document.getElementById('customer-email').value = customer.email;
+                document.getElementById('customer-phone').value = customer.phone;
+                customerModal.show();
+            }
+        });
+    });
+    
+    // Delete customer buttons
+    document.querySelectorAll('.delete-customer').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const email = this.dataset.email;
+            if (confirm('Are you sure you want to delete this customer?')) {
+                customersData = customersData.filter(c => c.email !== email);
+                updateCustomersTable();
+            }
+        });
+    });
+    
+    // Save customer
+    document.getElementById('saveCustomer').addEventListener('click', function() {
+        const emailHidden = document.getElementById('customer-email-hidden').value;
+        const name = document.getElementById('customer-name').value;
+        const email = document.getElementById('customer-email').value;
+        const phone = document.getElementById('customer-phone').value;
+        
+        if (emailHidden) {
+            // Edit existing
+            const index = customersData.findIndex(c => c.email === emailHidden);
+            if (index !== -1) {
+                customersData[index] = { ...customersData[index], name, email, phone };
+            }
+        } else {
+            // Add new
+            customersData.push({ name, email, phone, orders: 0, spent: 0 });
+        }
+        
+        updateCustomersTable();
+        customerModal.hide();
+    });
+    
+    function updateCustomersTable() {
+        const tbody = document.getElementById('customers-body');
+        tbody.innerHTML = customersData.map(customer => `
+            <tr>
+                <td>${customer.name}</td>
+                <td>${customer.email}</td>
+                <td>${customer.phone}</td>
+                <td>${customer.orders}</td>
+                <td>KES ${customer.spent.toLocaleString()}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary edit-customer" data-email="${customer.email}"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger delete-customer" data-email="${customer.email}"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+        `).join('');
+        
+        // Re-attach event listeners
+        document.querySelectorAll('.edit-customer').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const email = this.dataset.email;
+                const customer = customersData.find(c => c.email === email);
+                if (customer) {
+                    customerModalTitle.textContent = '<i class="bi bi-person me-2"></i>Edit Customer';
+                    document.getElementById('customer-email-hidden').value = email;
+                    document.getElementById('customer-name').value = customer.name;
+                    document.getElementById('customer-email').value = customer.email;
+                    document.getElementById('customer-phone').value = customer.phone;
+                    customerModal.show();
+                }
+            });
+        });
+        
+        document.querySelectorAll('.delete-customer').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const email = this.dataset.email;
+                if (confirm('Are you sure you want to delete this customer?')) {
+                    customersData = customersData.filter(c => c.email !== email);
+                    updateCustomersTable();
+                }
+            });
+        });
+    }
+});
+</script>
+
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Featured Products</h2>
+            <p class="lead text-muted">Browse our top-selling POS hardware and software solutions</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card card-product shadow-sm h-100">
+                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px; overflow: hidden;">
+                        <img src="/media/products/posiflex-xt-5315-i3-pos-terminal.jpg" alt="POS Terminal Pro" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">Hardware</span>
+                        <h6 class="card-title">POS Terminal Pro</h6>
+                        <p class="card-text text-muted small flex-grow-1">15-inch touchscreen terminal with built-in printer and card reader.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <strong>KES 45,000</strong>
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: POS Terminal Pro. Price: KES 45,000. 15-inch touchscreen terminal with built-in printer and card reader." target="_blank" class="btn btn-sm btn-success">
+                                <i class="bi bi-chat-dots me-1"></i>Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-6 col-lg-3">
+                <div class="card card-product shadow-sm h-100">
+                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px; overflow: hidden;">
+                        <img src="/media/products/posiflex-aura-8800u-b-usb-thermal-printer.webp" alt="Thermal Receipt Printer" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">Hardware</span>
+                        <h6 class="card-title">Thermal Receipt Printer</h6>
+                        <p class="card-text text-muted small flex-grow-1">High-speed thermal printer for receipts and kitchen orders.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <strong>KES 12,500</strong>
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: Thermal Receipt Printer. Price: KES 12,500. High-speed thermal printer for receipts and kitchen orders." target="_blank" class="btn btn-sm btn-success">
+                                <i class="bi bi-chat-dots me-1"></i>Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-6 col-lg-3">
+                <div class="card card-product shadow-sm h-100">
+                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px; overflow: hidden;">
+                        <img src="/media/products/cloud-based-pos-software.png" alt="POS Software Premium" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">Software License</span>
+                        <h6 class="card-title">POS Software Premium</h6>
+                        <p class="card-text text-muted small flex-grow-1">Advanced POS with analytics, CRM, and multi-location support.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <strong>KES 25,000</strong>
+                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: POS Software Premium. Price: KES 25,000. Advanced POS with analytics, CRM, and multi-location support." target="_blank" class="btn btn-sm btn-success">
+                                <i class="bi bi-chat-dots me-1"></i>Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-primary btn-lg">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row text-center g-4">
+        <div class="col-md-4">
+            <div class="icon-box mx-auto mb-3"><i class="bi bi-hdd-stack"></i></div>
+            <h5>POS Hardware</h5>
+            <p class="text-muted">Terminals, receipt printers, barcode scanners, cash drawers, and card readers.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="icon-box mx-auto mb-3"><i class="bi bi-window"></i></div>
+            <h5>POS Software</h5>
+            <p class="text-muted">Inventory, sales, and reporting software licensed and configured for your business.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="icon-box mx-auto mb-3"><i class="bi bi-tools"></i></div>
+            <h5>Install &amp; Support</h5>
+            <p class="text-muted">On-site installation, staff training, and a client portal for support tickets.</p>
+        </div>
+    </div>
+</section>
+
+{% if featured_products %}
+<section class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0">Featured Products</h2>
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-sm btn-outline-primary">View all</a>
+    </div>
+    <div class="row g-4">
+        {% for product in featured_products %}
+        <div class="col-sm-6 col-lg-4">
+            <div class="card card-product shadow-sm">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                <div class="card-img-top d-flex align-items-center justify-content-center text-secondary">
+                    <i class="bi bi-image" style="font-size:2rem"></i>
+                </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">{{ product.get_product_type_display }}</span>
+                    <h6 class="card-title">{{ product.name }}</h6>
+                    <p class="card-text text-muted small flex-grow-1">{{ product.short_description|default:"" }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <strong>KES {{ product.price|floatformat:0 }}</strong>
+                        <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success">
+                            <i class="bi bi-chat-dots me-1"></i>Quote
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('productCarousel');
+    const prevBtn = document.getElementById('productCarouselPrev');
+    const nextBtn = document.getElementById('productCarouselNext');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const productCards = carousel.querySelectorAll('.product-card');
+    
+    let currentIndex = 0;
+    let currentFilter = 'all';
+    
+    function getCardsPerView() {
+        return window.innerWidth >= 992 ? 4 : (window.innerWidth >= 576 ? 2 : 1);
+    }
+    
+    function getVisibleCards() {
+        if (currentFilter === 'all') {
+            return Array.from(productCards);
+        }
+        return Array.from(productCards).filter(card => {
+            const category = card.dataset.category || 'all';
+            return category === currentFilter;
+        });
+    }
+    
+    function updateCarousel() {
+        const visibleCards = getVisibleCards();
+        const cardsPerView = getCardsPerView();
+        
+        // Hide all product cards first
+        productCards.forEach(card => {
+            card.style.display = 'none';
+        });
+        
+        // Show only the visible product cards based on pagination
+        visibleCards.forEach((card, index) => {
+            if (index >= currentIndex && index < currentIndex + cardsPerView) {
+                card.style.display = 'block';
+            }
+        });
+        
+        // Calculate pagination based only on product cards
+        const productCount = visibleCards.length;
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= productCount - cardsPerView;
+    }
+    
+    prevBtn.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            currentIndex -= getCardsPerView();
+            updateCarousel();
+        }
+    });
+    
+    nextBtn.addEventListener('click', function() {
+        const visibleCards = getVisibleCards();
+        if (currentIndex < visibleCards.length - getCardsPerView()) {
+            currentIndex += getCardsPerView();
+            updateCarousel();
+        }
+    });
+    
+    // Filter functionality
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active state
+            filterBtns.forEach(b => {
+                b.classList.remove('active', 'btn-primary');
+                b.classList.add('btn-outline-secondary');
+            });
+            this.classList.add('active', 'btn-primary');
+            this.classList.remove('btn-outline-secondary');
+            
+            // Update filter
+            currentFilter = this.dataset.filter;
+            currentIndex = 0;
+            updateCarousel();
+        });
+    });
+    
+    // Initialize carousel
+    updateCarousel();
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        currentIndex = 0;
+        updateCarousel();
+    });
+});
+</script>
+{% endblock %}

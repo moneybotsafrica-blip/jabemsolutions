@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}About Us — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <h1 class="mb-4">About {{ SITE_NAME }}</h1>
+    <div class="row">
+        <div class="col-lg-8">
+            <p class="lead">We supply, install, and support point-of-sale systems for retailers, restaurants,
+                and service businesses across Kenya.</p>
+            <p>Our team handles everything from hardware procurement — terminals, printers, scanners, and
+                cash drawers — to POS software licensing, configuration, and staff training. Once you're live,
+                our client portal keeps support and service requests organized in one place.</p>
+            <h5 class="mt-4">What we do</h5>
+            <ul>
+                <li>POS hardware sales and installation</li>
+                <li>POS software licensing, setup, and configuration</li>
+                <li>On-site maintenance and repairs</li>
+                <li>Staff training and onboarding</li>
+                <li>Ongoing technical support via our client portal</li>
+            </ul>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Get in touch</h6>
+                    <p class="small mb-1"><i class="bi bi-telephone me-1"></i>{{ COMPANY_PHONE }}</p>
+                    <p class="small mb-1"><i class="bi bi-envelope me-1"></i>{{ COMPANY_EMAIL }}</p>
+                    <p class="small mb-0"><i class="bi bi-geo-alt me-1"></i>{{ COMPANY_ADDRESS }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

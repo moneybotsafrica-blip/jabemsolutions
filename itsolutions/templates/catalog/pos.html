@@ -1,0 +1,1219 @@
+{% extends "base.html" %}
+
+{% block title %}POS System{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .pos-container {
+        padding: 10px !important;
+    }
+    .pos-header {
+        padding: 15px !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    .pos-header h2 {
+        font-size: 1.2rem !important;
+    }
+    .mode-indicator i {
+        font-size: 1.8rem !important;
+    }
+    .nav-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.2rem !important;
+    }
+    .pos-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    .current-order-card {
+        padding: 15px !important;
+    }
+    .current-order-card h6 {
+        font-size: 0.9rem !important;
+    }
+    .order-table {
+        font-size: 0.75rem !important;
+    }
+    .form-control, .form-select {
+        font-size: 0.8rem !important;
+        padding: 0.3rem 0.5rem !important;
+    }
+    .btn-sm {
+        font-size: 0.75rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+    .product-card {
+        padding: 15px !important;
+    }
+    .product-image {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    .product-info h4 {
+        font-size: 0.9rem !important;
+    }
+    .product-price {
+        font-size: 1rem !important;
+    }
+    .product-stock {
+        font-size: 0.75rem !important;
+    }
+    .product-description {
+        font-size: 0.7rem !important;
+        max-height: 2.6em !important;
+        -webkit-line-clamp: 2 !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .pos-container {
+        padding: 5px !important;
+    }
+    .pos-header {
+        padding: 10px !important;
+    }
+    .pos-header h2 {
+        font-size: 1rem !important;
+    }
+    .mode-indicator i {
+        font-size: 1.5rem !important;
+    }
+    .nav-btn {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 1rem !important;
+    }
+    .pos-grid {
+        gap: 10px !important;
+    }
+    .current-order-card {
+        padding: 10px !important;
+    }
+    .current-order-card h6 {
+        font-size: 0.85rem !important;
+    }
+    .order-table {
+        font-size: 0.7rem !important;
+    }
+    .form-control, .form-select {
+        font-size: 0.75rem !important;
+        padding: 0.25rem 0.4rem !important;
+    }
+    .btn-sm {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.4rem !important;
+    }
+    .product-card {
+        padding: 10px !important;
+    }
+    .product-image {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    .product-info h4 {
+        font-size: 0.85rem !important;
+    }
+    .product-price {
+        font-size: 0.9rem !important;
+    }
+    .product-stock {
+        font-size: 0.7rem !important;
+    }
+    .product-description {
+        font-size: 0.65rem !important;
+        max-height: 2.6em !important;
+        -webkit-line-clamp: 2 !important;
+    }
+    .row.g-2 {
+        gap: 0.5rem !important;
+    }
+}
+</style>
+<style>
+/* Force Current Order card to use venue theme colors */
+#currentOrderCard {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+    background-color: transparent !important;
+}
+
+/* Mode-specific backgrounds */
+.pos-container[data-mode="restaurant"] #currentOrderCard {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
+    background-color: transparent !important;
+}
+
+.pos-container[data-mode="club"] #currentOrderCard {
+    background: linear-gradient(135deg, #000000 0%, #dc3545 100%) !important;
+    background-color: transparent !important;
+}
+
+.pos-container[data-mode="supermarket"] #currentOrderCard {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+    background-color: transparent !important;
+}
+
+.pos-container[data-mode="coffeeshop"] #currentOrderCard {
+    background: linear-gradient(135deg, #d35400 0%, #e67e22 100%) !important;
+    background-color: transparent !important;
+}
+
+.pos-container[data-mode="cafe"] #currentOrderCard {
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
+    background-color: transparent !important;
+}
+
+/* Override Bootstrap dark classes */
+#currentOrderCard.bg-dark,
+#currentOrderCard[class*="bg-"],
+#currentOrderCard .bg-dark,
+#currentOrderCard .table-dark {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Force transparent backgrounds for children */
+#currentOrderCard table,
+#currentOrderCard .table,
+#currentOrderCard .form-control,
+#currentOrderCard .form-select {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="pos-container" id="posContainer" data-mode="{{ current_mode }}">
+    <!-- Mode Switcher Header -->
+    <div class="pos-header">
+        <div class="mode-indicator">
+            <i class="bi {{ current_mode_icon }}"></i>
+            <h2 id="currentModeName">{{ current_mode_name }}</h2>
+        </div>
+        <div class="mode-nav">
+            <button class="nav-btn" id="prevMode" title="Previous Mode (Left Arrow)">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="mode-dots" id="modeDots">
+                {% for mode in modes %}
+                <span class="mode-dot {% if mode.key == current_mode %}active{% endif %}" data-mode="{{ mode.key }}"></span>
+                {% endfor %}
+            </div>
+            <button class="nav-btn" id="nextMode" title="Next Mode (Right Arrow)">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="pos-categories">
+        {% for category in categories %}
+        <div class="category-card" data-category="{{ category.slug }}">
+            <i class="bi {{ category.icon }}"></i>
+            <span>{{ category.name }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="pos-main-content">
+        <!-- Products Grid -->
+        <div class="pos-products">
+            {% for product in products %}
+            <div class="product-card" data-product="{{ product.id }}">
+                <div class="product-image">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}" loading="lazy">
+                    {% else %}
+                    <div class="product-icon">
+                        <i class="bi {{ product.icon }}"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="product-info">
+                    <h4>{{ product.name }}</h4>
+                    <p class="product-description">{{ product.description|default:"" }}</p>
+                    <p class="product-price">KES {{ product.price }}</p>
+                    <p class="product-stock">Stock: {{ product.stock_quantity }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Current Order Card -->
+        <div class="current-order-card" id="currentOrderCard" style="background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important; background-color: transparent !important;" class="!bg-transparent">
+            <h6 class="mb-2"><i class="bi bi-cart3 me-2"></i>Current Order</h6>
+            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                <table class="table table-sm mb-0 order-table" style="background: transparent !important; color: white !important; border-color: rgba(255,255,255,0.2) !important;">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-end">Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="pos-cart-items"><tr><td colspan="4" class="text-center text-muted small">No items added</td></tr></tbody>
+                </table>
+            </div>
+            <hr class="my-2 order-divider">
+            <div class="d-flex justify-content-between mb-1">
+                <span class="small">Subtotal:</span>
+                <span class="small" id="pos-subtotal">KES 0</span>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+                <span class="small">Discount:</span>
+                <div class="d-flex gap-1">
+                    <select class="form-select form-select-sm discount-select" style="width: 80px;" id="pos-discount-type">
+                        <option value="fixed">KES</option>
+                        <option value="percent">%</option>
+                    </select>
+                    <input type="number" class="form-control form-control-sm discount-input" style="width: 70px;" id="pos-discount" value="0" min="0">
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+                <span class="small">Tax (16%):</span>
+                <span class="small" id="pos-tax">KES 0</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-bold">Total:</span>
+                <span class="fw-bold total-text" id="pos-total">KES 0</span>
+            </div>
+            <div class="mb-2">
+                <label class="form-label small mb-1">Order Notes:</label>
+                <textarea class="form-control form-control-sm order-input" id="pos-notes" rows="1" placeholder="Add notes..."></textarea>
+            </div>
+            <div class="mb-2">
+                <label class="form-label small mb-1">Customer:</label>
+                <select class="form-select form-select-sm order-select" id="pos-customer">
+                    <option value="">Walk-in Customer</option>
+                    <option value="1">John Kamau</option>
+                    <option value="2">Mary Wanjiku</option>
+                    <option value="3">Peter Ochieng</option>
+                    <option value="4">Grace Akinyi</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label small mb-1">Payment Method:</label>
+                <select class="form-select form-select-sm order-select" id="pos-payment">
+                    <option value="cash">Cash</option>
+                    <option value="card">Card</option>
+                    <option value="mpesa">M-Pesa</option>
+                    <option value="bank">Bank Transfer</option>
+                    <option value="split">Split Payment</option>
+                </select>
+            </div>
+            <div class="mb-2 d-none" id="split-payment-section">
+                <label class="form-label small mb-1">Split Payment:</label>
+                <div class="row g-1 mb-1">
+                    <div class="col-4">
+                        <input type="number" class="form-control form-control-sm split-input" data-method="Cash" placeholder="Cash">
+                    </div>
+                    <div class="col-4">
+                        <input type="number" class="form-control form-control-sm split-input" data-method="Card" placeholder="Card">
+                    </div>
+                    <div class="col-4">
+                        <input type="number" class="form-control form-control-sm split-input" data-method="M-Pesa" placeholder="M-Pesa">
+                    </div>
+                </div>
+                <small class="text-muted" id="split-remaining">Remaining: KES 0</small>
+            </div>
+            <div class="row g-2 mb-2">
+                <div class="col-3">
+                    <button class="btn btn-sm w-100 btn-hold" id="pos-hold" disabled="">
+                        <i class="bi bi-pause me-1"></i>Hold
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-sm w-100 btn-resume" id="pos-resume" disabled="">
+                        <i class="bi bi-play me-1"></i>Resume
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-sm w-100 btn-clear" id="pos-clear">
+                        <i class="bi bi-trash me-1"></i>Clear
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-sm w-100 btn-checkout" id="pos-checkout" disabled="">
+                        <i class="bi bi-printer me-1"></i>Pay
+                    </button>
+                </div>
+            </div>
+            <div class="mb-2">
+                <small class="text-muted">Held Orders:</small>
+                <div id="held-orders-list" class="d-flex flex-wrap gap-1 mt-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.pos-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%);
+    padding: 20px;
+    transition: background 0.5s ease;
+}
+
+.pos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 30px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.mode-indicator {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mode-indicator i {
+    font-size: 2.5rem;
+    color: var(--mode-primary, #667eea);
+}
+
+.mode-indicator h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.mode-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: var(--mode-primary, #667eea);
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mode-dots {
+    display: flex;
+    gap: 10px;
+}
+
+.mode-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mode-dot.active {
+    background: var(--mode-primary, #667eea);
+    transform: scale(1.3);
+}
+
+.pos-categories {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.category-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 120px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-card i {
+    font-size: 2rem;
+    color: var(--mode-primary, #667eea);
+    margin-bottom: 10px;
+}
+
+.category-card span {
+    font-weight: 600;
+    color: #333;
+}
+
+.pos-main-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 20px;
+}
+
+.pos-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.current-order-card {
+    background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important;
+    background-color: transparent !important;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+    color: white !important;
+}
+
+/* Override Bootstrap dark classes - Maximum specificity */
+div#currentOrderCard.current-order-card,
+div#currentOrderCard,
+#currentOrderCard.current-order-card,
+#currentOrderCard {
+    background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important;
+    background-color: transparent !important;
+    background-image: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important;
+}
+
+/* Force override any Bootstrap background utilities within order card */
+div#currentOrderCard .bg-dark,
+div#currentOrderCard [class*="bg-"],
+div#currentOrderCard .table-dark,
+div#currentOrderCard table[class*="table-dark"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Override all possible Bootstrap dark theme classes globally */
+div#currentOrderCard .bg-dark,
+div#currentOrderCard .table-dark,
+div#currentOrderCard .text-dark,
+div#currentOrderCard [class*="bg-"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Specific override for table elements */
+div#currentOrderCard table,
+div#currentOrderCard .table {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+div#currentOrderCard table th,
+div#currentOrderCard table td {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+.current-order-card .table-dark,
+.current-order-card table[class*="table-dark"] {
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.current-order-card .table-dark th,
+.current-order-card .table-dark td,
+.current-order-card table[class*="table-dark"] th,
+.current-order-card table[class*="table-dark"] td {
+    background-color: transparent !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.current-order-card .form-control,
+.current-order-card .form-select,
+.current-order-card input,
+.current-order-card select,
+.current-order-card textarea {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.current-order-card .form-control:focus,
+.current-order-card .form-select:focus,
+.current-order-card input:focus,
+.current-order-card select:focus,
+.current-order-card textarea:focus {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.current-order-card h6 {
+    color: white;
+    font-weight: 600;
+}
+
+.order-table {
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    background-color: transparent !important;
+}
+
+.order-table.table-dark {
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.order-table.table-dark th,
+.order-table.table-dark td {
+    background-color: transparent !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.order-table thead th {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.order-table tbody tr {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.order-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.order-divider {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.discount-select,
+.discount-input,
+.order-input,
+.order-select,
+.split-input {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.discount-select:focus,
+.discount-input:focus,
+.order-input:focus,
+.order-select:focus,
+.split-input:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.discount-select option,
+.order-select option {
+    background: var(--mode-primary, #667eea);
+    color: white;
+}
+
+.total-text {
+    color: #4ade80 !important;
+}
+
+.btn-hold,
+.btn-resume,
+.btn-clear {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.btn-hold:hover,
+.btn-resume:hover,
+.btn-clear:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+}
+
+.btn-checkout {
+    background: #4ade80;
+    border-color: #4ade80;
+    color: #000;
+}
+
+.btn-checkout:hover {
+    background: #22c55e;
+    border-color: #22c55e;
+    color: #000;
+}
+
+.btn-checkout:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.order-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.order-header h3 i {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.order-id {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.order-items {
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.empty-order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #999;
+}
+
+.empty-order i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.empty-order p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.order-summary {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.summary-row:last-child {
+    margin-bottom: 0;
+}
+
+.summary-row.total {
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    padding-top: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.summary-row.total span:last-child {
+    color: white;
+}
+
+.order-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-clear,
+.btn-checkout {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-clear {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-clear:hover {
+    background: #d0d0d0;
+}
+
+.btn-checkout {
+    background: var(--mode-primary, #667eea);
+    color: white;
+}
+
+.btn-checkout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: var(--mode-primary, #667eea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background: var(--mode-primary, #667eea);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-icon i {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.product-info h4 {
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+    color: #333;
+    text-align: center;
+}
+
+.product-price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--mode-primary, #667eea);
+    text-align: center;
+    margin: 5px 0;
+}
+
+.product-stock {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin: 5px 0 0;
+}
+
+.product-description {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+    margin: 5px 0;
+    line-height: 1.3;
+    max-height: 3.9em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Mode-specific themes */
+.pos-container[data-mode="restaurant"] {
+    --mode-primary: #ff6b35;
+    --mode-secondary: #f7931e;
+}
+
+.pos-container[data-mode="club"] {
+    --mode-primary: #000000;
+    --mode-secondary: #dc3545;
+}
+
+.pos-container[data-mode="supermarket"] {
+    --mode-primary: #007bff;
+    --mode-secondary: #0056b3;
+}
+
+.pos-container[data-mode="coffeeshop"] {
+    --mode-primary: #d35400;
+    --mode-secondary: #e67e22;
+}
+
+.pos-container[data-mode="cafe"] {
+    --mode-primary: #8B4513;
+    --mode-secondary: #A0522D;
+}
+</style>
+
+<script>
+const modes = [
+    { key: 'restaurant', name: 'Restaurant', icon: 'bi-utensils' },
+    { key: 'club', name: 'Club', icon: 'bi-music-note' },
+    { key: 'supermarket', name: 'Supermarket', icon: 'bi-cart' },
+    { key: 'coffeeshop', name: 'Coffee Shop', icon: 'bi-cup-hot' },
+    { key: 'cafe', name: 'Cafe', icon: 'bi-cup-straw' }
+];
+
+let currentModeIndex = modes.findIndex(m => m.key === '{{ current_mode }}');
+if (currentModeIndex === -1) currentModeIndex = 0;
+
+function updateMode() {
+    const mode = modes[currentModeIndex];
+    const container = document.getElementById('posContainer');
+    const modeName = document.getElementById('currentModeName');
+    const modeIndicator = document.querySelector('.mode-indicator i');
+    const dots = document.querySelectorAll('.mode-dot');
+    const orderCard = document.getElementById('currentOrderCard');
+    
+    // Get mode colors
+    let primaryColor, secondaryColor;
+    switch(mode.key) {
+        case 'restaurant':
+            primaryColor = '#ff6b35';
+            secondaryColor = '#f7931e';
+            break;
+        case 'club':
+            primaryColor = '#000000';
+            secondaryColor = '#dc3545';
+            break;
+        case 'supermarket':
+            primaryColor = '#007bff';
+            secondaryColor = '#0056b3';
+            break;
+        case 'coffeeshop':
+            primaryColor = '#d35400';
+            secondaryColor = '#e67e22';
+            break;
+        case 'cafe':
+            primaryColor = '#8B4513';
+            secondaryColor = '#A0522D';
+            break;
+        default:
+            primaryColor = '#667eea';
+            secondaryColor = '#764ba2';
+    }
+    
+    container.setAttribute('data-mode', mode.key);
+    modeName.textContent = mode.name;
+    modeIndicator.className = `bi ${mode.icon}`;
+    
+    // Force update order card background with inline style
+    if (orderCard) {
+        orderCard.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+        orderCard.style.backgroundColor = 'transparent';
+        orderCard.style.setProperty('--mode-primary', primaryColor);
+        orderCard.style.setProperty('--mode-secondary', secondaryColor);
+        
+        // Remove any dark classes
+        orderCard.classList.remove('bg-dark', 'text-dark');
+        
+        // Force override on all children
+        const allChildren = orderCard.querySelectorAll('*');
+        allChildren.forEach(child => {
+            if (child.classList.contains('bg-dark') || child.classList.contains('table-dark')) {
+                child.classList.remove('bg-dark', 'table-dark');
+                child.style.backgroundColor = 'transparent';
+            }
+        });
+    }
+    
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentModeIndex);
+    });
+    
+    // Update URL without page reload
+    const newUrl = `${window.location.pathname}?mode=${mode.key}`;
+    window.history.pushState({ mode: mode.key }, '', newUrl);
+    
+    // Reload page to get new products
+    window.location.href = newUrl;
+}
+
+function nextMode() {
+    currentModeIndex = (currentModeIndex + 1) % modes.length;
+    updateMode();
+}
+
+function prevMode() {
+    currentModeIndex = (currentModeIndex - 1 + modes.length) % modes.length;
+    updateMode();
+}
+
+// Button click handlers
+document.getElementById('nextMode').addEventListener('click', nextMode);
+document.getElementById('prevMode').addEventListener('click', prevMode);
+
+// Dot click handlers
+document.querySelectorAll('.mode-dot').forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        currentModeIndex = index;
+        updateMode();
+    });
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextMode();
+    } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevMode();
+    }
+});
+
+// Initialize
+updateMode();
+
+// Force initial background set
+document.addEventListener('DOMContentLoaded', function() {
+    const orderCard = document.getElementById('currentOrderCard');
+    if (orderCard) {
+        // Remove any Bootstrap dark classes
+        orderCard.classList.remove('bg-dark', 'text-white', 'table-dark');
+        
+        const container = document.getElementById('posContainer');
+        const currentMode = container.getAttribute('data-mode') || 'restaurant';
+        
+        let primaryColor, secondaryColor;
+        switch(currentMode) {
+            case 'restaurant':
+                primaryColor = '#ff6b35';
+                secondaryColor = '#f7931e';
+                break;
+            case 'club':
+                primaryColor = '#000000';
+                secondaryColor = '#dc3545';
+                break;
+            case 'supermarket':
+                primaryColor = '#007bff';
+                secondaryColor = '#0056b3';
+                break;
+            case 'coffeeshop':
+                primaryColor = '#d35400';
+                secondaryColor = '#e67e22';
+                break;
+            case 'cafe':
+                primaryColor = '#8B4513';
+                secondaryColor = '#A0522D';
+                break;
+            default:
+                primaryColor = '#667eea';
+                secondaryColor = '#764ba2';
+        }
+        
+        // Force inline style with maximum priority
+        orderCard.style.cssText = `background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; background-color: transparent !important; --mode-primary: ${primaryColor} !important; --mode-secondary: ${secondaryColor} !important;`;
+        
+        // Remove any dark classes from children
+        const darkElements = orderCard.querySelectorAll('.bg-dark, .table-dark, [class*="bg-dark"]');
+        darkElements.forEach(el => {
+            el.classList.remove('bg-dark', 'table-dark');
+            el.style.setProperty('background-color', 'transparent', 'important');
+        });
+        
+        // Use MutationObserver to prevent Bootstrap from re-adding dark classes
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    if (orderCard.classList.contains('bg-dark') || orderCard.classList.contains('table-dark')) {
+                        orderCard.classList.remove('bg-dark', 'table-dark');
+                        orderCard.style.cssText = `background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; background-color: transparent !important; --mode-primary: ${primaryColor} !important; --mode-secondary: ${secondaryColor} !important;`;
+                    }
+                }
+            });
+        });
+        
+        observer.observe(orderCard, { attributes: true });
+        
+        // Periodically check and fix
+        setInterval(function() {
+            if (orderCard.classList.contains('bg-dark') || orderCard.classList.contains('table-dark')) {
+                orderCard.classList.remove('bg-dark', 'table-dark');
+                orderCard.style.cssText = `background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; background-color: transparent !important; --mode-primary: ${primaryColor} !important; --mode-secondary: ${secondaryColor} !important;`;
+            }
+        }, 100);
+    }
+});
+
+// Receipt printing function with QR code
+function printReceipt() {
+    const orderItems = document.getElementById('pos-cart-items');
+    const subtotal = document.getElementById('pos-subtotal').textContent;
+    const tax = document.getElementById('pos-tax').textContent;
+    const total = document.getElementById('pos-total').textContent;
+    const customer = document.getElementById('pos-customer');
+    const payment = document.getElementById('pos-payment');
+    const notes = document.getElementById('pos-notes').value;
+    
+    const customerName = customer.options[customer.selectedIndex].text;
+    const paymentMethod = payment.options[payment.selectedIndex].text;
+    
+    // Generate QR code
+    const qrData = `Order: ${new Date().toISOString()}\nTotal: ${total}\nCustomer: ${customerName}\nPayment: ${paymentMethod}`;
+    
+    // Create receipt HTML
+    const receiptWindow = window.open('', '_blank');
+    receiptWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Receipt</title>
+            <style>
+                body {
+                    font-family: 'Courier New', monospace;
+                    max-width: 300px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    text-align: center;
+                }
+                .qr-code {
+                    margin: 20px auto;
+                    display: flex;
+                    justify-content: center;
+                }
+                .header {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+                .divider {
+                    border-top: 1px dashed #000;
+                    margin: 10px 0;
+                }
+                .item {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 5px 0;
+                }
+                .total {
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+                .footer {
+                    margin-top: 20px;
+                    font-size: 12px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">Jabem Solutions Ltd</div>
+            <div class="header" style="font-size: 14px;">POS Receipt</div>
+            <div class="divider"></div>
+            <div style="text-align: left; margin: 10px 0;">
+                <div>Date: ${new Date().toLocaleString()}</div>
+                <div>Customer: ${customerName}</div>
+                <div>Payment: ${paymentMethod}</div>
+            </div>
+            <div class="divider"></div>
+            <div id="qr-code" class="qr-code"></div>
+            <div class="divider"></div>
+            <div style="text-align: left;">
+                ${Array.from(orderItems.querySelectorAll('tr')).map(row => {
+                    if (row.querySelector('td[colspan]')) return '';
+                    const cells = row.querySelectorAll('td');
+                    return `<div class="item"><span>${cells[0].textContent}</span><span>${cells[2].textContent}</span></div>`;
+                }).join('')}
+            </div>
+            <div class="divider"></div>
+            <div style="text-align: left;">
+                <div class="item"><span>Subtotal:</span><span>${subtotal}</span></div>
+                <div class="item"><span>Tax (16%):</span><span>${tax}</span></div>
+                <div class="item total"><span>TOTAL:</span><span>${total}</span></div>
+            </div>
+            ${notes ? `<div class="divider"></div><div style="text-align: left; font-size: 12px;">Notes: ${notes}</div>` : ''}
+            <div class="footer">
+                <div>Thank you for your business!</div>
+                <div>Contact: +254 736 794594</div>
+            </div>
+        </body>
+        </html>
+    `);
+    
+    receiptWindow.document.close();
+    
+    // Generate QR code after the DOM is ready
+    setTimeout(() => {
+        const qrContainer = receiptWindow.document.getElementById('qr-code');
+        QRCode.toCanvas(qrData, { width: 100 }, function(error, canvas) {
+            if (error) {
+                console.error(error);
+                return;
+            }
+            qrContainer.appendChild(canvas);
+        });
+    }, 100);
+}
+
+// Add checkout button handler
+document.getElementById('pos-checkout').addEventListener('click', function() {
+    if (!this.disabled) {
+        printReceipt();
+    }
+});
+</script>
+{% endblock %}

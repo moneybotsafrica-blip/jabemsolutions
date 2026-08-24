@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}New Support Ticket — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <h1 class="h3 mb-4">New Support Ticket</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" name="subject" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Related product (optional)</label>
+                    <select name="product" class="form-select">
+                        <option value="">— None —</option>
+                        {% for p in form.fields.product.queryset %}
+                        <option value="{{ p.pk }}">{{ p.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Priority</label>
+                    <select name="priority" class="form-select">
+                        {% for value, label in form.fields.priority.choices %}
+                        <option value="{{ value }}" {% if value == "medium" %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" rows="5" class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Ticket</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

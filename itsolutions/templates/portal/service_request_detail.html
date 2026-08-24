@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Service Request #{{ service_request.pk }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <a href="{% url 'portal:service_request_list' %}" class="text-decoration-none small"><i class="bi bi-arrow-left"></i> Back to service requests</a>
+
+    <div class="d-flex justify-content-between align-items-start mt-3 mb-4">
+        <div>
+            <h1 class="h3 mb-1">#{{ service_request.pk }} — {{ service_request.subject }}</h1>
+            <p class="text-muted mb-0">
+                {{ service_request.get_service_type_display }} &middot;
+                Requested {{ service_request.created_at|date:"d M Y" }} by {{ service_request.client }}
+                {% if service_request.product %} &middot; Product: {{ service_request.product.name }}{% endif %}
+            </p>
+            {% if service_request.preferred_date %}
+            <p class="text-muted mb-0">Preferred date: {{ service_request.preferred_date|date:"d M Y" }}</p>
+            {% endif %}
+            {% if service_request.location %}
+            <p class="text-muted mb-0">Location: {{ service_request.location }}</p>
+            {% endif %}
+        </div>
+        <div class="text-end">
+            <span class="badge bg-info text-dark status-badge mb-1">{{ service_request.get_status_display }}</span><br>
+            <span class="badge bg-secondary status-badge">{{ service_request.get_priority_display }} priority</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <p class="mb-0">{{ service_request.description|linebreaks }}</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

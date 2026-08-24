@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Contact — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="mb-4">Contact Us</h1>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    {{ form.name.errors }}
+                    <input type="text" name="name" class="form-control" value="{{ form.name.value|default:'' }}" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" value="{{ form.email.value|default:'' }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Phone (optional)</label>
+                        <input type="text" name="phone" class="form-control" value="{{ form.phone.value|default:'' }}">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" name="subject" class="form-control" value="{{ form.subject.value|default:'' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea name="message" rows="5" class="form-control" required>{{ form.message.value|default:'' }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <div class="card bg-light border-0 mt-4 mt-lg-0">
+                <div class="card-body">
+                    <h5>Reach us directly</h5>
+                    <p class="mb-1"><i class="bi bi-telephone me-2"></i>{{ COMPANY_PHONE }}</p>
+                    <p class="mb-1"><i class="bi bi-envelope me-2"></i>{{ COMPANY_EMAIL }}</p>
+                    <p class="mb-0"><i class="bi bi-geo-alt me-2"></i>{{ COMPANY_ADDRESS }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

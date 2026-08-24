@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}New Service Request — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <h1 class="h3 mb-4">New Service Request</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Service type</label>
+                    <select name="service_type" class="form-select">
+                        {% for value, label in form.fields.service_type.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" name="subject" class="form-control" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Preferred date (optional)</label>
+                        <input type="date" name="preferred_date" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Location</label>
+                        <input type="text" name="location" class="form-control" placeholder="Site address">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Related product (optional)</label>
+                    <select name="product" class="form-select">
+                        <option value="">— None —</option>
+                        {% for p in form.fields.product.queryset %}
+                        <option value="{{ p.pk }}">{{ p.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Priority</label>
+                    <select name="priority" class="form-select">
+                        {% for value, label in form.fields.priority.choices %}
+                        <option value="{{ value }}" {% if value == "medium" %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" rows="5" class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Request</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

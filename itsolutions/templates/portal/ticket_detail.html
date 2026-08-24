@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Ticket #{{ ticket.pk }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <a href="{% url 'portal:ticket_list' %}" class="text-decoration-none small"><i class="bi bi-arrow-left"></i> Back to tickets</a>
+
+    <div class="d-flex justify-content-between align-items-start mt-3 mb-4">
+        <div>
+            <h1 class="h3 mb-1">#{{ ticket.pk }} — {{ ticket.subject }}</h1>
+            <p class="text-muted mb-0">
+                Opened {{ ticket.created_at|date:"d M Y, H:i" }} by {{ ticket.client }}
+                {% if ticket.product %} &middot; Product: {{ ticket.product.name }}{% endif %}
+            </p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-primary status-badge mb-1">{{ ticket.get_status_display }}</span><br>
+            <span class="badge bg-secondary status-badge">{{ ticket.get_priority_display }} priority</span>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <p class="mb-0">{{ ticket.description|linebreaks }}</p>
+        </div>
+    </div>
+
+    <h5>Conversation</h5>
+    <div class="list-group mb-4">
+        {% for comment in comments %}
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+                <strong>{{ comment.author }}</strong>
+                <small class="text-muted">{{ comment.created_at|date:"d M Y, H:i" }}</small>
+            </div>
+            <p class="mb-0 mt-1">{{ comment.message|linebreaks }}</p>
+        </div>
+        {% empty %}
+        <div class="list-group-item text-muted">No replies yet.</div>
+        {% endfor %}
+    </div>
+
+    <form method="post" action="{% url 'portal:ticket_comment' ticket.pk %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <textarea name="message" rows="3" class="form-control" placeholder="Add a reply..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post Reply</button>
+    </form>
+</section>
+{% endblock %}
