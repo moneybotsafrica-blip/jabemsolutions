@@ -14,6 +14,10 @@
       "dest": "/static/$1"
     },
     {
+      "src": "/static/media/(.*)",
+      "dest": "/static/media/$1"
+    },
+    {
       "src": "/media/(.*)",
       "dest": "/static/media/$1"
     },
@@ -23,7 +27,11 @@
     }
   ],
   "env": {
-    "DJANGO_SETTINGS_MODULE": "config.settings"
+    "DJANGO_SETTINGS_MODULE": "config.settings",
+    "DATABASE_URL": "postgres://postgres.zutlyfpyvssnyostcloa:CwN21WTg2sKasewQ@aws-0-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require",
+    "DJANGO_SECRET_KEY": ")k!rzha*ix3ga^*new#5t7=qpy!h+680p)kn3x6atxemokw$aa",
+    "DJANGO_DEBUG": "False",
+    "DJANGO_ALLOWED_HOSTS": "jabemsolutions.vercel.app,jabemsolutions-9m6egd5ej-moneybotsafrica-blip.vercel.app"
   },
   "installCommand": "pip install -r requirements.txt",
   "buildCommand": "python build.py"

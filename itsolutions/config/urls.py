@@ -14,6 +14,8 @@ urlpatterns = [
 # Serve media files in development and on Vercel
 if settings.DEBUG or os.environ.get("VERCEL"):
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Also serve media files from /media/ for backward compatibility
+    urlpatterns += static("/media/", document_root=settings.MEDIA_ROOT)
 
 # Serve static files in development
 if settings.DEBUG:

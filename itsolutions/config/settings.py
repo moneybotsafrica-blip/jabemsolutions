@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-insecure-change-me-in-prod
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
 # Get allowed hosts from environment or default to localhost and Vercel domains
-allowed_hosts_env = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,jabemsolutions.vercel.app")
+allowed_hosts_env = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,jabemsolutions.vercel.app,jabemsolutions-9m6egd5ej-moneybotsafrica-blip.vercel.app")
 ALLOWED_HOSTS = allowed_hosts_env.split(",")
 
 # For Vercel deployment, add dynamic Vercel domains
