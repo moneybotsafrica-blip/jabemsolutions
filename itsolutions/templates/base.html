@@ -25,52 +25,6 @@
     .navbar-dark .dropdown-item {
         font-size: 0.75rem !important;
     }
-    
-    /* Mobile responsiveness */
-    @media (max-width: 768px) {
-        .navbar-brand {
-            font-size: 0.9rem !important;
-        }
-        .nav-link {
-            font-size: 0.8rem !important;
-            padding: 0.5rem 0.75rem !important;
-        }
-        .dropdown-item {
-            font-size: 0.75rem !important;
-        }
-        .navbar-dark .nav-link {
-            font-size: 0.75rem !important;
-        }
-        .navbar-dark .dropdown-item {
-            font-size: 0.7rem !important;
-        }
-        .top-bar {
-            font-size: 0.7rem !important;
-            padding: 0.5rem 0 !important;
-        }
-    }
-    
-    @media (max-width: 576px) {
-        .navbar-brand {
-            font-size: 0.8rem !important;
-        }
-        .nav-link {
-            font-size: 0.75rem !important;
-        }
-        .dropdown-item {
-            font-size: 0.7rem !important;
-        }
-        .navbar-dark .nav-link {
-            font-size: 0.7rem !important;
-        }
-        .navbar-dark .dropdown-item {
-            font-size: 0.65rem !important;
-        }
-        .top-bar {
-            font-size: 0.65rem !important;
-            padding: 0.3rem 0 !important;
-        }
-    }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -119,7 +73,7 @@
                 </li>
             </ul>
             <form class="d-flex me-3" action="{% url 'catalog:product_list' %}" method="get">
-                <div class="input-group" style="width: 350px;">
+                <div class="input-group" style="width: 100%; max-width: 350px; min-width: 200px;">
                     <input type="text" class="form-control form-control-sm" name="q" placeholder="Search products..." aria-label="Search">
                     <button class="btn btn-outline-dark btn-sm" type="submit">
                         <i class="bi bi-search"></i>

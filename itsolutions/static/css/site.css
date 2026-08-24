@@ -17,6 +17,9 @@ body {
     background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-mid) 60%, var(--brand-primary) 130%);
     color: #fff;
     padding: 5rem 0;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
 }
 
 .hero .lead {
@@ -298,6 +301,7 @@ footer.bg-white {
     /* Hero section */
     .hero {
         padding: 2rem 0 !important;
+        min-height: auto !important;
     }
     
     .hero h1 {
@@ -319,6 +323,15 @@ footer.bg-white {
     
     .hero .stat-item p {
         font-size: 0.75rem !important;
+    }
+    
+    .hero .row {
+        flex-direction: column;
+    }
+    
+    .hero .col-lg-8 {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
     
     /* Cards */
@@ -393,6 +406,14 @@ footer.bg-white {
     
     footer .small {
         font-size: 0.75rem !important;
+    }
+    
+    footer .col-md-3 {
+        margin-bottom: 1.5rem;
+    }
+    
+    footer .row {
+        justify-content: center;
     }
     
     /* WhatsApp float */
@@ -675,6 +696,22 @@ footer.bg-white {
     .navbar-brand img {
         height: 50px;
     }
+    
+    /* Tablet hero background */
+    .hero {
+        background-size: 20% !important;
+    }
+    
+    /* Tablet card grid */
+    .col-lg-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    /* Tablet navigation */
+    .navbar .input-group {
+        max-width: 250px;
+    }
 }
 
 /* Large desktop optimizations */
@@ -684,11 +721,92 @@ footer.bg-white {
     }
 }
 
+/* Mobile landscape adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding: 1rem 0 !important;
+        min-height: auto !important;
+    }
+    
+    .hero h1 {
+        font-size: 1.2rem !important;
+    }
+    
+    .py-5 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+}
+
+/* Small mobile devices (< 360px) */
+@media (max-width: 360px) {
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    .hero h1 {
+        font-size: 1rem !important;
+    }
+    
+    .navbar-brand {
+        font-size: 0.75rem !important;
+    }
+    
+    .navbar-brand img {
+        height: 30px !important;
+    }
+    
+    .card-product h6 {
+        font-size: 0.8rem !important;
+    }
+    
+    .btn {
+        font-size: 0.75rem !important;
+        padding: 0.35rem 0.7rem !important;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .card-img-top {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Mobile scroll behavior */
+@media (max-width: 768px) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Prevent horizontal scroll */
+    body {
+        overflow-x: hidden;
+    }
+    
+    /* Better touch scrolling */
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Mobile input focus */
+    input:focus, select:focus, textarea:focus {
+        font-size: 16px !important; /* Prevent iOS zoom */
+    }
+}
+
 /* Touch-friendly targets for mobile */
 @media (max-width: 768px) {
     .btn, .navbar-brand, .nav-link, .dropdown-item {
         min-height: 44px;
         min-width: 44px;
+        display: flex;
+        align-items: center;
     }
     
     .form-control, .form-select {
@@ -699,6 +817,27 @@ footer.bg-white {
         min-width: 48px;
         min-height: 48px;
     }
+    
+    /* Improve navbar toggler */
+    .navbar-toggler {
+        padding: 0.5rem;
+        border: none;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+    
+    /* Better mobile dropdown interaction */
+    .dropdown-toggle::after {
+        margin-left: auto;
+    }
+    
+    /* Improve category nav mobile */
+    .category-nav .navbar-toggler {
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 4px;
+    }
 }
 
 /* Improved mobile navigation */
@@ -708,6 +847,7 @@ footer.bg-white {
         padding: 1rem;
         border-radius: 0 0 8px 8px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        margin-top: 0.5rem;
     }
     
     .navbar-nav {
@@ -724,14 +864,36 @@ footer.bg-white {
         box-shadow: none;
         border: none;
         padding-left: 1rem;
+        background-color: transparent;
     }
     
     .category-nav .navbar-collapse {
         background-color: #4a148c;
+        border-radius: 8px;
     }
     
     .category-nav .nav-link {
         color: white !important;
+    }
+    
+    /* Mobile search bar improvement */
+    .navbar .d-flex {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    .navbar .input-group {
+        width: 100%;
+    }
+    
+    /* Mobile cart button */
+    .navbar .bi-cart {
+        font-size: 1.5rem;
+    }
+    
+    /* Mobile login button */
+    .navbar .bi-person-circle {
+        font-size: 1.5rem;
     }
 }
 
@@ -739,6 +901,64 @@ footer.bg-white {
 @media (max-width: 576px) {
     .row > .col-6 {
         padding: 0.25rem;
+    }
+    
+    /* Better mobile spacing */
+    .py-5 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+    
+    .py-4 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Mobile hero adjustments */
+    .hero h1 {
+        font-size: 1.1rem !important;
+        line-height: 1.3;
+    }
+    
+    .hero p {
+        font-size: 0.85rem !important;
+    }
+    
+    .hero .btn {
+        display: block;
+        width: 100%;
+        margin: 0.25rem 0 !important;
+    }
+    
+    /* Mobile advert carousel */
+    .carousel-item .card {
+        min-height: 250px !important;
+    }
+    
+    .carousel-item h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    .carousel-item p {
+        font-size: 0.8rem !important;
+    }
+    
+    /* Mobile filter section */
+    .card.shadow-sm {
+        margin-bottom: 1rem;
+    }
+    
+    /* Mobile product grid */
+    .col-sm-6 {
+        padding: 0.5rem;
     }
 }
 
@@ -770,6 +990,29 @@ footer.bg-white {
     .card-img-top {
         object-fit: cover;
     }
+    
+    /* Hero background image mobile optimization */
+    .hero {
+        background-size: 15% !important;
+        background-position: right top !important;
+    }
+    
+    /* Product card images */
+    .card-product .card-img-top {
+        height: 140px !important;
+        padding: 0.5rem !important;
+    }
+    
+    /* Advert carousel images */
+    .carousel-item img {
+        height: 150px !important;
+        object-fit: cover;
+    }
+    
+    /* Logo mobile optimization */
+    .navbar-brand img {
+        height: 35px !important;
+    }
 }
 
 /* Responsive button widths */
@@ -782,5 +1025,117 @@ footer.bg-white {
 @media (max-width: 767px) {
     .w-md-auto {
         width: 100% !important;
+    }
+    
+    /* Mobile form layout */
+    .row.g-2 > .col-md-4,
+    .row.g-2 > .col-md-3,
+    .row.g-2 > .col-md-2 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Mobile product list form */
+    .form-row {
+        flex-direction: column;
+    }
+    
+    /* Mobile pagination */
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .page-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Mobile alerts */
+    .alert {
+        border-radius: 8px;
+    }
+    
+    /* Mobile icons */
+    .bi {
+        vertical-align: middle;
+    }
+    
+    /* Mobile spacing adjustments */
+    .mt-3 {
+        margin-top: 1rem !important;
+    }
+    
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+    
+    .mb-2 {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .gap-2 {
+        gap: 0.5rem !important;
+    }
+    
+    .gap-4 {
+        gap: 1rem !important;
+    }
+    
+    /* Mobile text adjustments */
+    .lead {
+        font-size: 0.9rem !important;
+    }
+    
+    .small {
+        font-size: 0.75rem !important;
+    }
+    
+    /* Mobile container optimization */
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Mobile card grid spacing */
+    .g-4 > .col {
+        padding: 0.5rem;
+    }
+    
+    /* Mobile filter sidebar */
+    .col-lg-3 {
+        order: -1;
+        margin-bottom: 1rem;
+    }
+    
+    .col-lg-9 {
+        order: 1;
+    }
+    
+    /* Mobile product list layout */
+    .row.g-4 {
+        flex-direction: column;
+    }
+    
+    /* Mobile advert carousel */
+    .carousel {
+        margin-bottom: 1rem;
+    }
+    
+    /* Mobile filter buttons */
+    .filter-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Mobile price inputs */
+    .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 0.5rem !important;
+    }
+    
+    .d-flex.gap-2 > * {
+        width: 100%;
     }
 }
