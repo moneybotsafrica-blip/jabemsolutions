@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.urls import reverse
 from .models import (
     Category, Brand, Product, Stock, StockMovement, Cart, CartItem, Order, OrderItem,
     POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem
@@ -29,7 +30,7 @@ class StockInline(admin.StackedInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        "name", "sku", "category", "brand", "product_type",
+        "image_preview", "name", "sku", "category", "brand", "product_type",
         "price", "stock_badge", "stock_status", "is_active",
     )
     list_filter = ("product_type", "category", "brand", "is_active", "track_inventory")
@@ -37,6 +38,33 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     inlines = [StockInline]
     actions = ['bulk_enable_tracking', 'bulk_disable_tracking', 'bulk_set_reorder_level']
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('name', 'slug', 'sku', 'category', 'brand', 'product_type')
+        }),
+        ('Pricing & Description', {
+            'fields': ('price', 'short_description', 'description')
+        }),
+        ('Images', {
+            'fields': ('image', 'external_image_url'),
+            'description': 'Use external_image_url for Vercel deployment or external hosting'
+        }),
+        ('Inventory Settings', {
+            'fields': ('is_active', 'track_inventory', 'reorder_level')
+        }),
+        ('Metadata', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    readonly_fields = ('created_at', 'updated_at')
+    
+    def image_preview(self, obj):
+        if obj.get_image_url():
+            return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />', obj.get_image_url())
+        return format_html('<span style="color: #999;">No image</span>')
+    image_preview.short_description = "Image"
 
     def stock_badge(self, obj):
         if not obj.track_inventory:
