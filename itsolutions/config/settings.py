@@ -10,7 +10,26 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-insecure-change-me-in-prod
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*.vercel.app,localhost,127.0.0.1").split(",")
+# Get allowed hosts from environment or default to localhost and Vercel domains
+allowed_hosts_env = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,jabemsolutions.vercel.app")
+ALLOWED_HOSTS = allowed_hosts_env.split(",")
+
+# For Vercel deployment, add dynamic Vercel domains
+if os.environ.get("VERCEL"):
+    # Add the current Vercel deployment URL
+    vercel_url = os.environ.get("VERCEL_URL", "")
+    if vercel_url:
+        ALLOWED_HOSTS.append(vercel_url)
+        # Add with .vercel.app suffix if not already present
+        if not vercel_url.endswith(".vercel.app"):
+            ALLOWED_HOSTS.append(f"{vercel_url}.vercel.app")
+    
+    # Always add the main production domain
+    if "jabemsolutions.vercel.app" not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append("jabemsolutions.vercel.app")
+
+# Remove duplicates and empty strings
+ALLOWED_HOSTS = list(set([host for host in ALLOWED_HOSTS if host]))
 
 INSTALLED_APPS = [
     "django.contrib.admin",
