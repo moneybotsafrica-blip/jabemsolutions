@@ -17,8 +17,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("logo_preview", "name",)
     search_fields = ("name",)
+    
+    def logo_preview(self, obj):
+        if obj.get_logo_url():
+            return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />', obj.get_logo_url())
+        return format_html('<span style="color: #999;">No logo</span>')
+    logo_preview.short_description = "Logo"
 
 
 class StockInline(admin.StackedInline):

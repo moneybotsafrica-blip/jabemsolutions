@@ -3,6 +3,7 @@ from django.db import models, transaction
 from django.urls import reverse
 from django.utils.text import slugify
 from decimal import Decimal
+import os
 
 
 class Category(models.Model):
@@ -38,6 +39,15 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_logo_url(self):
+        """Return the best available logo URL for this brand."""
+        if self.logo:
+            # On Vercel, media files are copied to static/media/ during build
+            if os.environ.get("VERCEL"):
+                return f"/static/media/{self.logo.name}"
+            return self.logo.url
+        return None
 
 
 class Product(models.Model):
@@ -100,6 +110,9 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
+            # On Vercel, media files are copied to static/media/ during build
+            if os.environ.get("VERCEL"):
+                return f"/static/media/{self.image.name}"
             return self.image.url
         return None
 

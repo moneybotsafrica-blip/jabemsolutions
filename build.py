@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import shutil
 
 # Add the itsolutions directory to Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,5 +22,28 @@ call_command('migrate', '--noinput')
 
 print("Collecting static files...")
 call_command('collectstatic', '--noinput')
+
+# Copy media files to static files for Vercel deployment
+media_dir = os.path.join(itsolutions_dir, 'media')
+static_dir = os.path.join(itsolutions_dir, 'staticfiles')
+
+if os.path.exists(media_dir):
+    print("Copying media files to static files for Vercel deployment...")
+    for root, dirs, files in os.walk(media_dir):
+        for file in files:
+            source_path = os.path.join(root, file)
+            relative_path = os.path.relpath(source_path, media_dir)
+            dest_path = os.path.join(static_dir, 'media', relative_path)
+            
+            # Create destination directory if it doesn't exist
+            os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+            
+            # Copy the file
+            shutil.copy2(source_path, dest_path)
+            print(f"Copied: {relative_path}")
+    
+    print("Media files copied successfully!")
+else:
+    print("No media directory found, skipping media file copy.")
 
 print("Build completed successfully!")
