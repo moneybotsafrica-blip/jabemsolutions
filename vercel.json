@@ -2,7 +2,10 @@
   "builds": [
     {
       "src": "itsolutions/config/wsgi.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
     }
   ],
   "routes": [
@@ -10,5 +13,8 @@
       "src": "/(.*)",
       "dest": "itsolutions/config/wsgi.py"
     }
-  ]
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "config.settings"
+  }
 }
