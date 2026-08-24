@@ -95,6 +95,14 @@ class Product(models.Model):
     def in_stock(self):
         return (not self.track_inventory) or self.quantity_on_hand > 0
 
+    def get_image_url(self):
+        """Return the best available image URL for this product."""
+        if self.external_image_url:
+            return self.external_image_url
+        if self.image:
+            return self.image.url
+        return None
+
 
 class Stock(models.Model):
     """Current on-hand quantity per product. Kept separate from Product so

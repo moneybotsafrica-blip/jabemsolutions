@@ -61,8 +61,8 @@
     <a href="{% url 'catalog:product_list' %}" class="text-decoration-none small"><i class="bi bi-arrow-left"></i> Back to products</a>
     <div class="row mt-3 g-4">
         <div class="col-md-5">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" class="img-fluid rounded border" alt="{{ product.name }}">
+            {% if product.get_image_url %}
+            <img src="{{ product.get_image_url }}" class="img-fluid rounded border" alt="{{ product.name }}">
             {% else %}
             <div class="border rounded d-flex align-items-center justify-content-center text-secondary" style="height:320px;">
                 <i class="bi bi-image" style="font-size:3rem"></i>

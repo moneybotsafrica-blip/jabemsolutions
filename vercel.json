@@ -10,6 +10,14 @@
   ],
   "routes": [
     {
+      "src": "/media/(.*)",
+      "dest": "itsolutions/config/wsgi.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "itsolutions/config/wsgi.py"
     }

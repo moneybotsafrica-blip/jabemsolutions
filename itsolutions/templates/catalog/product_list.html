@@ -48,8 +48,8 @@
         {% for product in products %}
         <div class="col-sm-6 col-lg-4">
             <div class="card card-product shadow-sm h-100">
-                {% if product.image %}
-                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% if product.get_image_url %}
+                <img src="{{ product.get_image_url }}" class="card-img-top" alt="{{ product.name }}">
                 {% else %}
                 <img src="https://via.placeholder.com/400x300/6c757d/ffffff?text={{ product.name|truncatewords:3 }}" class="card-img-top" alt="{{ product.name }}">
                 {% endif %}
