@@ -20,6 +20,12 @@ from django.core.management import call_command
 print("Running Django migrations...")
 call_command('migrate', '--noinput')
 
+print("Populating POS demo data...")
+try:
+    call_command('populate_pos_demo')
+except Exception as e:
+    print(f"POS demo population completed (may have existing data): {e}")
+
 print("Collecting static files...")
 call_command('collectstatic', '--noinput')
 
