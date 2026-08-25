@@ -1,7 +1,9 @@
 import sys
 import os
 from pathlib import Path
-from django.core.management.base import BaseCommand
+from urllib.parse import unquote, urlparse
+
+from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from django.core.files import File
 from catalog.models import Product
@@ -22,28 +24,35 @@ class Command(BaseCommand):
         parser.add_argument(
             '--cloud-name',
             type=str,
-            required=True,
+            default=os.environ.get('CLOUDINARY_CLOUD_NAME'),
             help='Cloudinary cloud name'
         )
         parser.add_argument(
             '--api-key',
             type=str,
-            required=True,
+            default=os.environ.get('CLOUDINARY_API_KEY'),
             help='Cloudinary API key'
         )
         parser.add_argument(
             '--api-secret',
             type=str,
-            required=True,
+            default=os.environ.get('CLOUDINARY_API_SECRET'),
             help='Cloudinary API secret'
         )
 
     def handle(self, *args, **options):
-        # Configure Cloudinary
+        cloudinary_url = urlparse(os.environ.get('CLOUDINARY_URL', ''))
+        cloud_name = options['cloud_name'] or cloudinary_url.hostname
+        api_key = options['api_key'] or cloudinary_url.username
+        api_secret = options['api_secret'] or unquote(cloudinary_url.password or '')
+
+        if not all((cloud_name, api_key, api_secret)):
+            raise CommandError('Set CLOUDINARY_URL or provide Cloudinary credentials.')
+
         cloudinary.config(
-            cloud_name=options['cloud_name'],
-            api_key=options['api_key'],
-            api_secret=options['api_secret'],
+            cloud_name=cloud_name,
+            api_key=api_key,
+            api_secret=api_secret,
             secure=True
         )
 
