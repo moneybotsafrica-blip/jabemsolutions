@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.urls import path
 from django.template.response import TemplateResponse
 from django.utils.dateparse import parse_date
+from django.http import HttpResponse
 from .models import (
     Category, Brand, Product, Stock, StockMovement, Cart, CartItem, Order, OrderItem,
     POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem
@@ -456,25 +457,39 @@ class QuoteAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         report_urls = [
             path("report/", self.admin_site.admin_view(self.quotation_report), name="catalog_quote_report"),
+            path("report/download/", self.admin_site.admin_view(self.quotation_report_pdf), name="catalog_quote_report_pdf"),
         ]
         return report_urls + urls
 
-    def quotation_report(self, request):
+    def get_report_data(self, request):
         quotes = Quote.objects.prefetch_related("items")
         date_from = parse_date(request.GET.get("date_from", ""))
         date_to = parse_date(request.GET.get("date_to", ""))
+        status = request.GET.get("status", "")
         if date_from:
             quotes = quotes.filter(issued_date__gte=date_from)
         if date_to:
             quotes = quotes.filter(issued_date__lte=date_to)
+        if status in {choice[0] for choice in Quote.STATUS_CHOICES}:
+            quotes = quotes.filter(status=status)
         quote_rows = list(quotes)
+        value = sum((quote.total for quote in quote_rows), 0)
+        accepted_value = sum((quote.total for quote in quote_rows if quote.status == "accepted"), 0)
         totals = {
             "count": len(quote_rows),
             "draft": sum(quote.status == "draft" for quote in quote_rows),
             "sent": sum(quote.status == "sent" for quote in quote_rows),
             "accepted": sum(quote.status == "accepted" for quote in quote_rows),
-            "value": sum((quote.total for quote in quote_rows), 0),
+            "expired": sum(quote.status == "expired" for quote in quote_rows),
+            "value": value,
+            "accepted_value": accepted_value,
+            "average": value / len(quote_rows) if quote_rows else 0,
+            "acceptance_rate": (sum(quote.status == "accepted" for quote in quote_rows) / len(quote_rows) * 100) if quote_rows else 0,
         }
+        return quote_rows, totals
+
+    def quotation_report(self, request):
+        quote_rows, totals = self.get_report_data(request)
         context = {
             **self.admin_site.each_context(request),
             "title": "Quotation report",
@@ -482,8 +497,39 @@ class QuoteAdmin(admin.ModelAdmin):
             "totals": totals,
             "date_from": request.GET.get("date_from", ""),
             "date_to": request.GET.get("date_to", ""),
+            "selected_status": request.GET.get("status", ""),
+            "status_choices": Quote.STATUS_CHOICES,
         }
         return TemplateResponse(request, "admin/catalog/quote/report.html", context)
+
+    def quotation_report_pdf(self, request):
+        from reportlab.lib import colors
+        from reportlab.lib.pagesizes import A4
+        from reportlab.lib.styles import getSampleStyleSheet
+        from reportlab.lib.units import mm
+        from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+
+        quote_rows, totals = self.get_report_data(request)
+        response = HttpResponse(content_type="application/pdf")
+        response["Content-Disposition"] = "attachment; filename=quotation-report.pdf"
+        document = SimpleDocTemplate(response, pagesize=A4, leftMargin=14 * mm, rightMargin=14 * mm, topMargin=14 * mm, bottomMargin=14 * mm)
+        styles = getSampleStyleSheet()
+        heading = styles["Heading1"]
+        heading.textColor = colors.HexColor("#1762A3")
+        body = styles["BodyText"]
+        period = f"From: {request.GET.get('date_from') or 'All dates'}   To: {request.GET.get('date_to') or 'All dates'}"
+        metrics = [["Quotes", "Accepted", "Acceptance rate", "Quoted value", "Accepted value", "Average quote"], [str(totals["count"]), str(totals["accepted"]), f'{totals["acceptance_rate"]:.1f}%', f'KES {totals["value"]:,.2f}', f'KES {totals["accepted_value"]:,.2f}', f'KES {totals["average"]:,.2f}']]
+        metrics_table = Table(metrics, colWidths=[27 * mm, 27 * mm, 32 * mm, 34 * mm, 34 * mm, 34 * mm])
+        metrics_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1762A3")), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#cbd5e1")), ("ALIGN", (0, 0), (-1, -1), "CENTER"), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("PADDING", (0, 0), (-1, -1), 7)]))
+        rows = [["Quote", "Issued", "Client", "Status", "Total"]]
+        for quote in quote_rows:
+            rows.append([quote.quote_number, quote.issued_date.strftime("%d %b %Y"), Paragraph(f"{quote.client_name}<br/>{quote.client_company}", body), quote.get_status_display(), f"KES {quote.total:,.2f}"])
+        if len(rows) == 1:
+            rows.append(["", "", "No quotations match the selected filters.", "", ""])
+        report_table = Table(rows, colWidths=[32 * mm, 28 * mm, 63 * mm, 28 * mm, 37 * mm], repeatRows=1)
+        report_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#d7d7d7")), ("GRID", (0, 0), (-1, -1), 0.35, colors.HexColor("#cbd5e1")), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("ALIGN", (4, 1), (4, -1), "RIGHT"), ("PADDING", (0, 0), (-1, -1), 6)]))
+        document.build([Paragraph("Quotation Report", heading), Paragraph(period, body), Spacer(1, 5 * mm), metrics_table, Spacer(1, 8 * mm), report_table])
+        return response
 
     class Media:
         js = ("admin/js/quote_admin_layout.js",)
