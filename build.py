@@ -37,6 +37,24 @@ except Exception as e:
 print("Collecting static files...")
 call_command('collectstatic', '--noinput')
 
+# Copy static files to public directory for Vercel deployment
+staticfiles_dir = os.path.join(itsolutions_dir, 'staticfiles')
+public_dir = os.path.join(current_dir, 'public')
+
+if os.path.exists(staticfiles_dir):
+    print("Copying static files to public directory for Vercel deployment...")
+    import shutil
+    
+    # Remove existing public directory if it exists
+    if os.path.exists(public_dir):
+        shutil.rmtree(public_dir)
+    
+    # Copy entire staticfiles directory to public
+    shutil.copytree(staticfiles_dir, public_dir)
+    print("Static files copied to public directory successfully!")
+else:
+    print("No staticfiles directory found, skipping copy.")
+
 # Copy media files to static files for Vercel deployment
 media_dir = os.path.join(itsolutions_dir, 'media')
 static_dir = os.path.join(itsolutions_dir, 'staticfiles')
@@ -62,6 +80,17 @@ if os.path.exists(media_dir):
     
     print(f"Total media files copied: {media_files_count}")
     print("Media files copied successfully!")
+    
+    # Recopy to public directory to ensure media files are included
+    public_media_dir = os.path.join(public_dir, 'media')
+    if os.path.exists(static_dir):
+        media_source_dir = os.path.join(static_dir, 'media')
+        if os.path.exists(media_source_dir):
+            print("Copying media files to public directory...")
+            if os.path.exists(public_media_dir):
+                shutil.rmtree(public_media_dir)
+            shutil.copytree(media_source_dir, public_media_dir)
+            print("Media files copied to public directory successfully!")
 else:
     print("No media directory found, skipping media file copy.")
 

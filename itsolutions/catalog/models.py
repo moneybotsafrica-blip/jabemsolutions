@@ -53,8 +53,8 @@ class Brand(models.Model):
                     host = host.replace('http://', '')
                 elif host.startswith('https://'):
                     host = host.replace('https://', '')
-                # Construct absolute URL
-                return f"https://{host}/staticfiles/media/{self.logo.name}"
+                # Construct absolute URL using /media/ path (will be served from public directory)
+                return f"https://{host}/media/{self.logo.name}"
             return self.logo.url
         return None
 
@@ -128,8 +128,8 @@ class Product(models.Model):
                     host = host.replace('http://', '')
                 elif host.startswith('https://'):
                     host = host.replace('https://', '')
-                # Construct absolute URL
-                return f"https://{host}/staticfiles/media/{self.image.name}"
+                # Construct absolute URL using /media/ path (will be served from public directory)
+                return f"https://{host}/media/{self.image.name}"
             return self.image.url
         return None
 
