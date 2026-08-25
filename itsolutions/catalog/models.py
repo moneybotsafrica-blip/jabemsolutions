@@ -45,7 +45,7 @@ class Brand(models.Model):
         """Return the best available logo URL for this brand."""
         if self.logo:
             if not settings.DEBUG and settings.CLOUDINARY_CLOUD_NAME:
-                image_path = PurePosixPath(self.logo.name).with_suffix("")
+                image_path = PurePosixPath(self.logo.name)
                 return (
                     f"https://res.cloudinary.com/{settings.CLOUDINARY_CLOUD_NAME}"
                     f"/image/upload/jabem-media/{image_path}"
@@ -114,7 +114,7 @@ class Product(models.Model):
             return self.external_image_url
         if self.image:
             if not settings.DEBUG and settings.CLOUDINARY_CLOUD_NAME:
-                image_path = PurePosixPath(self.image.name).with_suffix("")
+                image_path = PurePosixPath(self.image.name)
                 return (
                     f"https://res.cloudinary.com/{settings.CLOUDINARY_CLOUD_NAME}"
                     f"/image/upload/jabem-media/{image_path}"
