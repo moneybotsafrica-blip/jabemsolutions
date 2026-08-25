@@ -43,10 +43,10 @@ class Brand(models.Model):
     def get_logo_url(self):
         """Return the best available logo URL for this brand."""
         if self.logo:
-            # In production, media files are served from /media/ via vercel.json routing
-            # which maps /media/(.*) to /staticfiles/media/$1
+            # In production, media files are served from /static/media/ via vercel.json routing
+            # which maps /static/(.*) to /staticfiles/$1
             if not settings.DEBUG:
-                return f"/media/{self.logo.name}"
+                return f"/static/media/{self.logo.name}"
             return self.logo.url
         return None
 
@@ -110,10 +110,10 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
-            # In production, media files are served from /media/ via vercel.json routing
-            # which maps /media/(.*) to /staticfiles/media/$1
+            # In production, media files are served from /static/media/ via vercel.json routing
+            # which maps /static/(.*) to /staticfiles/$1
             if not settings.DEBUG:
-                return f"/media/{self.image.name}"
+                return f"/static/media/{self.image.name}"
             return self.image.url
         return None
 
