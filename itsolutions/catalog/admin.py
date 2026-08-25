@@ -41,6 +41,9 @@ class ProductAdmin(admin.ModelAdmin):
     )
     list_filter = ("product_type", "category", "brand", "is_active", "track_inventory")
     search_fields = ("name", "sku", "description")
+    list_display_links = ("name",)
+    list_editable = ("price", "is_active")
+    list_per_page = 50
     prepopulated_fields = {"slug": ("name",)}
     inlines = [StockInline]
     actions = ['bulk_enable_tracking', 'bulk_disable_tracking', 'bulk_set_reorder_level']
