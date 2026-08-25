@@ -65,7 +65,6 @@ MIDDLEWARE = [
 # WhiteNoise configuration
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ROOT_URLCONF = "config.urls"
 
@@ -129,11 +128,11 @@ if DEBUG:
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 else:
-    # For Vercel production - use simpler static files storage
+    # For Vercel production - use WhiteNoise for static files
     STORAGES = {
         "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
         "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
         },
     }
     # Serve media files as static files on Vercel
