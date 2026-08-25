@@ -109,9 +109,9 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
-            # On Vercel or in production, media files are served from static/media/
+            # On Vercel or in production, media files are served from /media/ via vercel.json routing
             if os.environ.get("VERCEL") or not settings.DEBUG:
-                return f"/static/media/{self.image.name}"
+                return f"/media/{self.image.name}"
             return self.image.url
         return None
 

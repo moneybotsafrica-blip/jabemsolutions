@@ -130,7 +130,7 @@ else:
         },
     }
     # Serve media files as static files on Vercel
-    MEDIA_URL = "/static/media/"
+    MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "staticfiles" / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

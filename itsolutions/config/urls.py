@@ -11,11 +11,9 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
 ]
 
-# Serve media files in development and on Vercel
-if settings.DEBUG or os.environ.get("VERCEL"):
+# Serve media files in development only (Vercel handles media routing via vercel.json)
+if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    # Also serve media files from /media/ for backward compatibility
-    urlpatterns += static("/media/", document_root=settings.MEDIA_ROOT)
 
 # Serve static files in development
 if settings.DEBUG:
