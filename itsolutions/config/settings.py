@@ -123,12 +123,11 @@ if DEBUG:
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 else:
-    # For Vercel production - serve media files as static files
-    # Media files are copied to staticfiles/media during build
+    # For Vercel production - use simpler static files storage
     STORAGES = {
         "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
         "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
         },
     }
     # Serve media files as static files on Vercel
