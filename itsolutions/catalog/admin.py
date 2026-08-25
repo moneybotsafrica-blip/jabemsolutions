@@ -425,6 +425,9 @@ class QuoteAdmin(admin.ModelAdmin):
         return format_html('<a class="button" target="_blank" href="{}">Print / PDF</a>', reverse("catalog:quote_print", args=[obj.pk]))
     print_link.short_description = "Document"
 
+    class Media:
+        js = ("admin/js/quote_admin_layout.js",)
+
 
 # POS Demo Admin Classes
 @admin.register(POSCategory)
