@@ -274,12 +274,35 @@ class OrderItemInline(admin.StackedInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    change_list_template = "admin/catalog/order/change_list.html"
     list_display = ("id", "user", "status", "total", "total_items", "created_at", "order_actions")
     list_filter = ("status", "created_at")
     search_fields = ("user__username", "user__email", "id", "full_name", "phone")
     readonly_fields = ("created_at", "updated_at", "subtotal", "shipping_cost", "total")
     inlines = [OrderItemInline]
     actions = ['mark_as_processing', 'mark_as_shipped', 'mark_as_delivered', 'mark_as_cancelled', 'generate_order_report']
+
+    def get_urls(self):
+        urls = super().get_urls()
+        return [path("sales-report/", self.admin_site.admin_view(self.sales_report), name="catalog_order_sales_report")] + urls
+
+    def sales_report(self, request):
+        sales = Order.objects.exclude(status="cancelled").prefetch_related("items")
+        date_from = parse_date(request.GET.get("date_from", ""))
+        date_to = parse_date(request.GET.get("date_to", ""))
+        if date_from:
+            sales = sales.filter(created_at__date__gte=date_from)
+        if date_to:
+            sales = sales.filter(created_at__date__lte=date_to)
+        orders = list(sales)
+        return TemplateResponse(request, "admin/catalog/order/sales_report.html", {
+            **self.admin_site.each_context(request), "title": "Sales report", "orders": orders,
+            "date_from": request.GET.get("date_from", ""), "date_to": request.GET.get("date_to", ""),
+            "order_count": len(orders), "units_sold": sum(order.total_items for order in orders),
+            "sales_total": sum((order.total for order in orders), 0),
+            "pending_total": sum((order.total for order in orders if order.status == "pending"), 0),
+            "completed_total": sum((order.total for order in orders if order.status in {"delivered", "shipped"}), 0),
+        })
     
     fieldsets = (
         ('Order Information', {

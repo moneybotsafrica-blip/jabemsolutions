@@ -64,6 +64,7 @@
 {% endif %}{{ quote_settings.terms }}</div></section>
         <div class="quote-bottom"><div class="signature"><div class="signature-line"><span>Accepted by / Signature</span><span>Date</span></div><div class="signature-line"><span>Name</span><span>Company stamp</span></div></div><div class="summary"><div><span>Subtotal</span><strong>KES {{ quote.subtotal|floatformat:2 }}</strong></div><div><span>Tax ({{ quote.tax_rate }}%)</span><strong>KES {{ quote.tax_amount|floatformat:2 }}</strong></div><div class="total"><span>Total</span><span>KES {{ quote.total|floatformat:2 }}</span></div></div></div>
         <footer class="footer"><div><strong>Bank account details</strong><br>{{ quote_settings.bank_details|default:"Available on request." }}</div><div><strong>Payment details</strong><br>{{ quote_settings.payment_details }}</div></footer>
+        <p class="muted" style="margin: 12px 0 0; text-align: center; font-size: 12px;">Quotation created by Jabem Solutions Limited · +254736 794 594 · jabemsolutionsltd@gmail.com</p>
     </article>
 </body>
 </html>
