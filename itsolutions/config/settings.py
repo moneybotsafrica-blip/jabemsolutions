@@ -62,13 +62,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# Configure WhiteNoise to serve static files
-WHITENOISE_ROOT = BASE_DIR / "staticfiles"
-WHITENOISE_USE_FINDERS = True
-WHITENOISE_AUTOREFRESH = False
-WHITENOISE_ALLOW_ALL_ORIGINS = True
-WHITENOISE_INDEX_FILE = False
-WHITENOISE_STATIC_PREFIX = None
+# WhiteNoise configuration
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = "/static/"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ROOT_URLCONF = "config.urls"
 
@@ -117,9 +114,8 @@ TIME_ZONE = "Africa/Nairobi"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "/staticfiles/"
+# Static files are configured above with WhiteNoise
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Configure storage backend
 if DEBUG:
