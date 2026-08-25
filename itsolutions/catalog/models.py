@@ -346,7 +346,15 @@ IMPORTANT - When making a payment, kindly pay against the Account above.""")
 
 
 class Quote(models.Model):
-    STATUS_CHOICES = [("draft", "Draft"), ("sent", "Sent"), ("accepted", "Accepted"), ("expired", "Expired")]
+    STATUS_CHOICES = [
+        ("draft", "Draft"),
+        ("processed", "Processed"),
+        ("completed", "Completed"),
+        # Kept for quotations created before the workflow update.
+        ("sent", "Sent"),
+        ("accepted", "Accepted"),
+        ("expired", "Expired"),
+    ]
     quote_number = models.CharField(max_length=40, unique=True, blank=True, editable=False)
     client_name = models.CharField(max_length=160)
     client_company = models.CharField(max_length=160, blank=True)

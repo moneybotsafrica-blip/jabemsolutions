@@ -613,17 +613,19 @@ class QuoteAdmin(admin.ModelAdmin):
             quotes = quotes.filter(status=status)
         quote_rows = list(quotes)
         value = sum((quote.total for quote in quote_rows), 0)
-        accepted_value = sum((quote.total for quote in quote_rows if quote.status == "accepted"), 0)
+        completed_value = sum((quote.total for quote in quote_rows if quote.status in {"accepted", "completed"}), 0)
         totals = {
             "count": len(quote_rows),
             "draft": sum(quote.status == "draft" for quote in quote_rows),
+            "processed": sum(quote.status == "processed" for quote in quote_rows),
+            "completed": sum(quote.status == "completed" for quote in quote_rows),
             "sent": sum(quote.status == "sent" for quote in quote_rows),
             "accepted": sum(quote.status == "accepted" for quote in quote_rows),
             "expired": sum(quote.status == "expired" for quote in quote_rows),
             "value": value,
-            "accepted_value": accepted_value,
+            "accepted_value": completed_value,
             "average": value / len(quote_rows) if quote_rows else 0,
-            "acceptance_rate": (sum(quote.status == "accepted" for quote in quote_rows) / len(quote_rows) * 100) if quote_rows else 0,
+            "acceptance_rate": (sum(quote.status in {"accepted", "completed"} for quote in quote_rows) / len(quote_rows) * 100) if quote_rows else 0,
         }
         return quote_rows, totals
 
@@ -657,7 +659,7 @@ class QuoteAdmin(admin.ModelAdmin):
         heading.textColor = colors.HexColor("#1762A3")
         body = styles["BodyText"]
         period = f"From: {request.GET.get('date_from') or 'All dates'}   To: {request.GET.get('date_to') or 'All dates'}"
-        metrics = [["Quotes", "Accepted", "Acceptance rate", "Quoted value", "Accepted value", "Average quote"], [str(totals["count"]), str(totals["accepted"]), f'{totals["acceptance_rate"]:.1f}%', f'KES {totals["value"]:,.2f}', f'KES {totals["accepted_value"]:,.2f}', f'KES {totals["average"]:,.2f}']]
+        metrics = [["Quotes", "Completed", "Completion rate", "Quoted value", "Completed value", "Average quote"], [str(totals["count"]), str(totals["completed"] + totals["accepted"]), f'{totals["acceptance_rate"]:.1f}%', f'KES {totals["value"]:,.2f}', f'KES {totals["accepted_value"]:,.2f}', f'KES {totals["average"]:,.2f}']]
         metrics_table = Table(metrics, colWidths=[27 * mm, 27 * mm, 32 * mm, 34 * mm, 34 * mm, 34 * mm])
         metrics_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1762A3")), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#cbd5e1")), ("ALIGN", (0, 0), (-1, -1), "CENTER"), ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"), ("PADDING", (0, 0), (-1, -1), 7)]))
         rows = [["Quote", "Issued", "Client", "Status", "Total"]]
