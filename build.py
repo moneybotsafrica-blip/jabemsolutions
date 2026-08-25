@@ -22,7 +22,8 @@ call_command('migrate', '--noinput')
 
 print("Loading local data...")
 try:
-    call_command('loaddata', 'local_data.json')
+    # Load data with ignorenonexistent to handle any model differences
+    call_command('loaddata', 'local_data.json', '--ignorenonexistent')
     print("Local data loaded successfully!")
 except Exception as e:
     print(f"Local data loading completed (may have existing data): {e}")
