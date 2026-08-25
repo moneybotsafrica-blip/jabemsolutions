@@ -35,11 +35,17 @@ class Command(BaseCommand):
         )
 
         media_root = Path(settings.MEDIA_ROOT)
+        products_by_image = {}
         if options["database_products_only"]:
-            media_files = [
-                media_root / product.image.name
+            products_by_image = {
+                product.image.name: product
                 for product in Product.objects.exclude(image="")
-                if (media_root / product.image.name).is_file()
+                if product.image and product.image.name
+            }
+            media_files = [
+                media_root / image_name
+                for image_name in products_by_image
+                if (media_root / image_name).is_file()
             ]
         else:
             media_files = [path for path in media_root.rglob("*") if path.is_file()]
@@ -47,29 +53,38 @@ class Command(BaseCommand):
             relative_path = image_path.relative_to(media_root)
             public_id = (Path("jabem-media") / relative_path).as_posix()
             try:
-                cloudinary.uploader.upload(
+                result = cloudinary.uploader.upload(
                     str(image_path),
                     public_id=public_id,
                     overwrite=True,
                     resource_type="image",
                 )
-                return relative_path, None
+                return relative_path, result["secure_url"], None
             except Exception as error:
-                return relative_path, error
+                return relative_path, None, error
 
         uploaded = 0
         failed = 0
+        products_to_update = []
         with ThreadPoolExecutor(max_workers=options["workers"]) as executor:
             futures = [executor.submit(upload_image, image_path) for image_path in media_files]
             for future in as_completed(futures):
-                relative_path, error = future.result()
+                relative_path, secure_url, error = future.result()
                 if error:
                     failed += 1
                     self.stderr.write(f"Failed {relative_path}: {error}")
                 else:
                     uploaded += 1
+                    product = products_by_image.get(relative_path.as_posix())
+                    if product and product.external_image_url != secure_url:
+                        product.external_image_url = secure_url
+                        products_to_update.append(product)
                     if uploaded % 100 == 0:
                         self.stdout.write(f"Uploaded {uploaded}/{len(media_files)} files")
+
+        if products_to_update:
+            Product.objects.bulk_update(products_to_update, ["external_image_url"])
+            self.stdout.write(f"Updated {len(products_to_update)} product image URLs.")
 
         self.stdout.write(
             self.style.SUCCESS(
