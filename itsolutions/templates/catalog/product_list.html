@@ -61,7 +61,7 @@
                     </div>
                     <h6 class="card-title mb-0" style="font-size: 0.8rem; line-height: 1.1;">{{ product.name|truncatewords:4 }}</h6>
                     <div class="mt-auto pt-1">
-                        <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success w-100" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
+                        <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success w-100 quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
                             <i class="bi bi-chat-dots me-1"></i>Quote
                         </a>
                     </div>

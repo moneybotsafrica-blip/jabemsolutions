@@ -294,6 +294,21 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
+    document.querySelectorAll('.quote-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            const image = link.dataset.quoteImage
+                ? new URL(link.dataset.quoteImage, window.location.origin).href
+                : '';
+            const message = [
+                "Hello, I'm interested in requesting a quote for: " + link.dataset.quoteName,
+                "SKU: " + link.dataset.quoteSku,
+                "Price: KES " + link.dataset.quotePrice,
+                image ? "Product image: " + image : ''
+            ].filter(Boolean).join("\n");
+            link.href = "https://wa.me/254736794594?text=" + encodeURIComponent(message);
+        });
+    });
 });
 </script>
 {% block extra_scripts %}{% endblock %}

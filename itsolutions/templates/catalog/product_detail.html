@@ -105,7 +105,7 @@
                         <i class="bi bi-cart-plus me-1"></i> Add to Cart
                     </a>
                     {% endif %}
-                    <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}. {{ product.description|truncatewords:30 }}" target="_blank" class="btn btn-success btn-lg w-100 me-md-2">
+                    <a href="https://wa.me/254736794594" target="_blank" class="btn btn-success btn-lg w-100 me-md-2 quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}">
                         <i class="bi bi-chat-dots me-1"></i> Request Quote
                     </a>
                     {% if user.is_authenticated %}

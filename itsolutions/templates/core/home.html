@@ -206,7 +206,7 @@
                         </div>
                         <h6 class="card-title mb-0" style="font-size: 0.8rem; line-height: 1.1;">{{ product.name|truncatewords:4 }}</h6>
                         <div class="mt-auto pt-1">
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success w-100" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
+                            <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success w-100 quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
                                 <i class="bi bi-chat-dots me-1"></i>Quote
                             </a>
                         </div>
@@ -233,7 +233,7 @@
                         </div>
                         <h6 class="card-title mb-0" style="font-size: 0.8rem; line-height: 1.1;">{{ product.name|truncatewords:4 }}</h6>
                         <div class="mt-auto pt-1">
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success w-100" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
+                            <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success w-100 quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
                                 <i class="bi bi-chat-dots me-1"></i>Quote
                             </a>
                         </div>
@@ -2453,7 +2453,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p class="card-text text-muted small flex-grow-1">15-inch touchscreen terminal with built-in printer and card reader.</p>
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <strong>KES 45,000</strong>
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: POS Terminal Pro. Price: KES 45,000. 15-inch touchscreen terminal with built-in printer and card reader." target="_blank" class="btn btn-sm btn-success">
+                            <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success quote-link" data-quote-name="POS Terminal Pro" data-quote-sku="POS-TERMINAL-PRO" data-quote-price="45,000" data-quote-image="{% static 'images/posiflex-xt-5315-i3-pos-terminal.jpg' %}">
                                 <i class="bi bi-chat-dots me-1"></i>Quote
                             </a>
                         </div>
@@ -2472,7 +2472,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p class="card-text text-muted small flex-grow-1">High-speed thermal printer for receipts and kitchen orders.</p>
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <strong>KES 12,500</strong>
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: Thermal Receipt Printer. Price: KES 12,500. High-speed thermal printer for receipts and kitchen orders." target="_blank" class="btn btn-sm btn-success">
+                            <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success quote-link" data-quote-name="Thermal Receipt Printer" data-quote-sku="THERMAL-RECEIPT-PRINTER" data-quote-price="12,500" data-quote-image="{% static 'images/posiflex-aura-8800u-b-usb-thermal-printer.webp' %}">
                                 <i class="bi bi-chat-dots me-1"></i>Quote
                             </a>
                         </div>
@@ -2491,7 +2491,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p class="card-text text-muted small flex-grow-1">Advanced POS with analytics, CRM, and multi-location support.</p>
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <strong>KES 25,000</strong>
-                            <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: POS Software Premium. Price: KES 25,000. Advanced POS with analytics, CRM, and multi-location support." target="_blank" class="btn btn-sm btn-success">
+                            <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success quote-link" data-quote-name="POS Software Premium" data-quote-sku="POS-SOFTWARE-PREMIUM" data-quote-price="25,000" data-quote-image="{% static 'images/cloud-based-pos-software.png' %}">
                                 <i class="bi bi-chat-dots me-1"></i>Quote
                             </a>
                         </div>
@@ -2553,7 +2553,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="card-text text-muted small flex-grow-1 mb-1" style="font-size: 0.75rem;">{{ product.short_description|default:""|truncatewords:8 }}</p>
                     <div class="d-flex justify-content-between align-items-center mt-1">
                         <strong style="font-size: 0.9rem;">KES {{ product.price|floatformat:0 }}</strong>
-                        <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
+                        <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                             <i class="bi bi-chat-dots me-1"></i>Quote
                         </a>
                     </div>
@@ -2590,7 +2590,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="card-text text-muted small flex-grow-1 mb-1" style="font-size: 0.75rem;">{{ product.short_description|default:""|truncatewords:8 }}</p>
                     <div class="d-flex justify-content-between align-items-center mt-1">
                         <strong style="font-size: 0.9rem;">KES {{ product.price|floatformat:0 }}</strong>
-                        <a href="https://wa.me/254736794594?text=Hello, I'm interested in requesting a quote for: {{ product.name }} (SKU: {{ product.sku }}). Price: KES {{ product.price|floatformat:0 }}." target="_blank" class="btn btn-sm btn-success" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
+                        <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                             <i class="bi bi-chat-dots me-1"></i>Quote
                         </a>
                     </div>
