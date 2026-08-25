@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from decimal import Decimal
 import os
+from pathlib import PurePosixPath
 
 
 class Category(models.Model):
@@ -43,8 +44,12 @@ class Brand(models.Model):
     def get_logo_url(self):
         """Return the best available logo URL for this brand."""
         if self.logo:
-            if not settings.DEBUG:
-                return f"{settings.STATIC_URL}media/{self.logo.name}"
+            if not settings.DEBUG and settings.CLOUDINARY_CLOUD_NAME:
+                image_path = PurePosixPath(self.logo.name).with_suffix("")
+                return (
+                    f"https://res.cloudinary.com/{settings.CLOUDINARY_CLOUD_NAME}"
+                    f"/image/upload/jabem-media/{image_path}"
+                )
             return self.logo.url
         return None
 
@@ -108,8 +113,12 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
-            if not settings.DEBUG:
-                return f"{settings.STATIC_URL}media/{self.image.name}"
+            if not settings.DEBUG and settings.CLOUDINARY_CLOUD_NAME:
+                image_path = PurePosixPath(self.image.name).with_suffix("")
+                return (
+                    f"https://res.cloudinary.com/{settings.CLOUDINARY_CLOUD_NAME}"
+                    f"/image/upload/jabem-media/{image_path}"
+                )
             return self.image.url
         return None
 
