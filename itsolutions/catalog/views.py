@@ -41,7 +41,7 @@ def quote_pdf(request, quote_id):
     def para(value, style=body):
         return Paragraph(str(value or "").replace("\n", "<br/>"), style)
 
-    company_text = para(f"<b>{company.company_name.upper()}</b><br/>{company.address}<br/><b>Ph:</b> {company.phone} &nbsp; <b>Email:</b> {company.email}<br/><b>Reg / VAT:</b> {company.business_number}")
+    company_text = para(f"<font color='#1762A3' size='13'><b>JABEM SOLUTIONS LIMITED</b></font><br/><b>{company.company_name.upper()}</b><br/>{company.address}<br/><b>Ph:</b> {company.phone} &nbsp; <b>Email:</b> {company.email}<br/><b>Reg / VAT:</b> {company.business_number}")
     meta_text = para(f"<b>Number:</b>&nbsp;&nbsp; {quote.quote_number}<br/><b>Date:</b>&nbsp;&nbsp; {quote.issued_date:%d %b %Y}<br/><b>Page:</b>&nbsp;&nbsp; 1<br/><b>Reference:</b>&nbsp;&nbsp; {(quote.notes or 'Quotation')[:70]}<br/><b>Valid until:</b>&nbsp;&nbsp; {quote.valid_until:%d %b %Y}")
     header = Table([[company_text, [Paragraph("QUOTATION", title), meta_text]]], colWidths=[119 * mm, 69 * mm])
     header.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LINEBELOW", (0, 0), (-1, -1), 10, colors.HexColor("#5C9ED0")), ("BOTTOMPADDING", (0, 0), (-1, -1), 8)]))
