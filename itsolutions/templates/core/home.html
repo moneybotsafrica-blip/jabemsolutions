@@ -1512,8 +1512,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize POS type switching
-    document.getElementById('prev-pos-type').addEventListener('click', () => switchPosType(-1));
-    document.getElementById('next-pos-type').addEventListener('click', () => switchPosType(1));
+    document.getElementById('prev-pos-type')?.addEventListener('click', () => switchPosType(-1));
+    document.getElementById('next-pos-type')?.addEventListener('click', () => switchPosType(1));
     
     // Initialize with first POS type
     switchPosType(0);
@@ -2134,7 +2134,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize charts when Reports module is opened
-    document.querySelector('[data-module="reports"]').addEventListener('click', function() {
+    document.querySelector('[data-module="reports"]')?.addEventListener('click', function() {
         setTimeout(initCharts, 100);
     });
     
@@ -2445,7 +2445,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-sm-6 col-lg-3">
                 <div class="card card-product shadow-sm h-100">
                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px; overflow: hidden;">
-                        <img src="/media/products/posiflex-xt-5315-i3-pos-terminal.jpg" alt="POS Terminal Pro" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                        <img src="{% static 'images/posiflex-xt-5315-i3-pos-terminal.jpg' %}" alt="POS Terminal Pro" class="img-fluid" style="max-height: 100%; object-fit: contain;">
                     </div>
                     <div class="card-body d-flex flex-column">
                         <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">Hardware</span>
@@ -2464,7 +2464,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-sm-6 col-lg-3">
                 <div class="card card-product shadow-sm h-100">
                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px; overflow: hidden;">
-                        <img src="/media/products/posiflex-aura-8800u-b-usb-thermal-printer.webp" alt="Thermal Receipt Printer" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                        <img src="{% static 'images/posiflex-aura-8800u-b-usb-thermal-printer.webp' %}" alt="Thermal Receipt Printer" class="img-fluid" style="max-height: 100%; object-fit: contain;">
                     </div>
                     <div class="card-body d-flex flex-column">
                         <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">Hardware</span>
@@ -2483,7 +2483,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-sm-6 col-lg-3">
                 <div class="card card-product shadow-sm h-100">
                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px; overflow: hidden;">
-                        <img src="/media/products/cloud-based-pos-software.png" alt="POS Software Premium" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                        <img src="{% static 'images/cloud-based-pos-software.png' %}" alt="POS Software Premium" class="img-fluid" style="max-height: 100%; object-fit: contain;">
                     </div>
                     <div class="card-body d-flex flex-column">
                         <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2 align-self-start">Software License</span>

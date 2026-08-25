@@ -129,13 +129,13 @@ if DEBUG:
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 else:
-    # For Vercel production - use simpler storage
+    # Vercel functions have an ephemeral filesystem. Uploaded media must use
+    # external object storage; bundled static assets are served by WhiteNoise.
     STORAGES = {
         "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     }
-    # Serve media files as static files on Vercel
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "staticfiles" / "media"
+    MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

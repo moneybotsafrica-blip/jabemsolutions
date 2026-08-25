@@ -43,9 +43,6 @@ class Brand(models.Model):
     def get_logo_url(self):
         """Return the best available logo URL for this brand."""
         if self.logo:
-            # In production, use absolute URL to staticfiles
-            if not settings.DEBUG:
-                return f"https://jabemsolutions.vercel.app/staticfiles/media/{self.logo.name}"
             return self.logo.url
         return None
 
@@ -109,9 +106,6 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
-            # On Vercel or in production, media files are served from /staticfiles/media/
-            if os.environ.get("VERCEL") or not settings.DEBUG:
-                return f"/staticfiles/media/{self.image.name}"
             return self.image.url
         return None
 
