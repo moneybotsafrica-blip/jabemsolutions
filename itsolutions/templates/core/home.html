@@ -6,34 +6,12 @@
 {% endblock %}
 
 {% block content %}
-<section class="hero py-4" style="background-image: url('{% static 'images/hero-bg.png' %}'); background-size: 25%; background-position: right center; background-repeat: no-repeat; position: relative;">
-<style>
-@media (max-width: 768px) {
-    .hero {
-        background-size: 15% !important;
-        background-position: right top !important;
-    }
-    .hero h1, .hero p, .hero .stat-item h5, .hero .stat-item p {
-        color: #333 !important;
-        text-shadow: none !important;
-    }
-}
-@media (max-width: 576px) {
-    .hero {
-        background-size: 10% !important;
-        background-position: right top !important;
-    }
-    .hero h1, .hero p, .hero .stat-item h5, .hero .stat-item p {
-        color: #333 !important;
-        text-shadow: none !important;
-    }
-}
-</style>
+<section class="hero home-hero py-4">
     <div class="container position-relative" style="z-index: 1;">
         <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="h4 fw-bold mb-2 text-dark">Unlock hidden profits with Jabem Solutions Ltd's POS restaurant software</h1>
-                <p class="mb-3 text-muted">Turn data into profit. Automatically. Complete POS solutions for Kenyan businesses.</p>
+            <div class="col-lg-7 home-hero-copy">
+                <h1 class="h4 fw-bold mb-2">Unlock hidden profits with Jabem Solutions Ltd's POS restaurant software</h1>
+                <p class="mb-3">Turn data into profit. Automatically. Complete POS solutions for Kenyan businesses.</p>
                 <div class="mb-3">
                     <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-lg me-2">
                         <i class="bi bi-cart-fill me-1"></i>Shop Now
@@ -43,17 +21,20 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         <div class="stat-item">
-                            <h5 class="fw-bold mb-0 text-dark">50+</h5>
-                            <p class="small mb-0 text-muted">Businesses Served</p>
+                            <h5 class="fw-bold mb-0">50+</h5>
+                            <p class="small mb-0">Businesses Served</p>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="stat-item">
-                            <h5 class="fw-bold mb-0 text-dark">10,000+</h5>
-                            <p class="small mb-0 text-muted">Products Available</p>
+                            <h5 class="fw-bold mb-0">10,000+</h5>
+                            <p class="small mb-0">Products Available</p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-5 home-hero-visual">
+                <img src="{% static 'images/hero-image.png' %}" alt="Jabem POS terminal, receipt printer, and barcode scanner" class="img-fluid">
             </div>
         </div>
     </div>
@@ -132,6 +113,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="carousel-indicators home-advert-indicators">
+                            <button type="button" data-bs-target="#advertCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Deals Zone"></button>
+                            <button type="button" data-bs-target="#advertCarousel" data-bs-slide-to="1" aria-label="Online Exclusives"></button>
+                            <button type="button" data-bs-target="#advertCarousel" data-bs-slide-to="2" aria-label="Software Special"></button>
                         </div>
                         <!-- Custom Arrows -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#advertCarousel" data-bs-slide="prev" style="width: 40px; height: 40px; background-color: #6c757d; border-radius: 50%; top: 50%; transform: translateY(-50%); left: 10px; opacity: 0.8;">
