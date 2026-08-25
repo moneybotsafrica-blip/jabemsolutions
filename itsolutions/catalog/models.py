@@ -44,7 +44,9 @@ class Brand(models.Model):
     def get_logo_url(self):
         """Return the best available logo URL for this brand."""
         if self.logo:
-            if not settings.DEBUG and settings.CLOUDINARY_CLOUD_NAME:
+            if settings.CLOUDINARY_CLOUD_NAME and (
+                os.environ.get("VERCEL") or not settings.DEBUG
+            ):
                 image_path = PurePosixPath(self.logo.name)
                 return (
                     f"https://res.cloudinary.com/{settings.CLOUDINARY_CLOUD_NAME}"
@@ -113,7 +115,9 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
-            if not settings.DEBUG and settings.CLOUDINARY_CLOUD_NAME:
+            if settings.CLOUDINARY_CLOUD_NAME and (
+                os.environ.get("VERCEL") or not settings.DEBUG
+            ):
                 image_path = PurePosixPath(self.image.name)
                 return (
                     f"https://res.cloudinary.com/{settings.CLOUDINARY_CLOUD_NAME}"
