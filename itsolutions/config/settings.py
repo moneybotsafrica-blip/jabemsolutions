@@ -139,7 +139,7 @@ else:
     MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME", "")
+CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME", "wv4vftnd")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
