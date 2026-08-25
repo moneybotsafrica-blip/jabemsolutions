@@ -18,44 +18,50 @@ def quote_print(request, quote_id):
 
 @staff_member_required
 def quote_pdf(request, quote_id):
-    """Return a downloadable PDF version of an admin quote."""
+    """Generate the formal sales-quotation PDF used by the preview."""
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import A4
-    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
     from reportlab.lib.units import mm
-    from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+    from reportlab.platypus import KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
     quote = get_object_or_404(Quote.objects.prefetch_related("items__product"), pk=quote_id)
-    quote_settings = QuoteSettings.get_solo()
+    company = QuoteSettings.get_solo()
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = f'attachment; filename="{quote.quote_number}.pdf"'
-    document = SimpleDocTemplate(response, pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=14 * mm, bottomMargin=14 * mm)
+    document = SimpleDocTemplate(response, pagesize=A4, leftMargin=11 * mm, rightMargin=11 * mm, topMargin=10 * mm, bottomMargin=10 * mm)
     styles = getSampleStyleSheet()
-    heading = styles["Heading1"].clone("QuoteHeading")
-    heading.textColor = colors.HexColor("#1f4f8d")
-    normal = styles["BodyText"]
-    normal.leading = 14
-    story = [
-        Table([[Paragraph(f"<b>{quote_settings.company_name}</b><br/>{quote_settings.address or ''}<br/>{quote_settings.phone} {quote_settings.email}", normal), Paragraph(f"<font color='#1f4f8d'><b>QUOTE</b></font><br/><b>{quote.quote_number}</b><br/>Issued: {quote.issued_date:%d %b %Y}<br/>Valid until: {quote.valid_until:%d %b %Y}", normal)]], colWidths=[115 * mm, 65 * mm]),
-        Spacer(1, 8 * mm),
-        Paragraph("CLIENT", heading),
-        Paragraph(f"<b>{quote.client_name}</b><br/>{quote.client_company}<br/>{quote.client_phone}<br/>{quote.client_email}<br/>{quote.client_address}".replace("\n", "<br/>"), normal),
-        Spacer(1, 5 * mm),
-        Paragraph("TERMS", heading),
-        Paragraph(quote.project_description or "Product and service quotation", normal),
-        Spacer(1, 5 * mm),
-    ]
-    rows = [["#", "Description", "Unit price", "Qty", "Total"]]
-    for number, item in enumerate(quote.items.all(), start=1):
-        rows.append([str(number), Paragraph(item.description or (item.product.name if item.product else ""), normal), f"KES {item.unit_price:,.2f}", str(item.quantity), f"KES {item.line_total:,.2f}"])
-    if len(rows) == 1:
-        rows.append(["", "No items have been added yet.", "", "", ""])
-    items_table = Table(rows, colWidths=[9 * mm, 76 * mm, 31 * mm, 15 * mm, 42 * mm], repeatRows=1)
-    items_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1f4f8d")), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#dce1e8")), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("ALIGN", (2, 1), (-1, -1), "RIGHT"), ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
-    story.extend([items_table, Spacer(1, 6 * mm)])
-    totals = Table([["Subtotal", f"KES {quote.subtotal:,.2f}"], [f"Tax ({quote.tax_rate}%)", f"KES {quote.tax_amount:,.2f}"], ["TOTAL", f"KES {quote.total:,.2f}"]], colWidths=[42 * mm, 42 * mm], hAlign="RIGHT")
-    totals.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#dce1e8")), ("ALIGN", (1, 0), (-1, -1), "RIGHT"), ("BACKGROUND", (0, -1), (-1, -1), colors.HexColor("#1f4f8d")), ("TEXTCOLOR", (0, -1), (-1, -1), colors.white), ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"), ("PADDING", (0, 0), (-1, -1), 7)]))
-    story.extend([totals, Spacer(1, 8 * mm), Paragraph("TERMS & NOTES", heading), Paragraph((quote.notes + "<br/><br/>" if quote.notes else "") + quote_settings.terms, normal), Spacer(1, 5 * mm), Paragraph(f"<b>Payment details</b><br/>{quote_settings.payment_details}<br/><br/><b>Bank account details</b><br/>{quote_settings.bank_details or 'Available on request.'}", normal)])
+    body = ParagraphStyle("FormalBody", parent=styles["BodyText"], fontName="Helvetica", fontSize=8.5, leading=11)
+    small = ParagraphStyle("FormalSmall", parent=body, fontSize=7.5, leading=9)
+    title = ParagraphStyle("FormalTitle", parent=styles["Heading1"], fontName="Helvetica-Bold", fontSize=27, leading=29, textColor=colors.HexColor("#1762A3"), alignment=2)
+    label = ParagraphStyle("FormalLabel", parent=body, fontName="Helvetica-Bold")
+    blue = colors.HexColor("#1762A3")
+    grey = colors.HexColor("#D4D4D4")
+    width = 188 * mm
+    def para(value, style=body):
+        return Paragraph(str(value or "").replace("\n", "<br/>"), style)
+
+    company_text = para(f"<b>{company.company_name.upper()}</b><br/>{company.address}<br/><b>Ph:</b> {company.phone} &nbsp; <b>Email:</b> {company.email}<br/><b>Reg / VAT:</b> {company.business_number}")
+    meta_text = para(f"<b>Number:</b>&nbsp;&nbsp; {quote.quote_number}<br/><b>Date:</b>&nbsp;&nbsp; {quote.issued_date:%d %b %Y}<br/><b>Page:</b>&nbsp;&nbsp; 1<br/><b>Reference:</b>&nbsp;&nbsp; {(quote.notes or 'Quotation')[:70]}<br/><b>Valid until:</b>&nbsp;&nbsp; {quote.valid_until:%d %b %Y}")
+    header = Table([[company_text, [Paragraph("QUOTATION", title), meta_text]]], colWidths=[119 * mm, 69 * mm])
+    header.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LINEBELOW", (0, 0), (-1, -1), 10, colors.HexColor("#5C9ED0")), ("BOTTOMPADDING", (0, 0), (-1, -1), 8)]))
+    client_text = f"<b>{quote.client_name}</b><br/>{quote.client_company}<br/>{quote.client_phone}<br/>{quote.client_email}<br/>{quote.client_address}"
+    parties = Table([[para("<b>Sold To:</b><br/>" + client_text), para("<b>Ship To:</b><br/>" + client_text), para("<b>Sales person:</b> Jabem Solutions<br/><b>Contact:</b> +254736 794 594<br/><b>Currency:</b> KES")]], colWidths=[72 * mm, 72 * mm, 44 * mm])
+    parties.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("BOX", (0, 0), (1, 0), 1, colors.black), ("INNERGRID", (0, 0), (1, 0), 0.4, colors.black), ("LEFTPADDING", (0, 0), (-1, -1), 7), ("RIGHTPADDING", (0, 0), (-1, -1), 7), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
+    rows = [["Line", "Item", "Item Description", "Quantity", "Unit", "Unit Price", "Total"], ["PRODUCTS / SERVICES", "", "", "", "", "", ""]]
+    for index, item in enumerate(quote.items.all(), 1):
+        rows.append([str(index), item.product.sku if item.product else "", para(item.description or (item.product.name if item.product else ""), small), str(item.quantity), "EA", f"{item.unit_price:,.2f}", f"{item.line_total:,.2f}"])
+    if len(rows) == 2:
+        rows.append(["", "", "No items have been added yet.", "", "", "", ""])
+    item_table = Table(rows, colWidths=[10 * mm, 20 * mm, 65 * mm, 18 * mm, 17 * mm, 29 * mm, 29 * mm], repeatRows=1)
+    item_table.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black), ("BACKGROUND", (0, 0), (-1, 0), grey), ("BACKGROUND", (0, 1), (-1, 1), colors.HexColor("#F4F4F4")), ("SPAN", (0, 1), (-1, 1)), ("FONTNAME", (0, 0), (-1, 1), "Helvetica-Bold"), ("ALIGN", (0, 0), (-1, 1), "CENTER"), ("ALIGN", (0, 2), (1, -1), "CENTER"), ("ALIGN", (3, 2), (-1, -1), "RIGHT"), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 4), ("RIGHTPADDING", (0, 0), (-1, -1), 4), ("TOPPADDING", (0, 0), (-1, -1), 6), ("BOTTOMPADDING", (0, 0), (-1, -1), 6)]))
+    totals = Table([["Subtotal:", f"KES {quote.subtotal:,.2f}"], ["Discount:", "KES 0.00"], ["Delivery:", "KES 0.00"], ["VAT:", f"KES {quote.tax_amount:,.2f}"], ["Total:", f"KES {quote.total:,.2f}"]], colWidths=[35 * mm, 41 * mm])
+    totals.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black), ("BACKGROUND", (0, 0), (0, -1), grey), ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"), ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"), ("ALIGN", (1, 0), (1, -1), "RIGHT"), ("PADDING", (0, 0), (-1, -1), 6)]))
+    bottom = Table([[para((quote.notes or f"{quote.quote_number} - quotation prepared for {quote.client_name}"), body), totals]], colWidths=[112 * mm, 76 * mm])
+    bottom.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 0.5, colors.black), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 7), ("RIGHTPADDING", (0, 0), (-1, -1), 0), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
+    bank = para(f"<b>BANK DETAILS:</b><br/><b>Account Name:</b> {company.company_name}&nbsp;&nbsp;&nbsp;&nbsp; <b>Bank details:</b> {company.bank_details or 'Available on request.'}<br/><b>Payment details:</b> {company.payment_details}", small)
+    terms = para(f"<b>TERMS AND CONDITIONS:</b><br/>{company.terms}<br/><br/><font color='#4B5563'>Quotation created by Jabem Solutions Limited - +254736 794 594 - jabemsolutionsltd@gmail.com</font>", small)
+    story = [header, Spacer(1, 7 * mm), parties, Spacer(1, 6 * mm), item_table, Spacer(1, 0), bottom, Spacer(1, 6 * mm), bank, Spacer(1, 5 * mm), terms]
     document.build(story)
     return response
 
