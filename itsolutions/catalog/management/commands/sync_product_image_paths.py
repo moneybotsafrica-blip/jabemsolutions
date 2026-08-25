@@ -12,8 +12,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fixture_path = Path(settings.BASE_DIR).parent / "local_data.json"
-        with fixture_path.open(encoding="utf-8") as fixture_file:
-            fixture_data = json.load(fixture_file)
+        fixture_bytes = fixture_path.read_bytes()
+        encoding = "utf-16" if fixture_bytes.startswith((b"\xff\xfe", b"\xfe\xff")) else "utf-8-sig"
+        fixture_data = json.loads(fixture_bytes.decode(encoding))
 
         image_paths = {
             item["fields"]["sku"]: item["fields"].get("image", "")
