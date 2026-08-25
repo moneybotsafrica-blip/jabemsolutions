@@ -249,6 +249,116 @@ a:hover {
     }
 }
 
+/* Final POS mobile overrides: these intentionally follow the site-wide rules. */
+@media (max-width: 767.98px) {
+    .pos-demo-shell { display: block; min-height: 0 !important; }
+    #pos-header .d-flex { flex-wrap: wrap; gap: 0.5rem !important; }
+    #pos-header .d-flex:first-child,
+    #pos-header .d-flex:last-child { width: 100%; justify-content: space-between; flex-direction: row; }
+    #pos-header #current-time { display: none; }
+    #pos-sidebar { position: static !important; width: 100%; padding: 0.45rem !important; }
+    #pos-sidebar .nav { flex-direction: row; flex-wrap: nowrap; gap: 0.35rem; overflow-x: auto; padding-bottom: 0.15rem; scrollbar-width: thin; }
+    #pos-sidebar .nav-link { flex: 0 0 auto; min-height: 38px; min-width: auto; margin: 0 !important; padding: 0.4rem 0.65rem; font-size: 0.72rem; }
+    #pos-sidebar .nav-link i { margin-right: 0.25rem !important; }
+    #pos-main-content { width: 100%; }
+    #module-sales > .row { display: block; }
+    #module-sales > .row > .col-lg-7,
+    #module-sales > .row > .col-lg-5 { width: 100%; padding: 0.85rem !important; }
+    #module-sales .row.g-2 > .col-md-4 { flex: 0 0 100%; max-width: 100%; }
+    #pos-products { max-height: 340px; overflow-y: auto; }
+    #pos-products .product-btn { min-height: 104px; font-size: 0.75rem !important; }
+    #module-sales .table-responsive { max-height: 170px !important; }
+    #module-sales .bg-dark { border-top: 3px solid rgba(255, 255, 255, 0.2); }
+}
+
+/* POS demo: keep controls inside the demo and stack checkout on phones. */
+@media (max-width: 767.98px) {
+    .pos-demo-shell {
+        display: block;
+        min-height: 0 !important;
+    }
+
+    #pos-header .d-flex {
+        flex-wrap: wrap;
+        gap: 0.5rem !important;
+    }
+
+    #pos-header .d-flex:first-child,
+    #pos-header .d-flex:last-child {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #pos-header #current-time {
+        display: none;
+    }
+
+    #pos-sidebar {
+        position: static;
+        width: 100%;
+        padding: 0.45rem !important;
+    }
+
+    #pos-sidebar .nav {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 0.35rem;
+        overflow-x: auto;
+        padding-bottom: 0.15rem;
+        scrollbar-width: thin;
+    }
+
+    #pos-sidebar .nav-link {
+        flex: 0 0 auto;
+        min-height: 38px;
+        min-width: auto;
+        margin: 0 !important;
+        padding: 0.4rem 0.65rem;
+        font-size: 0.72rem;
+    }
+
+    #pos-sidebar .nav-link i {
+        margin-right: 0.25rem !important;
+    }
+
+    #pos-main-content {
+        width: 100%;
+    }
+
+    #module-sales > .row {
+        display: block;
+    }
+
+    #module-sales > .row > .col-lg-7,
+    #module-sales > .row > .col-lg-5 {
+        width: 100%;
+        padding: 0.85rem !important;
+    }
+
+    #module-sales .row.g-2 > .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    #pos-products {
+        max-height: 340px;
+        overflow-y: auto;
+    }
+
+    #pos-products .product-btn {
+        min-height: 104px;
+        font-size: 0.75rem !important;
+    }
+
+    #module-sales .table-responsive {
+        max-height: 170px !important;
+    }
+
+    #module-sales .bg-dark {
+        border-top: 3px solid rgba(255, 255, 255, 0.2);
+    }
+}
+
 .badge-stock-low {
     background-color: #dc3545;
 }
@@ -1224,4 +1334,26 @@ footer.bg-white {
     .d-flex.gap-2 > * {
         width: 100%;
     }
+}
+
+/* Final POS mobile overrides: these intentionally follow the site-wide rules. */
+@media (max-width: 767.98px) {
+    .pos-demo-shell { display: block; min-height: 0 !important; }
+    #pos-header .d-flex { flex-wrap: wrap; gap: 0.5rem !important; }
+    #pos-header .d-flex:first-child,
+    #pos-header .d-flex:last-child { width: 100%; justify-content: space-between; flex-direction: row; }
+    #pos-header #current-time { display: none; }
+    #pos-sidebar { position: static !important; width: 100%; padding: 0.45rem !important; }
+    #pos-sidebar .nav { flex-direction: row; flex-wrap: nowrap; gap: 0.35rem; overflow-x: auto; padding-bottom: 0.15rem; scrollbar-width: thin; }
+    #pos-sidebar .nav-link { flex: 0 0 auto; min-height: 38px; min-width: auto; margin: 0 !important; padding: 0.4rem 0.65rem; font-size: 0.72rem; }
+    #pos-sidebar .nav-link i { margin-right: 0.25rem !important; }
+    #pos-main-content { width: 100%; }
+    #module-sales > .row { display: block; }
+    #module-sales > .row > .col-lg-7,
+    #module-sales > .row > .col-lg-5 { width: 100%; padding: 0.85rem !important; }
+    #module-sales .row.g-2 > .col-md-4 { flex: 0 0 100%; max-width: 100%; }
+    #pos-products { max-height: 340px; overflow-y: auto; }
+    #pos-products .product-btn { min-height: 104px; font-size: 0.75rem !important; }
+    #module-sales .table-responsive { max-height: 170px !important; }
+    #module-sales .bg-dark { border-top: 3px solid rgba(255, 255, 255, 0.2); }
 }
