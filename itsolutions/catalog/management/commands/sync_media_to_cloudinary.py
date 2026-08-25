@@ -8,12 +8,15 @@ import cloudinary.uploader
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
+from catalog.models import Product
+
 
 class Command(BaseCommand):
     help = "Upload local media files to Cloudinary while preserving their paths."
 
     def add_arguments(self, parser):
         parser.add_argument("--workers", type=int, default=8)
+        parser.add_argument("--database-products-only", action="store_true")
 
     def handle(self, *args, **options):
         cloudinary_url = urlparse(os.environ.get("CLOUDINARY_URL", ""))
@@ -32,10 +35,17 @@ class Command(BaseCommand):
         )
 
         media_root = Path(settings.MEDIA_ROOT)
-        media_files = [path for path in media_root.rglob("*") if path.is_file()]
+        if options["database_products_only"]:
+            media_files = [
+                media_root / product.image.name
+                for product in Product.objects.exclude(image="")
+                if (media_root / product.image.name).is_file()
+            ]
+        else:
+            media_files = [path for path in media_root.rglob("*") if path.is_file()]
         def upload_image(image_path):
             relative_path = image_path.relative_to(media_root)
-            public_id = (Path("jabem-media") / relative_path).with_suffix("").as_posix()
+            public_id = (Path("jabem-media") / relative_path).as_posix()
             try:
                 cloudinary.uploader.upload(
                     str(image_path),
