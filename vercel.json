@@ -10,6 +10,9 @@
   ],
   "routes": [
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
       "dest": "itsolutions/config/wsgi.py"
     }
