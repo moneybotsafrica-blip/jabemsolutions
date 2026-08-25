@@ -1,8 +1,10 @@
 from django.conf import settings
 from django.db import models, transaction
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.text import slugify
 from decimal import Decimal
+from datetime import timedelta
 import os
 from pathlib import PurePosixPath
 
@@ -288,6 +290,107 @@ class OrderItem(models.Model):
     @property
     def total_price(self):
         return self.price * self.quantity
+
+
+def default_quote_valid_until():
+    return timezone.localdate() + timedelta(days=30)
+
+
+class QuoteSettings(models.Model):
+    """Single editable company profile used by all printable quotes."""
+    company_name = models.CharField(max_length=160, default="Jabem Solutions Ltd")
+    logo_url = models.URLField(max_length=500, blank=True, help_text="Optional public logo URL. The site logo is used when blank.")
+    phone = models.CharField(max_length=40, blank=True)
+    email = models.EmailField(blank=True)
+    address = models.TextField(blank=True)
+    business_number = models.CharField(max_length=100, blank=True, verbose_name="Business / tax number")
+    bank_details = models.TextField(blank=True)
+    payment_details = models.TextField(blank=True, default="Payment is due before delivery or installation.")
+    terms = models.TextField(blank=True, default="Please confirm acceptance of this quote before work begins. Prices are valid for the period shown above.")
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Quote settings"
+        verbose_name_plural = "Quote settings"
+
+    def __str__(self):
+        return self.company_name
+
+    @classmethod
+    def get_solo(cls):
+        settings_record, _ = cls.objects.get_or_create(pk=1)
+        return settings_record
+
+
+class Quote(models.Model):
+    STATUS_CHOICES = [("draft", "Draft"), ("sent", "Sent"), ("accepted", "Accepted"), ("expired", "Expired")]
+    quote_number = models.CharField(max_length=40, unique=True, blank=True, editable=False)
+    client_name = models.CharField(max_length=160)
+    client_company = models.CharField(max_length=160, blank=True)
+    client_phone = models.CharField(max_length=40, blank=True)
+    client_email = models.EmailField(blank=True)
+    client_address = models.TextField(blank=True)
+    project_description = models.TextField(blank=True)
+    issued_date = models.DateField(default=timezone.localdate)
+    valid_until = models.DateField(default=default_quote_valid_until)
+    tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("16.00"))
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default="draft")
+    notes = models.TextField(blank=True, help_text="Optional notes shown above the standard terms.")
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="quotes_created")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.quote_number or f"New quote for {self.client_name}"
+
+    def save(self, *args, **kwargs):
+        creating = self.pk is None
+        super().save(*args, **kwargs)
+        if creating and not self.quote_number:
+            self.quote_number = f"Q-{self.issued_date:%Y}-{self.pk:05d}"
+            type(self).objects.filter(pk=self.pk).update(quote_number=self.quote_number)
+
+    @property
+    def subtotal(self):
+        return sum((item.line_total for item in self.items.all()), Decimal("0.00"))
+
+    @property
+    def tax_amount(self):
+        return (self.subtotal * self.tax_rate / Decimal("100")).quantize(Decimal("0.01"))
+
+    @property
+    def total(self):
+        return self.subtotal + self.tax_amount
+
+
+class QuoteItem(models.Model):
+    quote = models.ForeignKey(Quote, on_delete=models.CASCADE, related_name="items")
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.SET_NULL)
+    description = models.CharField(max_length=255, blank=True)
+    unit_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("0.00"))
+    quantity = models.PositiveIntegerField(default=1)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "pk"]
+
+    def __str__(self):
+        return self.description or (self.product.name if self.product else "Quote item")
+
+    def save(self, *args, **kwargs):
+        if self.product:
+            if not self.description:
+                self.description = self.product.name
+            if not self.unit_price:
+                self.unit_price = self.product.price
+        super().save(*args, **kwargs)
+
+    @property
+    def line_total(self):
+        return self.unit_price * self.quantity
 
 
 # POS Demo Models

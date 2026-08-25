@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quote {{ quote.quote_number }}</title>
+    <style>
+        :root { --blue: #1f4f8d; --ink: #172033; --muted: #607080; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #edf1f5; color: var(--ink); font: 14px Arial, sans-serif; }
+        .toolbar { max-width: 900px; margin: 18px auto 0; display: flex; justify-content: flex-end; }
+        .toolbar button { border: 0; border-radius: 6px; background: var(--blue); color: #fff; font-weight: 700; padding: 10px 16px; cursor: pointer; }
+        .quote { max-width: 900px; min-height: 1120px; margin: 18px auto; padding: 44px; background: #fff; box-shadow: 0 3px 18px #c9d0d9; }
+        .header { display: flex; justify-content: space-between; gap: 30px; border-bottom: 4px solid var(--blue); padding-bottom: 22px; }
+        .identity { display: flex; align-items: center; gap: 16px; }
+        .logo { width: 92px; max-height: 68px; object-fit: contain; }
+        .company { font-size: 25px; font-weight: 700; color: var(--blue); }
+        .company-details { color: var(--muted); line-height: 1.55; margin-top: 6px; }
+        .quote-title { text-align: right; }
+        .quote-title h1 { margin: 0; color: var(--blue); font-size: 34px; }
+        .quote-title p { margin: 8px 0 0; line-height: 1.65; }
+        .sections { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin: 28px 0; }
+        .section-title { margin: 0 0 9px; padding: 8px 10px; color: #fff; background: var(--blue); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+        .panel { border: 1px solid #d6dce5; min-height: 125px; padding: 12px; line-height: 1.65; }
+        .muted { color: var(--muted); }
+        table { width: 100%; border-collapse: collapse; margin-top: 26px; }
+        th { background: var(--blue); color: #fff; padding: 10px; text-align: left; font-size: 12px; }
+        td { padding: 10px; border-bottom: 1px solid #dce1e8; vertical-align: top; }
+        tbody tr:nth-child(even) { background: #f5f7f9; }
+        .number { text-align: right; white-space: nowrap; }
+        .summary { width: 310px; margin: 24px 0 26px auto; }
+        .summary div { display: flex; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid #dce1e8; }
+        .summary .total { color: #fff; background: var(--blue); font-size: 17px; font-weight: 700; }
+        .terms { border: 1px solid #d6dce5; padding: 14px; line-height: 1.6; white-space: pre-line; }
+        .footer { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 30px; padding-top: 18px; border-top: 2px solid var(--blue); white-space: pre-line; line-height: 1.55; }
+        @media print { body { background: #fff; } .toolbar { display: none; } .quote { box-shadow: none; margin: 0; max-width: none; } @page { size: A4; margin: 10mm; } }
+        @media (max-width: 650px) { .quote { margin: 0; padding: 22px; } .header, .sections, .footer { display: block; } .quote-title { text-align: left; margin-top: 20px; } .sections > div { margin-bottom: 20px; } .summary { width: 100%; } }
+    </style>
+</head>
+<body>
+    <div class="toolbar"><button type="button" onclick="window.print()">Print / Save as PDF</button></div>
+    <article class="quote">
+        <header class="header">
+            <div class="identity">
+                <img class="logo" src="{% if quote_settings.logo_url %}{{ quote_settings.logo_url }}{% else %}{% static 'images/logo.jpeg' %}{% endif %}" alt="{{ quote_settings.company_name }} logo">
+                <div><div class="company">{{ quote_settings.company_name }}</div><div class="company-details">{{ quote_settings.address|linebreaksbr }}<br>{{ quote_settings.phone }}{% if quote_settings.email %} · {{ quote_settings.email }}{% endif %}</div></div>
+            </div>
+            <div class="quote-title"><h1>QUOTE</h1><p><strong>{{ quote.quote_number }}</strong><br>Issued: {{ quote.issued_date|date:"d M Y" }}<br>Valid until: {{ quote.valid_until|date:"d M Y" }}</p></div>
+        </header>
+        <section class="sections"><div><h2 class="section-title">Client</h2><div class="panel"><strong>{{ quote.client_name }}</strong>{% if quote.client_company %}<br>{{ quote.client_company }}{% endif %}{% if quote.client_phone %}<br>{{ quote.client_phone }}{% endif %}{% if quote.client_email %}<br>{{ quote.client_email }}{% endif %}{% if quote.client_address %}<br>{{ quote.client_address|linebreaksbr }}{% endif %}</div></div><div><h2 class="section-title">Quote / Project description</h2><div class="panel muted">{{ quote.project_description|default:"Product and service quotation"|linebreaksbr }}</div></div></section>
+        <table><thead><tr><th>#</th><th>Description</th><th class="number">Unit price</th><th class="number">Qty</th><th class="number">Total</th></tr></thead><tbody>{% for item in quote.items.all %}<tr><td>{{ forloop.counter }}</td><td>{{ item.description|default:item.product.name }}</td><td class="number">KES {{ item.unit_price|floatformat:2 }}</td><td class="number">{{ item.quantity }}</td><td class="number">KES {{ item.line_total|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="5" class="muted">No items have been added yet.</td></tr>{% endfor %}</tbody></table>
+        <div class="summary"><div><span>Subtotal</span><strong>KES {{ quote.subtotal|floatformat:2 }}</strong></div><div><span>Tax ({{ quote.tax_rate }}%)</span><strong>KES {{ quote.tax_amount|floatformat:2 }}</strong></div><div class="total"><span>Total</span><span>KES {{ quote.total|floatformat:2 }}</span></div></div>
+        <section><h2 class="section-title">Terms &amp; notes</h2><div class="terms">{% if quote.notes %}{{ quote.notes }}
+
+{% endif %}{{ quote_settings.terms }}</div></section>
+        <footer class="footer"><div><strong>Bank account details</strong><br>{{ quote_settings.bank_details|default:"Available on request." }}</div><div><strong>Payment details</strong><br>{{ quote_settings.payment_details }}</div></footer>
+    </article>
+</body>
+</html>

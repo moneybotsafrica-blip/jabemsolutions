@@ -2,10 +2,17 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.db import transaction
 from decimal import Decimal
-from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct
+from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct, Quote, QuoteSettings
+
+
+@staff_member_required
+def quote_print(request, quote_id):
+    quote = get_object_or_404(Quote.objects.prefetch_related("items__product"), pk=quote_id)
+    return render(request, "catalog/quote_print.html", {"quote": quote, "quote_settings": QuoteSettings.get_solo()})
 
 
 class ProductListView(ListView):

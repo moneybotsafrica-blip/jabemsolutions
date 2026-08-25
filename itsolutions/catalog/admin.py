@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.urls import reverse
 from .models import (
     Category, Brand, Product, Stock, StockMovement, Cart, CartItem, Order, OrderItem,
-    POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem
+    POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem
 )
 
 
@@ -364,6 +364,66 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_display = ("order", "product", "quantity", "price", "total_price")
     list_filter = ("order__status",)
     search_fields = ("product__name", "order__id")
+
+
+class QuoteItemInline(admin.TabularInline):
+    model = QuoteItem
+    extra = 1
+    autocomplete_fields = ("product",)
+    fields = ("product", "description", "unit_price", "quantity", "order", "line_total")
+    readonly_fields = ("line_total",)
+
+
+@admin.register(QuoteSettings)
+class QuoteSettingsAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ("Company details", {"fields": ("company_name", "logo_url", "phone", "email", "address", "business_number")}),
+        ("Payment and quote terms", {"fields": ("bank_details", "payment_details", "terms")}),
+    )
+
+    def has_add_permission(self, request):
+        return not QuoteSettings.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(Quote)
+class QuoteAdmin(admin.ModelAdmin):
+    list_display = ("quote_number", "client_name", "client_company", "issued_date", "valid_until", "status", "total_display", "print_link")
+    list_filter = ("status", "issued_date", "valid_until")
+    search_fields = ("quote_number", "client_name", "client_company", "client_email")
+    readonly_fields = ("quote_number", "created_at", "updated_at", "subtotal_display", "tax_display", "total_display")
+    inlines = (QuoteItemInline,)
+    fieldsets = (
+        ("Quote", {"fields": ("quote_number", "status", "issued_date", "valid_until", "created_by")}),
+        ("Client", {"fields": ("client_name", "client_company", "client_phone", "client_email", "client_address")}),
+        ("Project and totals", {"fields": ("project_description", "tax_rate", "notes", "subtotal_display", "tax_display", "total_display")}),
+        ("Metadata", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+    )
+
+    def save_model(self, request, obj, form, change):
+        if not obj.created_by_id:
+            obj.created_by = request.user
+        super().save_model(request, obj, form, change)
+
+    def total_display(self, obj):
+        return f"KES {obj.total:,.2f}"
+    total_display.short_description = "Total"
+
+    def subtotal_display(self, obj):
+        return f"KES {obj.subtotal:,.2f}"
+    subtotal_display.short_description = "Subtotal"
+
+    def tax_display(self, obj):
+        return f"KES {obj.tax_amount:,.2f}"
+    tax_display.short_description = "Tax"
+
+    def print_link(self, obj):
+        if not obj.pk:
+            return "Save first"
+        return format_html('<a class="button" target="_blank" href="{}">Print / PDF</a>', reverse("catalog:quote_print", args=[obj.pk]))
+    print_link.short_description = "Document"
 
 
 # POS Demo Admin Classes

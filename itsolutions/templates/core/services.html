@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class="text-center mt-5">
-        <a href="{% if user.is_authenticated %}{% url 'portal:service_request_create' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="btn btn-primary btn-lg">
+        <a href="{% url 'core:contact' %}" class="btn btn-primary btn-lg">
             Request a Service
         </a>
     </div>
