@@ -271,6 +271,42 @@ a:hover {
     #module-sales .bg-dark { border-top: 3px solid rgba(255, 255, 255, 0.2); }
 }
 
+/* Clear, tap-friendly mobile navigation. These rules override desktop hover menus. */
+@media (max-width: 991.98px) {
+    .navbar .nav-item.dropdown:hover .dropdown-menu { display: none; }
+    .navbar .nav-item.dropdown > .dropdown-menu.show { display: block; }
+    .navbar-toggler { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .category-menu-label { color: #fff; font-size: 0.8rem; font-weight: 600; }
+    #navMain,
+    #categoryNav { width: 100%; }
+    #navMain .navbar-nav,
+    #categoryNav .navbar-nav { width: 100%; }
+    #navMain .nav-link,
+    #categoryNav .nav-link { justify-content: space-between; }
+    #navMain .dropdown-menu,
+    #categoryNav .dropdown-menu { width: 100%; }
+    #categoryNav .dropdown-menu { background: rgba(255, 255, 255, 0.98); }
+}
+
+/* Services and branding section */
+.services-hero { background: linear-gradient(135deg, #f4fbf7 0%, #e7f5ed 100%); }
+.services-hero .lead { max-width: 760px; }
+.branding-service { background: #f8faf9; border-radius: 1rem; padding: 1.25rem; }
+.branding-image { display: block; width: 100%; border-radius: 0.85rem; object-fit: cover; box-shadow: 0 0.75rem 1.75rem rgba(15, 61, 46, 0.14); }
+.branding-image-tall { height: 330px; }
+.branding-image-short { height: 220px; }
+.branding-item-note { min-height: 95px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.3rem; border-radius: 0.85rem; color: #fff; background: var(--brand-dark); font-size: 0.85rem; font-weight: 600; text-align: center; }
+.branding-item-note i { font-size: 1.45rem; }
+
+@media (max-width: 767.98px) {
+    .services-hero { padding-top: 2.25rem !important; padding-bottom: 2.25rem !important; }
+    .services-hero .display-6 { font-size: 1.8rem; line-height: 1.2; }
+    .branding-service { padding: 1rem; margin-left: 0; margin-right: 0; }
+    .branding-image-tall { height: 255px; }
+    .branding-image-short { height: 165px; }
+    .branding-item-note { min-height: 75px; font-size: 0.72rem; }
+}
+
 /* POS demo: keep controls inside the demo and stack checkout on phones. */
 @media (max-width: 767.98px) {
     .pos-demo-shell {

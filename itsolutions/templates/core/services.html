@@ -1,8 +1,17 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Services — {{ SITE_NAME }}{% endblock %}
 {% block content %}
+<section class="services-hero py-5">
+    <div class="container">
+        <span class="text-uppercase fw-semibold small text-success">Jabem Solutions</span>
+        <h1 class="display-6 fw-bold mb-3">Business technology and branding that works.</h1>
+        <p class="lead text-muted mb-0">From your POS counter to the branded items your customers take home, we make your business look and run its best.</p>
+    </div>
+</section>
+
 <section class="container py-5">
-    <h1 class="mb-4">Our Services</h1>
+    <h2 class="h3 mb-4">Our Services</h2>
     <div class="row g-4">
         <div class="col-md-6">
             <div class="card h-100 shadow-sm">
@@ -43,6 +52,31 @@
                         recommend the right hardware/software combination.</p>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row g-4 align-items-center mt-4 branding-service">
+        <div class="col-lg-6">
+            <div class="row g-3">
+                <div class="col-6">
+                    <img class="branding-image branding-image-tall" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Custom branded T-shirts on display" loading="lazy">
+                </div>
+                <div class="col-6 d-flex flex-column gap-3">
+                    <img class="branding-image branding-image-short" src="https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Branded promotional items" loading="lazy">
+                    <div class="branding-item-note"><i class="bi bi-palette2"></i><span>Made for your brand</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <span class="text-uppercase fw-semibold small text-success">Branding &amp; merchandise</span>
+            <h2 class="h3 fw-bold mt-2">Put your brand in customers’ hands.</h2>
+            <p class="text-muted">We supply branded T-shirts, workwear, caps, mugs, notebooks, pens, bags and event materials for a consistent, professional look.</p>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <span class="badge text-bg-light border">T-shirts &amp; workwear</span>
+                <span class="badge text-bg-light border">Mugs &amp; bottles</span>
+                <span class="badge text-bg-light border">Stationery &amp; gifts</span>
+                <span class="badge text-bg-light border">Signage &amp; events</span>
+            </div>
+            <a href="{% url 'core:contact' %}" class="btn btn-primary">Request branding support <i class="bi bi-arrow-right ms-1"></i></a>
         </div>
     </div>
     <div class="text-center mt-5">

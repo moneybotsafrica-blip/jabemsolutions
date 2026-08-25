@@ -45,8 +45,9 @@
             <img src="{% static 'images/logo.jpeg' %}" alt="{{ SITE_NAME }}" style="height: 60px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
             <span style="display: none;"><i class="bi bi-cpu-fill me-1"></i>{{ SITE_NAME }}</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Open main menu">
             <span class="navbar-toggler-icon"></span>
+            <span class="visually-hidden">Main menu</span>
         </button>
         <div class="collapse navbar-collapse" id="navMain">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
@@ -119,8 +120,9 @@
 <!-- Category Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark category-nav" style="background-color: #4a148c;">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#categoryNav" aria-label="Toggle category navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#categoryNav" aria-controls="categoryNav" aria-expanded="false" aria-label="Browse product categories">
             <span class="navbar-toggler-icon"></span>
+            <span class="category-menu-label">Categories</span>
         </button>
         <div class="collapse navbar-collapse" id="categoryNav">
             <ul class="navbar-nav mx-auto">
