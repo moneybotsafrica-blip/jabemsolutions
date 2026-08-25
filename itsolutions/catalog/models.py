@@ -306,7 +306,15 @@ class QuoteSettings(models.Model):
     business_number = models.CharField(max_length=100, blank=True, verbose_name="Business / tax number")
     bank_details = models.TextField(blank=True)
     payment_details = models.TextField(blank=True, default="Payment is due before delivery or installation.")
-    terms = models.TextField(blank=True, default="Please confirm acceptance of this quote before work begins. Prices are valid for the period shown above.")
+    terms = models.TextField(blank=True, default="""1. Payment: 100% before Dispatch.
+2. Price Validity: Prices are valid for 14 days from the quotation date.
+3. Delivery: On receipt of LPO / PAYMENT.
+4. Warranty: One (1) Year Warranty where applicable from the date of installation.
+5. The equipment should be plugged into a clean power source (UPS and adequate Earthing).
+6. All goods remain the property of Jabem Solutions Limited until payment is received in full. Lipa Na Mpesa Paybill No-247247 Account Number: 309061 or Paybill-516600 Account Number: 309061. Business Name: Jabem Solutions Limited.
+
+For Clarifications, please contact Jabem Solutions Limited, +254736 794 594, jabemsolutionsltd@gmail.com.
+IMPORTANT - When making a payment, kindly pay against the Account above.""")
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
