@@ -43,6 +43,8 @@ class Brand(models.Model):
     def get_logo_url(self):
         """Return the best available logo URL for this brand."""
         if self.logo:
+            if not settings.DEBUG:
+                return f"{settings.STATIC_URL}media/{self.logo.name}"
             return self.logo.url
         return None
 
@@ -106,6 +108,8 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
+            if not settings.DEBUG:
+                return f"{settings.STATIC_URL}media/{self.image.name}"
             return self.image.url
         return None
 
