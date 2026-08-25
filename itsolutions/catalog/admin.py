@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
+from django.urls import path
+from django.template.response import TemplateResponse
+from django.utils.dateparse import parse_date
 from .models import (
     Category, Brand, Product, Stock, StockMovement, Cart, CartItem, Order, OrderItem,
     POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem
@@ -390,6 +393,7 @@ class QuoteSettingsAdmin(admin.ModelAdmin):
 
 @admin.register(Quote)
 class QuoteAdmin(admin.ModelAdmin):
+    change_list_template = "admin/catalog/quote/change_list.html"
     list_display = ("quote_number", "client_name", "client_company", "issued_date", "valid_until", "status", "total_display", "print_link")
     list_filter = ("status", "issued_date", "valid_until")
     search_fields = ("quote_number", "client_name", "client_company", "client_email")
@@ -422,8 +426,41 @@ class QuoteAdmin(admin.ModelAdmin):
     def print_link(self, obj):
         if not obj.pk:
             return "Save first"
-        return format_html('<a class="button" target="_blank" href="{}">Print / PDF</a>', reverse("catalog:quote_print", args=[obj.pk]))
+        return format_html('<a class="button" target="_blank" href="{}">Preview</a> <a class="button" href="{}">PDF</a>', reverse("catalog:quote_print", args=[obj.pk]), reverse("catalog:quote_pdf", args=[obj.pk]))
     print_link.short_description = "Document"
+
+    def get_urls(self):
+        urls = super().get_urls()
+        report_urls = [
+            path("report/", self.admin_site.admin_view(self.quotation_report), name="catalog_quote_report"),
+        ]
+        return report_urls + urls
+
+    def quotation_report(self, request):
+        quotes = Quote.objects.prefetch_related("items")
+        date_from = parse_date(request.GET.get("date_from", ""))
+        date_to = parse_date(request.GET.get("date_to", ""))
+        if date_from:
+            quotes = quotes.filter(issued_date__gte=date_from)
+        if date_to:
+            quotes = quotes.filter(issued_date__lte=date_to)
+        quote_rows = list(quotes)
+        totals = {
+            "count": len(quote_rows),
+            "draft": sum(quote.status == "draft" for quote in quote_rows),
+            "sent": sum(quote.status == "sent" for quote in quote_rows),
+            "accepted": sum(quote.status == "accepted" for quote in quote_rows),
+            "value": sum((quote.total for quote in quote_rows), 0),
+        }
+        context = {
+            **self.admin_site.each_context(request),
+            "title": "Quotation report",
+            "quotes": quote_rows,
+            "totals": totals,
+            "date_from": request.GET.get("date_from", ""),
+            "date_to": request.GET.get("date_to", ""),
+        }
+        return TemplateResponse(request, "admin/catalog/quote/report.html", context)
 
     class Media:
         js = ("admin/js/quote_admin_layout.js",)

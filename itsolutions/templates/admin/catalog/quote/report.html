@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+  <h1>Quotation report</h1>
+  <form method="get" style="margin-bottom: 20px; display: flex; gap: 12px; align-items: end; flex-wrap: wrap;">
+    <div><label for="date_from">From</label><br><input id="date_from" type="date" name="date_from" value="{{ date_from }}"></div>
+    <div><label for="date_to">To</label><br><input id="date_to" type="date" name="date_to" value="{{ date_to }}"></div>
+    <div><button type="submit" class="default">Apply dates</button> <a href="{% url 'admin:catalog_quote_report' %}">Clear</a></div>
+  </form>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px;">
+    <div class="module" style="padding: 14px;"><strong>Quotes</strong><br><span style="font-size: 24px;">{{ totals.count }}</span></div>
+    <div class="module" style="padding: 14px;"><strong>Draft</strong><br><span style="font-size: 24px;">{{ totals.draft }}</span></div>
+    <div class="module" style="padding: 14px;"><strong>Sent</strong><br><span style="font-size: 24px;">{{ totals.sent }}</span></div>
+    <div class="module" style="padding: 14px;"><strong>Accepted</strong><br><span style="font-size: 24px;">{{ totals.accepted }}</span></div>
+    <div class="module" style="padding: 14px;"><strong>Quoted value</strong><br><span style="font-size: 20px;">KES {{ totals.value|floatformat:2 }}</span></div>
+  </div>
+  <div class="module"><table><thead><tr><th>Quote</th><th>Issued</th><th>Client</th><th>Status</th><th>Quoted total</th></tr></thead><tbody>{% for quote in quotes %}<tr><td><a href="{% url 'admin:catalog_quote_change' quote.pk %}">{{ quote.quote_number }}</a></td><td>{{ quote.issued_date }}</td><td>{{ quote.client_name }}{% if quote.client_company %}<br><small>{{ quote.client_company }}</small>{% endif %}</td><td>{{ quote.get_status_display }}</td><td>KES {{ quote.total|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="5">No quotes match this date range.</td></tr>{% endfor %}</tbody></table></div>
+  <p style="margin-top: 20px;"><a href="{% url 'admin:catalog_quote_changelist' %}">Back to quotes</a></p>
+</div>
+{% endblock %}

@@ -3,6 +3,7 @@ from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.db import transaction
 from decimal import Decimal
@@ -13,6 +14,50 @@ from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCate
 def quote_print(request, quote_id):
     quote = get_object_or_404(Quote.objects.prefetch_related("items__product"), pk=quote_id)
     return render(request, "catalog/quote_print.html", {"quote": quote, "quote_settings": QuoteSettings.get_solo()})
+
+
+@staff_member_required
+def quote_pdf(request, quote_id):
+    """Return a downloadable PDF version of an admin quote."""
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib.units import mm
+    from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+
+    quote = get_object_or_404(Quote.objects.prefetch_related("items__product"), pk=quote_id)
+    quote_settings = QuoteSettings.get_solo()
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="{quote.quote_number}.pdf"'
+    document = SimpleDocTemplate(response, pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=14 * mm, bottomMargin=14 * mm)
+    styles = getSampleStyleSheet()
+    heading = styles["Heading1"].clone("QuoteHeading")
+    heading.textColor = colors.HexColor("#1f4f8d")
+    normal = styles["BodyText"]
+    normal.leading = 14
+    story = [
+        Table([[Paragraph(f"<b>{quote_settings.company_name}</b><br/>{quote_settings.address or ''}<br/>{quote_settings.phone} {quote_settings.email}", normal), Paragraph(f"<font color='#1f4f8d'><b>QUOTE</b></font><br/><b>{quote.quote_number}</b><br/>Issued: {quote.issued_date:%d %b %Y}<br/>Valid until: {quote.valid_until:%d %b %Y}", normal)]], colWidths=[115 * mm, 65 * mm]),
+        Spacer(1, 8 * mm),
+        Paragraph("CLIENT", heading),
+        Paragraph(f"<b>{quote.client_name}</b><br/>{quote.client_company}<br/>{quote.client_phone}<br/>{quote.client_email}<br/>{quote.client_address}".replace("\n", "<br/>"), normal),
+        Spacer(1, 5 * mm),
+        Paragraph("TERMS", heading),
+        Paragraph(quote.project_description or "Product and service quotation", normal),
+        Spacer(1, 5 * mm),
+    ]
+    rows = [["#", "Description", "Unit price", "Qty", "Total"]]
+    for number, item in enumerate(quote.items.all(), start=1):
+        rows.append([str(number), Paragraph(item.description or (item.product.name if item.product else ""), normal), f"KES {item.unit_price:,.2f}", str(item.quantity), f"KES {item.line_total:,.2f}"])
+    if len(rows) == 1:
+        rows.append(["", "No items have been added yet.", "", "", ""])
+    items_table = Table(rows, colWidths=[9 * mm, 76 * mm, 31 * mm, 15 * mm, 42 * mm], repeatRows=1)
+    items_table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1f4f8d")), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white), ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#dce1e8")), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("ALIGN", (2, 1), (-1, -1), "RIGHT"), ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
+    story.extend([items_table, Spacer(1, 6 * mm)])
+    totals = Table([["Subtotal", f"KES {quote.subtotal:,.2f}"], [f"Tax ({quote.tax_rate}%)", f"KES {quote.tax_amount:,.2f}"], ["TOTAL", f"KES {quote.total:,.2f}"]], colWidths=[42 * mm, 42 * mm], hAlign="RIGHT")
+    totals.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#dce1e8")), ("ALIGN", (1, 0), (-1, -1), "RIGHT"), ("BACKGROUND", (0, -1), (-1, -1), colors.HexColor("#1f4f8d")), ("TEXTCOLOR", (0, -1), (-1, -1), colors.white), ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"), ("PADDING", (0, 0), (-1, -1), 7)]))
+    story.extend([totals, Spacer(1, 8 * mm), Paragraph("TERMS & NOTES", heading), Paragraph((quote.notes + "<br/><br/>" if quote.notes else "") + quote_settings.terms, normal), Spacer(1, 5 * mm), Paragraph(f"<b>Payment details</b><br/>{quote_settings.payment_details}<br/><br/><b>Bank account details</b><br/>{quote_settings.bank_details or 'Available on request.'}", normal)])
+    document.build(story)
+    return response
 
 
 class ProductListView(ListView):

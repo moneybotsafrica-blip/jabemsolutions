@@ -9,8 +9,8 @@
         :root { --blue: #1f4f8d; --ink: #172033; --muted: #607080; }
         * { box-sizing: border-box; }
         body { margin: 0; background: #edf1f5; color: var(--ink); font: 14px Arial, sans-serif; }
-        .toolbar { max-width: 900px; margin: 18px auto 0; display: flex; justify-content: flex-end; }
-        .toolbar button { border: 0; border-radius: 6px; background: var(--blue); color: #fff; font-weight: 700; padding: 10px 16px; cursor: pointer; }
+        .toolbar { max-width: 900px; margin: 18px auto 0; display: flex; justify-content: flex-end; gap: 8px; }
+        .toolbar button, .toolbar a { border: 0; border-radius: 6px; background: var(--blue); color: #fff; font-weight: 700; padding: 10px 16px; cursor: pointer; text-decoration: none; }
         .quote { max-width: 900px; min-height: 1120px; margin: 18px auto; padding: 44px; background: #fff; box-shadow: 0 3px 18px #c9d0d9; }
         .header { display: flex; justify-content: space-between; gap: 30px; border-bottom: 4px solid var(--blue); padding-bottom: 22px; }
         .identity { display: flex; align-items: center; gap: 16px; }
@@ -40,7 +40,7 @@
     </style>
 </head>
 <body>
-    <div class="toolbar"><button type="button" onclick="window.print()">Print / Save as PDF</button></div>
+    <div class="toolbar"><a href="{% url 'catalog:quote_pdf' quote.pk %}">Download PDF</a><button type="button" onclick="window.print()">Print / Preview</button></div>
     <article class="quote">
         <header class="header">
             <div class="identity">
