@@ -208,6 +208,15 @@ a:hover {
     transition: transform 0.3s ease;
 }
 
+.product-image {
+    display: block;
+    width: 100%;
+    flex: 0 0 auto;
+    background-color: #f8f9fa;
+    object-fit: contain !important;
+    object-position: center;
+}
+
 .card-product:hover .card-img-top {
     transform: scale(1.05);
 }
@@ -269,6 +278,22 @@ a:hover {
     #pos-products .product-btn { min-height: 104px; font-size: 0.75rem !important; }
     #module-sales .table-responsive { max-height: 170px !important; }
     #module-sales .bg-dark { border-top: 3px solid rgba(255, 255, 255, 0.2); }
+}
+
+/* Header identity and compact product cards on phones. */
+.navbar-brand { display: inline-flex; align-items: center; gap: 0.55rem; }
+.site-title { display: inline-flex; flex-direction: column; line-height: 1; letter-spacing: -0.02em; }
+.site-title-main { color: var(--brand-dark); font-size: 1.05rem; font-weight: 800; }
+.site-title-sub { color: var(--brand-primary); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+@media (max-width: 767.98px) {
+    .navbar-brand { gap: 0.4rem; }
+    .site-title-main { font-size: 0.9rem; }
+    .site-title-sub { font-size: 0.58rem; }
+    .card-product { overflow: hidden; }
+    .product-image { padding: 0.35rem !important; }
+    .card-product .card-body { min-width: 0; }
+    .card-product .card-title { overflow-wrap: anywhere; }
 }
 
 /* Clear, tap-friendly mobile navigation. These rules override desktop hover menus. */

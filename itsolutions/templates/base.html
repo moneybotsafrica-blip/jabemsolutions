@@ -43,7 +43,8 @@
     <div class="container">
         <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">
             <img src="{% static 'images/logo.jpeg' %}" alt="{{ SITE_NAME }}" style="height: 60px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-            <span style="display: none;"><i class="bi bi-cpu-fill me-1"></i>{{ SITE_NAME }}</span>
+            <span class="site-title"><span class="site-title-main">Jabem</span><span class="site-title-sub">Solutions</span></span>
+            <span class="visually-hidden"><i class="bi bi-cpu-fill me-1"></i>{{ SITE_NAME }}</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Open main menu">
             <span class="navbar-toggler-icon"></span>
