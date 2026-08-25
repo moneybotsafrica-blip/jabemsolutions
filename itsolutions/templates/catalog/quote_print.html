@@ -24,9 +24,10 @@
         .section-title { margin: 0 0 9px; padding: 8px 10px; color: #fff; background: var(--blue); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
         .panel { border: 1px solid #d6dce5; min-height: 125px; padding: 12px; line-height: 1.65; }
         .muted { color: var(--muted); }
-        table { width: 100%; border-collapse: collapse; margin-top: 26px; }
-        th { background: var(--blue); color: #fff; padding: 10px; text-align: left; font-size: 12px; }
-        td { padding: 10px; border-bottom: 1px solid #dce1e8; vertical-align: top; }
+        table { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 26px; }
+        th { background: var(--blue); color: #fff; padding: 10px 8px; text-align: left; font-size: 12px; }
+        td { padding: 10px 8px; border-bottom: 1px solid #dce1e8; vertical-align: top; line-height: 1.4; }
+        th.description, td.description { overflow-wrap: anywhere; word-break: break-word; }
         tbody tr:nth-child(even) { background: #f5f7f9; }
         .number { text-align: right; white-space: nowrap; }
         .summary { width: 310px; margin: 24px 0 26px auto; }
@@ -49,7 +50,7 @@
             <div class="quote-title"><h1>QUOTE</h1><p><strong>{{ quote.quote_number }}</strong><br>Issued: {{ quote.issued_date|date:"d M Y" }}<br>Valid until: {{ quote.valid_until|date:"d M Y" }}</p></div>
         </header>
         <section class="sections"><div><h2 class="section-title">Client</h2><div class="panel"><strong>{{ quote.client_name }}</strong>{% if quote.client_company %}<br>{{ quote.client_company }}{% endif %}{% if quote.client_phone %}<br>{{ quote.client_phone }}{% endif %}{% if quote.client_email %}<br>{{ quote.client_email }}{% endif %}{% if quote.client_address %}<br>{{ quote.client_address|linebreaksbr }}{% endif %}</div></div><div><h2 class="section-title">Terms</h2><div class="panel muted">{{ quote.project_description|default:"Product and service quotation"|linebreaksbr }}</div></div></section>
-        <table><thead><tr><th>#</th><th>Description</th><th class="number">Unit price</th><th class="number">Qty</th><th class="number">Total</th></tr></thead><tbody>{% for item in quote.items.all %}<tr><td>{{ forloop.counter }}</td><td>{{ item.description|default:item.product.name }}</td><td class="number">KES {{ item.unit_price|floatformat:2 }}</td><td class="number">{{ item.quantity }}</td><td class="number">KES {{ item.line_total|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="5" class="muted">No items have been added yet.</td></tr>{% endfor %}</tbody></table>
+        <table><colgroup><col style="width: 5%"><col style="width: 51%"><col style="width: 17%"><col style="width: 9%"><col style="width: 18%"></colgroup><thead><tr><th>#</th><th class="description">Description</th><th class="number">Unit price</th><th class="number">Qty</th><th class="number">Total</th></tr></thead><tbody>{% for item in quote.items.all %}<tr><td>{{ forloop.counter }}</td><td class="description">{{ item.description|default:item.product.name }}</td><td class="number">KES {{ item.unit_price|floatformat:2 }}</td><td class="number">{{ item.quantity }}</td><td class="number">KES {{ item.line_total|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="5" class="muted">No items have been added yet.</td></tr>{% endfor %}</tbody></table>
         <div class="summary"><div><span>Subtotal</span><strong>KES {{ quote.subtotal|floatformat:2 }}</strong></div><div><span>Tax ({{ quote.tax_rate }}%)</span><strong>KES {{ quote.tax_amount|floatformat:2 }}</strong></div><div class="total"><span>Total</span><span>KES {{ quote.total|floatformat:2 }}</span></div></div>
         <section><h2 class="section-title">Terms &amp; notes</h2><div class="terms">{% if quote.notes %}{{ quote.notes }}
 
