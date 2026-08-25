@@ -5,9 +5,10 @@ from django.urls import path
 from django.template.response import TemplateResponse
 from django.utils.dateparse import parse_date
 from django.http import HttpResponse
+from decimal import Decimal
 from .models import (
     Category, Brand, Product, Stock, StockMovement, Cart, CartItem, Order, OrderItem,
-    POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem
+    POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem, ReportCenter
 )
 
 
@@ -57,7 +58,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('name', 'slug', 'sku', 'category', 'brand', 'product_type')
         }),
         ('Pricing & Description', {
-            'fields': ('price', 'short_description', 'description')
+            'fields': ('price', 'cost_price', 'short_description', 'description')
         }),
         ('Images', {
             'fields': ('image', 'external_image_url'),
@@ -170,9 +171,9 @@ class StockAdmin(admin.ModelAdmin):
     
     def value_at_cost(self, obj):
         # Assuming we might add cost price later, for now use retail price
-        estimated_value = obj.quantity_on_hand * obj.product.price
+        estimated_value = obj.quantity_on_hand * obj.product.cost_price
         return format_html('KES {}', f'{estimated_value:,.0f}')
-    value_at_cost.short_description = "Estimated Value"
+    value_at_cost.short_description = "Cost Value"
     
     def mark_as_in_stock(self, request, queryset):
         updated = queryset.update(quantity_on_hand=50)
@@ -391,6 +392,144 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_display = ("order", "product", "quantity", "price", "total_price")
     list_filter = ("order__status",)
     search_fields = ("product__name", "order__id")
+
+
+@admin.register(ReportCenter)
+class ReportCenterAdmin(admin.ModelAdmin):
+    """The admin sidebar entry point for downloadable business reports."""
+
+    change_list_template = "admin/catalog/reportcenter/dashboard.html"
+
+    def get_urls(self):
+        urls = super().get_urls()
+        report_urls = [
+            path(
+                "download/<str:report_type>/",
+                self.admin_site.admin_view(self.download_excel),
+                name="catalog_reportcenter_download",
+            ),
+        ]
+        return report_urls + urls
+
+    def get_report_data(self, request):
+        date_from = parse_date(request.GET.get("date_from", ""))
+        date_to = parse_date(request.GET.get("date_to", ""))
+        orders = Order.objects.exclude(status="cancelled").prefetch_related("items__product")
+        if date_from:
+            orders = orders.filter(created_at__date__gte=date_from)
+        if date_to:
+            orders = orders.filter(created_at__date__lte=date_to)
+        orders = list(orders)
+        order_items = [item for order in orders for item in order.items.all()]
+        revenue = sum((order.total for order in orders), Decimal("0"))
+        units = sum((item.quantity for item in order_items), 0)
+        cost_of_sales = sum((item.product.cost_price * item.quantity for item in order_items), Decimal("0"))
+        stocks = list(Stock.objects.select_related("product", "product__category", "product__brand"))
+        low_stock = [stock for stock in stocks if 0 < stock.quantity_on_hand <= stock.product.reorder_level]
+        out_of_stock = [stock for stock in stocks if stock.quantity_on_hand <= 0]
+        return {
+            "orders": orders,
+            "order_items": order_items,
+            "stocks": stocks,
+            "sales": {"orders": len(orders), "units": units, "revenue": revenue},
+            "pnl": {"revenue": revenue, "cost_of_sales": cost_of_sales, "gross_profit": revenue - cost_of_sales},
+            "inventory": {
+                "units": sum((stock.quantity_on_hand for stock in stocks), 0),
+                "cost_value": sum((stock.quantity_on_hand * stock.product.cost_price for stock in stocks), Decimal("0")),
+                "retail_value": sum((stock.quantity_on_hand * stock.product.price for stock in stocks), Decimal("0")),
+                "low_stock": len(low_stock),
+                "out_of_stock": len(out_of_stock),
+            },
+            "low_stock_items": low_stock + out_of_stock,
+        }
+
+    def changelist_view(self, request, extra_context=None):
+        data = self.get_report_data(request)
+        context = {
+            **self.admin_site.each_context(request),
+            **data,
+            "title": "Business reports",
+            "date_from": request.GET.get("date_from", ""),
+            "date_to": request.GET.get("date_to", ""),
+        }
+        return TemplateResponse(request, self.change_list_template, context)
+
+    def download_excel(self, request, report_type):
+        if report_type not in {"sales", "pnl", "inventory"}:
+            return HttpResponse("Unknown report.", status=404)
+
+        from openpyxl import Workbook
+        from openpyxl.styles import Font, PatternFill
+
+        data = self.get_report_data(request)
+        workbook = Workbook()
+        sheet = workbook.active
+        sheet.title = {"sales": "Sales", "pnl": "Profit and Loss", "inventory": "Inventory"}[report_type]
+        title_fill = PatternFill("solid", fgColor="1762A3")
+
+        def write_header(row):
+            for cell in row:
+                cell.font = Font(bold=True, color="FFFFFF")
+                cell.fill = title_fill
+
+        if report_type == "sales":
+            sheet.append(["Sales Report"])
+            sheet.append(["From", request.GET.get("date_from") or "All dates", "To", request.GET.get("date_to") or "All dates"])
+            sheet.append([])
+            headers = ["Order", "Date", "Customer", "Email", "Status", "Items", "Subtotal", "Shipping", "Total"]
+            sheet.append(headers)
+            write_header(sheet[4])
+            for order in data["orders"]:
+                sheet.append([order.pk, order.created_at.replace(tzinfo=None), order.full_name, order.email, order.get_status_display(), order.total_items, order.subtotal, order.shipping_cost, order.total])
+            sheet.append([])
+            sheet.append(["Total orders", data["sales"]["orders"], "Units sold", data["sales"]["units"], "Revenue", data["sales"]["revenue"]])
+        elif report_type == "pnl":
+            sheet.append(["Profit and Loss Report"])
+            sheet.append(["From", request.GET.get("date_from") or "All dates", "To", request.GET.get("date_to") or "All dates"])
+            sheet.append([])
+            sheet.append(["Metric", "Amount (KES)"])
+            write_header(sheet[4])
+            for label, amount in [("Sales revenue", data["pnl"]["revenue"]), ("Cost of goods sold", data["pnl"]["cost_of_sales"]), ("Gross profit before overheads", data["pnl"]["gross_profit"])]:
+                sheet.append([label, amount])
+            sheet.append([])
+            sheet.append(["Product", "SKU", "Quantity sold", "Sales revenue", "Cost of goods sold", "Gross profit"])
+            write_header(sheet[9])
+            product_rows = {}
+            for item in data["order_items"]:
+                row = product_rows.setdefault(item.product_id, [item.product.name, item.product.sku, 0, Decimal("0"), Decimal("0")])
+                row[2] += item.quantity
+                row[3] += item.price * item.quantity
+                row[4] += item.product.cost_price * item.quantity
+            for row in product_rows.values():
+                sheet.append(row + [row[3] - row[4]])
+        else:
+            sheet.append(["Inventory Report"])
+            sheet.append([])
+            headers = ["Product", "SKU", "Category", "Brand", "Location", "On hand", "Reorder level", "Unit cost", "Cost value", "Retail price", "Retail value", "Status"]
+            sheet.append(headers)
+            write_header(sheet[3])
+            for stock in data["stocks"]:
+                if stock.quantity_on_hand <= 0:
+                    status = "Out of stock"
+                elif stock.quantity_on_hand <= stock.product.reorder_level:
+                    status = "Low stock"
+                else:
+                    status = "In stock"
+                sheet.append([stock.product.name, stock.product.sku, stock.product.category.name if stock.product.category else "", stock.product.brand.name if stock.product.brand else "", stock.warehouse_location, stock.quantity_on_hand, stock.product.reorder_level, stock.product.cost_price, stock.quantity_on_hand * stock.product.cost_price, stock.product.price, stock.quantity_on_hand * stock.product.price, status])
+            sheet.append([])
+            sheet.append(["Inventory units", data["inventory"]["units"], "Cost value", data["inventory"]["cost_value"], "Retail value", data["inventory"]["retail_value"]])
+
+        for column in sheet.columns:
+            letter = column[0].column_letter
+            sheet.column_dimensions[letter].width = min(max(max(len(str(cell.value or "")) for cell in column) + 2, 12), 34)
+        for row in sheet.iter_rows():
+            for cell in row:
+                if isinstance(cell.value, Decimal):
+                    cell.number_format = '#,##0.00'
+        response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response["Content-Disposition"] = f'attachment; filename="jabem-{report_type}-report.xlsx"'
+        workbook.save(response)
+        return response
 
 
 class QuoteItemInline(admin.TabularInline):

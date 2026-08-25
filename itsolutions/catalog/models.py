@@ -72,6 +72,12 @@ class Product(models.Model):
     short_description = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=12, decimal_places=2)
+    cost_price = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        default=0,
+        help_text="Your unit purchase cost. Used for profit and loss reporting.",
+    )
     image = models.ImageField(upload_to="products/", blank=True, null=True)
     external_image_url = models.URLField(max_length=500, blank=True, help_text="External image URL for products")
     is_active = models.BooleanField(default=True)
@@ -127,6 +133,15 @@ class Product(models.Model):
                 )
             return self.image.url
         return None
+
+
+class ReportCenter(Product):
+    """A proxy model that gives the admin a permanent Reports item in its sidebar."""
+
+    class Meta:
+        proxy = True
+        verbose_name = "Reports"
+        verbose_name_plural = "Reports"
 
 
 class Stock(models.Model):
