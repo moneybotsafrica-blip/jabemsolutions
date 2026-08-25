@@ -109,9 +109,9 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
-            # In production, use absolute URL to staticfiles
-            if not settings.DEBUG:
-                return f"https://jabemsolutions.vercel.app/staticfiles/media/{self.image.name}"
+            # On Vercel or in production, media files are served from /staticfiles/media/
+            if os.environ.get("VERCEL") or not settings.DEBUG:
+                return f"/staticfiles/media/{self.image.name}"
             return self.image.url
         return None
 

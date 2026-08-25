@@ -62,9 +62,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# Configure WhiteNoise to serve static files
+# Configure WhiteNoise to serve static and media files
 WHITENOISE_ROOT = BASE_DIR / "staticfiles"
 WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = False
+WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "config.urls"
 
