@@ -164,7 +164,7 @@ class StockAdmin(admin.ModelAdmin):
     def value_at_cost(self, obj):
         # Assuming we might add cost price later, for now use retail price
         estimated_value = obj.quantity_on_hand * obj.product.price
-        return format_html('KES {:,.0f}', estimated_value)
+        return format_html('KES {}', f'{estimated_value:,.0f}')
     value_at_cost.short_description = "Estimated Value"
     
     def mark_as_in_stock(self, request, queryset):

@@ -212,6 +212,18 @@
     {% block content %}{% endblock %}
 </main>
 
+<nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+    <a href="{% url 'core:home' %}" class="mobile-nav-link"><i class="bi bi-house-door"></i><span>Home</span></a>
+    <a href="{% url 'catalog:product_list' %}" class="mobile-nav-link"><i class="bi bi-grid"></i><span>Shop</span></a>
+    <a href="{% url 'core:services' %}" class="mobile-nav-link"><i class="bi bi-tools"></i><span>Services</span></a>
+    <a href="{% url 'catalog:cart' %}" class="mobile-nav-link"><i class="bi bi-bag"></i><span>Cart</span></a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'portal:dashboard' %}" class="mobile-nav-link"><i class="bi bi-person"></i><span>Account</span></a>
+    {% else %}
+    <a href="{% url 'accounts:login' %}" class="mobile-nav-link"><i class="bi bi-person"></i><span>Account</span></a>
+    {% endif %}
+</nav>
+
 <footer class="bg-dark text-white py-5">
     <div class="container">
         <div class="row">
