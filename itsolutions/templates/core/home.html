@@ -2540,8 +2540,8 @@ document.addEventListener('DOMContentLoaded', function() {
         {% for product in featured_products|slice:":8" %}
         <div class="col-6 col-md-4 col-lg-3">
             <div class="card card-product shadow-sm h-100">
-                {% if product.image %}
-                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 120px; object-fit: cover;">
+                {% if product.get_image_url %}
+                <img src="{{ product.get_image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 120px; object-fit: cover;">
                 {% else %}
                 <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 120px;">
                     <i class="bi bi-image" style="font-size:1.5rem"></i>
@@ -2577,8 +2577,8 @@ document.addEventListener('DOMContentLoaded', function() {
         {% for product in latest_products|slice:":16" %}
         <div class="col-6 col-md-4 col-lg-3">
             <div class="card card-product shadow-sm h-100">
-                {% if product.image %}
-                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 120px; object-fit: cover;">
+                {% if product.get_image_url %}
+                <img src="{{ product.get_image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 120px; object-fit: cover;">
                 {% else %}
                 <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 120px;">
                     <i class="bi bi-image" style="font-size:1.5rem"></i>

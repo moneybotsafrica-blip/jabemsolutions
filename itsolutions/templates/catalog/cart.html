@@ -25,8 +25,8 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            {% if item.product.image %}
-                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="rounded me-2 me-md-3" style="width:50px; height:50px; object-fit:cover;">
+                                            {% if item.product.get_image_url %}
+                                            <img src="{{ item.product.get_image_url }}" alt="{{ item.product.name }}" class="rounded me-2 me-md-3" style="width:50px; height:50px; object-fit:cover;">
                                             {% else %}
                                             <div class="rounded me-2 me-md-3 bg-light d-flex align-items-center justify-content-center" style="width:50px; height:50px;">
                                                 <i class="bi bi-image text-secondary"></i>

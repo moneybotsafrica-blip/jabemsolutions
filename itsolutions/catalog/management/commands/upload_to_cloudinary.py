@@ -49,7 +49,7 @@ class Command(BaseCommand):
 
         self.stdout.write('Uploading product images to Cloudinary...')
 
-        products_with_images = Product.objects.exclude(image__isnull=True).exclude(image='')
+        products_with_images = Product.objects.exclude(image__isnull=True).exclude(image='').filter(external_image_url='')
         total = products_with_images.count()
         uploaded = 0
         failed = 0
@@ -69,9 +69,8 @@ class Command(BaseCommand):
                             overwrite=True
                         )
                         
-                        # Update product with Cloudinary URL
-                        product.image.name = result['public_id']
-                        product.save()
+                        product.external_image_url = result['secure_url']
+                        product.save(update_fields=['external_image_url'])
                         
                         uploaded += 1
                         self.stdout.write(f'✓ Uploaded: {product.name[:50]}')
