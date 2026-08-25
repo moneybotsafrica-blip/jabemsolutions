@@ -90,7 +90,20 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASE_URL = os.environ.get("DATABASE_URL")
 if DATABASE_URL:
     import dj_database_url
-    DATABASES = {"default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)}
+    # Serverless functions must not retain database sessions between requests.
+    # Supabase's session pool has a small connection limit, and persistent
+    # connections from multiple Vercel instances quickly exhaust it.
+    database_conn_max_age = 0 if os.environ.get("VERCEL") else 600
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=database_conn_max_age,
+            conn_health_checks=bool(os.environ.get("VERCEL")),
+        )
+    }
+    if os.environ.get("VERCEL"):
+        # Safe when DATABASE_URL is switched to Supabase's transaction pooler.
+        DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
 else:
     DATABASES = {
         "default": {
