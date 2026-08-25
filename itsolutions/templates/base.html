@@ -274,14 +274,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const acceptCookiesBtn = document.getElementById('acceptCookies');
     
     // Check if user has already accepted cookies
-    if (!localStorage.getItem('cookiesAccepted')) {
+    if (cookieConsent && !localStorage.getItem('cookiesAccepted')) {
         cookieConsent.classList.remove('d-none');
     }
     
     // Handle accept cookies button
-    acceptCookiesBtn.addEventListener('click', function() {
+    acceptCookiesBtn?.addEventListener('click', function() {
         localStorage.setItem('cookiesAccepted', 'true');
-        cookieConsent.classList.add('d-none');
+        cookieConsent?.classList.add('d-none');
+    });
+
+    document.querySelectorAll('#navMain a:not(.dropdown-toggle), #categoryNav .dropdown-item').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.querySelectorAll('#navMain.show, #categoryNav.show').forEach(function(menu) {
+                bootstrap.Collapse.getOrCreateInstance(menu).hide();
+            });
+        });
     });
 });
 </script>

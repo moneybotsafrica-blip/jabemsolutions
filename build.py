@@ -28,6 +28,9 @@ try:
 except Exception as e:
     print(f"Local data loading completed (may have existing data): {e}")
 
+print("Syncing product image paths...")
+call_command('sync_product_image_paths')
+
 print("Populating POS demo data...")
 try:
     call_command('populate_pos_demo')
