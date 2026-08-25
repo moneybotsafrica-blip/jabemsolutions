@@ -350,7 +350,7 @@ a:hover {
     .home-shop-heading > div { min-width: 0; }
     .home-shop-heading .btn { flex: 0 0 auto; white-space: nowrap; padding-left: 0.7rem !important; padding-right: 0.7rem !important; }
     .home-shop-layout { display: flex; flex-direction: column; }
-    .home-filter-column { order: -1; margin-bottom: 0.85rem; }
+    .home-filter-column { margin-bottom: 0.85rem; }
     .home-shop-content { width: 100%; }
     .home-filter-card { border: 1px solid #dce8e1; border-radius: 0.9rem; overflow: hidden; box-shadow: 0 0.25rem 0.9rem rgba(15, 61, 46, 0.08) !important; }
     .home-filter-card .card-body { padding: 0.85rem; }
