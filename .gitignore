@@ -70,6 +70,3 @@ node_modules/
 glantix_extracted/
 glantix_products_export.zip
 products.json
-
-# Public directory (generated during Vercel build)
-public/

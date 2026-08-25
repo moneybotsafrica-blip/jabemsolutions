@@ -10,7 +10,12 @@
   ],
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "/staticfiles/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+    {
+      "src": "/media/(.*)",
+      "dest": "/staticfiles/media/$1"
     },
     {
       "src": "/(.*)",

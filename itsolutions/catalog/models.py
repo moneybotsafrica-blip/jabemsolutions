@@ -43,18 +43,9 @@ class Brand(models.Model):
     def get_logo_url(self):
         """Return the best available logo URL for this brand."""
         if self.logo:
-            # In production, construct absolute URL using the site domain
+            # In production, use absolute URL to staticfiles
             if not settings.DEBUG:
-                # Get the first allowed host as the base URL
-                allowed_hosts = getattr(settings, 'ALLOWED_HOSTS', [])
-                host = allowed_hosts[0] if allowed_hosts else 'jabemsolutions.vercel.app'
-                # Clean up the host (remove protocol if present)
-                if host.startswith('http://'):
-                    host = host.replace('http://', '')
-                elif host.startswith('https://'):
-                    host = host.replace('https://', '')
-                # Construct absolute URL using /media/ path (will be served from public directory)
-                return f"https://{host}/media/{self.logo.name}"
+                return f"https://jabemsolutions.vercel.app/staticfiles/media/{self.logo.name}"
             return self.logo.url
         return None
 
@@ -118,18 +109,9 @@ class Product(models.Model):
         if self.external_image_url:
             return self.external_image_url
         if self.image:
-            # In production, construct absolute URL using the site domain
+            # In production, use absolute URL to staticfiles
             if not settings.DEBUG:
-                # Get the first allowed host as the base URL
-                allowed_hosts = getattr(settings, 'ALLOWED_HOSTS', [])
-                host = allowed_hosts[0] if allowed_hosts else 'jabemsolutions.vercel.app'
-                # Clean up the host (remove protocol if present)
-                if host.startswith('http://'):
-                    host = host.replace('http://', '')
-                elif host.startswith('https://'):
-                    host = host.replace('https://', '')
-                # Construct absolute URL using /media/ path (will be served from public directory)
-                return f"https://{host}/media/{self.image.name}"
+                return f"https://jabemsolutions.vercel.app/staticfiles/media/{self.image.name}"
             return self.image.url
         return None
 
