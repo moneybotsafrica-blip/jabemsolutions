@@ -68,3 +68,5 @@ node_modules/
 
 # Glantix extraction files
 glantix_extracted/
+glantix_products_export.zip
+products.json
