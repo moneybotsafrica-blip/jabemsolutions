@@ -396,9 +396,9 @@ class QuoteAdmin(admin.ModelAdmin):
     readonly_fields = ("quote_number", "created_at", "updated_at", "subtotal_display", "tax_display", "total_display")
     inlines = (QuoteItemInline,)
     fieldsets = (
-        ("Quote", {"fields": ("quote_number", "status", "issued_date", "valid_until", "created_by")}),
-        ("Client", {"fields": ("client_name", "client_company", "client_phone", "client_email", "client_address")}),
-        ("Project and totals", {"fields": ("project_description", "tax_rate", "notes", "subtotal_display", "tax_display", "total_display")}),
+        ("Quote details", {"fields": (("quote_number", "status"), ("issued_date", "valid_until"), "created_by")}),
+        ("Client details", {"fields": (("client_name", "client_company"), ("client_phone", "client_email"), "client_address")}),
+        ("Terms and totals", {"fields": ("project_description", "notes", "tax_rate", ("subtotal_display", "tax_display", "total_display"))}),
         ("Metadata", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
     )
 

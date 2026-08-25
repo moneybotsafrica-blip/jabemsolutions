@@ -330,7 +330,7 @@ class Quote(models.Model):
     client_phone = models.CharField(max_length=40, blank=True)
     client_email = models.EmailField(blank=True)
     client_address = models.TextField(blank=True)
-    project_description = models.TextField(blank=True)
+    project_description = models.TextField(blank=True, verbose_name="Terms")
     issued_date = models.DateField(default=timezone.localdate)
     valid_until = models.DateField(default=default_quote_valid_until)
     tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal("16.00"))
