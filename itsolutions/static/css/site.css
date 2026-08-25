@@ -382,22 +382,18 @@ a:hover {
 }
 
 /* Make the homepage artwork and offer cards genuinely useful on phones. */
-.home-hero { min-height: 0; background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand-mid) 62%, var(--brand-primary) 100%); }
-.home-hero-copy { color: #fff; }
-.home-hero-copy p, .home-hero-copy .stat-item p { color: rgba(255, 255, 255, 0.82); }
-.home-hero-copy .stat-item { border-left-color: #9ce2bd; }
-.home-hero-visual { display: flex; align-items: center; justify-content: center; }
-.home-hero-visual img { max-height: 260px; object-fit: contain; filter: drop-shadow(0 1rem 1.2rem rgba(0, 0, 0, 0.22)); }
+.home-hero { min-height: 0; background-color: #fff; background-size: 25%; background-position: right center; background-repeat: no-repeat; }
+.home-hero-copy { color: #212529; }
+.home-hero-copy p, .home-hero-copy .stat-item p { color: #6c757d; }
+.home-hero-copy .stat-item { border-left-color: var(--brand-primary); }
 
 @media (max-width: 767.98px) {
-    .home-hero { padding-top: 1.5rem !important; padding-bottom: 1.25rem !important; overflow: hidden; }
-    .home-hero-copy h1 { color: #fff !important; font-size: 1.3rem !important; line-height: 1.28; }
-    .home-hero-copy p { color: rgba(255, 255, 255, 0.88) !important; font-size: 0.88rem !important; }
+    .home-hero { padding-top: 1.5rem !important; padding-bottom: 1.25rem !important; overflow: hidden; background-size: 42% !important; background-position: right bottom !important; }
+    .home-hero-copy h1 { color: #212529 !important; font-size: 1.3rem !important; line-height: 1.28; }
+    .home-hero-copy p { color: #6c757d !important; font-size: 0.88rem !important; }
     .home-hero-copy .btn { display: inline-flex; width: auto; min-height: 42px; margin: 0.15rem 0.25rem 0.15rem 0 !important; }
-    .home-hero-copy .stat-item h5 { color: #fff !important; }
-    .home-hero-copy .stat-item p { color: rgba(255, 255, 255, 0.78) !important; }
-    .home-hero-visual { margin-top: 0.25rem; }
-    .home-hero-visual img { width: min(82vw, 285px); max-height: 235px; }
+    .home-hero-copy .stat-item h5 { color: #212529 !important; }
+    .home-hero-copy .stat-item p { color: #6c757d !important; }
     #advertCarousel { border-radius: 0.9rem; overflow: hidden; }
     #advertCarousel .carousel-item .row { display: block; }
     #advertCarousel .carousel-item .col-md-4 { height: 155px; }

@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block content %}
-<section class="hero home-hero py-4">
+<section class="hero home-hero py-4" style="background-image: url('{% static 'images/hero-bg.png' %}');">
     <div class="container position-relative" style="z-index: 1;">
         <div class="row align-items-center">
-            <div class="col-lg-7 home-hero-copy">
+            <div class="col-lg-8 home-hero-copy">
                 <h1 class="h4 fw-bold mb-2">Unlock hidden profits with Jabem Solutions Ltd's POS restaurant software</h1>
                 <p class="mb-3">Turn data into profit. Automatically. Complete POS solutions for Kenyan businesses.</p>
                 <div class="mb-3">
@@ -32,9 +32,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-5 home-hero-visual">
-                <img src="{% static 'images/hero-image.png' %}" alt="Jabem POS terminal, receipt printer, and barcode scanner" class="img-fluid">
             </div>
         </div>
     </div>
