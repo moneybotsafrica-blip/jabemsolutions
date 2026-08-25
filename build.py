@@ -20,6 +20,13 @@ from django.core.management import call_command
 print("Running Django migrations...")
 call_command('migrate', '--noinput')
 
+print("Loading local data...")
+try:
+    call_command('loaddata', 'local_data.json')
+    print("Local data loaded successfully!")
+except Exception as e:
+    print(f"Local data loading completed (may have existing data): {e}")
+
 print("Populating POS demo data...")
 try:
     call_command('populate_pos_demo')
