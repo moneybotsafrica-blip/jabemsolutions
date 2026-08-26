@@ -46,13 +46,16 @@ def quote_pdf(request, quote_id):
     header = Table([[company_text, [Paragraph("QUOTATION", title), meta_text]]], colWidths=[119 * mm, 69 * mm])
     header.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LINEBELOW", (0, 0), (-1, -1), 10, colors.HexColor("#5C9ED0")), ("BOTTOMPADDING", (0, 0), (-1, -1), 8)]))
     client_text = f"<b>{quote.client_name}</b><br/>{quote.client_company}<br/>{quote.client_phone}<br/>{quote.client_email}<br/>{quote.client_address}"
-    parties = Table([[para("<b>Sold To:</b><br/>" + client_text), para("<b>Ship To:</b><br/>" + client_text), para("<b>Sales person:</b> Jabem Solutions<br/><b>Contact:</b> +254736 794 594<br/><b>Currency:</b> KES")]], colWidths=[72 * mm, 72 * mm, 44 * mm])
+    parties = Table([[para("<b>Sold To:</b><br/>" + client_text), para("<b>Ship To:</b><br/>" + client_text), para("<b>Sales person:</b> Jabem Solutions<br/><b>Email:</b> info@jabemsolutions.co.ke<br/><b>Currency:</b> KES")]], colWidths=[72 * mm, 72 * mm, 44 * mm])
     parties.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("BOX", (0, 0), (1, 0), 1, colors.black), ("INNERGRID", (0, 0), (1, 0), 0.4, colors.black), ("LEFTPADDING", (0, 0), (-1, -1), 7), ("RIGHTPADDING", (0, 0), (-1, -1), 7), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
     rows = [["Line", "Item", "Item Description", "Quantity", "Unit", "Unit Price", "Total"], ["PRODUCTS / SERVICES", "", "", "", "", "", ""]]
     for index, item in enumerate(quote.items.all(), 1):
         rows.append([str(index), item.product.sku if item.product else "", para(item.description or item.item_name or (item.product.name if item.product else ""), small), str(item.quantity), "EA", f"{item.unit_price:,.2f}", f"{item.line_total:,.2f}"])
     if len(rows) == 2:
         rows.append(["", "", "No items have been added yet.", "", "", "", ""])
+    # Keep a clear, professional item area even for short quotations.
+    while len(rows) < 10:
+        rows.append(["", "", "", "", "", "", ""])
     item_table = Table(rows, colWidths=[10 * mm, 20 * mm, 65 * mm, 18 * mm, 17 * mm, 29 * mm, 29 * mm], repeatRows=1)
     item_table.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black), ("BACKGROUND", (0, 0), (-1, 0), grey), ("BACKGROUND", (0, 1), (-1, 1), colors.HexColor("#F4F4F4")), ("SPAN", (0, 1), (-1, 1)), ("FONTNAME", (0, 0), (-1, 1), "Helvetica-Bold"), ("ALIGN", (0, 0), (-1, 1), "CENTER"), ("ALIGN", (0, 2), (1, -1), "CENTER"), ("ALIGN", (3, 2), (-1, -1), "RIGHT"), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 4), ("RIGHTPADDING", (0, 0), (-1, -1), 4), ("TOPPADDING", (0, 0), (-1, -1), 6), ("BOTTOMPADDING", (0, 0), (-1, -1), 6)]))
     totals = Table([["Subtotal:", f"KES {quote.subtotal:,.2f}"], ["Discount:", "KES 0.00"], ["Delivery:", "KES 0.00"], ["VAT:", f"KES {quote.tax_amount:,.2f}"], ["Total:", f"KES {quote.total:,.2f}"]], colWidths=[35 * mm, 41 * mm])
