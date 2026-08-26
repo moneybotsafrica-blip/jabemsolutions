@@ -401,7 +401,7 @@ class Quote(models.Model):
 class QuoteItem(models.Model):
     quote = models.ForeignKey(Quote, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.SET_NULL)
-    item_name = models.CharField(max_length=255, blank=True, verbose_name="Manual item")
+    item_name = models.CharField(max_length=255, blank=True, verbose_name="Product (manual item)")
     description = models.CharField(max_length=255, blank=True)
     unit_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("0.00"))
     quantity = models.PositiveIntegerField(default=1)

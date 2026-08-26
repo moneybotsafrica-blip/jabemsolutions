@@ -539,6 +539,13 @@ class QuoteItemInline(admin.TabularInline):
     fields = ("product", "item_name", "description", "unit_price", "quantity", "taxable", "order", "line_total")
     readonly_fields = ("line_total",)
 
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        field = super().formfield_for_dbfield(db_field, request, **kwargs)
+        if db_field.name == "product":
+            field.label = "Product (select from inventory)"
+            field.help_text = "Leave blank when using Product (manual item)."
+        return field
+
 
 @admin.register(QuoteSettings)
 class QuoteSettingsAdmin(admin.ModelAdmin):
