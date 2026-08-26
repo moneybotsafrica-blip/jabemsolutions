@@ -13,7 +13,16 @@ from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCate
 @staff_member_required
 def quote_print(request, quote_id):
     quote = get_object_or_404(Quote.objects.prefetch_related("items__product"), pk=quote_id)
-    return render(request, "catalog/quote_print.html", {"quote": quote, "quote_settings": QuoteSettings.get_solo()})
+    response = render(request, "catalog/quote_print.html", {"quote": quote, "quote_settings": QuoteSettings.get_solo()})
+    # Keep existing printable quotations consistent while supporting the updated payment contact block.
+    content = response.content.decode("utf-8")
+    content = content.replace("jabemsolutionsltd@gmail.com", "info@jabemsolutions.co.ke")
+    content = content.replace(
+        '</div></section><section class="terms">',
+        '</div><p><strong>Lipa Na Mpesa:</strong> Paybill No-247247 Account Number: 309061 or Paybill-516600 Account Number: 309061.<br><strong>Business Name:</strong> Jabem Solutions Limited</p></section><section class="terms">',
+    )
+    response.content = content.encode("utf-8")
+    return response
 
 
 @staff_member_required
@@ -62,7 +71,7 @@ def quote_pdf(request, quote_id):
     totals.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black), ("BACKGROUND", (0, 0), (0, -1), grey), ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"), ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"), ("ALIGN", (1, 0), (1, -1), "RIGHT"), ("PADDING", (0, 0), (-1, -1), 6)]))
     bottom = Table([[para((quote.notes or f"{quote.quote_number} - quotation prepared for {quote.client_name}"), body), totals]], colWidths=[112 * mm, 76 * mm])
     bottom.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 0.5, colors.black), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 7), ("RIGHTPADDING", (0, 0), (-1, -1), 0), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
-    bank = para(f"<b>BANK DETAILS:</b><br/><b>Account Name:</b> {company.company_name}&nbsp;&nbsp;&nbsp;&nbsp; <b>Bank details:</b> {company.bank_details or 'Available on request.'}<br/><b>Payment details:</b> {company.payment_details}<br/><br/><b>LIPA NA M-PESA PAYMENT:</b><br/><b>Paybill No. 247247</b> — Account Number: <b>309061</b><br/><b>or Paybill No. 516600</b> — Account Number: <b>309061</b>", small)
+    bank = para(f"<b>BANK DETAILS:</b><br/><b>Account Name:</b> {company.company_name}&nbsp;&nbsp;&nbsp;&nbsp; <b>Bank details:</b> {company.bank_details or 'Available on request.'}<br/><b>Payment details:</b> {company.payment_details}<br/><br/><b>LIPA NA MPESA:</b> Paybill No-247247 Account Number: 309061 or Paybill-516600 Account Number: 309061.<br/><b>Business Name:</b> Jabem Solutions Limited", small)
     terms = para(f"<b>TERMS AND CONDITIONS:</b><br/>{company.terms}<br/><br/><font color='#4B5563'>Quotation created by Jabem Solutions Limited - +254736 794 594 - info@jabemsolutions.co.ke</font>", small)
     story = [header, Spacer(1, 7 * mm), parties, Spacer(1, 6 * mm), item_table, Spacer(1, 0), bottom, Spacer(1, 6 * mm), bank, Spacer(1, 5 * mm), terms]
     document.build(story)
