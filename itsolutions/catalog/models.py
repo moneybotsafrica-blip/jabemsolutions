@@ -328,7 +328,7 @@ class QuoteSettings(models.Model):
 5. The equipment should be plugged into a clean power source (UPS and adequate Earthing).
 6. All goods remain the property of Jabem Solutions Limited until payment is received in full. Lipa Na Mpesa Paybill No-247247 Account Number: 309061 or Paybill-516600 Account Number: 309061. Business Name: Jabem Solutions Limited.
 
-For Clarifications, please contact Jabem Solutions Limited, +254736 794 594, jabemsolutionsltd@gmail.com.
+For Clarifications, please contact Jabem Solutions Limited, +254736 794 594, info@jabemsolutions.co.ke.
 IMPORTANT - When making a payment, kindly pay against the Account above.""")
     updated_at = models.DateTimeField(auto_now=True)
 
