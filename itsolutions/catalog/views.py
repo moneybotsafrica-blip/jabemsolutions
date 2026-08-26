@@ -219,8 +219,10 @@ def whatsapp_checkout(request):
     
     message += "*ORDER ITEMS:*\n"
     for index, item in enumerate(cart.items.all(), 1):
-        message += f"{index}. {item.product.name}\n"
-        message += f"   SKU: {item.product.sku}\n"
+        item_title = item.description or item.item_name or (item.product.name if item.product else "Manual item")
+        message += f"{index}. {item_title}\n"
+        if item.product:
+            message += f"   SKU: {item.product.sku}\n"
         message += f"   Qty: {item.quantity} × KES {item.product.price:.0f}\n"
         message += f"   Subtotal: KES {item.total_price:.0f}\n\n"
     
