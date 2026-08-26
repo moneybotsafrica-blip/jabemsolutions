@@ -536,7 +536,7 @@ class QuoteItemInline(admin.TabularInline):
     model = QuoteItem
     extra = 1
     autocomplete_fields = ("product",)
-    fields = ("product", "description", "unit_price", "quantity", "order", "line_total")
+    fields = ("product", "item_name", "description", "unit_price", "quantity", "taxable", "order", "line_total")
     readonly_fields = ("line_total",)
 
 

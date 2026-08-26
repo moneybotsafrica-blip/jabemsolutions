@@ -50,7 +50,7 @@ def quote_pdf(request, quote_id):
     parties.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("BOX", (0, 0), (1, 0), 1, colors.black), ("INNERGRID", (0, 0), (1, 0), 0.4, colors.black), ("LEFTPADDING", (0, 0), (-1, -1), 7), ("RIGHTPADDING", (0, 0), (-1, -1), 7), ("TOPPADDING", (0, 0), (-1, -1), 7), ("BOTTOMPADDING", (0, 0), (-1, -1), 7)]))
     rows = [["Line", "Item", "Item Description", "Quantity", "Unit", "Unit Price", "Total"], ["PRODUCTS / SERVICES", "", "", "", "", "", ""]]
     for index, item in enumerate(quote.items.all(), 1):
-        rows.append([str(index), item.product.sku if item.product else "", para(item.description or (item.product.name if item.product else ""), small), str(item.quantity), "EA", f"{item.unit_price:,.2f}", f"{item.line_total:,.2f}"])
+        rows.append([str(index), item.product.sku if item.product else "", para(item.description or item.item_name or (item.product.name if item.product else ""), small), str(item.quantity), "EA", f"{item.unit_price:,.2f}", f"{item.line_total:,.2f}"])
     if len(rows) == 2:
         rows.append(["", "", "No items have been added yet.", "", "", "", ""])
     item_table = Table(rows, colWidths=[10 * mm, 20 * mm, 65 * mm, 18 * mm, 17 * mm, 29 * mm, 29 * mm], repeatRows=1)

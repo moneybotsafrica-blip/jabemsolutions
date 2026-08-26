@@ -390,7 +390,8 @@ class Quote(models.Model):
 
     @property
     def tax_amount(self):
-        return (self.subtotal * self.tax_rate / Decimal("100")).quantize(Decimal("0.01"))
+        taxable_subtotal = sum((item.line_total for item in self.items.all() if item.taxable), Decimal("0.00"))
+        return (taxable_subtotal * self.tax_rate / Decimal("100")).quantize(Decimal("0.01"))
 
     @property
     def total(self):
@@ -400,16 +401,18 @@ class Quote(models.Model):
 class QuoteItem(models.Model):
     quote = models.ForeignKey(Quote, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.SET_NULL)
+    item_name = models.CharField(max_length=255, blank=True, verbose_name="Manual item")
     description = models.CharField(max_length=255, blank=True)
     unit_price = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("0.00"))
     quantity = models.PositiveIntegerField(default=1)
+    taxable = models.BooleanField(default=False, verbose_name="Apply VAT")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ["order", "pk"]
 
     def __str__(self):
-        return self.description or (self.product.name if self.product else "Quote item")
+        return self.description or self.item_name or (self.product.name if self.product else "Quote item")
 
     def save(self, *args, **kwargs):
         if self.product:
