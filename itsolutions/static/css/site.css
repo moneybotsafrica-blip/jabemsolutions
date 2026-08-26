@@ -322,6 +322,15 @@ a:hover {
 /* Services and branding section */
 .services-hero { background: linear-gradient(135deg, #f4fbf7 0%, #e7f5ed 100%); }
 .services-hero .lead { max-width: 760px; }
+.services-heading { display:flex; justify-content:space-between; align-items:end; gap:1rem; margin-bottom:1.75rem; }
+.service-card { border:1px solid #dce8e1; border-radius:1rem; padding:1.35rem; box-shadow:0 .35rem 1rem rgba(15,61,46,.07); transition:transform .2s ease, box-shadow .2s ease; overflow:hidden; }
+.service-card:hover { transform:translateY(-4px); box-shadow:0 .7rem 1.5rem rgba(15,61,46,.14); }
+.service-card h3 { font-size:1.13rem; font-weight:750; margin:.7rem 0; }.service-card p { color:#66756d; font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
+.service-icon { width:52px; height:52px; display:grid; place-items:center; border-radius:.9rem; color:var(--brand-primary); background:#eaf6ee; font-size:1.45rem; }.service-label { display:block; margin-top:1rem; font-size:.68rem; font-weight:800; color:var(--brand-primary); letter-spacing:.09em; text-transform:uppercase; }
+.service-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:auto; }.service-tags span { border:1px solid #dce8e1; border-radius:99px; padding:.24rem .55rem; color:#607166; font-size:.71rem; font-weight:650; }
+.service-link { display:inline-flex; align-items:center; gap:.4rem; margin-top:1rem; color:var(--brand-primary); font-size:.86rem; font-weight:750; text-decoration:none; }.service-link:hover { text-decoration:underline; }
+.service-card-featured { padding:0 1.35rem 1.35rem; }.service-card-image { width:calc(100% + 2.7rem); height:150px; object-fit:cover; margin-left:-1.35rem; }.service-card-featured .over-image { position:relative; margin-top:-1.65rem; background:#fff; box-shadow:0 .25rem .75rem rgba(15,61,46,.16); }.service-card-featured .service-label { margin-top:.8rem; }
+.service-card-contact { background:linear-gradient(145deg,#f0faf4,#fff); }
 .branding-service { background: #f8faf9; border-radius: 1rem; padding: 1.25rem; }
 .branding-image { display: block; width: 100%; border-radius: 0.85rem; object-fit: cover; box-shadow: 0 0.75rem 1.75rem rgba(15, 61, 46, 0.14); }
 .branding-image-tall { height: 330px; }
@@ -336,6 +345,9 @@ a:hover {
 @media (max-width: 767.98px) {
     .services-hero { padding-top: 2.25rem !important; padding-bottom: 2.25rem !important; }
     .services-hero .display-6 { font-size: 1.8rem; line-height: 1.2; }
+    .services-heading { align-items:flex-start; flex-direction:column; margin-bottom:1.2rem; }
+    .services-heading .btn { width:100%; }
+    .service-card { padding:1.1rem; }.service-card-featured { padding:0 1.1rem 1.1rem; }.service-card-image { width:calc(100% + 2.2rem); margin-left:-1.1rem; height:145px; }
     .branding-service { padding: 1rem; margin-left: 0; margin-right: 0; }
     .branding-image-tall { height: 255px; }
     .branding-image-short { height: 165px; }
