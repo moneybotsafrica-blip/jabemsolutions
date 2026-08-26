@@ -8,4 +8,6 @@ urlpatterns = [
     path("about/", views.about, name="about"),
     path("services/", views.services, name="services"),
     path("contact/", views.contact, name="contact"),
+    path("robots.txt", views.robots_txt, name="robots_txt"),
+    path("sitemap.xml", views.sitemap_xml, name="sitemap_xml"),
 ]

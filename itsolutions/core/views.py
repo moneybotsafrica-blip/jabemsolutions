@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import redirect, render
+from django.http import HttpResponse
 
 from catalog.models import Product
 from .forms import ContactForm
@@ -78,6 +79,23 @@ def about(request):
 
 def services(request):
     return render(request, "core/services.html")
+
+
+def robots_txt(request):
+    sitemap_url = request.build_absolute_uri("/sitemap.xml")
+    return HttpResponse(
+        f"User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /accounts/\nDisallow: /cart/\nSitemap: {sitemap_url}\n",
+        content_type="text/plain",
+    )
+
+
+def sitemap_xml(request):
+    urls = ["/", "/about/", "/services/", "/contact/", "/products/"]
+    body = "".join(f"<url><loc>{request.build_absolute_uri(path)}</loc><changefreq>weekly</changefreq></url>" for path in urls)
+    return HttpResponse(
+        f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>',
+        content_type="application/xml",
+    )
 
 
 def contact(request):
