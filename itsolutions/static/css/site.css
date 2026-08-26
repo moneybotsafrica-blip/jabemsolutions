@@ -5,6 +5,12 @@
     --brand-light: #e8f5e9;
 }
 
+/* Homepage mobile order: show the offer advert before product filters. */
+@media (max-width: 767.98px) {
+    .home-shop-layout .home-shop-content { order: 1; }
+    .home-shop-layout .home-filter-column { order: 2; width: 100%; }
+}
+
 body {
     background-color: #ffffff;
 }
