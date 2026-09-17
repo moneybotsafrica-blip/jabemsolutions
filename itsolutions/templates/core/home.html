@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}{{ SITE_NAME }} | Shop Business Technology{% endblock %}
+{% block title %}{{ SITE_NAME }} | IT Solutions &amp; Technology Services{% endblock %}
 {% block extra_head %}
 <style>
 .retail-home{background:#f6f8f7;padding-bottom:3.5rem}.delivery-strip{background:var(--brand-dark);color:#fff;font-size:.78rem;font-weight:700}.delivery-strip .container{min-height:2.35rem;display:flex;align-items:center;justify-content:space-between}.delivery-strip a{color:#c8f0d4;text-decoration:none}.retail-hero{padding:1.25rem 0 1.75rem}.hero-main,.hero-side{position:relative;overflow:hidden;border-radius:1rem;color:#fff}.hero-main{min-height:390px;display:flex;align-items:center;background:linear-gradient(105deg,rgba(15,61,46,.98) 0%,rgba(15,61,46,.91) 48%,rgba(15,61,46,.28) 100%),url('{% static "images/hero-image.jpg" %}') right center/cover}.hero-main:after{content:"";position:absolute;right:-8rem;top:-12rem;width:28rem;height:28rem;border:1px solid rgba(255,255,255,.18);border-radius:50%}.hero-copy{position:relative;z-index:1;padding:2.5rem 8%;max-width:680px}.hero-eyebrow{color:#bee8cb;font-size:.72rem;font-weight:800;letter-spacing:.12em}.hero-copy h1{font-size:clamp(2rem,4vw,3.5rem);font-weight:850;line-height:1.07}.hero-copy p{color:#e0f4e6;max-width:440px}.hero-side{min-height:188px;padding:1.55rem;display:flex;flex-direction:column;justify-content:end;background:linear-gradient(135deg,rgba(20,108,67,.95),rgba(25,135,84,.78)),url('{% static "images/receipt_printer_epson_tmt88vii_front.webp" %}') 88% 35%/150px no-repeat}.hero-side+.hero-side{background:linear-gradient(135deg,rgba(24,72,54,.96),rgba(15,61,46,.80)),url('{% static "images/barcode_scanner_posiflex_ts2200ub.jpg" %}') 89% 34%/180px no-repeat}.hero-side small{font-size:.68rem;letter-spacing:.1em;font-weight:800;color:#c8f0d4}.hero-side h2{font-size:1.35rem;font-weight:800;margin:.35rem 0 0;max-width:60%}.shop-section{padding:1.6rem 0}.shop-title{color:var(--brand-dark);font-size:1.35rem;font-weight:800;margin:0}.section-link{font-size:.84rem;color:var(--brand-primary);font-weight:750;text-decoration:none}.category-tile{display:block;height:100%;padding:1rem .85rem;border:1px solid #dce8e1;border-radius:.7rem;color:var(--brand-dark);background:#fff;text-decoration:none;transition:.2s ease}.category-tile:hover{color:var(--brand-primary);transform:translateY(-3px);box-shadow:0 .7rem 1.2rem rgba(15,61,46,.11)}.category-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:#e9f6ed;color:var(--brand-primary);font-size:1.15rem;margin-bottom:.7rem}.category-tile strong{display:block;font-size:.84rem;line-height:1.2}.category-tile span{font-size:.72rem;color:#78887f}.product-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}.store-product{min-width:0;overflow:hidden;background:#fff;border:1px solid #dce8e1;border-radius:.7rem;transition:.2s ease}.store-product:hover{transform:translateY(-4px);box-shadow:0 .7rem 1.4rem rgba(15,61,46,.12)}.store-product-image,.store-product-placeholder{width:100%;height:165px;padding:.8rem;display:block;object-fit:contain;background:#fbfcfb}.store-product-placeholder{display:grid;place-items:center;color:#a3b3a9;font-size:2rem}.store-product-body{padding:.85rem}.store-product-category{color:var(--brand-primary);font-size:.67rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}.store-product h3{min-height:2.5em;margin:.3rem 0 .75rem;color:#26362d;font-size:.84rem;font-weight:750;line-height:1.3}.store-product-price{color:var(--brand-dark);font-size:.92rem;font-weight:850}.store-product-action{width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:var(--brand-primary);color:#fff;text-decoration:none}.offer-banner{position:relative;overflow:hidden;padding:2.5rem 7%;border-radius:1rem;color:#fff;background:linear-gradient(100deg,rgba(15,61,46,.98),rgba(20,108,67,.86)),url('{% static "images/advert-banner.png" %}') right center/cover}.offer-banner small{color:#c7f1d4;letter-spacing:.1em;font-weight:800}.offer-banner h2{max-width:500px;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:850}.benefit-strip{background:#fff;border:1px solid #dce8e1;border-radius:.8rem}.benefit{display:flex;align-items:center;gap:.75rem;padding:1.1rem}.benefit i{color:var(--brand-primary);font-size:1.5rem}.benefit h3{color:var(--brand-dark);font-size:.8rem;font-weight:850;margin:0}.benefit p{color:#76867d;font-size:.71rem;margin:.15rem 0 0}@media(max-width:991.98px){.hero-main{min-height:330px}.product-row{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-side h2{max-width:74%}}@media(max-width:767.98px){.delivery-strip .container{justify-content:center}.delivery-contact{display:none}.retail-hero{padding:.75rem 0 1rem}.hero-main{min-height:320px;background-position:64% center}.hero-copy{padding:2rem 1.35rem}.hero-copy p{font-size:.94rem;max-width:74%}.hero-side{min-height:145px}.shop-section{padding:1.2rem 0}.product-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.store-product-image,.store-product-placeholder{height:130px}.store-product-body{padding:.65rem}.store-product h3{font-size:.76rem}.category-tile{padding:.8rem .65rem}.category-icon{width:38px;height:38px}.offer-banner{padding:2rem 1.5rem}}
@@ -42,9 +42,239 @@
 .company-card:hover .card-img-top {
     transform: scale(1.05);
 }
+.advert-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    background: #fff;
+}
+.advert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+.advert-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.05);
+    margin: 0 auto;
+}
 </style>
 {% endblock %}
 {% block content %}
 <div class="retail-home">
+    <!-- Transparent Hero Section -->
+    <section class="hero-transparent-section">
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="row align-items-center g-4 g-lg-5">
+                <!-- Left Column: Copy & Actions -->
+                <div class="col-lg-7">
+                    <div class="hero-transparent-badge">
+                        <i class="bi bi-patch-check-fill text-success"></i>
+                        <span>Leading IT Solutions Provider in Kenya</span>
+                    </div>
+                    <h1 class="hero-transparent-title">
+                        Empower Your Business With <span class="hero-highlight">Comprehensive IT</span> Solutions
+                    </h1>
+                    <p class="hero-transparent-lead">
+                        Complete hardware and software procurement, cloud computing, networking, data security, and customized IT consulting services designed to drive your business forward across Kenya.
+                    </p>
+                    <div class="hero-transparent-actions">
+                        <a href="{% url 'core:services' %}" class="btn btn-primary">
+                            <i class="bi bi-tools me-2"></i>Our Services
+                        </a>
+                        <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-dark">
+                            <i class="bi bi-box-seam me-2"></i>Explore Products
+                        </a>
+                        <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20interested%20in%20IT%20solutions" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success">
+                            <i class="bi bi-whatsapp me-2"></i>Get Quote
+                        </a>
+                    </div>
+                    <div class="hero-transparent-stats">
+                        <div class="hero-stat-item">
+                            <div class="hero-stat-icon">
+                                <i class="bi bi-building"></i>
+                            </div>
+                            <div class="hero-stat-text">
+                                <strong>500+ Clients</strong>
+                                <span>Trusted Countrywide</span>
+                            </div>
+                        </div>
+                        <div class="hero-stat-item">
+                            <div class="hero-stat-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <div class="hero-stat-text">
+                                <strong>100% Genuine</strong>
+                                <span>Quality IT Equipment</span>
+                            </div>
+                        </div>
+                        <div class="hero-stat-item">
+                            <div class="hero-stat-icon">
+                                <i class="bi bi-headset"></i>
+                            </div>
+                            <div class="hero-stat-text">
+                                <strong>24/7 Support</strong>
+                                <span>Expert Assistance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Transparent Visual Stage -->
+                <div class="col-lg-5 hero-transparent-visual">
+                    <div class="hero-transparent-img-card">
+                        <span class="hero-floating-tag tag-top">
+                            <i class="bi bi-check-circle-fill text-success fs-6"></i>
+                            <span>Complete IT Solutions Suite</span>
+                        </span>
+                        <img src="{% static 'images/hero-image.png' %}" alt="Jabem IT Solutions - Comprehensive Hardware, Software, Networking and Cloud Services" class="hero-transparent-img">
+                        <span class="hero-floating-tag tag-bottom">
+                            <i class="bi bi-lightning-charge-fill text-warning fs-6"></i>
+                            <span>Ready-to-Deploy Solutions</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advert Cards Section -->
+    <section class="py-4 bg-light">
+        <div class="container">
+            <div class="row g-3">
+                <!-- Advert Card 1 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 advert-card">
+                        <div class="card-body p-4 text-center">
+                            <div class="advert-icon mb-3">
+                                <i class="bi bi-cloud-arrow-up fs-1 text-primary"></i>
+                            </div>
+                            <h5 class="card-title fw-bold mb-2">Cloud Solutions</h5>
+                            <p class="card-text text-muted small mb-3">Scalable cloud hosting, storage, and migration services for your business needs.</p>
+                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-outline-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Advert Card 2 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 advert-card">
+                        <div class="card-body p-4 text-center">
+                            <div class="advert-icon mb-3">
+                                <i class="bi bi-shield-lock fs-1 text-success"></i>
+                            </div>
+                            <h5 class="card-title fw-bold mb-2">Network Security</h5>
+                            <p class="card-text text-muted small mb-3">Advanced security solutions to protect your data and ensure compliance.</p>
+                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-outline-success">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Advert Card 3 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 advert-card">
+                        <div class="card-body p-4 text-center">
+                            <div class="advert-icon mb-3">
+                                <i class="bi bi-router fs-1 text-warning"></i>
+                            </div>
+                            <h5 class="card-title fw-bold mb-2">Networking</h5>
+                            <p class="card-text text-muted small mb-3">Wireless networks, structured cabling, and unified communications.</p>
+                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-outline-warning">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Category Shortcut Strip -->
+    <section class="py-3 border-top border-bottom bg-white">
+        <div class="container">
+            <div class="row g-2 align-items-center">
+                <div class="col-6 col-md-3">
+                    <a href="{% url 'catalog:product_list' %}?type=hardware" class="category-quick-pill text-decoration-none d-flex align-items-center gap-2 p-2 rounded">
+                        <div class="category-icon-sm"><i class="bi bi-hdd-stack text-success"></i></div>
+                        <div>
+                            <div class="fw-bold text-dark small">IT Hardware</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">Servers &amp; Equipment</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a href="{% url 'catalog:product_list' %}?q=printer" class="category-quick-pill text-decoration-none d-flex align-items-center gap-2 p-2 rounded">
+                        <div class="category-icon-sm"><i class="bi bi-printer text-success"></i></div>
+                        <div>
+                            <div class="fw-bold text-dark small">Printers &amp; Scanners</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">Office Solutions</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a href="{% url 'core:services' %}" class="category-quick-pill text-decoration-none d-flex align-items-center gap-2 p-2 rounded">
+                        <div class="category-icon-sm"><i class="bi bi-cloud text-success"></i></div>
+                        <div>
+                            <div class="fw-bold text-dark small">Cloud Services</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">Hosting &amp; Storage</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a href="{% url 'core:services' %}" class="category-quick-pill text-decoration-none d-flex align-items-center gap-2 p-2 rounded">
+                        <div class="category-icon-sm"><i class="bi bi-shield-lock text-success"></i></div>
+                        <div>
+                            <div class="fw-bold text-dark small">Network Security</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">Protection &amp; Compliance</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Showcase -->
+    {% if featured_products %}
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <span class="text-uppercase fw-bold small text-success" style="letter-spacing: 0.08em;">Popular Solutions</span>
+                    <h2 class="h4 fw-bold text-dark mb-0">Featured IT Products &amp; Equipment</h2>
+                </div>
+                <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-success btn-sm">
+                    View All Products <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+            <div class="row g-3">
+                {% for product in featured_products %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card card-product shadow-sm h-100">
+                        <div class="card-img-wrapper p-3 d-flex align-items-center justify-content-center bg-white" style="height: 160px;">
+                            {% if product.get_image_url %}
+                            <img src="{{ product.get_image_url }}" class="card-img-top product-image" alt="{{ product.name }}" style="max-height: 130px; object-fit: contain;" loading="lazy">
+                            {% else %}
+                            <i class="bi bi-hdd-stack text-secondary fs-1"></i>
+                            {% endif %}
+                        </div>
+                        <div class="card-body d-flex flex-column p-3">
+                            <span class="badge bg-light text-dark border align-self-start mb-2" style="font-size: 0.68rem;">{{ product.category.name|default:"Hardware" }}</span>
+                            <h6 class="card-title mb-1" style="font-size: 0.88rem; line-height: 1.3;">
+                                <a href="{{ product.get_absolute_url }}" class="text-dark text-decoration-none">{{ product.name|truncatewords:6 }}</a>
+                            </h6>
+                            <p class="small text-muted mb-3 flex-grow-1" style="font-size: 0.76rem;">{{ product.short_description|default:""|truncatewords:8 }}</p>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                <span class="fw-bold text-dark" style="font-size: 0.95rem;">KES {{ product.price|floatformat:0 }}</span>
+                                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20requesting%20a%20quote%20for%20{{ product.name|urlencode }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-success py-1 px-2" style="font-size: 0.75rem;" title="Quote on WhatsApp">
+                                    <i class="bi bi-whatsapp me-1"></i>Quote
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
 </div>
 {% endblock %}
