@@ -232,39 +232,180 @@
     <a href="{% url 'accounts:login' %}" class="mobile-nav-link"><i class="bi bi-person"></i><span>Account</span></a>
 </nav>
 
-<footer class="bg-dark text-white py-5">
+<!-- Pre-Footer Compact Highlights Strip -->
+<div class="footer-highlights-compact">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3 mb-3">
-                <img src="{% static 'images/logo.jpeg' %}" alt="{{ SITE_NAME }}" style="height: 70px; margin-bottom: 15px; background: #212529;" onerror="this.style.display='none';">
-                <p class="small text-white-50">Your trusted partner for POS solutions, hardware, and software in Kenya. Jabem Solutions Ltd.</p>
+        <div class="row g-2 text-center text-md-start align-items-center">
+            <div class="col-6 col-md-3">
+                <div class="highlight-item">
+                    <i class="bi bi-truck text-success"></i>
+                    <span><strong>Countrywide</strong> Delivery</span>
+                </div>
             </div>
-            <div class="col-md-3 mb-3">
-                <h6>Quick Links</h6>
-                <ul class="list-unstyled small">
-                    <li><a class="text-white-50" href="{% url 'catalog:product_list' %}">Products</a></li>
-                    <li><a class="text-white-50" href="{% url 'core:services' %}">Services</a></li>
-                </ul>
+            <div class="col-6 col-md-3">
+                <div class="highlight-item">
+                    <i class="bi bi-shield-check text-success"></i>
+                    <span><strong>Genuine</strong> POS Hardware</span>
+                </div>
             </div>
-            <div class="col-md-3 mb-3">
-                <h6>Contact</h6>
-                <ul class="list-unstyled small text-white-50">
-                    <li><i class="bi bi-telephone me-1"></i>{{ COMPANY_PHONE }}</li>
-                    <li><i class="bi bi-envelope me-1"></i>{{ COMPANY_EMAIL }}</li>
-                    <li><i class="bi bi-geo-alt me-1"></i>{{ COMPANY_ADDRESS }}</li>
-                </ul>
+            <div class="col-6 col-md-3">
+                <div class="highlight-item">
+                    <i class="bi bi-tools text-success"></i>
+                    <span><strong>Expert</strong> Setup &amp; Training</span>
+                </div>
             </div>
-            <div class="col-md-3 mb-3">
-                <h6>Newsletter</h6>
-                <p class="small text-white-50 mb-2">Subscribe for updates and exclusive offers.</p>
-                <form class="d-flex gap-2">
-                    <input type="email" class="form-control form-control-sm" placeholder="Your email" aria-label="Email">
-                    <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
-                </form>
+            <div class="col-6 col-md-3">
+                <div class="highlight-item">
+                    <i class="bi bi-headset text-success"></i>
+                    <span><strong>24/7</strong> Support</span>
+                </div>
             </div>
         </div>
-        <hr>
-        <p class="small text-muted mb-0">&copy; {% now "Y" %} {{ SITE_NAME }}. All rights reserved.</p>
+    </div>
+</div>
+
+<!-- Main Site Footer (Compact) -->
+<footer class="site-footer footer-compact">
+    <div class="footer-top-accent"></div>
+    <div class="container py-4">
+        <div class="row g-3 g-lg-4">
+            <!-- Col 1: Brand & Bio -->
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-brand-wrap mb-2">
+                    <a href="{% url 'core:home' %}" class="footer-logo-link text-decoration-none">
+                        <span class="footer-logo-box me-2">
+                            <img src="{% static 'images/logo.jpeg' %}" alt="{{ SITE_NAME }}" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <i class="bi bi-cpu-fill text-success fs-4" style="display:none;"></i>
+                        </span>
+                        <span class="footer-brand-name">
+                            <span class="brand-main">Jabem</span>
+                            <span class="brand-sub">Solutions</span>
+                        </span>
+                    </a>
+                </div>
+                <p class="footer-about-text small mb-2">
+                    Point of Sale hardware, software, and IT infrastructure solutions for Kenyan retailers and businesses.
+                </p>
+                <div class="footer-hours-compact mb-2">
+                    <i class="bi bi-clock me-1 text-success"></i>
+                    <span>Mon - Sat: 8:00 - 18:00 &bull; 24/7 Call-out</span>
+                </div>
+                <div class="footer-social-links">
+                    <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer" class="social-icon-btn whatsapp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn facebook" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn linkedin" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn twitter" aria-label="Twitter X"><i class="bi bi-twitter-x"></i></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Col 2: Products -->
+            <div class="col-lg-2 col-md-3 col-6">
+                <h6 class="footer-heading">POS &amp; Products</h6>
+                <ul class="footer-nav-list list-unstyled">
+                    <li><a href="{% url 'catalog:product_list' %}"><i class="bi bi-chevron-right"></i>All Products</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?type=hardware"><i class="bi bi-chevron-right"></i>POS Hardware</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?type=software"><i class="bi bi-chevron-right"></i>POS Software</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?q=printer"><i class="bi bi-chevron-right"></i>Thermal Printers</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?q=scanner"><i class="bi bi-chevron-right"></i>Barcode Scanners</a></li>
+                    <li><a href="{% url 'catalog:pos' %}"><i class="bi bi-chevron-right"></i>POS Live Demo</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Company & Services -->
+            <div class="col-lg-2 col-md-3 col-6">
+                <h6 class="footer-heading">Company</h6>
+                <ul class="footer-nav-list list-unstyled">
+                    <li><a href="{% url 'core:about' %}"><i class="bi bi-chevron-right"></i>About Us</a></li>
+                    <li><a href="{% url 'core:services' %}"><i class="bi bi-chevron-right"></i>Services</a></li>
+                    <li><a href="{% url 'core:contact' %}"><i class="bi bi-chevron-right"></i>Contact Us</a></li>
+                    <li><a href="{% url 'catalog:cart' %}"><i class="bi bi-chevron-right"></i>Shopping Cart</a></li>
+                    <li><a href="{% url 'core:services' %}"><i class="bi bi-chevron-right"></i>Maintenance</a></li>
+                    <li><a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20would%20like%20to%20request%20a%20quote" target="_blank" rel="noopener noreferrer"><i class="bi bi-chevron-right"></i>Request Quote</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Contact & Newsletter -->
+            <div class="col-lg-4 col-md-12">
+                <h6 class="footer-heading">Contact &amp; Newsletter</h6>
+                <div class="footer-contact-compact mb-2">
+                    <a href="tel:{{ COMPANY_PHONE|cut:' ' }}" class="contact-compact-item me-3 text-decoration-none">
+                        <i class="bi bi-telephone-fill text-success me-1"></i>{{ COMPANY_PHONE }}
+                    </a>
+                    <a href="mailto:{{ COMPANY_EMAIL }}" class="contact-compact-item me-3 text-decoration-none">
+                        <i class="bi bi-envelope-fill text-success me-1"></i>{{ COMPANY_EMAIL }}
+                    </a>
+                    <span class="contact-compact-item">
+                        <i class="bi bi-geo-alt-fill text-success me-1"></i>{{ COMPANY_ADDRESS }}
+                    </span>
+                </div>
+                <div class="footer-newsletter-compact mt-2">
+                    <form id="footerNewsletterForm" class="footer-newsletter-form" onsubmit="handleFooterNewsletter(event)">
+                        <div class="newsletter-input-group">
+                            <i class="bi bi-envelope newsletter-input-icon"></i>
+                            <label class="visually-hidden" for="newsletter-email">Email Address</label>
+                            <input id="newsletter-email" type="email" class="form-control newsletter-input" placeholder="Get updates &amp; offers..." required>
+                            <button type="submit" class="btn newsletter-submit-btn" aria-label="Subscribe">
+                                <span>Subscribe</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div id="newsletterSuccessMsg" class="newsletter-msg text-success mt-1 d-none small">
+                            <i class="bi bi-check-circle-fill me-1"></i> Subscribed successfully!
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment & Trust Badges Strip (Compact) -->
+        <div class="footer-trust-row compact-trust-row">
+            <div class="row align-items-center g-2">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="trust-pill-label me-2">Payments:</span>
+                    <div class="d-inline-flex flex-wrap gap-1 align-items-center">
+                        <span class="payment-badge mpesa" title="Lipa na M-Pesa"><i class="bi bi-phone me-1"></i>M-PESA</span>
+                        <span class="payment-badge" title="Visa &amp; Mastercard"><i class="bi bi-credit-card-2-front me-1"></i>Cards</span>
+                        <span class="payment-badge" title="Bank Transfer"><i class="bi bi-bank me-1"></i>Bank</span>
+                        <span class="payment-badge" title="Cash on Delivery"><i class="bi bi-cash-stack me-1"></i>COD</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-inline-flex align-items-center gap-2">
+                        <span class="security-badge small"><i class="bi bi-shield-shaded text-success me-1"></i>256-bit SSL</span>
+                        <span class="security-badge small"><i class="bi bi-patch-check-fill text-success me-1"></i>Verified Kenya Partner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright Bar (Compact) -->
+        <div class="footer-bottom-bar compact-bottom-bar">
+            <div class="row align-items-center g-1">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="copyright-text mb-0 small">
+                        &copy; {% now "Y" %} <strong>{{ SITE_NAME }}</strong>. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <ul class="list-inline mb-0 footer-secondary-links small">
+                        <li class="list-inline-item"><a href="{% url 'core:about' %}">About</a></li>
+                        <li class="list-inline-item">&bull;</li>
+                        <li class="list-inline-item"><a href="{% url 'core:services' %}">Services</a></li>
+                        <li class="list-inline-item">&bull;</li>
+                        <li class="list-inline-item"><a href="{% url 'core:contact' %}">Contact</a></li>
+                        <li class="list-inline-item">&bull;</li>
+                        <li class="list-inline-item"><a href="{% url 'core:sitemap_xml' %}">Sitemap</a></li>
+                        <li class="list-inline-item">&bull;</li>
+                        <li class="list-inline-item">
+                            <button type="button" class="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Scroll to top">
+                                <i class="bi bi-arrow-up-short"></i> Top
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </footer>
 
@@ -330,6 +471,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function handleFooterNewsletter(event) {
+    event.preventDefault();
+    const input = document.getElementById('newsletter-email');
+    const msg = document.getElementById('newsletterSuccessMsg');
+    if (input && input.value) {
+        if (msg) {
+            msg.classList.remove('d-none');
+        }
+        input.value = '';
+        setTimeout(function() {
+            if (msg) msg.classList.add('d-none');
+        }, 6000);
+    }
+}
 </script>
 {% block extra_scripts %}{% endblock %}
 

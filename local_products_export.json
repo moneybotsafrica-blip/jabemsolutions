@@ -48,7 +48,7 @@
     "warehouse_location": "Main Store"
   },
   {
-    "name": "Mustek Cash Drawer M4052",
+    "name": "Mustek cash drawer M4052",
     "slug": "mustek-cash-drawer-m4052",
     "sku": "MUSTEK-M4052",
     "price": 15000.0,
@@ -13904,7 +13904,7 @@
     "warehouse_location": "Main Store"
   },
   {
-    "name": "Posiflex CR-4000 Cash Drawer",
+    "name": "Posiflex CR-4000 cash drawer",
     "slug": "posiflex-cr-4000-cash-drawer",
     "sku": "POSIFLEX-CR-4000-CASH-DRAWER",
     "price": 17500.0,
@@ -68992,7 +68992,7 @@
     "warehouse_location": "Main Store"
   },
   {
-    "name": "EPOS Cash Drawer price in Kenya",
+    "name": "EPOS cash drawer price in Kenya",
     "slug": "epos-cash-drawer",
     "sku": "EPOS-CASH-DRAWER",
     "price": 8500.0,

@@ -31,7 +31,7 @@ class Command(BaseCommand):
         # Product data for Mustek items
         mustek_products = [
             {
-                'name': 'Cash Drawer M4052',
+                'name': 'cash drawer M4052',
                 'slug': 'cash-drawer-m4052',
                 'sku': 'CD-M4052',
                 'price': 15000,

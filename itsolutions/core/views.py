@@ -6,10 +6,27 @@ from django.http import HttpResponse
 
 from .forms import ContactForm
 from .models import ContactMessage
+from catalog.models import Category, Product
 
 
 def home(request):
-    return render(request, "core/home.html")
+    products = (
+        Product.objects.filter(is_active=True)
+        .select_related("category", "brand")[:8]
+    )
+    latest_products = (
+        Product.objects.filter(is_active=True)
+        .select_related("category", "brand")
+        .order_by("-created_at")[:8]
+    )
+    return render(
+        request,
+        "core/home.html",
+        {
+            "featured_products": products,
+            "latest_products": latest_products,
+        },
+    )
 
 
 def about(request):
