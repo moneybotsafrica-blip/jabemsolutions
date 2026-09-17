@@ -3,184 +3,324 @@
 {% block title %}{{ SITE_NAME }} | IT Solutions &amp; Technology Services{% endblock %}
 {% block extra_head %}
 <style>
-.retail-home{background:#f6f8f7;padding-bottom:3.5rem}.delivery-strip{background:var(--brand-dark);color:#fff;font-size:.78rem;font-weight:700}.delivery-strip .container{min-height:2.35rem;display:flex;align-items:center;justify-content:space-between}.delivery-strip a{color:#c8f0d4;text-decoration:none}.retail-hero{padding:1.25rem 0 1.75rem}.hero-main,.hero-side{position:relative;overflow:hidden;border-radius:1rem;color:#fff}.hero-main{min-height:390px;display:flex;align-items:center;background:linear-gradient(105deg,rgba(15,61,46,.98) 0%,rgba(15,61,46,.91) 48%,rgba(15,61,46,.28) 100%),url('{% static "images/hero-image.jpg" %}') right center/cover}.hero-main:after{content:"";position:absolute;right:-8rem;top:-12rem;width:28rem;height:28rem;border:1px solid rgba(255,255,255,.18);border-radius:50%}.hero-copy{position:relative;z-index:1;padding:2.5rem 8%;max-width:680px}.hero-eyebrow{color:#bee8cb;font-size:.72rem;font-weight:800;letter-spacing:.12em}.hero-copy h1{font-size:clamp(2rem,4vw,3.5rem);font-weight:850;line-height:1.07}.hero-copy p{color:#e0f4e6;max-width:440px}.hero-side{min-height:188px;padding:1.55rem;display:flex;flex-direction:column;justify-content:end;background:linear-gradient(135deg,rgba(20,108,67,.95),rgba(25,135,84,.78)),url('{% static "images/receipt_printer_epson_tmt88vii_front.webp" %}') 88% 35%/150px no-repeat}.hero-side+.hero-side{background:linear-gradient(135deg,rgba(24,72,54,.96),rgba(15,61,46,.80)),url('{% static "images/barcode_scanner_posiflex_ts2200ub.jpg" %}') 89% 34%/180px no-repeat}.hero-side small{font-size:.68rem;letter-spacing:.1em;font-weight:800;color:#c8f0d4}.hero-side h2{font-size:1.35rem;font-weight:800;margin:.35rem 0 0;max-width:60%}.shop-section{padding:1.6rem 0}.shop-title{color:var(--brand-dark);font-size:1.35rem;font-weight:800;margin:0}.section-link{font-size:.84rem;color:var(--brand-primary);font-weight:750;text-decoration:none}.category-tile{display:block;height:100%;padding:1rem .85rem;border:1px solid #dce8e1;border-radius:.7rem;color:var(--brand-dark);background:#fff;text-decoration:none;transition:.2s ease}.category-tile:hover{color:var(--brand-primary);transform:translateY(-3px);box-shadow:0 .7rem 1.2rem rgba(15,61,46,.11)}.category-icon{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:#e9f6ed;color:var(--brand-primary);font-size:1.15rem;margin-bottom:.7rem}.category-tile strong{display:block;font-size:.84rem;line-height:1.2}.category-tile span{font-size:.72rem;color:#78887f}.product-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}.store-product{min-width:0;overflow:hidden;background:#fff;border:1px solid #dce8e1;border-radius:.7rem;transition:.2s ease}.store-product:hover{transform:translateY(-4px);box-shadow:0 .7rem 1.4rem rgba(15,61,46,.12)}.store-product-image,.store-product-placeholder{width:100%;height:165px;padding:.8rem;display:block;object-fit:contain;background:#fbfcfb}.store-product-placeholder{display:grid;place-items:center;color:#a3b3a9;font-size:2rem}.store-product-body{padding:.85rem}.store-product-category{color:var(--brand-primary);font-size:.67rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}.store-product h3{min-height:2.5em;margin:.3rem 0 .75rem;color:#26362d;font-size:.84rem;font-weight:750;line-height:1.3}.store-product-price{color:var(--brand-dark);font-size:.92rem;font-weight:850}.store-product-action{width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:var(--brand-primary);color:#fff;text-decoration:none}.offer-banner{position:relative;overflow:hidden;padding:2.5rem 7%;border-radius:1rem;color:#fff;background:linear-gradient(100deg,rgba(15,61,46,.98),rgba(20,108,67,.86)),url('{% static "images/advert-banner.png" %}') right center/cover}.offer-banner small{color:#c7f1d4;letter-spacing:.1em;font-weight:800}.offer-banner h2{max-width:500px;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:850}.benefit-strip{background:#fff;border:1px solid #dce8e1;border-radius:.8rem}.benefit{display:flex;align-items:center;gap:.75rem;padding:1.1rem}.benefit i{color:var(--brand-primary);font-size:1.5rem}.benefit h3{color:var(--brand-dark);font-size:.8rem;font-weight:850;margin:0}.benefit p{color:#76867d;font-size:.71rem;margin:.15rem 0 0}@media(max-width:991.98px){.hero-main{min-height:330px}.product-row{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-side h2{max-width:74%}}@media(max-width:767.98px){.delivery-strip .container{justify-content:center}.delivery-contact{display:none}.retail-hero{padding:.75rem 0 1rem}.hero-main{min-height:320px;background-position:64% center}.hero-copy{padding:2rem 1.35rem}.hero-copy p{font-size:.94rem;max-width:74%}.hero-side{min-height:145px}.shop-section{padding:1.2rem 0}.product-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.store-product-image,.store-product-placeholder{height:130px}.store-product-body{padding:.65rem}.store-product h3{font-size:.76rem}.category-tile{padding:.8rem .65rem}.category-icon{width:38px;height:38px}.offer-banner{padding:2rem 1.5rem}}
-/* Marketplace-style product cards: generous image stage, minimal border, compact details. */
-.store-product{border-color:#e5ebe7;border-radius:.3rem;box-shadow:0 .15rem .45rem rgba(15,61,46,.05)}
-.store-product:hover{border-color:#c2dccb;box-shadow:0 .8rem 1.65rem rgba(15,61,46,.13)}
-.store-product-image,.store-product-placeholder{height:205px;padding:1.15rem;background:#fff;border-bottom:1px solid #eff3f0}
-.store-product-body{padding:.85rem .9rem .95rem}.store-product-category{color:#7a8d82;font-size:.64rem;font-weight:750}.store-product h3{margin:.35rem 0 .8rem;font-size:.85rem}.store-product-price{font-size:.95rem}.store-product-action{width:31px;height:31px;border:1px solid #c9e1d1;background:#fff;color:var(--brand-primary);transition:.2s ease}.store-product:hover .store-product-action{background:var(--brand-primary);border-color:var(--brand-primary);color:#fff}
-@media(max-width:767.98px){.store-product-image,.store-product-placeholder{height:158px;padding:.7rem}}
-.hero-main::before, .hero-side::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    background-size: inherit;
-    background-position: inherit;
-    background-repeat: inherit;
-    opacity: 0.3;
-    z-index: -1;
-}
-.hero-main { background: linear-gradient(105deg,rgba(15,61,46,.98) 0%,rgba(15,61,46,.91) 48%,rgba(15,61,46,.28) 100%) !important; }
-.hero-side { background: linear-gradient(135deg,rgba(20,108,67,.95),rgba(25,135,84,.78)) !important; }
-.company-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-    overflow: hidden;
-}
-.company-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-.card-img-top {
-    width: 100%;
-    transition: transform 0.3s ease;
-}
-.company-card:hover .card-img-top {
-    transform: scale(1.05);
-}
-.advert-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 12px;
-    background: #fff;
-}
-.advert-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-}
-.advert-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.05);
-    margin: 0 auto;
-}
+.retail-home { background: #f6f8f7; padding-bottom: 3.5rem; }
+.card-product { transition: transform 0.25s ease, box-shadow 0.25s ease; border-radius: 12px; border: 1px solid #e5ebe7; }
+.card-product:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(15, 61, 46, 0.1) !important; border-color: #c2dccb; }
 </style>
 {% endblock %}
 {% block content %}
 <div class="retail-home">
-    <!-- Transparent Hero Section -->
+    <!-- Premium Transparent Hero Section -->
     <section class="hero-transparent-section">
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center g-4 g-lg-5">
                 <!-- Left Column: Copy & Actions -->
                 <div class="col-lg-7">
-                    <div class="hero-transparent-badge">
-                        <i class="bi bi-patch-check-fill text-success"></i>
-                        <span>Leading IT Solutions Provider in Kenya</span>
+                    <!-- Eyebrow Badge with Live Pulse -->
+                    <div class="hero-premium-badge">
+                        <span class="hero-badge-beacon">
+                            <span class="beacon-core"></span>
+                            <span class="beacon-ping"></span>
+                        </span>
+                        <span class="hero-badge-title">Enterprise IT &amp; POS Solutions Partner</span>
+                        <span class="hero-badge-separator"></span>
+                        <span class="hero-badge-location"><i class="bi bi-geo-alt-fill"></i> Kenya</span>
                     </div>
+
                     <h1 class="hero-transparent-title">
-                        Empower Your Business With <span class="hero-highlight">Comprehensive IT</span> Solutions
+                        Empower Your Enterprise With 
+                        <span class="hero-gradient-text">Intelligent IT</span>
+                        <span class="hero-highlight-underline">Solutions</span> &amp; POS Systems
                     </h1>
+
                     <p class="hero-transparent-lead">
-                        Complete hardware and software procurement, cloud computing, networking, data security, and customized IT consulting services designed to drive your business forward across Kenya.
+                        High-performance POS hardware, robust cloud infrastructure, enterprise network security, and dedicated IT consulting—tailored to drive reliability, speed, and growth for businesses across Kenya.
                     </p>
+
+                    <!-- CTAs -->
                     <div class="hero-transparent-actions">
-                        <a href="{% url 'core:services' %}" class="btn btn-primary">
-                            <i class="bi bi-tools me-2"></i>Our Services
+                        <a href="{% url 'core:services' %}" class="btn-hero-primary">
+                            <span>Explore Solutions</span>
+                            <i class="bi bi-arrow-right hero-btn-icon"></i>
                         </a>
-                        <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-dark">
-                            <i class="bi bi-box-seam me-2"></i>Explore Products
+                        <a href="{% url 'catalog:product_list' %}" class="btn-hero-secondary">
+                            <i class="bi bi-box-seam me-2"></i>
+                            <span>Browse Products</span>
                         </a>
-                        <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20interested%20in%20IT%20solutions" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success">
-                            <i class="bi bi-whatsapp me-2"></i>Get Quote
+                        <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20interested%20in%20IT%20solutions" target="_blank" rel="noopener noreferrer" class="btn-hero-whatsapp">
+                            <i class="bi bi-whatsapp me-2"></i>
+                            <span>Instant Quote</span>
                         </a>
                     </div>
+
+                    <!-- Glassmorphic Trust Stats Row -->
                     <div class="hero-transparent-stats">
-                        <div class="hero-stat-item">
-                            <div class="hero-stat-icon">
-                                <i class="bi bi-building"></i>
+                        <div class="hero-stat-glass-card">
+                            <div class="hero-stat-icon-wrap icon-emerald">
+                                <i class="bi bi-buildings-fill"></i>
                             </div>
-                            <div class="hero-stat-text">
-                                <strong>500+ Clients</strong>
-                                <span>Trusted Countrywide</span>
+                            <div class="hero-stat-info">
+                                <div class="hero-stat-number">500+ Clients</div>
+                                <div class="hero-stat-label">Active Deployments</div>
                             </div>
                         </div>
-                        <div class="hero-stat-item">
-                            <div class="hero-stat-icon">
+                        <div class="hero-stat-glass-card">
+                            <div class="hero-stat-icon-wrap icon-teal">
                                 <i class="bi bi-shield-check"></i>
                             </div>
-                            <div class="hero-stat-text">
-                                <strong>100% Genuine</strong>
-                                <span>Quality IT Equipment</span>
+                            <div class="hero-stat-info">
+                                <div class="hero-stat-number">100% Genuine</div>
+                                <div class="hero-stat-label">Certified OEM Hardware</div>
                             </div>
                         </div>
-                        <div class="hero-stat-item">
-                            <div class="hero-stat-icon">
+                        <div class="hero-stat-glass-card">
+                            <div class="hero-stat-icon-wrap icon-cyan">
                                 <i class="bi bi-headset"></i>
                             </div>
-                            <div class="hero-stat-text">
-                                <strong>24/7 Support</strong>
-                                <span>Expert Assistance</span>
+                            <div class="hero-stat-info">
+                                <div class="hero-stat-number">24/7 Support</div>
+                                <div class="hero-stat-label">Remote &amp; On-Site Care</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Transparent Visual Stage -->
+                <!-- Right Column: Premium Transparent Visual Stage -->
                 <div class="col-lg-5 hero-transparent-visual">
-                    <div class="hero-transparent-img-card">
-                        <span class="hero-floating-tag tag-top">
-                            <i class="bi bi-check-circle-fill text-success fs-6"></i>
-                            <span>Complete IT Solutions Suite</span>
-                        </span>
-                        <img src="{% static 'images/hero-image.png' %}" alt="Jabem IT Solutions - Comprehensive Hardware, Software, Networking and Cloud Services" class="hero-transparent-img">
-                        <span class="hero-floating-tag tag-bottom">
-                            <i class="bi bi-lightning-charge-fill text-warning fs-6"></i>
-                            <span>Ready-to-Deploy Solutions</span>
-                        </span>
+                    <div class="hero-visual-stage">
+                        <!-- Ambient Radial Backlights -->
+                        <div class="hero-stage-glow"></div>
+                        <div class="hero-stage-glow-secondary"></div>
+
+                        <!-- Top Floating Glass Pill -->
+                        <div class="hero-glass-pill pill-top">
+                            <div class="glass-pill-icon bg-success-subtle text-success">
+                                <i class="bi bi-patch-check-fill"></i>
+                            </div>
+                            <div class="glass-pill-content">
+                                <strong>Enterprise IT Suite</strong>
+                                <span>Certified Hardware &amp; Cloud</span>
+                            </div>
+                        </div>
+
+                        <!-- Hardware Equipment Visual with Ground Shadow -->
+                        <div class="hero-img-wrapper">
+                            <img src="{% static 'images/hero-image.png' %}" alt="Jabem IT Solutions - Comprehensive Hardware, Software, Networking and Cloud Services" class="hero-transparent-img">
+                            <div class="hero-ground-shadow"></div>
+                        </div>
+
+                        <!-- Bottom Floating Glass Pill -->
+                        <div class="hero-glass-pill pill-bottom">
+                            <div class="glass-pill-icon bg-warning-subtle text-warning">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                            </div>
+                            <div class="glass-pill-content">
+                                <strong>Rapid 24h Setup</strong>
+                                <span>Countrywide Delivery</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Advert Cards Section -->
-    <section class="py-4 bg-light">
+    <!-- Company Profile & Sales Trust Section -->
+    <section class="company-profile-section py-5">
         <div class="container">
-            <div class="row g-3">
+            <!-- Main Profile Showcase Card -->
+            <div class="profile-showcase-card">
+                <div class="row align-items-center g-4 g-xl-5">
+                    <!-- Left Column: Company Story & Sales Trust Pillars -->
+                    <div class="col-lg-7">
+                        <div class="profile-badge-pill mb-3">
+                            <i class="bi bi-shield-check text-success"></i>
+                            <span>About Jabem Solutions &bull; Kenya's Technology Partner</span>
+                        </div>
+                        <h2 class="profile-main-title mb-3">
+                            Powering Kenyan Commerce With 
+                            <span class="text-brand-gradient">Reliable IT &amp; Smart POS</span> Systems
+                        </h2>
+                        <p class="profile-intro-text mb-4">
+                            At <strong>Jabem Solutions</strong>, we help supermarkets, retail stores, restaurants, pharmacies, and corporate enterprises across Kenya streamline operations, prevent revenue loss, and scale with confidence. We don't just supply equipment—we deliver end-to-end IT architecture, certified hardware, software licensing, on-site installation, and 24/7 technical care.
+                        </p>
+
+                        <!-- 4 Value-Driven Sales Pillars (2x2 Grid) -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6">
+                                <div class="profile-pillar-card">
+                                    <div class="pillar-icon bg-success-subtle text-success">
+                                        <i class="bi bi-patch-check-fill"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="pillar-title">100% Genuine OEM Hardware</h6>
+                                        <p class="pillar-desc">Direct partnership with top manufacturers (Posiflex, Epson, Honeywell) with full replacement warranty.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="profile-pillar-card">
+                                    <div class="pillar-icon bg-primary-subtle text-primary">
+                                        <i class="bi bi-graph-up-arrow"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="pillar-title">Sales &amp; Stock Intelligence</h6>
+                                        <p class="pillar-desc">Automate multi-store inventory, sales auditing, staff shifts, and daily profit/loss tracking with ease.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="profile-pillar-card">
+                                    <div class="pillar-icon bg-warning-subtle text-warning">
+                                        <i class="bi bi-receipt-cutoff"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="pillar-title">KRA eTIMS &amp; Payment Ready</h6>
+                                        <p class="pillar-desc">Fully compliant with Kenya Revenue Authority eTIMS, plus instant M-PESA Till/Paybill &amp; Card integration.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="profile-pillar-card">
+                                    <div class="pillar-icon bg-info-subtle text-info">
+                                        <i class="bi bi-tools"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="pillar-title">Turnkey Setup &amp; 24/7 SLA</h6>
+                                        <p class="pillar-desc">Complete on-site deployment, network cabling, staff training, and rapid response field dispatch across Kenya.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sales CTAs & Trust Contact -->
+                        <div class="d-flex flex-wrap align-items-center gap-3 pt-2">
+                            <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20interested%20in%20a%20turnkey%20POS%20and%20IT%20solution%20for%20my%20business" target="_blank" rel="noopener noreferrer" class="btn btn-profile-primary">
+                                <i class="bi bi-whatsapp me-2"></i>
+                                <span>Talk to a Solutions Specialist</span>
+                            </a>
+                            <a href="{% url 'core:contact' %}" class="btn btn-profile-secondary">
+                                <i class="bi bi-calendar-check me-2"></i>
+                                <span>Book Free Consultation</span>
+                            </a>
+                            <div class="profile-direct-call text-muted small d-flex align-items-center gap-2">
+                                <i class="bi bi-telephone-outbound text-success fs-6"></i>
+                                <span>Hotline: <strong class="text-dark">+254 736 794 594</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Sales Image Showcase Frame -->
+                    <div class="col-lg-5">
+                        <div class="profile-image-showcase">
+                            <!-- Showcase Switcher Header -->
+                            <div class="showcase-nav-tabs mb-3 d-flex justify-content-center gap-2">
+                                <button type="button" class="showcase-tab active" data-target="pos" onclick="switchShowcase('pos')">
+                                    <i class="bi bi-display me-1"></i> Retail &amp; POS Systems
+                                </button>
+                                <button type="button" class="showcase-tab" data-target="it" onclick="switchShowcase('it')">
+                                    <i class="bi bi-hdd-network me-1"></i> Enterprise IT Solutions
+                                </button>
+                            </div>
+
+                            <!-- Showcase Media Frame -->
+                            <div class="showcase-frame">
+                                <div class="showcase-badge-top">
+                                    <span class="badge-dot-live"></span>
+                                    <span>Verified Kenya Deployment</span>
+                                </div>
+
+                                <img id="showcaseImgPos" src="{% static 'images/advert-1.png' %}" alt="Complete POS System Sales Solutions Kenya - Jabem Solutions" class="showcase-img active" loading="lazy">
+                                <img id="showcaseImgIt" src="{% static 'images/advert-2.png' %}" alt="Enterprise IT Solutions and Infrastructure - Jabem Solutions" class="showcase-img" loading="lazy">
+
+                                <div class="showcase-badge-bottom">
+                                    <div class="badge-icon text-warning">
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <div class="badge-copy">
+                                        <strong>4.9 / 5 Client Trust Rating</strong>
+                                        <small>500+ Active Deployments Countrywide</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="showcase-caption text-center text-muted small mt-2 mb-0">
+                                <i class="bi bi-info-circle me-1"></i> Turnkey packages include hardware, software, installation &amp; staff training.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Industries & Sectors Empowered Strip -->
+                <div class="profile-sectors-strip mt-4 pt-4 border-top">
+                    <div class="row align-items-center g-3 text-center text-md-start">
+                        <div class="col-md-3">
+                            <span class="fw-bold text-dark small text-uppercase" style="letter-spacing: 0.05em;">Sectors We Empower:</span>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 gap-lg-3">
+                                <span class="sector-pill"><i class="bi bi-cart4 text-success me-1"></i> Supermarkets &amp; Retail</span>
+                                <span class="sector-pill"><i class="bi bi-cup-hot text-danger me-1"></i> Restaurants &amp; Hospitality</span>
+                                <span class="sector-pill"><i class="bi bi-capsule text-primary me-1"></i> Pharmacies &amp; Chemists</span>
+                                <span class="sector-pill"><i class="bi bi-building text-info me-1"></i> Corporate &amp; Finance</span>
+                                <span class="sector-pill"><i class="bi bi-box-seam text-warning me-1"></i> Wholesale &amp; Warehousing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upgraded Advert Cards Section -->
+    <section class="py-4 py-lg-5 advert-section">
+        <div class="container">
+            <div class="row g-3 g-lg-4">
                 <!-- Advert Card 1 -->
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100 advert-card">
-                        <div class="card-body p-4 text-center">
-                            <div class="advert-icon mb-3">
-                                <i class="bi bi-cloud-arrow-up fs-1 text-primary"></i>
+                    <div class="card border-0 advert-card h-100">
+                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
+                            <div class="advert-icon-box icon-cloud mb-3">
+                                <i class="bi bi-cloud-arrow-up-fill"></i>
                             </div>
-                            <h5 class="card-title fw-bold mb-2">Cloud Solutions</h5>
-                            <p class="card-text text-muted small mb-3">Scalable cloud hosting, storage, and migration services for your business needs.</p>
-                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-outline-primary">Learn More</a>
+                            <h5 class="advert-card-title fw-bold mb-2">Cloud Infrastructure</h5>
+                            <p class="advert-card-text text-muted small mb-3">Scalable hybrid cloud servers, automated backups, and migration designed for high availability.</p>
+                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-advert mt-auto">
+                                <span>Learn More</span>
+                                <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <!-- Advert Card 2 -->
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100 advert-card">
-                        <div class="card-body p-4 text-center">
-                            <div class="advert-icon mb-3">
-                                <i class="bi bi-shield-lock fs-1 text-success"></i>
+                    <div class="card border-0 advert-card h-100">
+                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
+                            <div class="advert-icon-box icon-security mb-3">
+                                <i class="bi bi-shield-lock-fill"></i>
                             </div>
-                            <h5 class="card-title fw-bold mb-2">Network Security</h5>
-                            <p class="card-text text-muted small mb-3">Advanced security solutions to protect your data and ensure compliance.</p>
-                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-outline-success">Learn More</a>
+                            <h5 class="advert-card-title fw-bold mb-2">Network Security</h5>
+                            <p class="advert-card-text text-muted small mb-3">Next-gen firewalls, endpoint protection, ransomware defense, and compliance audits.</p>
+                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-advert mt-auto">
+                                <span>Learn More</span>
+                                <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <!-- Advert Card 3 -->
                 <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100 advert-card">
-                        <div class="card-body p-4 text-center">
-                            <div class="advert-icon mb-3">
-                                <i class="bi bi-router fs-1 text-warning"></i>
+                    <div class="card border-0 advert-card h-100">
+                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
+                            <div class="advert-icon-box icon-network mb-3">
+                                <i class="bi bi-router-fill"></i>
                             </div>
-                            <h5 class="card-title fw-bold mb-2">Networking</h5>
-                            <p class="card-text text-muted small mb-3">Wireless networks, structured cabling, and unified communications.</p>
-                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-outline-warning">Learn More</a>
+                            <h5 class="advert-card-title fw-bold mb-2">Enterprise Networking</h5>
+                            <p class="advert-card-text text-muted small mb-3">High-capacity structured cabling, managed switches, and enterprise Wi-Fi 6 coverage.</p>
+                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-advert mt-auto">
+                                <span>Learn More</span>
+                                <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -277,4 +417,29 @@
     </section>
     {% endif %}
 </div>
+
+<script>
+function switchShowcase(type) {
+    var posImg = document.getElementById('showcaseImgPos');
+    var itImg = document.getElementById('showcaseImgIt');
+    var tabs = document.querySelectorAll('.showcase-tab');
+    if (!posImg || !itImg) return;
+
+    tabs.forEach(function(t) {
+        if (t.getAttribute('data-target') === type) {
+            t.classList.add('active');
+        } else {
+            t.classList.remove('active');
+        }
+    });
+
+    if (type === 'pos') {
+        itImg.classList.remove('active');
+        posImg.classList.add('active');
+    } else {
+        posImg.classList.remove('active');
+        itImg.classList.add('active');
+    }
+}
+</script>
 {% endblock %}
