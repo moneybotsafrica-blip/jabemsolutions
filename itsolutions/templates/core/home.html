@@ -272,55 +272,154 @@
         </div>
     </section>
 
-    <!-- Upgraded Advert Cards Section -->
-    <section class="py-4 py-lg-5 advert-section">
+    <!-- Carrefour-Style Promotional Adverts Section -->
+    <section class="py-5 advert-promo-section">
         <div class="container">
-            <div class="row g-3 g-lg-4">
-                <!-- Advert Card 1 -->
-                <div class="col-md-4">
-                    <div class="card border-0 advert-card h-100">
-                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
-                            <div class="advert-icon-box icon-cloud mb-3">
-                                <i class="bi bi-cloud-arrow-up-fill"></i>
+            <!-- Section Header -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
+                <div>
+                    <div class="promo-badge-tag mb-2">
+                        <i class="bi bi-fire text-danger"></i>
+                        <span>FEATURED WEEKLY DEALS &bull; LIMITED STOCK PROMOS</span>
+                    </div>
+                    <h2 class="promo-section-title mb-1">
+                        Commercial Special Offers &amp; Turnkey Packages
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        Explore our Carrefour-grade retail technology specials. Complete hardware bundles, KRA eTIMS compliance, and on-site setup.
+                    </p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20interested%20in%20your%20current%20advert%20promotional%20deals" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-success">
+                        <i class="bi bi-whatsapp me-1"></i>Inquire All Deals
+                    </a>
+                </div>
+            </div>
+
+            <!-- Advert Cards Row -->
+            <div class="row g-4">
+                <!-- Advert Card 1: Supermarket & Retail POS Mega Bundle -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="advert-promo-card h-100">
+                        <!-- Flyer Image Container -->
+                        <div class="promo-img-wrap">
+                            <span class="promo-ribbon-badge bg-danger text-white">
+                                <i class="bi bi-star-fill me-1"></i>MEGA BUNDLE
+                            </span>
+                            <img src="{% static 'images/advert-supermarket-pos.jpg' %}" alt="Supermarket and Retail POS Special Mega Bundle - Jabem Solutions" class="promo-flyer-img" loading="lazy">
+                            <div class="promo-img-overlay">
+                                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20inquiring%20about%20the%20Supermarket%20and%20Retail%20POS%20Mega%20Bundle%20deal" target="_blank" rel="noopener noreferrer" class="btn btn-light btn-sm fw-bold shadow-sm">
+                                    <i class="bi bi-whatsapp text-success me-1"></i>Claim on WhatsApp
+                                </a>
                             </div>
-                            <h5 class="advert-card-title fw-bold mb-2">Cloud Infrastructure</h5>
-                            <p class="advert-card-text text-muted small mb-3">Scalable hybrid cloud servers, automated backups, and migration designed for high availability.</p>
-                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-advert mt-auto">
-                                <span>Learn More</span>
-                                <i class="bi bi-arrow-right ms-1"></i>
-                            </a>
+                        </div>
+
+                        <!-- Card Body Details -->
+                        <div class="promo-card-body p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-success-subtle text-success border border-success-subtle small">KRA eTIMS Compliant</span>
+                                <span class="text-muted small"><i class="bi bi-shield-check text-success"></i> 1 Year Warranty</span>
+                            </div>
+                            <h5 class="promo-card-heading mb-2">Supermarket &amp; Retail POS Mega Bundle</h5>
+                            <ul class="promo-highlights-list mb-3 flex-grow-1">
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Dual-screen touchscreen POS terminal</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> High-speed thermal receipt printer</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Omnidirectional hands-free scanner + cash drawer</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Free on-site setup &amp; staff training</li>
+                            </ul>
+                            <div class="promo-card-footer pt-3 border-top d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted small d-block" style="font-size: 0.75rem;"><i class="bi bi-box-seam text-success me-1"></i>Turnkey Package</span>
+                                    <strong class="text-dark" style="font-size: 0.88rem;">Custom Deal Quote</strong>
+                                </div>
+                                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20want%20to%20request%20a%20quote%20for%20the%20Supermarket%20and%20Retail%20POS%20Mega%20Bundle" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-promo-action">
+                                    <i class="bi bi-whatsapp me-1"></i>Request Quote
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Advert Card 2 -->
-                <div class="col-md-4">
-                    <div class="card border-0 advert-card h-100">
-                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
-                            <div class="advert-icon-box icon-security mb-3">
-                                <i class="bi bi-shield-lock-fill"></i>
+
+                <!-- Advert Card 2: Special Hardware Offer (Printers, Scanners & Drawers) -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="advert-promo-card h-100">
+                        <!-- Flyer Image Container -->
+                        <div class="promo-img-wrap">
+                            <span class="promo-ribbon-badge bg-warning text-dark">
+                                <i class="bi bi-lightning-charge-fill me-1"></i>HOT HARDWARE
+                            </span>
+                            <img src="{% static 'images/advert-hardware-special.jpg' %}" alt="Special Hardware Offer Receipt Printer Scanner Cash Drawer - Jabem Solutions" class="promo-flyer-img" loading="lazy">
+                            <div class="promo-img-overlay">
+                                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20inquiring%20about%20the%20Special%20Hardware%20Offer%20(Printer,%20Scanner,%20Drawer)" target="_blank" rel="noopener noreferrer" class="btn btn-light btn-sm fw-bold shadow-sm">
+                                    <i class="bi bi-whatsapp text-success me-1"></i>Claim on WhatsApp
+                                </a>
                             </div>
-                            <h5 class="advert-card-title fw-bold mb-2">Network Security</h5>
-                            <p class="advert-card-text text-muted small mb-3">Next-gen firewalls, endpoint protection, ransomware defense, and compliance audits.</p>
-                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-advert mt-auto">
-                                <span>Learn More</span>
-                                <i class="bi bi-arrow-right ms-1"></i>
-                            </a>
+                        </div>
+
+                        <!-- Card Body Details -->
+                        <div class="promo-card-body p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle small">Genuine OEM Equipment</span>
+                                <span class="text-muted small"><i class="bi bi-truck text-primary"></i> Fast Dispatch</span>
+                            </div>
+                            <h5 class="promo-card-heading mb-2">POS Hardware Essentials Package</h5>
+                            <ul class="promo-highlights-list mb-3 flex-grow-1">
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Heavy-duty Epson thermal receipt printer</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Laser barcode scanner with auto-trigger</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Reinforced 5-slot metal cash drawer</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Plug &amp; play with all Kenyan retail software</li>
+                            </ul>
+                            <div class="promo-card-footer pt-3 border-top d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted small d-block" style="font-size: 0.75rem;"><i class="bi bi-shield-check text-primary me-1"></i>Full Warranty</span>
+                                    <strong class="text-dark" style="font-size: 0.88rem;">Hardware Bundle</strong>
+                                </div>
+                                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20want%20to%20request%20a%20quote%20for%20the%20POS%20Hardware%20Essentials%20package" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-promo-action">
+                                    <i class="bi bi-whatsapp me-1"></i>Request Quote
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Advert Card 3 -->
-                <div class="col-md-4">
-                    <div class="card border-0 advert-card h-100">
-                        <div class="card-body p-4 text-center d-flex flex-column align-items-center">
-                            <div class="advert-icon-box icon-network mb-3">
-                                <i class="bi bi-router-fill"></i>
+
+                <!-- Advert Card 3: Restaurant & Hospitality POS Pack -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="advert-promo-card h-100">
+                        <!-- Flyer Image Container -->
+                        <div class="promo-img-wrap">
+                            <span class="promo-ribbon-badge bg-success text-white">
+                                <i class="bi bi-cup-hot-fill me-1"></i>HOSPITALITY PACK
+                            </span>
+                            <img src="{% static 'images/advert-restaurant-pos.jpg' %}" alt="Restaurant and Hospitality POS Special Pack - Jabem Solutions" class="promo-flyer-img" loading="lazy">
+                            <div class="promo-img-overlay">
+                                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20am%20inquiring%20about%20the%20Restaurant%20and%20Hospitality%20POS%20Pack%20deal" target="_blank" rel="noopener noreferrer" class="btn btn-light btn-sm fw-bold shadow-sm">
+                                    <i class="bi bi-whatsapp text-success me-1"></i>Claim on WhatsApp
+                                </a>
                             </div>
-                            <h5 class="advert-card-title fw-bold mb-2">Enterprise Networking</h5>
-                            <p class="advert-card-text text-muted small mb-3">High-capacity structured cabling, managed switches, and enterprise Wi-Fi 6 coverage.</p>
-                            <a href="{% url 'core:services' %}" class="btn btn-sm btn-advert mt-auto">
-                                <span>Learn More</span>
-                                <i class="bi bi-arrow-right ms-1"></i>
-                            </a>
+                        </div>
+
+                        <!-- Card Body Details -->
+                        <div class="promo-card-body p-3 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-warning-subtle text-dark border border-warning-subtle small">Limited Package</span>
+                                <span class="text-muted small"><i class="bi bi-credit-card text-success"></i> M-PESA Ready</span>
+                            </div>
+                            <h5 class="promo-card-heading mb-2">Restaurant &amp; Lounge POS Suite</h5>
+                            <ul class="promo-highlights-list mb-3 flex-grow-1">
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> 15" All-in-One Touch POS Terminal</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Mobile Android handheld POS for waitstaff</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> Cloud sales dashboard &amp; kitchen printer</li>
+                                <li><i class="bi bi-check2-circle text-success me-1"></i> 24/7 technical hotline &amp; emergency support</li>
+                            </ul>
+                            <div class="promo-card-footer pt-3 border-top d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted small d-block" style="font-size: 0.75rem;"><i class="bi bi-lightning-charge text-warning me-1"></i>Complete Setup</span>
+                                    <strong class="text-dark" style="font-size: 0.88rem;">Hospitality Suite</strong>
+                                </div>
+                                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20want%20to%20request%20a%20quote%20for%20the%20Restaurant%20and%20Hospitality%20POS%20Suite" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-promo-action">
+                                    <i class="bi bi-whatsapp me-1"></i>Request Quote
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2875,7 +2875,152 @@ footer.bg-white {
         font-size: 0.72rem;
         padding: 0.4rem 0.5rem;
     }
+/* ==========================================================================
+   CARREFOUR-STYLE PROMOTIONAL ADVERTS SECTION
+   ========================================================================== */
+.advert-promo-section {
+    background: #f4f8f5;
+    position: relative;
+    border-bottom: 1px solid #e2ebe5;
 }
+
+.promo-badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.28rem 0.75rem;
+    background: rgba(220, 53, 69, 0.08);
+    border: 1px solid rgba(220, 53, 69, 0.22);
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #b02a37;
+    text-transform: uppercase;
+}
+
+.promo-section-title {
+    font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+    font-weight: 850;
+    color: var(--brand-dark);
+    letter-spacing: -0.02em;
+}
+
+.advert-promo-card {
+    background: #ffffff;
+    border: 1px solid #dce8e0;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 61, 46, 0.06);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.advert-promo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(15, 61, 46, 0.12);
+    border-color: rgba(25, 135, 84, 0.4);
+}
+
+.promo-img-wrap {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-flyer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.advert-promo-card:hover .promo-flyer-img {
+    transform: scale(1.04);
+}
+
+.promo-ribbon-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    z-index: 2;
+}
+
+.promo-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 61, 46, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 3;
+}
+
+.advert-promo-card:hover .promo-img-overlay {
+    opacity: 1;
+}
+
+.promo-card-heading {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--brand-dark);
+    line-height: 1.25;
+}
+
+.promo-highlights-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.promo-highlights-list li {
+    font-size: 0.78rem;
+    color: #4a5e52;
+    margin-bottom: 0.3rem;
+    line-height: 1.35;
+    display: flex;
+    align-items: flex-start;
+}
+
+.promo-highlights-list li i {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.btn-promo-action {
+    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    color: #ffffff;
+    font-weight: 750;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.25);
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-promo-action:hover {
+    color: #ffffff;
+    background: var(--brand-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 61, 46, 0.32);
+}
+
 
 
 
