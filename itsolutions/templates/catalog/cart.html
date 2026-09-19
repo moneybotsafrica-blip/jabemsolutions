@@ -84,6 +84,17 @@
                         <i class="bi bi-whatsapp me-2"></i>Checkout via WhatsApp
                     </a>
                     <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary w-100">Continue Shopping</a>
+                    <div class="mt-4 pt-3 border-top text-center">
+                        <p class="text-muted small mb-2 fw-semibold"><i class="bi bi-shield-check text-success me-1"></i>Guaranteed Safe &amp; Secure Checkout</p>
+                        <div class="payment-logos-wrap justify-content-center">
+                            <span class="payment-badge-card card-mpesa" title="Lipa na M-PESA"><img src="{% static 'images/payments/mpesa.svg' %}" alt="M-PESA"></span>
+                            <span class="payment-badge-card card-airtel" title="Airtel Money"><img src="{% static 'images/payments/airtel.svg' %}" alt="Airtel Money"></span>
+                            <span class="payment-badge-card card-visa" title="Visa"><img src="{% static 'images/payments/visa.svg' %}" alt="Visa"></span>
+                            <span class="payment-badge-card card-mc" title="Mastercard"><img src="{% static 'images/payments/mastercard.svg' %}" alt="Mastercard"></span>
+                            <span class="payment-badge-card card-bank" title="Bank Transfer"><img src="{% static 'images/payments/bank-transfer.svg' %}" alt="Bank Transfer"></span>
+                            <span class="payment-badge-card card-cash" title="Cash on Delivery"><img src="{% static 'images/payments/cash-delivery.svg' %}" alt="Cash on Delivery"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -34,13 +34,21 @@
                             </div>
                             <div class="col-12">
                                 <label for="payment_method" class="form-label">Payment Method</label>
-                                <select class="form-select" id="payment_method" name="payment_method" required>
+                                <select class="form-select mb-2" id="payment_method" name="payment_method" required>
                                     <option value="whatsapp">WhatsApp Order (Contact for Payment)</option>
                                     <option value="cash">Cash on Delivery</option>
                                     <option value="mpesa">M-Pesa</option>
-                                    <option value="card">Card Payment</option>
+                                    <option value="card">Card Payment (Visa / Mastercard)</option>
                                     <option value="bank">Bank Transfer</option>
                                 </select>
+                                <div class="payment-logos-wrap pt-1">
+                                    <span class="payment-badge-card card-mpesa" title="Lipa na M-PESA"><img src="{% static 'images/payments/mpesa.svg' %}" alt="M-PESA"></span>
+                                    <span class="payment-badge-card card-airtel" title="Airtel Money"><img src="{% static 'images/payments/airtel.svg' %}" alt="Airtel Money"></span>
+                                    <span class="payment-badge-card card-visa" title="Visa"><img src="{% static 'images/payments/visa.svg' %}" alt="Visa"></span>
+                                    <span class="payment-badge-card card-mc" title="Mastercard"><img src="{% static 'images/payments/mastercard.svg' %}" alt="Mastercard"></span>
+                                    <span class="payment-badge-card card-bank" title="Bank Transfer"><img src="{% static 'images/payments/bank-transfer.svg' %}" alt="Bank Transfer"></span>
+                                    <span class="payment-badge-card card-cash" title="Cash on Delivery"><img src="{% static 'images/payments/cash-delivery.svg' %}" alt="Cash on Delivery"></span>
+                                </div>
                             </div>
                             <div class="col-12">
                                 <label for="notes" class="form-label">Order Notes (Optional)</label>

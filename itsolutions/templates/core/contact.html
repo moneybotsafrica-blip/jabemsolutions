@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Contact — {{ SITE_NAME }}{% endblock %}
 {% block content %}
+<section class="page-hero scroll-animate">
+    <div class="container">
+        <span class="hero-kicker d-block">We're here to help</span>
+        <h1 class="h2 mb-2">Contact Us</h1>
+        <p class="mb-0">Talk to our team about POS setups, hardware supply, branding, or support.</p>
+    </div>
+</section>
 <section class="container py-5">
     <div class="row">
         <div class="col-lg-6">
-            <h1 class="mb-4">Contact Us</h1>
             <form method="post" novalidate>
                 {% csrf_token %}
                 <div class="mb-3">
