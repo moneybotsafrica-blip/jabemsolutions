@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  body {
+    background: #081a12;
+    padding: 30px;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  .test-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.05);
+    padding: 16px 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    width: fit-content;
+  }
+  .label {
+    color: #87ab99;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .payment-logo-card {
+    background: #ffffff;
+    height: 28px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .payment-logo-card img, .payment-logo-card svg {
+    height: 18px;
+    width: auto;
+    max-width: 60px;
+    object-fit: contain;
+  }
+</style>
+</head>
+<body>
+  <div class='test-container'>
+    <span class='label'>Payments:</span>
+    <div class='payment-logo-card'><img src='logos/visa.svg' alt='Visa'></div>
+    <div class='payment-logo-card'><img src='logos/mastercard.svg' alt='Mastercard'></div>
+    <div class='payment-logo-card'><img src='logos/paypal.svg' alt='PayPal'></div>
+    <div class='payment-logo-card'><img src='../scratch_mpesa.svg' alt='M-Pesa'></div>
+  </div>
+</body>
+</html>

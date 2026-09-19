@@ -51,7 +51,7 @@ class Command(BaseCommand):
             },
             'mustek_pos_images/cash_drawer_m4052.png': {
                 'keywords': ['cash drawer', 'm4052'],
-                'description': 'M4052 cash drawer with robust construction and secure storage for cash transactions.'
+                'description': 'M4052 Cash Drawer with robust construction and secure storage for cash transactions.'
             },
             'mustek_pos_images/pos_software_waiter_app.webp': {
                 'keywords': ['pos software', 'waiter app', 'software'],

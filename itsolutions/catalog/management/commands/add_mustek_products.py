@@ -31,13 +31,13 @@ class Command(BaseCommand):
         # Product data for Mustek items
         mustek_products = [
             {
-                'name': 'cash drawer M4052',
+                'name': 'Cash Drawer M4052',
                 'slug': 'cash-drawer-m4052',
                 'sku': 'CD-M4052',
                 'price': 15000,
                 'product_type': 'hardware',
                 'image_file': 'mustek_pos_images/cash_drawer_m4052.png',
-                'description': 'M4052 cash drawer with robust construction and secure storage for cash transactions. Features multiple bill and coin compartments, durable metal construction, and compatibility with most POS systems.',
+                'description': 'M4052 Cash Drawer with robust construction and secure storage for cash transactions. Features multiple bill and coin compartments, durable metal construction, and compatibility with most POS systems.',
                 'keywords': ['cash drawer', 'm4052']
             },
             {

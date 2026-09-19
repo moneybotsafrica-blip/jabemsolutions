@@ -6,7 +6,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Count
 from decimal import Decimal
 from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct, Quote, QuoteSettings
 
@@ -90,10 +90,16 @@ class ProductListView(ListView):
         kind = self.request.GET.get("type")
         category_slug = self.request.GET.get("category")
         q = self.request.GET.get("q")
+        price_min = self.request.GET.get("price_min")
+        price_max = self.request.GET.get("price_max")
         if kind in {"hardware", "software"}:
             qs = qs.filter(product_type=kind)
         if category_slug:
             qs = qs.filter(category__slug=category_slug)
+        if price_min and price_min.replace(".", "", 1).isdigit():
+            qs = qs.filter(price__gte=float(price_min))
+        if price_max and price_max.replace(".", "", 1).isdigit():
+            qs = qs.filter(price__lte=float(price_max))
         if q:
             terms = q.split()
             include = [t for t in terms if not t.startswith("-")]
@@ -109,10 +115,16 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["categories"] = Category.objects.all()
+        ctx["categories"] = (
+            Category.objects.annotate(
+                active_count=Count("products", filter=Q(products__is_active=True))
+            ).filter(active_count__gt=0).order_by("name")
+        )
         ctx["selected_type"] = self.request.GET.get("type", "")
         ctx["selected_category"] = self.request.GET.get("category", "")
         ctx["query"] = self.request.GET.get("q", "")
+        ctx["price_min"] = self.request.GET.get("price_min", "")
+        ctx["price_max"] = self.request.GET.get("price_max", "")
         return ctx
 
 

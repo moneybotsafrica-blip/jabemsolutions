@@ -1,97 +1,459 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Products — {{ SITE_NAME }}{% endblock %}
 {% block extra_head %}
+<style>
+    /* ---------- SHOP BY CATEGORY — sliding circular rail (compact) ---------- */
+    .gp-cats { padding: 1.1rem 0 0.2rem; }
+    .gp-cats-head { margin-bottom: 0.6rem; }
+    .gp-cats-head .kicker {
+        font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em;
+        text-transform: uppercase; color: #2563eb;
+    }
+    .gp-cats-head h2 {
+        font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 800;
+        color: #1d1d1f; margin: 0.1rem 0 0;
+    }
+    .gp-rail-wrap { position: relative; }
+    .gp-rail-panel {
+        background: linear-gradient(180deg, #f8faff 0%, #eef3fd 100%);
+        border: 1px solid rgba(37, 99, 235, 0.08); border-radius: 18px;
+        padding: 1rem 1rem 0.4rem; box-shadow: inset 0 1px 0 #ffffff;
+    }
+    .gp-rail {
+        display: flex; gap: 0.8rem; overflow-x: auto;
+        padding: 0.3rem 0.2rem 0.7rem;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .gp-rail::-webkit-scrollbar { display: none; }
+    .gp-cat {
+        flex: 0 0 auto; width: 92px; scroll-snap-align: start;
+        display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+        text-decoration: none;
+    }
+    .gp-cat-ring {
+        width: 68px; height: 68px; padding: 3px; border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
+        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.16);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .gp-cat-ring img {
+        width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+        border: 2px solid #ffffff; background: #eef2fb; display: block;
+        transition: transform 0.35s ease;
+    }
+    .gp-cat:hover .gp-cat-ring { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.26); }
+    .gp-cat:hover .gp-cat-ring img { transform: scale(1.08); }
+    .gp-cat-label { font-size: 0.72rem; font-weight: 600; color: #1d1d1f; text-align: center; line-height: 1.15; }
+    .gp-cat:hover .gp-cat-label { color: #1d4ed8; }
+    .gp-nav {
+        position: absolute; top: 28px; width: 30px; height: 30px; border-radius: 50%;
+        background: #ffffff; border: 1px solid rgba(37, 99, 235, 0.18); color: #2563eb;
+        display: flex; align-items: center; justify-content: center; z-index: 3;
+        box-shadow: 0 6px 16px rgba(6, 13, 36, 0.12); cursor: pointer;
+        transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+    .gp-nav:hover { background: #2563eb; color: #ffffff; }
+    .gp-nav.prev { left: -12px; }
+    .gp-nav.next { right: -12px; }
+    .gp-nav[disabled] { opacity: 0; pointer-events: none; }
+    @media (max-width: 575.98px) {
+        .gp-nav { display: none; }
+        .gp-cat { width: 78px; }
+        .gp-cat-ring { width: 58px; height: 58px; }
+    }
+
+    /* ---------- ADVERT CARDS ---------- */
+    .gp-ads { padding: 2.6rem 0 0.4rem; }
+    .gp-ads-head { margin-bottom: 1.3rem; }
+    .gp-ads-head .kicker {
+        font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+        text-transform: uppercase; color: #2563eb;
+    }
+    .gp-ads-head h2 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-weight: 800; color: #1d1d1f; margin: 0.2rem 0 0; }
+    .gp-ad {
+        position: relative; display: block; border-radius: 18px; overflow: hidden;
+        text-decoration: none; box-shadow: 0 10px 26px rgba(6, 13, 36, 0.10);
+        transition: transform 0.2s ease, box-shadow 0.2s ease; min-height: 200px;
+    }
+    .gp-ad:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(37, 99, 235, 0.2); }
+    .gp-ad img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+    .gp-ad:hover img { transform: scale(1.06); }
+    .gp-ad-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6, 13, 36, 0.1) 25%, rgba(6, 13, 36, 0.7) 60%, rgba(6, 13, 36, 0.97) 100%); }
+    .gp-ad-content { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.15rem 1.25rem; color: #fff; }
+    .gp-ad-tag { display: inline-block; font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; background: #2563eb; color: #fff; border-radius: 980px; padding: 0.22rem 0.6rem; margin-bottom: 0.55rem; }
+    .gp-ad-title { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.15rem; line-height: 1.15; color: #fff; text-shadow: 0 1px 12px rgba(6, 13, 36, 0.65); }
+    .gp-ad-sub { font-size: 0.82rem; color: rgba(255, 255, 255, 0.9); margin: 0; text-shadow: 0 1px 8px rgba(6, 13, 36, 0.6); }
+    .gp-ad-cta { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.65rem; font-size: 0.82rem; font-weight: 700; color: #fff; }
+    .gp-ad-cta i { transition: transform 0.2s ease; }
+    .gp-ad:hover .gp-ad-cta i { transform: translateX(4px); }
+    .gp-ad-feature { aspect-ratio: 24 / 9; }
+    .gp-ad-feature .gp-ad-title { font-size: clamp(1.3rem, 2.4vw, 1.9rem); }
+    .gp-ad-sm { aspect-ratio: 16 / 11; }
+    .gp-ad-sm .gp-ad-overlay { background: linear-gradient(180deg, rgba(6, 13, 36, 0.3) 15%, rgba(6, 13, 36, 0.87) 50%, rgba(6, 13, 36, 0.98) 100%); }
+    .gp-ad-sm .gp-ad-content { padding: 0.9rem 1rem 1rem; }
+    .gp-ad-sm .gp-ad-title { font-size: 1.02rem; }
+    @media (max-width: 767.98px) { .gp-ad-feature { aspect-ratio: 16 / 10; } }
+
+    /* ---------- FILTER SIDEBAR (Kilimall style) + RESULTS ---------- */
+    .gp-filter-inner { position: sticky; top: 92px; }
+    .gp-flt-card {
+        background: #ffffff; border: 1px solid rgba(37, 99, 235, 0.10);
+        border-radius: 14px; box-shadow: 0 8px 24px rgba(6, 13, 36, 0.05);
+        overflow: hidden; margin-bottom: 0.9rem;
+    }
+    .gp-flt-sec { padding: 0.95rem 1.05rem; border-bottom: 1px solid #eef1f7; }
+    .gp-flt-sec:last-child { border-bottom: none; }
+    .gp-flt-h {
+        display: flex; align-items: center; justify-content: space-between;
+        font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+        color: #1d1d1f; margin: 0 0 0.7rem;
+    }
+    .gp-flt-h i { color: #2563eb; margin-right: 0.4rem; }
+    .gp-flt-h .hd { display: flex; align-items: center; }
+    .gp-flt-reset { font-size: 0.68rem; font-weight: 600; color: #2563eb; text-decoration: none; text-transform: none; letter-spacing: 0; }
+    .gp-flt-reset:hover { text-decoration: underline; }
+    .gp-search-wrap { position: relative; }
+    .gp-search-wrap i {
+        position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%);
+        color: #9aa6bd; font-size: 0.85rem; pointer-events: none;
+    }
+    .gp-search-wrap input {
+        width: 100%; border: 1px solid rgba(37, 99, 235, 0.18); border-radius: 10px;
+        padding: 0.5rem 0.75rem 0.5rem 2rem; font-size: 0.85rem; background: #fbfcff;
+    }
+    .gp-search-wrap input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.12); background: #fff; }
+    .gp-flt-list { list-style: none; margin: 0; padding: 0; max-height: 265px; overflow-y: auto; }
+    .gp-flt-list li + li { margin-top: 1px; }
+    .gp-flt-list a {
+        display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+        font-size: 0.82rem; font-weight: 500; color: #3c4250; text-decoration: none;
+        padding: 0.42rem 0.55rem; border-radius: 8px; border-left: 3px solid transparent;
+    }
+    .gp-flt-list a:hover { background: #f4f7ff; color: #1d4ed8; }
+    .gp-flt-list a.active { background: #eff6ff; color: #1d4ed8; font-weight: 700; border-left-color: #2563eb; }
+    .gp-flt-list .cnt { font-size: 0.68rem; font-weight: 600; color: #9aa6bd; background: #f1f4fa; border-radius: 980px; padding: 0.08rem 0.45rem; flex: 0 0 auto; }
+    .gp-flt-list a.active .cnt { background: #dbeafe; color: #1d4ed8; }
+    .gp-chip-row { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+    .gp-chip {
+        display: inline-block; font-size: 0.76rem; font-weight: 600; color: #3c4250;
+        border: 1px solid rgba(37, 99, 235, 0.22); border-radius: 980px; padding: 0.3rem 0.85rem;
+        text-decoration: none; background: #fff;
+    }
+    .gp-chip:hover { border-color: #2563eb; color: #1d4ed8; }
+    .gp-chip.active { background: linear-gradient(135deg, #2563eb, #1d4ed8); border-color: transparent; color: #fff; }
+    .gp-price-row { display: flex; align-items: center; gap: 0.45rem; }
+    .gp-price-row input {
+        width: 50%; min-width: 0; border: 1px solid rgba(37, 99, 235, 0.18); border-radius: 8px;
+        padding: 0.4rem 0.55rem; font-size: 0.8rem; background: #fbfcff;
+    }
+    .gp-price-row input:focus { outline: none; border-color: #2563eb; background: #fff; }
+    .gp-price-row .dash { color: #b9c4dd; font-weight: 700; }
+    .gp-price-go {
+        margin-top: 0.55rem; width: 100%; border: none; border-radius: 8px; font-size: 0.78rem;
+        font-weight: 700; color: #fff; padding: 0.45rem 0.6rem;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    }
+    .gp-price-go:hover { filter: brightness(1.07); }
+    .gp-flt-foot { padding: 0.8rem 1.05rem; background: #fbfcff; }
+    .gp-flt-foot a { display: block; text-align: center; font-size: 0.8rem; font-weight: 600; color: #6e6e73; text-decoration: none; }
+    .gp-flt-foot a:hover { color: #1d4ed8; }
+
+    /* ---------- TOOLBAR + PRODUCT CARDS ---------- */
+    .gp-toolbar {
+        display: flex; align-items: flex-end; justify-content: space-between;
+        gap: 1rem; flex-wrap: wrap; margin-bottom: 1.15rem;
+    }
+    .gp-toolbar h2 { font-size: 1.55rem; font-weight: 800; color: #1d1d1f; margin: 0; }
+    .gp-toolbar .gp-count { font-size: 0.85rem; color: #6e6e73; margin-top: 0.2rem; }
+    .gp-toolbar .gp-count b { color: #1d4ed8; font-weight: 700; }
+    .gp-cart-btn {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        border: 1px solid rgba(37, 99, 235, 0.25); color: #2563eb;
+        border-radius: 980px; padding: 0.5rem 1.15rem; font-weight: 600; font-size: 0.88rem;
+        text-decoration: none; background: #fff; transition: background 0.2s, color 0.2s;
+    }
+    .gp-cart-btn:hover { background: #2563eb; color: #fff; }
+    .gp-card {
+        position: relative; height: 100%; background: #fff;
+        border: 1px solid rgba(6, 13, 36, 0.08); border-radius: 12px; overflow: hidden;
+        box-shadow: 0 1px 3px rgba(6, 13, 36, 0.05);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        display: flex; flex-direction: column;
+    }
+    .gp-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(37, 99, 235, 0.15); }
+    .gp-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; }
+    .gp-card-media { position: relative; aspect-ratio: 4 / 3; background: #eef2fb; overflow: hidden; }
+    .gp-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
+    .gp-card:hover .gp-card-media img { transform: scale(1.05); }
+    .gp-card-media .gp-ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: #b9c4dd; font-size: 2rem; }
+    .gp-card-type {
+        position: absolute; top: 0.55rem; left: 0.55rem; font-size: 0.6rem; font-weight: 700;
+        letter-spacing: 0.04em; text-transform: uppercase; color: #fff;
+        background: rgba(29, 78, 216, 0.92); border-radius: 6px; padding: 0.18rem 0.5rem;
+    }
+    .gp-fav {
+        position: absolute; top: 0.5rem; right: 0.5rem; z-index: 2; width: 32px; height: 32px;
+        border-radius: 50%; background: rgba(255, 255, 255, 0.92); border: none; color: #9aa6bd;
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+        box-shadow: 0 2px 6px rgba(6, 13, 36, 0.14); transition: color 0.15s ease, transform 0.15s ease;
+    }
+    .gp-fav:hover { transform: scale(1.08); }
+    .gp-fav.active { color: #e0245e; }
+    .gp-card-body { padding: 0.7rem 0.8rem 0.85rem; display: flex; flex-direction: column; flex: 1; }
+    .gp-card-price { font-size: 1.08rem; font-weight: 800; color: #1d4ed8; margin-bottom: 0.28rem; }
+    .gp-card-name {
+        font-size: 0.86rem; font-weight: 600; color: #2b2f38; line-height: 1.3; margin: 0 0 0.55rem;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.25em;
+    }
+    .gp-card-meta { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; font-size: 0.7rem; color: #8a93a6; }
+    .gp-card-meta .loc { display: inline-flex; align-items: center; gap: 0.2rem; }
+    .gp-card-actions { display: flex; gap: 0.45rem; padding: 0 0.8rem 0.85rem; }
+    .gp-quote {
+        flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+        border: none; border-radius: 9px; font-weight: 700; font-size: 0.8rem; padding: 0.5rem 0.6rem;
+        color: #fff; background: linear-gradient(135deg, #2563eb, #1d4ed8); text-decoration: none;
+    }
+    .gp-quote:hover { color: #fff; filter: brightness(1.07); }
+    .gp-empty { text-align: center; padding: 3.5rem 1rem; border: 1.5px dashed rgba(37, 99, 235, 0.22); border-radius: 18px; background: #fbfcff; }
+    .gp-empty i { font-size: 2.6rem; color: #b9c4dd; }
+    .gp-empty p { color: #6e6e73; margin: 0.8rem 0 1.2rem; }
+    @media (prefers-reduced-motion: reduce) {
+        .gp-cat-ring, .gp-cat-ring img, .gp-card, .gp-card-media img { transition: none; }
+    }
+</style>
 {% endblock %}
 {% block content %}
-<section class="page-hero scroll-animate">
-    <div class="container">
-        <span class="hero-kicker d-block">Genuine tech, East Africa delivery</span>
-        <h1 class="h2 mb-2">Our Products</h1>
-        <p class="mb-0">Browse our complete range of hardware and software solutions</p>
+<section class="container gp-ads">
+    <div class="gp-ads-head">
+        <span class="kicker">Offers</span>
+        <h2>Deals &amp; Highlights</h2>
+    </div>
+    <div class="row g-3 g-lg-4">
+        <div class="col-12">
+            <a class="gp-ad gp-ad-feature" href="?q=laptop">
+                <img src="{% static 'images/deals_laptop_banner.jpg' %}" alt="Laptop deals">
+                <div class="gp-ad-overlay"></div>
+                <div class="gp-ad-content">
+                    <span class="gp-ad-tag">Featured deal</span>
+                    <p class="gp-ad-title">Laptop Deals — genuine brands, Nairobi stock</p>
+                    <p class="gp-ad-sub">Ultrabooks, business laptops and workstations ready for delivery.</p>
+                    <span class="gp-ad-cta">Shop laptops <i class="bi bi-arrow-right"></i></span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="gp-ad gp-ad-sm" href="?q=restaurant+pos">
+                <img src="{% static 'images/advert-restaurant-pos.jpg' %}" alt="Restaurant POS">
+                <div class="gp-ad-overlay"></div>
+                <div class="gp-ad-content">
+                    <span class="gp-ad-tag">POS</span>
+                    <p class="gp-ad-title">Restaurant POS</p>
+                    <p class="gp-ad-sub">Ordering, kitchen display &amp; billing in one.</p>
+                    <span class="gp-ad-cta">Explore <i class="bi bi-arrow-right"></i></span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="gp-ad gp-ad-sm" href="?q=supermarket+pos">
+                <img src="{% static 'images/advert-supermarket-pos.jpg' %}" alt="Supermarket and retail POS">
+                <div class="gp-ad-overlay"></div>
+                <div class="gp-ad-content">
+                    <span class="gp-ad-tag">POS</span>
+                    <p class="gp-ad-title">Supermarket &amp; Retail POS</p>
+                    <p class="gp-ad-sub">Scanners, drawers and scale-ready bundles.</p>
+                    <span class="gp-ad-cta">Explore <i class="bi bi-arrow-right"></i></span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="gp-ad gp-ad-sm" href="?type=hardware">
+                <img src="{% static 'images/advert-hardware-special.jpg' %}" alt="Hardware specials">
+                <div class="gp-ad-overlay"></div>
+                <div class="gp-ad-content">
+                    <span class="gp-ad-tag">Specials</span>
+                    <p class="gp-ad-title">Hardware Specials</p>
+                    <p class="gp-ad-sub">Printers, networking, CCTV and accessories.</p>
+                    <span class="gp-ad-cta">Browse <i class="bi bi-arrow-right"></i></span>
+                </div>
+            </a>
+        </div>
     </div>
 </section>
-<section class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{% url 'catalog:cart' %}" class="btn btn-outline-primary position-relative ms-auto">
-            <i class="bi bi-cart3 me-1"></i> Cart
-            {% if cart_items %}
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {{ cart_items|length }}
-            </span>
-            {% endif %}
+<section class="container gp-cats">
+    <div class="gp-cats-head">
+        <span class="kicker">Browse</span>
+        <h2>Shop by Category</h2>
+    </div>
+    <div class="gp-rail-wrap">
+        <button class="gp-nav prev" type="button" aria-label="Scroll left"><i class="bi bi-chevron-left"></i></button>
+        <button class="gp-nav next" type="button" aria-label="Scroll right"><i class="bi bi-chevron-right"></i></button>
+        <div class="gp-rail-panel">
+        <div class="gp-rail" id="gpRail">
+            <a class="gp-cat" href="{% url 'catalog:product_list' %}"><div class="gp-cat-ring"><i class="bi bi-grid-3x3-gap-fill" style="font-size:1.5rem;color:#2563eb;display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:50%;background:#fff;border:2px solid #fff"></i></div><span class="gp-cat-label">All Products</span></a>
+            <a class="gp-cat" href="?q=laptop"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_ultrabook.jpg' %}" alt="Laptops" loading="lazy"></div><span class="gp-cat-label">Laptops</span></a>
+            <a class="gp-cat" href="?q=desktop"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_workstation.jpg' %}" alt="Desktops" loading="lazy"></div><span class="gp-cat-label">Desktops</span></a>
+            <a class="gp-cat" href="?q=monitor"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_2in1.jpg' %}" alt="Monitors" loading="lazy"></div><span class="gp-cat-label">Monitors</span></a>
+            <a class="gp-cat" href="?q=pos"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_pos.jpg' %}" alt="POS Terminals" loading="lazy"></div><span class="gp-cat-label">POS Terminals</span></a>
+            <a class="gp-cat" href="?q=printer+-thermal"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_printer.jpg' %}" alt="Printers" loading="lazy"></div><span class="gp-cat-label">Printers</span></a>
+            <a class="gp-cat" href="?q=thermal"><div class="gp-cat-ring"><img src="{% static 'images/products/prod_thermal_printer.jpg' %}" alt="Receipt Printers" loading="lazy"></div><span class="gp-cat-label">Receipt Printers</span></a>
+            <a class="gp-cat" href="?q=router"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_networking.jpg' %}" alt="Routers &amp; Switches" loading="lazy"></div><span class="gp-cat-label">Routers &amp; Switches</span></a>
+            <a class="gp-cat" href="?q=camera"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_surveillance.jpg' %}" alt="CCTV Cameras" loading="lazy"></div><span class="gp-cat-label">CCTV Cameras</span></a>
+            <a class="gp-cat" href="?q=ups"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_power.jpg' %}" alt="Power &amp; UPS" loading="lazy"></div><span class="gp-cat-label">Power &amp; UPS</span></a>
+            <a class="gp-cat" href="?q=ssd"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_storage.jpg' %}" alt="Storage" loading="lazy"></div><span class="gp-cat-label">Storage</span></a>
+            <a class="gp-cat" href="{% url 'core:office_supplies' %}"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_business.jpg' %}" alt="Office Supplies" loading="lazy"></div><span class="gp-cat-label">Office Supplies</span></a>
+            <a class="gp-cat" href="{% url 'core:school_supplies' %}"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_student.jpg' %}" alt="School Supplies" loading="lazy"></div><span class="gp-cat-label">School Supplies</span></a>
+        </div>
+        </div>
+    </div>
+</section>
+<section class="container pb-5">
+    <div class="gp-toolbar">
+        <div>
+            <h2>{% if query or selected_type or selected_category %}Filtered Results{% else %}All Products{% endif %}</h2>
+            <p class="gp-count">Showing <b>{{ paginator.count }}</b> product{{ paginator.count|pluralize }}{% if selected_type %} &middot; {{ selected_type|title }}{% endif %}{% if query %} &middot; &ldquo;{{ query }}&rdquo;{% endif %}</p>
+        </div>
+        <a href="{% url 'catalog:cart' %}" class="gp-cart-btn">
+            <i class="bi bi-bag-check"></i> View Cart
+            {% if cart_items %}<span class="badge rounded-pill bg-danger ms-1">{{ cart_items|length }}</span>{% endif %}
         </a>
     </div>
 
-    <form method="get" class="row g-2 mb-4">
-        <div class="col-md-4">
-            <input type="text" name="q" class="form-control" placeholder="Search products..." value="{{ query }}">
-        </div>
-        <div class="col-md-3">
-            <select name="type" class="form-select">
-                <option value="">All Types</option>
-                <option value="hardware" {% if selected_type == "hardware" %}selected{% endif %}>Hardware</option>
-                <option value="software" {% if selected_type == "software" %}selected{% endif %}>Software</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select name="category" class="form-select">
-                <option value="">All Categories</option>
-                {% for c in categories %}
-                <option value="{{ c.slug }}" {% if selected_category == c.slug %}selected{% endif %}">{{ c.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-primary w-100" type="submit">Filter</button>
-        </div>
-    </form>
-
-    <div class="row g-3">
-        {% for product in products %}
-        <div class="col-6 col-md-4 col-lg-3">
-            <div class="card card-product shadow-sm h-100">
-                {% if product.get_image_url %}
-                <img src="{{ product.get_image_url }}" class="card-img-top product-image" alt="{{ product.name }}" style="height: 160px; object-fit: contain; background: #f8f9fa; padding: 0.5rem;" loading="lazy">
-                {% else %}
-                <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 160px;">
-                    <i class="bi bi-image" style="font-size:1.5rem"></i>
-                </div>
-                {% endif %}
-                <div class="card-body d-flex flex-column p-2">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis align-self-start" style="font-size: 0.65rem;">{{ product.get_product_type_display }}</span>
-                        <strong style="font-size: 0.85rem;">KES {{ product.price|floatformat:0 }}</strong>
+    <div class="row g-4">
+        <aside class="col-lg-3">
+            <div class="gp-filter-inner">
+                <div class="gp-flt-card">
+                    <div class="gp-flt-sec">
+                        <h3 class="gp-flt-h"><span class="hd"><i class="bi bi-sliders"></i> Refine</span></h3>
+                        <form method="get" class="gp-search-wrap">
+                            <i class="bi bi-search"></i>
+                            <input type="text" name="q" placeholder="Search products..." value="{{ query }}">
+                            {% if selected_type %}<input type="hidden" name="type" value="{{ selected_type }}">{% endif %}
+                            {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+                            {% if price_min %}<input type="hidden" name="price_min" value="{{ price_min }}">{% endif %}
+                            {% if price_max %}<input type="hidden" name="price_max" value="{{ price_max }}">{% endif %}
+                        </form>
                     </div>
-                    <h6 class="card-title mb-0" style="font-size: 0.8rem; line-height: 1.1;">{{ product.name|truncatewords:4 }}</h6>
-                    <div class="mt-auto pt-1">
-                        <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success w-100 quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
-                            <i class="bi bi-chat-dots me-1"></i>Quote
-                        </a>
+                    <div class="gp-flt-sec">
+                        <h3 class="gp-flt-h"><span class="hd"><i class="bi bi-pc-display"></i> Product Type</span></h3>
+                        <div class="gp-chip-row">
+                            <a class="gp-chip {% if not selected_type %}active{% endif %}" href="{% url 'catalog:product_list' %}">All</a>
+                            <a class="gp-chip {% if selected_type == 'hardware' %}active{% endif %}" href="?type=hardware">Hardware</a>
+                            <a class="gp-chip {% if selected_type == 'software' %}active{% endif %}" href="?type=software">Software</a>
+                        </div>
                     </div>
+                    <div class="gp-flt-sec">
+                        <h3 class="gp-flt-h"><span class="hd"><i class="bi bi-tags"></i> Categories</span></h3>
+                        <ul class="gp-flt-list">
+                            <li><a href="{% url 'catalog:product_list' %}" class="{% if not selected_category %}active{% endif %}">All Categories</a></li>
+                            {% for c in categories %}
+                            <li><a href="?category={{ c.slug }}" class="{% if selected_category == c.slug %}active{% endif %}">{{ c.name }}<span class="cnt">{{ c.active_count }}</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="gp-flt-sec">
+                        <h3 class="gp-flt-h"><span class="hd"><i class="bi bi-cash-stack"></i> Price (KES)</span></h3>
+                        <form method="get">
+                            {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+                            {% if selected_type %}<input type="hidden" name="type" value="{{ selected_type }}">{% endif %}
+                            {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+                            <div class="gp-price-row">
+                                <input type="number" name="price_min" min="0" placeholder="Min" value="{{ price_min }}">
+                                <span class="dash">&mdash;</span>
+                                <input type="number" name="price_max" min="0" placeholder="Max" value="{{ price_max }}">
+                            </div>
+                            <button class="gp-price-go" type="submit"><i class="bi bi-check-lg me-1"></i>Apply price</button>
+                        </form>
+                    </div>
+                    <div class="gp-flt-foot"><a href="{% url 'catalog:product_list' %}"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset all filters</a></div>
                 </div>
             </div>
-        </div>
-        {% empty %}
-        <div class="col-12 text-center py-5">
-            <i class="bi bi-search" style="font-size:3rem; color:#dee2e6;"></i>
-            <p class="text-muted mt-3">No products match your filters.</p>
-            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-primary">Clear Filters</a>
-        </div>
-        {% endfor %}
-    </div>
+        </aside>
+        <div class="col-lg-9">
+            <div class="row g-3 g-lg-4">
+                {% for product in products %}
+                <div class="col-6 col-md-4 col-xl-3">
+                    <div class="gp-card">
+                        <button class="gp-fav" type="button" aria-label="Save"><i class="bi bi-heart"></i></button>
+                        <a class="gp-card-link" href="{% url 'catalog:product_detail' product.slug %}">
+                            <div class="gp-card-media">
+                                <span class="gp-card-type">{{ product.get_product_type_display }}</span>
+                                {% if product.get_image_url %}
+                                <img src="{{ product.get_image_url }}" alt="{{ product.name }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                                <i class="bi bi-image gp-ph" style="display:none"></i>
+                                {% else %}
+                                <i class="bi bi-image gp-ph"></i>
+                                {% endif %}
+                            </div>
+                            <div class="gp-card-body">
+                                <div class="gp-card-price">KES {{ product.price|floatformat:0 }}</div>
+                                <h3 class="gp-card-name">{{ product.name }}</h3>
+                                <div class="gp-card-meta">
+                                    <span class="loc"><i class="bi bi-geo-alt-fill"></i> Nairobi</span>
+                                    <span>{{ product.created_at|timesince }} ago</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="gp-card-actions">
+                            <a href="https://wa.me/254736794594" target="_blank" class="gp-quote quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}">
+                                <i class="bi bi-whatsapp"></i> Chat to order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="gp-empty">
+                        <i class="bi bi-search"></i>
+                        <p>No products match your filters.</p>
+                        <a href="{% url 'catalog:product_list' %}" class="btn btn-primary" style="border-radius:980px;">Clear Filters</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
 
-    {% if is_paginated %}
-    <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% if is_paginated %}
+            <nav class="mt-4" aria-label="Product pages">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+                    {% endif %}
+                    <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
             {% endif %}
-            <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
-            {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
+        </div>
+    </div>
 </section>
+<script>
+(function () {
+    var rail = document.getElementById('gpRail');
+    if (!rail) return;
+    var wrap = rail.parentElement;
+    var prev = wrap.querySelector('.gp-nav.prev');
+    var next = wrap.querySelector('.gp-nav.next');
+    function step() { return Math.min(rail.clientWidth * 0.8, 480); }
+    function update() {
+        prev.toggleAttribute('disabled', rail.scrollLeft <= 2);
+        next.toggleAttribute('disabled', rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2);
+    }
+    prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: 'smooth' }); });
+    rail.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+})();
+document.addEventListener('click', function (e) {
+    var fav = e.target.closest('.gp-fav');
+    if (!fav) return;
+    e.preventDefault();
+    fav.classList.toggle('active');
+    var icon = fav.querySelector('i');
+    if (icon) icon.className = fav.classList.contains('active') ? 'bi bi-heart-fill' : 'bi bi-heart';
+});
+</script>
 {% endblock %}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+    background: #081a12;
+    padding: 30px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #c9ded3;
+}
+.footer-trust-row {
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 18px;
+    border-radius: 8px;
+    max-width: 1060px;
+}
+.trust-pill-label {
+    font-size: 0.72rem;
+    color: #87ab99;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+}
+.payment-logos-wrap {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+}
+.payment-badge-card {
+    background: #ffffff;
+    height: 28px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: default;
+}
+.payment-badge-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+}
+.payment-badge-card img {
+    height: 18px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+.payment-badge-card.card-mpesa img {
+    height: 20px;
+}
+.payment-badge-card.card-visa img {
+    height: 14px;
+}
+.payment-badge-card.card-mc img {
+    height: 18px;
+}
+.payment-badge-card.card-airtel img {
+    height: 19px;
+}
+.payment-badge-card.card-bank img {
+    height: 17px;
+}
+.payment-badge-card.card-cash img {
+    height: 17px;
+}
+</style>
+</head>
+<body>
+  <div class="footer-trust-row">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 6px;">
+        <span class="trust-pill-label">Payments:</span>
+        <div class="payment-logos-wrap">
+          <div class="payment-badge-card card-mpesa" title="Lipa na M-PESA"><img src="c:\Users\Bots\Documents\jabemsolutions\itsolutions\static\images\payments\mpesa.svg" alt="M-Pesa"></div>
+          <div class="payment-badge-card card-airtel" title="Airtel Money"><img src="c:\Users\Bots\Documents\jabemsolutions\itsolutions\static\images\payments\airtel.svg" alt="Airtel Money"></div>
+          <div class="payment-badge-card card-visa" title="Visa Card"><img src="c:\Users\Bots\Documents\jabemsolutions\itsolutions\static\images\payments\visa.svg" alt="Visa"></div>
+          <div class="payment-badge-card card-mc" title="Mastercard"><img src="c:\Users\Bots\Documents\jabemsolutions\itsolutions\static\images\payments\mastercard.svg" alt="Mastercard"></div>
+          <div class="payment-badge-card card-bank" title="Bank Transfer / Equity / Co-op"><img src="c:\Users\Bots\Documents\jabemsolutions\itsolutions\static\images\payments\bank-transfer.svg" alt="Bank Transfer"></div>
+          <div class="payment-badge-card card-cash" title="Cash on Delivery"><img src="c:\Users\Bots\Documents\jabemsolutions\itsolutions\static\images\payments\cash-delivery.svg" alt="Cash on Delivery"></div>
+        </div>
+      </div>
+      <div>
+        <span style="font-size: 0.72rem; color: #a4c5b4; font-weight: 600;">🔒 256-bit SSL &bull; Verified Kenya Partner</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
