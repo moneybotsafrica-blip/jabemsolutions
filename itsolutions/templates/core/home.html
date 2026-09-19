@@ -387,6 +387,7 @@
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     }
 
+    a.nv-service-card { display: block; height: 100%; color: inherit; text-decoration: none; }
     .nv-service-card:hover {
         transform: translateY(-6px);
         border-color: rgba(37, 99, 235, 0.35);
@@ -1170,6 +1171,98 @@
         box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
     }
 
+    /* ---------- 4a. COUNTRIES WE SERVE ---------- */
+    .nv-geo {
+        padding: 5.5rem 0 4.5rem;
+        background: linear-gradient(180deg, #ffffff 0%, #f4f7ff 100%);
+    }
+
+    .nv-geo-card {
+        position: relative;
+        height: 100%;
+        text-align: center;
+        background: #ffffff;
+        border: 1px solid rgba(37, 99, 235, 0.10);
+        border-radius: 22px;
+        padding: 2.4rem 1.4rem 1.9rem;
+        box-shadow: 0 8px 24px rgba(6, 13, 36, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+
+    .nv-geo-card::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--blue), var(--blue-soft));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .nv-geo-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 44px rgba(37, 99, 235, 0.16);
+    }
+
+    .nv-geo-card:hover::before { opacity: 1; }
+
+    .nv-geo-flag {
+        width: 104px;
+        height: 104px;
+        margin: 0 auto 1.15rem;
+        padding: 5px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+        display: flex;
+    }
+
+    .nv-geo-flag img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #ffffff;
+        background: #eef2fb;
+    }
+
+    .nv-geo-name {
+        font-weight: 800;
+        color: #1d1d1f;
+        margin-bottom: 0.25rem;
+    }
+
+    .nv-geo-tag {
+        font-size: 0.82rem;
+        color: var(--blue);
+        font-weight: 600;
+        margin-bottom: 0.6rem;
+    }
+
+    .nv-geo-desc {
+        font-size: 0.88rem;
+        color: #6e6e73;
+        margin-bottom: 1rem;
+    }
+
+    .nv-geo-cities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        justify-content: center;
+    }
+
+    .nv-geo-cities span {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #1e40af;
+        background: #eff6ff;
+        border: 1px solid rgba(37, 99, 235, 0.14);
+        border-radius: 980px;
+        padding: 0.2rem 0.65rem;
+    }
+
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 991.98px) {
         .nv-hero {
@@ -1198,11 +1291,11 @@
         <div class="container">
             <div class="nv-hero-grid">
                 <div>
-                    <div class="nv-hero-pill"><span class="dot"></span> Nairobi&rsquo;s trusted IT partner &middot; serving all 47 counties</div>
+                    <div class="nv-hero-pill"><span class="dot"></span> Nairobi&rsquo;s trusted IT partner &middot; serving Kenya, Uganda &amp; Tanzania</div>
                     <div class="nv-kicker">We Provide Best IT Solutions</div>
                     <h1>Smart Technology<br>For Your <span class="accent">Better Future</span></h1>
                     <p class="lead-text">We supply, install and support point-of-sale systems, business hardware
-                        and IT infrastructure for shops, restaurants, schools and offices across Kenya —
+                        and IT infrastructure for shops, restaurants, schools and offices across East Africa —
                         helping your business grow online and on the ground.</p>
                     <div class="nv-hero-actions">
                         <a href="{% url 'core:services' %}" class="btn-nv-primary">Our Services <i class="bi bi-arrow-right"></i></a>
@@ -1210,7 +1303,7 @@
                     </div>
                 </div>
                 <div class="nv-hero-media">
-                    <div class="nv-hero-chip"><i class="bi bi-box-seam"></i> Countrywide Delivery</div>
+                    <div class="nv-hero-chip"><i class="bi bi-box-seam"></i> East Africa Delivery</div>
                     <div class="nv-hero-float-badge">10+<span>Years of<br>Experience</span></div>
                 </div>
             </div>
@@ -1241,101 +1334,101 @@
             <div class="nv-services-marquee">
                 <div class="nv-services-track">
                     <div class="nv-service-slide">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#pos">
                             <span class="nv-service-num">01</span>
                             <div class="nv-service-icon"><i class="bi bi-cash-stack"></i></div>
                             <h3>POS &amp; Business Systems</h3>
                             <p>Supermarket, restaurant and retail checkout lines — terminals, printers, scanners and cash drawers, configured and installed.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
                             <span class="nv-service-num">02</span>
                             <div class="nv-service-icon"><i class="bi bi-laptop"></i></div>
                             <h3>Hardware Supply</h3>
                             <p>Genuine laptops, desktops and accessories from Dell, HP, Lenovo and more — sourced from authorised brands.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#networking">
                             <span class="nv-service-num">03</span>
                             <div class="nv-service-icon"><i class="bi bi-hdd-network"></i></div>
                             <h3>Networking &amp; Infrastructure</h3>
                             <p>Routers, switches, cabling and Wi-Fi setups engineered for reliable connectivity in offices and branches.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
                             <span class="nv-service-num">04</span>
                             <div class="nv-service-icon"><i class="bi bi-printer"></i></div>
                             <h3>Printers &amp; Office Tech</h3>
                             <p>Thermal, invoice and office printers plus consumables — supplied, installed and kept running by our team.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#cctv">
                             <span class="nv-service-num">05</span>
                             <div class="nv-service-icon"><i class="bi bi-camera-video"></i></div>
                             <h3>CCTV &amp; Security</h3>
                             <p>Cameras, surveillance and access control systems that keep your premises, stock and staff secure.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#branding">
                             <span class="nv-service-num">06</span>
                             <div class="nv-service-icon"><i class="bi bi-brush"></i></div>
                             <h3>Branding &amp; Support</h3>
                             <p>Branded items that keep your business visible, plus maintenance contracts and 24/7 expert support.</p>
-                        </div>
+                        </a>
                     </div>
                     <!-- Duplicate set for seamless loop -->
                     <div class="nv-service-slide" aria-hidden="true">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#pos">
                             <span class="nv-service-num">01</span>
                             <div class="nv-service-icon"><i class="bi bi-cash-stack"></i></div>
                             <h3>POS &amp; Business Systems</h3>
                             <p>Supermarket, restaurant and retail checkout lines — terminals, printers, scanners and cash drawers, configured and installed.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
                             <span class="nv-service-num">02</span>
                             <div class="nv-service-icon"><i class="bi bi-laptop"></i></div>
                             <h3>Hardware Supply</h3>
                             <p>Genuine laptops, desktops and accessories from Dell, HP, Lenovo and more — sourced from authorised brands.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#networking">
                             <span class="nv-service-num">03</span>
                             <div class="nv-service-icon"><i class="bi bi-hdd-network"></i></div>
                             <h3>Networking &amp; Infrastructure</h3>
                             <p>Routers, switches, cabling and Wi-Fi setups engineered for reliable connectivity in offices and branches.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
                             <span class="nv-service-num">04</span>
                             <div class="nv-service-icon"><i class="bi bi-printer"></i></div>
                             <h3>Printers &amp; Office Tech</h3>
                             <p>Thermal, invoice and office printers plus consumables — supplied, installed and kept running by our team.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#cctv">
                             <span class="nv-service-num">05</span>
                             <div class="nv-service-icon"><i class="bi bi-camera-video"></i></div>
                             <h3>CCTV &amp; Security</h3>
                             <p>Cameras, surveillance and access control systems that keep your premises, stock and staff secure.</p>
-                        </div>
+                        </a>
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
-                        <div class="nv-service-card">
+                        <a class="nv-service-card" href="{% url 'core:services' %}#branding">
                             <span class="nv-service-num">06</span>
                             <div class="nv-service-icon"><i class="bi bi-brush"></i></div>
                             <h3>Branding &amp; Support</h3>
                             <p>Branded items that keep your business visible, plus maintenance contracts and 24/7 expert support.</p>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1366,7 +1459,7 @@
                 <div class="col-lg-6 nv-reveal nv-about-copy" style="--nv-delay:.12s">
                     <div class="nv-kicker">About Us</div>
                     <h2>We Are Here to Grow Your Business <span class="accent">Exponentially</span></h2>
-                    <p class="body">Jabem Solutions is a Nairobi-based IT company equipping Kenyan businesses with
+                    <p class="body">Jabem Solutions is a Nairobi-based IT company equipping businesses across Kenya, Uganda and Tanzania with
                         reliable technology. From a single receipt printer to a full supermarket checkout line,
                         our engineers handle procurement, setup, staff training and ongoing support.</p>
                     <ul class="nv-check-list">
@@ -1428,7 +1521,7 @@
         <div class="container">
             <div class="nv-stats-head">
                 <div class="nv-kicker">Our Impact</div>
-                <h2>Trusted Across Kenya <span class="accent">by the Numbers</span></h2>
+                <h2>Trusted Across East Africa <span class="accent">by the Numbers</span></h2>
             </div>
             <div class="row g-4">
                 <div class="col-sm-6 col-lg-3">
@@ -1455,6 +1548,65 @@
                         <div><strong><span class="nv-count" data-count="10">0</span>+</strong><span>Years of Experience</span></div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4a. COUNTRIES WE SERVE -->
+    <section class="nv-geo" id="countries">
+        <div class="container">
+            <div class="nv-section-head">
+                <div class="nv-kicker">Beyond Borders</div>
+                <h2>Countries Our Services <span class="accent">Reach</span></h2>
+                <p class="text-muted">From our Nairobi base, we install, deliver and support POS and IT systems
+                    across the region — our service goes beyond Kenya's borders.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="nv-geo-card">
+                        <div class="nv-geo-flag">
+                            <img src="{% static 'images/flags/ke.png' %}" alt="Flag of Kenya" loading="lazy">
+                        </div>
+                        <div class="nv-geo-name">Kenya</div>
+                        <div class="nv-geo-tag">Home Ground &middot; Full Installation &amp; Support</div>
+                        <p class="nv-geo-desc">Same-week on-site POS setup, networking and CCTV installs, plus 47-county delivery.</p>
+                        <div class="nv-geo-cities">
+                            <span>Nairobi</span><span>Mombasa</span><span>Kisumu</span><span>Nakuru</span><span>Eldoret</span><span>Thika</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="nv-geo-card">
+                        <div class="nv-geo-flag">
+                            <img src="{% static 'images/flags/ug.png' %}" alt="Flag of Uganda" loading="lazy">
+                        </div>
+                        <div class="nv-geo-name">Uganda</div>
+                        <div class="nv-geo-tag">Active Coverage &middot; Kampala &amp; Beyond</div>
+                        <p class="nv-geo-desc">Cross-border delivery of hardware and software with remote configuration and training.</p>
+                        <div class="nv-geo-cities">
+                            <span>Kampala</span><span>Entebbe</span><span>Jinja</span><span>Mbarara</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="nv-geo-card">
+                        <div class="nv-geo-flag">
+                            <img src="{% static 'images/flags/tz.png' %}" alt="Flag of Tanzania" loading="lazy">
+                        </div>
+                        <div class="nv-geo-name">Tanzania</div>
+                        <div class="nv-geo-tag">Active Coverage &middot; Dar &amp; the North</div>
+                        <p class="nv-geo-desc">POS bundles, printers and accessories shipped with full customs and cross-border handling.</p>
+                        <div class="nv-geo-cities">
+                            <span>Dar es Salaam</span><span>Arusha</span><span>Mwanza</span><span>Dodoma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="{% url 'core:services' %}#coverage" class="btn btn-sm px-4 py-2 rounded-pill"
+                   style="background:#eff6ff;color:#1e40af;border:1px solid rgba(37,99,235,.18);font-weight:600;">
+                    <i class="bi bi-geo-alt me-1"></i> See full delivery &amp; coverage details
+                </a>
             </div>
         </div>
     </section>

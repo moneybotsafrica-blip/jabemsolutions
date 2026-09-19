@@ -12,6 +12,7 @@
 
 <style>
     /* ---------- SERVICES PAGE (blue/white premium) ---------- */
+    [id] { scroll-margin-top: 120px; }
     .svc-section { padding: 4.25rem 0; }
     .svc-section.tint { background: #f4f7ff; }
     .svc-head { text-align: center; max-width: 640px; margin: 0 auto 2.8rem; }
@@ -338,7 +339,7 @@
             <p class="sub">Every service below is handled end-to-end by our engineers — supply, installation, configuration, training and after-sales care.</p>
         </div>
         <div class="row g-4">
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" id="pos">
                 <div class="svc-detail-card">
                     <div class="svc-detail-icon"><i class="bi bi-cash-stack"></i></div>
                     <h3>POS Design &amp; Deployment</h3>
@@ -351,7 +352,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" id="hardware">
                 <div class="svc-detail-card">
                     <div class="svc-detail-icon"><i class="bi bi-laptop"></i></div>
                     <h3>Hardware Supply &amp; Setup</h3>
@@ -364,7 +365,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" id="networking">
                 <div class="svc-detail-card">
                     <div class="svc-detail-icon"><i class="bi bi-hdd-network"></i></div>
                     <h3>Networking &amp; Internet</h3>
@@ -377,7 +378,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" id="cctv">
                 <div class="svc-detail-card">
                     <div class="svc-detail-icon"><i class="bi bi-camera-video"></i></div>
                     <h3>CCTV &amp; Security Systems</h3>
@@ -390,7 +391,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" id="branding">
                 <div class="svc-detail-card">
                     <div class="svc-detail-icon"><i class="bi bi-brush"></i></div>
                     <h3>Branding &amp; Print Media</h3>
@@ -403,7 +404,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" id="training">
                 <div class="svc-detail-card">
                     <div class="svc-detail-icon"><i class="bi bi-mortarboard"></i></div>
                     <h3>Training &amp; Consultancy</h3>
@@ -421,7 +422,7 @@
 </section>
 
 <!-- 2. INDUSTRIES -->
-<section class="svc-section tint">
+<section class="svc-section tint" id="industries">
     <div class="container">
         <div class="svc-head">
             <span class="svc-kicker">Who We Serve</span>
@@ -481,7 +482,7 @@
 </section>
 
 <!-- 3. SUPPORT PLANS -->
-<section class="svc-section">
+<section class="svc-section" id="plans">
     <div class="container">
         <div class="svc-head">
             <span class="svc-kicker">Care Plans</span>
@@ -538,13 +539,13 @@
 </section>
 
 <!-- 4. COVERAGE -->
-<section class="svc-coverage">
+<section class="svc-coverage" id="coverage">
     <div class="container">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <span class="svc-kicker" style="color:#60a5fa;">Nationwide</span>
-                <h2>We Deliver and Install <span class="accent">Anywhere in Kenya</span></h2>
-                <p>Based in Nairobi with engineers on the road every week. Order by phone or WhatsApp and we handle supply, delivery, installation and training at your premises — whatever county you operate in.</p>
+                <span class="svc-kicker" style="color:#60a5fa;">East Africa</span>
+                <h2>We Deliver and Install <span class="accent">Anywhere in East Africa</span></h2>
+                <p>Based in Nairobi with engineers on the road every week across Kenya, Uganda and Tanzania. Order by phone or WhatsApp and we handle supply, delivery, installation and training at your premises — wherever you operate.</p>
                 <ul class="svc-county-list">
                     <li>Nairobi</li>
                     <li>Mombasa</li>
@@ -552,10 +553,12 @@
                     <li>Nakuru</li>
                     <li>Eldoret</li>
                     <li>Thika</li>
-                    <li>Machakos</li>
-                    <li>Merru</li>
-                    <li>Kiambu</li>
-                    <li>+ all 47 counties</li>
+                    <li>Kampala</li>
+                    <li>Entebbe</li>
+                    <li>Dar es Salaam</li>
+                    <li>Arusha</li>
+                    <li>Mwanza</li>
+                    <li>+ all 47 counties &amp; beyond</li>
                 </ul>
             </div>
             <div class="col-lg-6">
@@ -563,7 +566,7 @@
                     <div class="col-sm-6">
                         <div class="svc-coverage-card">
                             <i class="bi bi-truck"></i>
-                            <strong>Countrywide Delivery</strong>
+                            <strong>Regional Delivery</strong>
                             <span>Door-to-door supply with insured transport partners.</span>
                         </div>
                     </div>
@@ -595,7 +598,7 @@
 </section>
 
 <!-- 5. FAQ -->
-<section class="svc-section">
+<section class="svc-section" id="faq">
     <div class="container">
         <div class="svc-head">
             <span class="svc-kicker">Good to Know</span>
@@ -616,7 +619,7 @@
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo">Do you supply outside Nairobi?</button>
                     </h2>
                     <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#svcFaq">
-                        <div class="accordion-body">Yes. We deliver and install in all 47 counties. Transport is quoted upfront, and installation is handled by our own engineers so you get the same setup and training wherever you are.</div>
+                        <div class="accordion-body">Yes. We deliver and install across all 47 counties in Kenya, and we also serve Uganda and Tanzania. Transport and any cross-border handling are quoted upfront, and installation is done by our own engineers so you get the same setup and training wherever you are.</div>
                     </div>
                 </div>
                 <div class="accordion-item">

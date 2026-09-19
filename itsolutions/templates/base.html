@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jabem Solutions Limited provides POS software, POS terminals, printers, networking, inventory systems, installation, training and support for Kenyan businesses.">
+    <meta name="description" content="Jabem Solutions Limited provides POS software, POS terminals, printers, networking, inventory systems, installation, training and support for businesses across Kenya, Uganda and Tanzania.">
     <meta name="keywords" content="Jabem Solutions, POS systems Kenya, POS software Nairobi, inventory management, receipt printers, business technology Kenya">
     <meta name="author" content="Jabem Solutions Limited">
     <meta name="robots" content="index, follow">
@@ -12,13 +12,12 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Jabem Solutions Limited">
     <meta property="og:title" content="{% block og_title %}{{ SITE_NAME }} — POS Software & Hardware Solutions{% endblock %}">
-    <meta property="og:description" content="POS software, hardware, inventory systems and business technology services for Kenyan businesses.">
+    <meta property="og:description" content="POS software, hardware, inventory systems and business technology services for businesses across Kenya, Uganda and Tanzania.">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}">
     <meta name="twitter:card" content="summary">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Jabem Solutions Limited","url":"{{ request.scheme }}://{{ request.get_host }}","logo":"{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.jpeg' %}","telephone":"+254736794594","email":"jabemsolutionsltd@gmail.com","areaServed":"Kenya","description":"POS software, POS hardware, inventory systems and business technology services for Kenyan businesses."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Jabem Solutions Limited","url":"{{ request.scheme }}://{{ request.get_host }}","logo":"{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}","telephone":"+254736794594","email":"jabemsolutionsltd@gmail.com","areaServed":["Kenya","Uganda","Tanzania"],"description":"POS software, POS hardware, inventory systems and business technology services for businesses across East Africa."}</script>
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
-    <link rel="icon" type="image/svg+xml" href="{% static 'images/logo-favicon.svg' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32.png' %}">
     <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -41,6 +40,100 @@
     .navbar-dark .dropdown-item {
         font-size: 0.75rem !important;
     }
+
+    /* ---------- Refined navbar dropdown design ---------- */
+    .navbar .nav-link {
+        border-radius: 980px;
+        padding: 0.42rem 0.95rem;
+        transition: background-color 0.18s ease, color 0.18s ease;
+    }
+    .navbar-light .nav-link:hover,
+    .navbar-light .nav-link:focus-visible { background: #f4f7ff; }
+    .navbar-dark .nav-link:hover { background: rgba(255, 255, 255, 0.09); }
+    .navbar .dropdown-toggle[aria-expanded="true"] {
+        background: #eff6ff;
+        color: #1d4ed8 !important;
+    }
+    .navbar-dark .dropdown-toggle[aria-expanded="true"] {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff !important;
+    }
+    .navbar .dropdown-toggle::after {
+        border-width: 0.28em 0.28em 0;
+        margin-left: 0.45em;
+        vertical-align: 0.12em;
+        opacity: 0.55;
+    }
+    .navbar .dropdown-menu {
+        --nv-menu-gap: 0.45rem;
+        min-width: 238px;
+        border: 1px solid rgba(6, 13, 36, 0.06);
+        border-radius: 16px;
+        padding: var(--nv-menu-gap);
+        margin-top: 0.55rem !important;
+        background: #ffffff;
+        box-shadow: 0 22px 48px rgba(6, 13, 36, 0.14), 0 2px 6px rgba(6, 13, 36, 0.05);
+    }
+    .navbar .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.5rem 0.6rem;
+        border-radius: 10px;
+        font-weight: 500;
+        color: #1d1d1f;
+        white-space: normal;
+        transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    }
+    .navbar .dropdown-item > i:first-child {
+        flex: 0 0 auto;
+        width: 28px;
+        height: 28px;
+        border-radius: 9px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        color: #2563eb;
+        background: #eff6ff;
+        margin: 0 !important;
+        transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .navbar .dropdown-item:hover,
+    .navbar .dropdown-item:focus-visible {
+        background: #f4f7ff;
+        color: #1d4ed8;
+        transform: translateX(2px);
+    }
+    .navbar .dropdown-item:hover > i:first-child,
+    .navbar .dropdown-item:focus-visible > i:first-child {
+        background: #2563eb;
+        color: #ffffff;
+    }
+    .navbar .dropdown-item:active { background: #e3edfd; }
+    .navbar .dropdown-divider {
+        border: 0;
+        border-top: 1px solid #eef1f7;
+        margin: 0.5rem 0.4rem;
+    }
+    @media (min-width: 991.98px) {
+        .navbar .dropdown-menu {
+            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        }
+        .navbar .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .navbar .dropdown-menu,
+        .navbar .dropdown-item { transition: none; }
+    }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -57,7 +150,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">
-            <img src="{% static 'images/logo.jpeg' %}" alt="{{ SITE_NAME }}" style="height: 60px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <img src="{% static 'images/logo-mark.png' %}" alt="{{ SITE_NAME }}" style="height: 58px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
             <span class="site-title"><span class="site-title-main">Jabem</span><span class="site-title-sub">Solutions</span></span>
             <span class="visually-hidden"><i class="bi bi-cpu-fill me-1"></i>{{ SITE_NAME }}</span>
         </a>
@@ -82,10 +175,15 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'core:services' %}"><i class="bi bi-grid me-2"></i>All Services</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'core:services' %}"><i class="bi bi-tools me-2"></i>Installation</a></li>
-                        <li><a class="dropdown-item" href="{% url 'core:services' %}"><i class="bi bi-person-video me-2"></i>Training</a></li>
-                        <li><a class="dropdown-item" href="{% url 'core:services' %}"><i class="bi bi-headset me-2"></i>Support</a></li>
-                        <li><a class="dropdown-item" href="{% url 'core:services' %}"><i class="bi bi-gear me-2"></i>Maintenance</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#pos"><i class="bi bi-cash-stack me-2"></i>POS &amp; Installation</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#hardware"><i class="bi bi-laptop me-2"></i>Hardware &amp; Setup</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#networking"><i class="bi bi-hdd-network me-2"></i>Networking &amp; Internet</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#cctv"><i class="bi bi-camera-video me-2"></i>CCTV &amp; Security</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#branding"><i class="bi bi-brush me-2"></i>Branding &amp; Print</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#training"><i class="bi bi-person-video me-2"></i>Training</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#plans"><i class="bi bi-headset me-2"></i>Support Plans</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}#faq"><i class="bi bi-question-circle me-2"></i>FAQs</a></li>
                     </ul>
                 </li>
             </ul>
@@ -148,6 +246,10 @@
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=pos">POS Terminals</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=touchscreen">Touchscreens</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=monitor">Monitors</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=computer">Computers</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=laptop">Laptops</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=desktop">Desktops</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=server">Servers</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -156,6 +258,7 @@
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=router">Routers</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=switch">Switches</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=cable">Cables</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=access+point">Access Points</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -164,12 +267,15 @@
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=printer">Printers</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=scanner">Scanners</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=paper">Paper</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=supplies">School &amp; Office Supplies</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Cameras & Surveillance <i class="bi bi-chevron-down ms-1 small"></i></a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=camera">Security Cameras</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=access">Access Control Solutions</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=nvr">NVR Systems</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=dvr">DVR Systems</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=cctv">CCTV Accessories</a></li>
                     </ul>
@@ -196,6 +302,7 @@
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=ups">UPS Systems</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=battery">Batteries</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=adapter">Adapters</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=inverter">Inverters</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -203,7 +310,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=phone">Phones</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=headset">Headsets</a></li>
-                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=conference">Conference Systems</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=conference">Boardrooms &amp; Conference Solutions</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -242,7 +349,7 @@
             <div class="col-6 col-md-3">
                 <div class="highlight-item">
                     <i class="bi bi-truck text-success"></i>
-                    <span><strong>Countrywide</strong> Delivery</span>
+                    <span><strong>East Africa</strong> Delivery</span>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -277,7 +384,7 @@
                 <div class="footer-brand-wrap mb-2">
                     <a href="{% url 'core:home' %}" class="footer-logo-link text-decoration-none">
                         <span class="footer-logo-box me-2">
-                            <img src="{% static 'images/logo.jpeg' %}" alt="{{ SITE_NAME }}" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <img src="{% static 'images/logo-mark.png' %}" alt="{{ SITE_NAME }}" class="footer-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
                             <i class="bi bi-cpu-fill text-success fs-4" style="display:none;"></i>
                         </span>
                         <span class="footer-brand-name">
@@ -287,7 +394,7 @@
                     </a>
                 </div>
                 <p class="footer-about-text small mb-2">
-                    Point of Sale hardware, software, and IT infrastructure solutions for Kenyan retailers and businesses.
+                    Point of Sale hardware, software, and IT infrastructure solutions for retailers and businesses across East Africa.
                 </p>
                 <div class="footer-hours-compact mb-2">
                     <i class="bi bi-clock me-1 text-success"></i>
