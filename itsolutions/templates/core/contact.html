@@ -1,51 +1,628 @@
 {% extends "base.html" %}
-{% block title %}Contact — {{ SITE_NAME }}{% endblock %}
+{% load static %}
+{% block title %}Contact Us — {{ SITE_NAME }}{% endblock %}
 {% block content %}
-<section class="page-hero scroll-animate">
+<style>
+    /* ==========================================================================
+       CONTACT PAGE (ct-*) — blue/white premium
+       ========================================================================== */
+    .ct-section { padding: 4rem 0; }
+    .ct-section.tint { background: linear-gradient(180deg, #f4f7ff 0%, #ffffff 100%); }
+
+    .ct-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: .75rem;
+        color: #2563eb;
+        font-size: .78rem;
+        font-weight: 700;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        margin-bottom: .6rem;
+    }
+    .ct-kicker::before, .ct-kicker::after {
+        content: '';
+        width: 26px;
+        height: 2px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #60a5fa, #2563eb);
+    }
+    .ct-head { text-align: center; max-width: 640px; margin: 0 auto 2.6rem; }
+    .ct-head h2 {
+        font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: #1d1d1f;
+        margin-bottom: .6rem;
+    }
+    .ct-head h2 .accent { color: #2563eb; }
+    .ct-head p { color: #6e6e73; margin-bottom: 0; }
+
+    /* 0. Hero */
+    .ct-hero { padding: 5rem 0 4.2rem; }
+    .ct-hero .container { position: relative; z-index: 1; }
+    .ct-hero h1 {
+        font-size: clamp(2.1rem, 4.6vw, 3.1rem);
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        color: #1d1d1f;
+        line-height: 1.1;
+        margin-bottom: .9rem;
+    }
+    .ct-hero h1 .accent {
+        background: linear-gradient(90deg, #2563eb, #60a5fa);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .ct-hero .ct-hero-lead { color: #6e6e73; font-size: 1.08rem; max-width: 480px; margin-bottom: 1.5rem; }
+    .ct-hero-chips { display: flex; flex-wrap: wrap; gap: .55rem; margin-bottom: 1.7rem; }
+    .ct-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: .45rem;
+        padding: .42rem .9rem;
+        border-radius: 980px;
+        background: #ffffff;
+        border: 1px solid #dbeafe;
+        color: #1e40af;
+        font-size: .82rem;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.07);
+    }
+    .ct-chip i { color: #2563eb; }
+    .ct-chip .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+        animation: ct-pulse 1.8s infinite;
+    }
+    @keyframes ct-pulse {
+        0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+        70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+    .ct-hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+    .btn-ct-wa {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        border-radius: 980px;
+        padding: .75rem 1.6rem;
+        font-weight: 600;
+        color: #ffffff;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.3);
+        text-decoration: none;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn-ct-wa:hover { color: #ffffff; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(37, 99, 235, 0.4); }
+    .btn-ct-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        border-radius: 980px;
+        padding: .75rem 1.6rem;
+        font-weight: 600;
+        color: #1e40af;
+        background: #ffffff;
+        border: 1px solid #bfdbfe;
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+    .btn-ct-ghost:hover { background: #eff6ff; border-color: #2563eb; color: #1e40af; transform: translateY(-2px); }
+
+    /* Hero chat mock */
+    .ct-hero-visual { position: relative; min-height: 420px; }
+    .ct-chat-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(340px, 90%);
+        background: #ffffff;
+        border: 1px solid #e8e8ed;
+        border-radius: 20px;
+        padding: 1.2rem;
+        box-shadow: 0 24px 60px rgba(6, 13, 36, 0.14);
+    }
+    .ct-chat-head { display: flex; align-items: center; gap: .7rem; padding-bottom: .8rem; border-bottom: 1px solid #f1f5f9; margin-bottom: .9rem; }
+    .ct-chat-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-weight: 800;
+        font-size: .85rem;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        flex: 0 0 auto;
+    }
+    .ct-chat-head strong { display: block; font-size: .9rem; color: #1d1d1f; line-height: 1.2; }
+    .ct-chat-head span { font-size: .74rem; color: #22c55e; font-weight: 600; display: flex; align-items: center; gap: .3rem; }
+    .ct-chat-head span::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; }
+    .ct-bubble {
+        border-radius: 14px;
+        padding: .6rem .85rem;
+        font-size: .84rem;
+        line-height: 1.4;
+        margin-bottom: .55rem;
+        max-width: 88%;
+    }
+    .ct-bubble.them { background: #eff6ff; color: #1e3a8a; border-bottom-left-radius: 4px; }
+    .ct-bubble.me { background: linear-gradient(135deg, #2563eb, #1e40af); color: #ffffff; margin-left: auto; border-bottom-right-radius: 4px; }
+    .ct-bubble-time { display: block; font-size: .66rem; opacity: .65; margin-top: .15rem; }
+    .ct-chat-typing { display: inline-flex; gap: 4px; padding: .55rem .8rem; background: #eff6ff; border-radius: 14px; border-bottom-left-radius: 4px; }
+    .ct-chat-typing i { width: 6px; height: 6px; border-radius: 50%; background: #93c5fd; animation: ct-typing 1.2s infinite; }
+    .ct-chat-typing i:nth-child(2) { animation-delay: .18s; }
+    .ct-chat-typing i:nth-child(3) { animation-delay: .36s; }
+    @keyframes ct-typing {
+        0%, 60%, 100% { transform: translateY(0); opacity: .5; }
+        30% { transform: translateY(-4px); opacity: 1; }
+    }
+    .ct-hero-float {
+        position: absolute;
+        z-index: 2;
+        background: #ffffff;
+        border: 1px solid #e8e8ed;
+        border-radius: 14px;
+        padding: .65rem .95rem;
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+        font-size: .8rem;
+        font-weight: 600;
+        color: #1d1d1f;
+        box-shadow: 0 14px 34px rgba(6, 13, 36, 0.12);
+    }
+    .ct-hero-float i { font-size: 1rem; color: #2563eb; }
+    .ct-hero-float span { color: #86868b; font-weight: 400; font-size: .72rem; display: block; }
+    .ct-float-1 { top: 0; left: 0; animation: ct-float 5s ease-in-out infinite; }
+    .ct-float-2 { bottom: 0; right: 0; animation: ct-float 5s ease-in-out 1.4s infinite; }
+    @keyframes ct-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-9px); }
+    }
+    @media (max-width: 991.98px) {
+        .ct-hero { padding: 3.2rem 0 3rem; }
+        .ct-hero-visual { min-height: 300px; margin-top: 1.5rem; }
+    }
+
+    /* 1. Quick channel tiles */
+    .ct-tile {
+        position: relative;
+        height: 100%;
+        background: #ffffff;
+        border: 1px solid #e8e8ed;
+        border-radius: 18px;
+        padding: 1.6rem 1.25rem;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.04);
+        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .ct-tile:hover {
+        transform: translateY(-5px);
+        border-color: #bfdbfe;
+        box-shadow: 0 14px 34px rgba(37, 99, 235, 0.14);
+    }
+    .ct-tile-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto .9rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.45rem;
+        color: #2563eb;
+        background: #eff6ff;
+        border: 1px solid #dbeafe;
+        transition: all .25s ease;
+    }
+    .ct-tile:hover .ct-tile-icon {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: #ffffff;
+        border-color: transparent;
+    }
+    .ct-tile strong { display: block; color: #1d1d1f; font-size: .98rem; margin-bottom: .15rem; }
+    .ct-tile span { display: block; color: #6e6e73; font-size: .84rem; line-height: 1.35; }
+    .ct-tile small { display: block; margin-top: .45rem; color: #2563eb; font-size: .78rem; font-weight: 600; }
+
+    /* 2. Form card */
+    .ct-form-card {
+        background: #ffffff;
+        border: 1px solid #e8e8ed;
+        border-radius: 22px;
+        padding: 2.2rem;
+        box-shadow: 0 10px 40px rgba(6, 13, 36, 0.07);
+    }
+    .ct-form-card h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: .3rem; }
+    .ct-form-card > p { color: #6e6e73; font-size: .92rem; margin-bottom: 1.6rem; }
+    .ct-form-card .form-label {
+        font-size: .82rem;
+        font-weight: 600;
+        color: #1d1d1f;
+        margin-bottom: .3rem;
+    }
+    .ct-form-card .form-label .req { color: #2563eb; }
+    .ct-form-card .form-control {
+        border-radius: 12px;
+        border-color: #e2e8f0;
+        padding: .7rem .9rem;
+        font-size: .95rem;
+        background: #fbfcfe;
+        transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .ct-form-card .form-control:focus {
+        border-color: #60a5fa;
+        box-shadow: 0 0 0 .22rem rgba(37, 99, 235, 0.13);
+        background: #ffffff;
+    }
+    .ct-form-card textarea.form-control { resize: vertical; min-height: 130px; }
+    .ct-form-card .errorlist {
+        list-style: none;
+        margin: 0 0 .3rem;
+        padding: 0;
+        color: #dc2626;
+        font-size: .8rem;
+    }
+    .ct-submit {
+        display: inline-flex;
+        align-items: center;
+        gap: .55rem;
+        border: 0;
+        border-radius: 980px;
+        padding: .8rem 1.9rem;
+        font-weight: 600;
+        color: #ffffff;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.32);
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .ct-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.42);
+        color: #ffffff;
+    }
+    .ct-form-note {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        margin-top: 1rem;
+        color: #86868b;
+        font-size: .8rem;
+    }
+
+    /* 3. Direct panel + map */
+    .ct-direct {
+        position: relative;
+        overflow: hidden;
+        border-radius: 22px;
+        padding: 2.2rem;
+        color: #ffffff;
+        background: linear-gradient(150deg, #0c1e4b 0%, #0a1128 55%, #1e40af 130%);
+        box-shadow: 0 16px 44px rgba(6, 13, 36, 0.35);
+    }
+    .ct-direct::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(147, 197, 253, 0.14) 1px, transparent 1px);
+        background-size: 22px 22px;
+        opacity: .5;
+        pointer-events: none;
+    }
+    .ct-direct > * { position: relative; }
+    .ct-direct h3 { color: #ffffff; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: .35rem; }
+    .ct-direct > p { color: #bfdbfe; font-size: .9rem; margin-bottom: 1.5rem; }
+    .ct-direct-row {
+        display: flex;
+        align-items: flex-start;
+        gap: .95rem;
+        padding: .85rem 0;
+        border-top: 1px solid rgba(147, 197, 253, 0.16);
+    }
+    .ct-direct-row:first-of-type { border-top: 0; padding-top: 0; }
+    .ct-direct-icon {
+        flex: 0 0 auto;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.05rem;
+        color: #93c5fd;
+        background: rgba(96, 165, 250, 0.14);
+        border: 1px solid rgba(96, 165, 250, 0.28);
+    }
+    .ct-direct-row strong { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #93c5fd; margin-bottom: .1rem; }
+    .ct-direct-row span, .ct-direct-row a { color: #e5edff; font-size: .95rem; text-decoration: none; }
+    .ct-direct-row a:hover { color: #ffffff; }
+    .ct-direct-social { display: flex; gap: .6rem; margin-top: 1.4rem; }
+    .ct-direct-social a {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #bfdbfe;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(147, 197, 253, 0.25);
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+    .ct-direct-social a:hover { background: #2563eb; color: #ffffff; border-color: transparent; transform: translateY(-2px); }
+
+    .ct-map {
+        margin-top: 1.4rem;
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid #e8e8ed;
+        box-shadow: 0 8px 28px rgba(6, 13, 36, 0.08);
+        background: #ffffff;
+    }
+    .ct-map iframe { display: block; width: 100%; height: 240px; border: 0; }
+
+    /* 4. What happens next */
+    .ct-step {
+        position: relative;
+        height: 100%;
+        background: #ffffff;
+        border: 1px solid #e8e8ed;
+        border-radius: 18px;
+        padding: 1.8rem 1.4rem 1.5rem;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.04);
+    }
+    .ct-step-num {
+        position: absolute;
+        top: -16px;
+        left: 1.4rem;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .85rem;
+        font-weight: 700;
+        color: #ffffff;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+    }
+    .ct-step i { font-size: 1.6rem; color: #2563eb; margin-bottom: .7rem; display: block; }
+    .ct-step strong { display: block; color: #1d1d1f; font-size: 1rem; margin-bottom: .3rem; }
+    .ct-step p { color: #6e6e73; font-size: .88rem; margin-bottom: 0; }
+
+    @media (max-width: 575.98px) {
+        .ct-form-card, .ct-direct { padding: 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ct-tile, .ct-tile-icon, .ct-submit, .ct-direct-social a { transition: none; }
+        .ct-tile:hover, .ct-submit:hover, .ct-direct-social a:hover { transform: none; }
+        .ct-hero-float, .ct-chip .dot, .ct-chat-typing i { animation: none; }
+    }
+</style>
+
+<section class="page-hero ct-hero scroll-animate">
     <div class="container">
-        <span class="hero-kicker d-block">We're here to help</span>
-        <h1 class="h2 mb-2">Contact Us</h1>
-        <p class="mb-0">Talk to our team about POS setups, hardware supply, branding, or support.</p>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="hero-kicker d-block">We're here to help</span>
+                <h1>Talk to a real <span class="accent">engineer</span>, not a bot.</h1>
+                <p class="ct-hero-lead">Tell us about your POS, hardware or branding need — our Nairobi-based team replies fast and speaks your language.</p>
+                <div class="ct-hero-chips">
+                    <span class="ct-chip"><span class="dot"></span> Online now</span>
+                    <span class="ct-chip"><i class="bi bi-lightning-charge"></i> Reply in &lt; 1 hour</span>
+                    <span class="ct-chip"><i class="bi bi-geo-alt"></i> All 47 counties</span>
+                </div>
+                <div class="ct-hero-actions">
+                    <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions%2C%20I%20need%20assistance" target="_blank" rel="noopener noreferrer" class="btn-ct-wa"><i class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
+                    <a href="#ct-form" class="btn-ct-ghost"><i class="bi bi-pencil-square"></i> Send a message</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ct-hero-visual">
+                    <div class="ct-hero-float ct-float-1">
+                        <div><i class="bi bi-check-circle"></i></div>
+                        <div><span style="display:block">Quote sent</span><strong style="font-size:.8rem">POS lane setup · Nakuru</strong></div>
+                    </div>
+                    <div class="ct-hero-float ct-float-2">
+                        <div><i class="bi bi-headset"></i></div>
+                        <div><span style="display:block">Support active</span><strong style="font-size:.8rem">24/7 call-out</strong></div>
+                    </div>
+                    <div class="ct-chat-card">
+                        <div class="ct-chat-head">
+                            <span class="ct-chat-avatar">JS</span>
+                            <div>
+                                <strong>Jabem Support</strong>
+                                <span>Online</span>
+                            </div>
+                        </div>
+                        <div class="ct-bubble me">Hi, I need a POS for my supermarket in Thika.<span class="ct-bubble-time">10:02</span></div>
+                        <div class="ct-bubble them">Great — how many checkout lanes do you run? We can have you live within 2 days.<span class="ct-bubble-time">10:03 ✓✓</span></div>
+                        <div class="ct-chat-typing"><i></i><i></i><i></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
-<section class="container py-5">
-    <div class="row">
-        <div class="col-lg-6">
-            <form method="post" novalidate>
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label class="form-label">Name</label>
-                    {{ form.name.errors }}
-                    <input type="text" name="name" class="form-control" value="{{ form.name.value|default:'' }}" required>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ form.email.value|default:'' }}" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Phone (optional)</label>
-                        <input type="text" name="phone" class="form-control" value="{{ form.phone.value|default:'' }}">
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Subject</label>
-                    <input type="text" name="subject" class="form-control" value="{{ form.subject.value|default:'' }}" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Message</label>
-                    <textarea name="message" rows="5" class="form-control" required>{{ form.message.value|default:'' }}</textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
+
+{# ============ 1. QUICK CHANNELS ============ #}
+<section class="ct-section pb-0">
+    <div class="container">
+        <div class="row g-3 g-lg-4">
+            <div class="col-6 col-lg-3">
+                <a class="ct-tile" href="tel:{{ COMPANY_PHONE|cut:' '|cut:'+' }}">
+                    <span class="ct-tile-icon"><i class="bi bi-telephone"></i></span>
+                    <strong>Call Us</strong>
+                    <span>{{ COMPANY_PHONE }}</span>
+                    <small>Mon–Sat, 8am–6pm</small>
+                </a>
+            </div>
+            <div class="col-6 col-lg-3">
+                <a class="ct-tile" href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions%2C%20I%20need%20assistance" target="_blank" rel="noopener noreferrer">
+                    <span class="ct-tile-icon"><i class="bi bi-whatsapp"></i></span>
+                    <strong>WhatsApp</strong>
+                    <span>Fastest way to reach an engineer</span>
+                    <small>Typical reply &lt; 1 hour</small>
+                </a>
+            </div>
+            <div class="col-6 col-lg-3">
+                <a class="ct-tile" href="mailto:{{ COMPANY_EMAIL }}">
+                    <span class="ct-tile-icon"><i class="bi bi-envelope"></i></span>
+                    <strong>Email Us</strong>
+                    <span>{{ COMPANY_EMAIL }}</span>
+                    <small>For quotes &amp; documents</small>
+                </a>
+            </div>
+            <div class="col-6 col-lg-3">
+                <a class="ct-tile" href="https://maps.google.com/maps?q={{ COMPANY_ADDRESS|urlencode }}" target="_blank" rel="noopener noreferrer">
+                    <span class="ct-tile-icon"><i class="bi bi-geo-alt"></i></span>
+                    <strong>Visit Us</strong>
+                    <span>{{ COMPANY_ADDRESS }}</span>
+                    <small>Site visits by appointment</small>
+                </a>
+            </div>
         </div>
-        <div class="col-lg-6">
-            <div class="card bg-light border-0 mt-4 mt-lg-0">
-                <div class="card-body">
-                    <h5>Reach us directly</h5>
-                    <p class="mb-1"><i class="bi bi-telephone me-2"></i>{{ COMPANY_PHONE }}</p>
-                    <p class="mb-1"><i class="bi bi-envelope me-2"></i>{{ COMPANY_EMAIL }}</p>
-                    <p class="mb-0"><i class="bi bi-geo-alt me-2"></i>{{ COMPANY_ADDRESS }}</p>
+    </div>
+</section>
+
+{# ============ 2. FORM + DIRECT PANEL ============ #}
+<section class="ct-section">
+    <div class="container">
+        <div class="row g-4 g-lg-5 align-items-stretch">
+            <div class="col-lg-7">
+                <div class="ct-form-card h-100" id="ct-form">
+                    <h3>Send us a message</h3>
+                    <p>Tell us what your business needs — a quote, a fix, or a full setup. We'll route it to the right team.</p>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="id_name">Full name <span class="req">*</span></label>
+                                {{ form.name.errors }}
+                                <input type="text" name="name" id="id_name" class="form-control" placeholder="Jane Wanjiku" value="{{ form.name.value|default:'' }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="id_email">Email <span class="req">*</span></label>
+                                {{ form.email.errors }}
+                                <input type="email" name="email" id="id_email" class="form-control" placeholder="you@company.co.ke" value="{{ form.email.value|default:'' }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="id_phone">Phone (optional)</label>
+                                {{ form.phone.errors }}
+                                <input type="text" name="phone" id="id_phone" class="form-control" placeholder="07XX XXX XXX" value="{{ form.phone.value|default:'' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="id_subject">Subject <span class="req">*</span></label>
+                                {{ form.subject.errors }}
+                                <input type="text" name="subject" id="id_subject" class="form-control" placeholder="POS for my supermarket" value="{{ form.subject.value|default:'' }}" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label" for="id_message">Message <span class="req">*</span></label>
+                                {{ form.message.errors }}
+                                <textarea name="message" id="id_message" rows="5" class="form-control" placeholder="Briefly describe your business, location and what you need…" required>{{ form.message.value|default:'' }}</textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="ct-submit"><i class="bi bi-send"></i> Send Message</button>
+                        <div class="ct-form-note"><i class="bi bi-shield-check"></i> Your details stay private — we only use them to respond to your enquiry.</div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="ct-direct">
+                    <h3>Reach us directly</h3>
+                    <p>Prefer a human on the line? Any of these work.</p>
+                    <div class="ct-direct-row">
+                        <span class="ct-direct-icon"><i class="bi bi-telephone"></i></span>
+                        <div>
+                            <strong>Phone</strong>
+                            <a href="tel:{{ COMPANY_PHONE|cut:' '|cut:'+' }}">{{ COMPANY_PHONE }}</a>
+                        </div>
+                    </div>
+                    <div class="ct-direct-row">
+                        <span class="ct-direct-icon"><i class="bi bi-whatsapp"></i></span>
+                        <div>
+                            <strong>WhatsApp</strong>
+                            <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer">+254 736 794594</a>
+                        </div>
+                    </div>
+                    <div class="ct-direct-row">
+                        <span class="ct-direct-icon"><i class="bi bi-envelope"></i></span>
+                        <div>
+                            <strong>Email</strong>
+                            <a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a>
+                        </div>
+                    </div>
+                    <div class="ct-direct-row">
+                        <span class="ct-direct-icon"><i class="bi bi-geo-alt"></i></span>
+                        <div>
+                            <strong>Location</strong>
+                            <span>{{ COMPANY_ADDRESS }}</span>
+                        </div>
+                    </div>
+                    <div class="ct-direct-row">
+                        <span class="ct-direct-icon"><i class="bi bi-clock"></i></span>
+                        <div>
+                            <strong>Working hours</strong>
+                            <span>Mon–Sat: 8:00am – 6:00pm · Emergency support 24/7</span>
+                        </div>
+                    </div>
+                    <div class="ct-direct-social">
+                        <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="mailto:{{ COMPANY_EMAIL }}" aria-label="Email"><i class="bi bi-envelope"></i></a>
+                        <a href="tel:{{ COMPANY_PHONE|cut:' '|cut:'+' }}" aria-label="Call"><i class="bi bi-telephone"></i></a>
+                    </div>
+                </div>
+                <div class="ct-map">
+                    <iframe src="https://maps.google.com/maps?q={{ COMPANY_ADDRESS|urlencode }}&z=11&output=embed" title="Jabem Solutions location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ============ 3. WHAT HAPPENS NEXT ============ #}
+<section class="ct-section tint">
+    <div class="container">
+        <div class="ct-head">
+            <span class="ct-kicker">After you hit send</span>
+            <h2>What Happens <span class="accent">Next</span></h2>
+            <p>No black holes — every enquiry follows the same short path.</p>
+        </div>
+        <div class="row g-4 pt-2">
+            <div class="col-md-4">
+                <div class="ct-step">
+                    <span class="ct-step-num">1</span>
+                    <i class="bi bi-inbox"></i>
+                    <strong>We receive it</strong>
+                    <p>Your message lands with our support desk and you get a confirmation — usually within the hour on weekdays.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="ct-step">
+                    <span class="ct-step-num">2</span>
+                    <i class="bi bi-chat-left-text"></i>
+                    <strong>We talk it through</strong>
+                    <p>An engineer calls or WhatsApps you to understand the setup, timeline and budget before recommending anything.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="ct-step">
+                    <span class="ct-step-num">3</span>
+                    <i class="bi bi-file-earmark-check"></i>
+                    <strong>You get a clear quote</strong>
+                    <p>A written, itemised quote with options — no surprise costs. Approve it and we schedule supply or installation.</p>
                 </div>
             </div>
         </div>
