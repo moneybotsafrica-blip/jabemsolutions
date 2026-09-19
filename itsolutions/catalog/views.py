@@ -6,6 +6,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.db import transaction
+from django.db.models import Q
 from decimal import Decimal
 from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct, Quote, QuoteSettings
 
@@ -94,7 +95,16 @@ class ProductListView(ListView):
         if category_slug:
             qs = qs.filter(category__slug=category_slug)
         if q:
-            qs = qs.filter(name__icontains=q)
+            terms = q.split()
+            include = [t for t in terms if not t.startswith("-")]
+            exclude = [t[1:] for t in terms if t.startswith("-") and len(t) > 1]
+            if include:
+                clauses = Q(name__icontains=include[0])
+                for term in include[1:]:
+                    clauses |= Q(name__icontains=term)
+                qs = qs.filter(clauses)
+            for term in exclude:
+                qs = qs.exclude(name__icontains=term)
         return qs
 
     def get_context_data(self, **kwargs):

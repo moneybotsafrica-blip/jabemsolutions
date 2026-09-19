@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} — {{ SITE_NAME }}{% endblock %}
+{% block extra_head %}
+<style>
+    /* ---------- HERO ---------- */
+    .sp-hero {
+        position: relative;
+        background:
+            radial-gradient(720px 340px at 88% -10%, rgba(37, 99, 235, 0.35), transparent 60%),
+            radial-gradient(520px 300px at -6% 108%, rgba(96, 165, 250, 0.18), transparent 60%),
+            linear-gradient(120deg, #060d24 0%, #0a1128 55%, #12306e 100%);
+        color: #fff;
+        padding: 5rem 0 4.2rem;
+        overflow: hidden;
+    }
+    .sp-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        -webkit-mask-image: linear-gradient(105deg, transparent 45%, rgba(0, 0, 0, 0.85));
+        mask-image: linear-gradient(105deg, transparent 45%, rgba(0, 0, 0, 0.85));
+        pointer-events: none;
+    }
+    .sp-hero .container { position: relative; z-index: 1; }
+    .sp-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #93c5fd;
+        background: rgba(37, 99, 235, 0.16);
+        border: 1px solid rgba(147, 197, 253, 0.28);
+        border-radius: 980px;
+        padding: 0.35rem 0.95rem;
+        margin-bottom: 1.1rem;
+    }
+    .sp-hero h1 {
+        font-weight: 800;
+        font-size: clamp(2.1rem, 4.6vw, 3.1rem);
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+        margin-bottom: 1rem;
+        color: #ffffff;
+    }
+    .sp-hero h1 .accent {
+        background: linear-gradient(92deg, #60a5fa, #93c5fd);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .sp-lead {
+        color: rgba(255, 255, 255, 0.78);
+        max-width: 640px;
+        margin-bottom: 1.4rem;
+    }
+    .sp-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.8rem; }
+    .sp-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #dbeafe;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 980px;
+        padding: 0.38rem 0.85rem;
+    }
+    .sp-chip i { color: #60a5fa; }
+    .btn-sp-wa {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: #fff;
+        border: 0;
+        border-radius: 980px;
+        padding: 0.65rem 1.6rem;
+        font-weight: 600;
+        box-shadow: 0 12px 26px rgba(37, 99, 235, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-sp-wa:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 16px 32px rgba(37, 99, 235, 0.45); }
+    .btn-sp-ghost {
+        color: #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 980px;
+        padding: 0.65rem 1.6rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn-sp-ghost:hover { color: #fff; background: rgba(255, 255, 255, 0.09); border-color: rgba(255, 255, 255, 0.45); }
+
+    /* ---------- TILES ---------- */
+    .sp-tiles { padding: 4.5rem 0 1rem; background: #fff; }
+    .sp-head { max-width: 620px; margin-bottom: 2.2rem; }
+    .sp-head .tag {
+        font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+        text-transform: uppercase; color: #2563eb; margin-bottom: 0.5rem; display: block;
+    }
+    .sp-head h2 { font-weight: 800; letter-spacing: -0.02em; color: #1d1d1f; }
+    .sp-tile {
+        display: block;
+        height: 100%;
+        text-decoration: none;
+        background: linear-gradient(180deg, #ffffff, #f7faff);
+        border: 1px solid rgba(37, 99, 235, 0.10);
+        border-radius: 18px;
+        padding: 1.5rem 1.35rem;
+        box-shadow: 0 6px 18px rgba(6, 13, 36, 0.04);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .sp-tile:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 38px rgba(37, 99, 235, 0.15);
+        border-color: rgba(37, 99, 235, 0.35);
+    }
+    .sp-tile-icon {
+        width: 46px; height: 46px;
+        border-radius: 13px;
+        display: flex; align-items: center; justify-content: center;
+        background: #eff6ff; color: #2563eb; font-size: 1.25rem;
+        margin-bottom: 1rem;
+        transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    .sp-tile:hover .sp-tile-icon { background: #2563eb; color: #fff; }
+    .sp-tile h3 { font-size: 0.98rem; font-weight: 700; color: #1d1d1f; margin-bottom: 0.35rem; }
+    .sp-tile p { font-size: 0.82rem; color: #6e6e73; margin-bottom: 0.7rem; }
+    .sp-tile .go {
+        font-size: 0.76rem; font-weight: 700; color: #2563eb;
+        display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .sp-tile .go i { transition: transform 0.2s ease; }
+    .sp-tile:hover .go i { transform: translateX(3px); }
+
+    /* ---------- PRODUCTS ---------- */
+    .sp-products { padding: 3.5rem 0 4.5rem; background: #fff; }
+    .sp-empty {
+        text-align: center;
+        border: 1.5px dashed rgba(37, 99, 235, 0.25);
+        border-radius: 22px;
+        background: #f7faff;
+        padding: 3.2rem 1.5rem;
+    }
+    .sp-empty i { font-size: 2.6rem; color: #93c5fd; }
+    .sp-empty p { color: #6e6e73; margin: 0.9rem auto 1.3rem; max-width: 460px; }
+
+    /* ---------- CTA BAND ---------- */
+    .sp-cta { padding: 0 0 5rem; background: #fff; }
+    .sp-cta-panel {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(120deg, #060d24, #12306e);
+        border-radius: 26px;
+        padding: 3.2rem 2.5rem;
+        color: #fff;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.6rem;
+    }
+    .sp-cta-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
+        background-size: 22px 22px;
+        -webkit-mask-image: linear-gradient(105deg, transparent 45%, rgba(0, 0, 0, 0.9));
+        mask-image: linear-gradient(105deg, transparent 45%, rgba(0, 0, 0, 0.9));
+        pointer-events: none;
+    }
+    .sp-cta-panel > * { position: relative; z-index: 1; }
+    .sp-cta-panel h2 { font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: #fff; }
+    .sp-cta-panel p { color: rgba(255, 255, 255, 0.75); margin: 0; max-width: 520px; }
+
+    @media (max-width: 575.98px) {
+        .sp-hero { padding: 3.6rem 0 3.2rem; }
+        .sp-cta-panel { padding: 2.2rem 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .sp-tile, .sp-tile-icon, .btn-sp-wa, .sp-tile .go i { transition: none; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="sp-hero">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-9">
+                <span class="sp-kicker"><i class="bi bi-bag-check"></i> {{ page.kicker }}</span>
+                <h1>{{ page.title.split.0 }} <span class="accent">{{ page.title.split.1 }}</span></h1>
+                <p class="sp-lead mx-auto">{{ page.lead }}</p>
+                <div class="sp-chips justify-content-center">
+                    {% for item in page.hero_items %}
+                    <span class="sp-chip"><i class="bi bi-check-circle-fill"></i> {{ item }}</span>
+                    {% endfor %}
+                </div>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <a href="{{ wa_link }}" target="_blank" class="btn btn-sp-wa"><i class="bi bi-whatsapp me-2"></i>Request a Bulk Quote</a>
+                    <a href="#sp-categories" class="btn btn-sp-ghost">Browse Categories <i class="bi bi-arrow-down-short"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORY TILES -->
+<section class="sp-tiles" id="sp-categories">
+    <div class="container">
+        <div class="sp-head">
+            <span class="tag">Shop by Category</span>
+            <h2>What We Stock</h2>
+        </div>
+        <div class="row g-4">
+            {% for tile in page.tiles %}
+            <div class="col-sm-6 col-lg-4">
+                <a class="sp-tile" href="{% url 'catalog:product_list' %}?q={{ tile.terms|urlencode }}">
+                    <div class="sp-tile-icon"><i class="bi {{ tile.icon }}"></i></div>
+                    <h3>{{ tile.name }}</h3>
+                    <p>{{ tile.desc }}</p>
+                    <span class="go">Browse <i class="bi bi-arrow-right"></i></span>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- PRODUCTS IN STOCK -->
+<section class="sp-products">
+    <div class="container">
+        <div class="sp-head">
+            <span class="tag">In Stock Now</span>
+            <h2>Popular {{ page.title }}</h2>
+        </div>
+        {% if products %}
+        <div class="row g-3">
+            {% for product in products %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card card-product shadow-sm h-100">
+                    {% if product.get_image_url %}
+                    <img src="{{ product.get_image_url }}" class="card-img-top product-image" alt="{{ product.name }}" style="height: 160px; object-fit: contain; background: #f8f9fa; padding: 0.5rem;" loading="lazy">
+                    {% else %}
+                    <div class="card-img-top d-flex align-items-center justify-content-center text-secondary" style="height: 160px;">
+                        <i class="bi bi-image" style="font-size:1.5rem"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column p-2">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge bg-secondary-subtle text-secondary-emphasis align-self-start" style="font-size: 0.65rem;">{{ product.get_product_type_display }}</span>
+                            <strong style="font-size: 0.85rem;">KES {{ product.price|floatformat:0 }}</strong>
+                        </div>
+                        <h6 class="card-title mb-0" style="font-size: 0.8rem; line-height: 1.1;">{{ product.name|truncatewords:4 }}</h6>
+                        <div class="mt-auto pt-1">
+                            <a href="https://wa.me/254736794594" target="_blank" class="btn btn-sm btn-success quote-link w-100" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
+                                <i class="bi bi-chat-dots me-1"></i>Quote
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-primary rounded-pill px-4">View All Products</a>
+        </div>
+        {% else %}
+        <div class="sp-empty">
+            <i class="bi bi-box-seam"></i>
+            <p>We're restocking this range right now. Message us your list and we'll source it for you — bulk school and office orders are our specialty.</p>
+            <a href="{{ wa_link }}" target="_blank" class="btn btn-sp-wa"><i class="bi bi-whatsapp me-2"></i>Send Your List</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- BULK CTA -->
+<section class="sp-cta">
+    <div class="container">
+        <div class="sp-cta-panel">
+            <div>
+                <h2>{{ page.cta_title }}</h2>
+                <p>{{ page.cta_text }}</p>
+            </div>
+            <div class="d-flex flex-wrap gap-3">
+                <a href="{{ wa_link }}" target="_blank" class="btn btn-sp-wa"><i class="bi bi-whatsapp me-2"></i>WhatsApp Us</a>
+                <a href="tel:{{ COMPANY_PHONE }}" class="btn btn-sp-ghost"><i class="bi bi-telephone me-2"></i>{{ COMPANY_PHONE }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

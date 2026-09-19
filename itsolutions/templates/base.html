@@ -264,10 +264,12 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Printers & Office <i class="bi bi-chevron-down ms-1 small"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=printer">Printers</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=printer+-thermal">Commercial &amp; Office Printers</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=thermal">Thermal Receipt Printers</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=scanner">Scanners</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=paper">Paper</a></li>
-                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=supplies">School &amp; Office Supplies</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:school_supplies' %}">School Supplies</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:office_supplies' %}">Office Supplies</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -275,8 +277,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=camera">Security Cameras</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=access">Access Control Solutions</a></li>
-                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=nvr">NVR Systems</a></li>
-                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=dvr">DVR Systems</a></li>
+                        <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=nvr+dvr">NVR &amp; DVR Systems</a></li>
                         <li><a class="dropdown-item" href="{% url 'catalog:product_list' %}?q=cctv">CCTV Accessories</a></li>
                     </ul>
                 </li>
