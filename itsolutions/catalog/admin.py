@@ -59,7 +59,7 @@ class ProductAdmin(admin.ModelAdmin):
         "image_preview", "name", "sku", "category", "brand", "product_type",
         "price", "stock_badge", "stock_status", "is_active",
     )
-    list_filter = ("product_type", "category", "brand", "is_active", "track_inventory", "shop_slot")
+    list_filter = ("product_type", "category", "brand", "is_active", "track_inventory") # , "shop_slot")
     search_fields = ("name", "sku", "description")
     list_display_links = ("name",)
     list_editable = ("price", "is_active")
@@ -82,10 +82,10 @@ class ProductAdmin(admin.ModelAdmin):
         ('Inventory Settings', {
             'fields': ('is_active', 'track_inventory', 'reorder_level')
         }),
-        ('Shop Page Sections', {
-            'fields': ('shop_slot',),
-            'description': 'Assign this product to a themed section on the shop page.',
-        }),
+        # ('Shop Page Sections', {
+        #     'fields': ('shop_slot',),
+        #     'description': 'Assign this product to a themed section on the shop page.',
+        # }),
         ('Metadata', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
