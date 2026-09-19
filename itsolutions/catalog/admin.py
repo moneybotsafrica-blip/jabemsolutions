@@ -8,8 +8,23 @@ from django.http import HttpResponse
 from decimal import Decimal
 from .models import (
     Category, Brand, Product, Stock, StockMovement, Cart, CartItem, Order, OrderItem,
-    POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem, ReportCenter
+    POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem, ReportCenter,
+    ShopPromo,
 )
+
+
+@admin.register(ShopPromo)
+class ShopPromoAdmin(admin.ModelAdmin):
+    list_display = ("preview", "title", "tag", "kind", "href", "order", "is_active")
+    list_filter = ("kind", "is_active")
+    list_editable = ("order", "is_active")
+    search_fields = ("title", "tag")
+
+    def preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="width:96px;height:54px;object-fit:cover;border-radius:6px;" />', obj.image)
+        return "—"
+    preview.short_description = "Image"
 
 
 @admin.register(Category)
@@ -44,7 +59,7 @@ class ProductAdmin(admin.ModelAdmin):
         "image_preview", "name", "sku", "category", "brand", "product_type",
         "price", "stock_badge", "stock_status", "is_active",
     )
-    list_filter = ("product_type", "category", "brand", "is_active", "track_inventory")
+    list_filter = ("product_type", "category", "brand", "is_active", "track_inventory", "shop_slot")
     search_fields = ("name", "sku", "description")
     list_display_links = ("name",)
     list_editable = ("price", "is_active")
@@ -66,6 +81,10 @@ class ProductAdmin(admin.ModelAdmin):
         }),
         ('Inventory Settings', {
             'fields': ('is_active', 'track_inventory', 'reorder_level')
+        }),
+        ('Shop Page Sections', {
+            'fields': ('shop_slot',),
+            'description': 'Assign this product to a themed section on the shop page.',
         }),
         ('Metadata', {
             'fields': ('created_at', 'updated_at'),
