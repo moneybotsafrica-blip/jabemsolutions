@@ -19,6 +19,7 @@ from django.core.management import call_command
 
 print("Running Django migrations...")
 call_command('migrate', '--noinput')
+print("Migrations completed successfully.")
 
 print("Loading local data...")
 try:
