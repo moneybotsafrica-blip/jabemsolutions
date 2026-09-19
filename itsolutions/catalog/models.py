@@ -566,27 +566,27 @@ class POSSaleItem(models.Model):
         return f"{self.quantity}x {self.product.name}"
 
 
-class ShopPromo(models.Model):
-    PROMO_KIND_CHOICES = [
-        ("feature", "Featured banner (wide)"),
-        ("card", "Promo card (small)"),
-    ]
-    tag = models.CharField(max_length=40, default="Deal", help_text="Small pill label, e.g. HOT DEAL")
-    title = models.CharField(max_length=120)
-    subtitle = models.CharField(max_length=160, blank=True)
-    href = models.CharField("Link URL", max_length=300, help_text="e.g. ?q=laptop, ?type=hardware or a full URL")
-    image = models.CharField(
-        "Image path", max_length=400,
-        help_text="Static path like /static/images/promos/promo_laptop_deals.png, or any full image URL",
-    )
-    kind = models.CharField(max_length=10, choices=PROMO_KIND_CHOICES, default="card")
-    order = models.PositiveIntegerField(default=0)
-    is_active = models.BooleanField(default=True)
+# class ShopPromo(models.Model):
+#     PROMO_KIND_CHOICES = [
+#         ("feature", "Featured banner (wide)"),
+#         ("card", "Promo card (small)"),
+#     ]
+#     tag = models.CharField(max_length=40, default="Deal", help_text="Small pill label, e.g. HOT DEAL")
+#     title = models.CharField(max_length=120)
+#     subtitle = models.CharField(max_length=160, blank=True)
+#     href = models.CharField("Link URL", max_length=300, help_text="e.g. ?q=laptop, ?type=hardware or a full URL")
+#     image = models.CharField(
+#         "Image path", max_length=400,
+#         help_text="Static path like /static/images/promos/promo_laptop_deals.png, or any full image URL",
+#     )
+#     kind = models.CharField(max_length=10, choices=PROMO_KIND_CHOICES, default="card")
+#     order = models.PositiveIntegerField(default=0)
+#     is_active = models.BooleanField(default=True)
 
-    class Meta:
-        ordering = ["order", "id"]
-        verbose_name = "Shop advert"
-        verbose_name_plural = "Shop adverts"
+#     class Meta:
+#         ordering = ["order", "id"]
+#         verbose_name = "Shop advert"
+#         verbose_name_plural = "Shop adverts"
 
-    def __str__(self):
-        return f"{self.title} ({self.get_kind_display()})"
+#     def __str__(self):
+#         return f"{self.title} ({self.get_kind_display()})"

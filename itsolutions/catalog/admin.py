@@ -9,22 +9,22 @@ from decimal import Decimal
 from .models import (
     Category, Brand, Product, Stock, StockMovement, Cart, CartItem, Order, OrderItem,
     POSCategory, POSProduct, POSCustomer, POSSale, POSSaleItem, QuoteSettings, Quote, QuoteItem, ReportCenter,
-    ShopPromo,
+    # ShopPromo,
 )
 
 
-@admin.register(ShopPromo)
-class ShopPromoAdmin(admin.ModelAdmin):
-    list_display = ("preview", "title", "tag", "kind", "href", "order", "is_active")
-    list_filter = ("kind", "is_active")
-    list_editable = ("order", "is_active")
-    search_fields = ("title", "tag")
+# @admin.register(ShopPromo)
+# class ShopPromoAdmin(admin.ModelAdmin):
+#     list_display = ("preview", "title", "tag", "kind", "href", "order", "is_active")
+#     list_filter = ("kind", "is_active")
+#     list_editable = ("order", "is_active")
+#     search_fields = ("title", "tag")
 
-    def preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" style="width:96px;height:54px;object-fit:cover;border-radius:6px;" />', obj.image)
-        return "—"
-    preview.short_description = "Image"
+#     def preview(self, obj):
+#         if obj.image:
+#             return format_html('<img src="{}" style="width:96px;height:54px;object-fit:cover;border-radius:6px;" />', obj.image)
+#         return "—"
+#     preview.short_description = "Image"
 
 
 @admin.register(Category)

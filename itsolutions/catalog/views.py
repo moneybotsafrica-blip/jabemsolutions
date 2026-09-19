@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.db import transaction
 from django.db.models import Q, Count
 from decimal import Decimal
-from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct, Quote, QuoteSettings, ShopPromo
+from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct, Quote, QuoteSettings # , ShopPromo
 
 
 @staff_member_required
@@ -126,7 +126,8 @@ class ProductListView(ListView):
         ctx["price_min"] = self.request.GET.get("price_min", "")
         ctx["price_max"] = self.request.GET.get("price_max", "")
         base = Product.objects.filter(is_active=True).select_related("category", "brand")
-        ctx["shop_promos"] = ShopPromo.objects.filter(is_active=True)
+        # ctx["shop_promos"] = ShopPromo.objects.filter(is_active=True)
+        ctx["shop_promos"] = []  # Temporary: disable ShopPromo
         # ctx["new_arrival_products"] = base.filter(shop_slot="new_arrival")[:12]
         ctx["new_arrival_products"] = base[:12]  # Temporary: show latest products
         return ctx

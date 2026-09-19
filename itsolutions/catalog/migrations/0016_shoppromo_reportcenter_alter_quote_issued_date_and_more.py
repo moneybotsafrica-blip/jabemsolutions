@@ -12,25 +12,25 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='ShopPromo',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tag', models.CharField(default='Deal', help_text='Small pill label, e.g. HOT DEAL', max_length=40)),
-                ('title', models.CharField(max_length=120)),
-                ('subtitle', models.CharField(blank=True, max_length=160)),
-                ('href', models.CharField(help_text='e.g. ?q=laptop, ?type=hardware or a full URL', max_length=300, verbose_name='Link URL')),
-                ('image', models.CharField(help_text='Static path like /static/images/promos/promo_laptop_deals.png, or any full image URL', max_length=400, verbose_name='Image path')),
-                ('kind', models.CharField(choices=[('feature', 'Featured banner (wide)'), ('card', 'Promo card (small)')], default='card', max_length=10)),
-                ('order', models.PositiveIntegerField(default=0)),
-                ('is_active', models.BooleanField(default=True)),
-            ],
-            options={
-                'verbose_name': 'Shop advert',
-                'verbose_name_plural': 'Shop adverts',
-                'ordering': ['order', 'id'],
-            },
-        ),
+        # migrations.CreateModel(
+        #     name='ShopPromo',
+        #     fields=[
+        #         ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+        #         ('tag', models.CharField(default='Deal', help_text='Small pill label, e.g. HOT DEAL', max_length=40)),
+        #         ('title', models.CharField(max_length=120)),
+        #         ('subtitle', models.CharField(blank=True, max_length=160)),
+        #         ('href', models.CharField(help_text='e.g. ?q=laptop, ?type=hardware or a full URL', max_length=300, verbose_name='Link URL')),
+        #         ('image', models.CharField(help_text='Static path like /static/images/promos/promo_laptop_deals.png, or any full image URL', max_length=400, verbose_name='Image path')),
+        #         ('kind', models.CharField(choices=[('feature', 'Featured banner (wide)'), ('card', 'Promo card (small)')], default='card', max_length=10)),
+        #         ('order', models.PositiveIntegerField(default=0)),
+        #         ('is_active', models.BooleanField(default=True)),
+        #     ],
+        #     options={
+        #         'verbose_name': 'Shop advert',
+        #         'verbose_name_plural': 'Shop adverts',
+        #         'ordering': ['order', 'id'],
+        #     },
+        # ),
         migrations.CreateModel(
             name='ReportCenter',
             fields=[
