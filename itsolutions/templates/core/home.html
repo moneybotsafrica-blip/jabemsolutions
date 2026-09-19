@@ -1171,21 +1171,27 @@
         box-shadow: 0 6px 16px rgba(37, 99, 235, 0.18);
     }
 
-    /* ---------- 4a. COUNTRIES WE SERVE ---------- */
+    /* ---------- 4a. COUNTRIES WE SERVE (compact) ---------- */
     .nv-geo {
-        padding: 5.5rem 0 4.5rem;
+        padding: 3rem 0 3.25rem;
         background: linear-gradient(180deg, #ffffff 0%, #f4f7ff 100%);
     }
 
+    .nv-geo .nv-section-head { margin-bottom: 1.6rem; }
+    .nv-geo .nv-section-head h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+
     .nv-geo-card {
         position: relative;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
         height: 100%;
-        text-align: center;
+        text-align: left;
         background: #ffffff;
         border: 1px solid rgba(37, 99, 235, 0.10);
-        border-radius: 22px;
-        padding: 2.4rem 1.4rem 1.9rem;
-        box-shadow: 0 8px 24px rgba(6, 13, 36, 0.05);
+        border-radius: 16px;
+        padding: 1.05rem 1.2rem;
+        box-shadow: 0 6px 16px rgba(6, 13, 36, 0.04);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         overflow: hidden;
     }
@@ -1194,27 +1200,27 @@
         content: '';
         position: absolute;
         inset: 0 0 auto 0;
-        height: 4px;
+        height: 3px;
         background: linear-gradient(90deg, var(--blue), var(--blue-soft));
         opacity: 0;
         transition: opacity 0.3s ease;
     }
 
     .nv-geo-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 44px rgba(37, 99, 235, 0.16);
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px rgba(37, 99, 235, 0.14);
     }
 
     .nv-geo-card:hover::before { opacity: 1; }
 
     .nv-geo-flag {
-        width: 104px;
-        height: 104px;
-        margin: 0 auto 1.15rem;
-        padding: 5px;
+        flex: 0 0 auto;
+        width: 64px;
+        height: 64px;
+        padding: 3px;
         border-radius: 50%;
         background: linear-gradient(135deg, #2563eb, #60a5fa);
-        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.22);
         display: flex;
     }
 
@@ -1223,44 +1229,41 @@
         height: 100%;
         border-radius: 50%;
         object-fit: cover;
-        border: 3px solid #ffffff;
+        border: 2px solid #ffffff;
         background: #eef2fb;
     }
 
+    .nv-geo-body { min-width: 0; }
+
     .nv-geo-name {
+        font-size: 1.02rem;
         font-weight: 800;
         color: #1d1d1f;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.1rem;
     }
 
     .nv-geo-tag {
-        font-size: 0.82rem;
+        font-size: 0.74rem;
         color: var(--blue);
         font-weight: 600;
-        margin-bottom: 0.6rem;
-    }
-
-    .nv-geo-desc {
-        font-size: 0.88rem;
-        color: #6e6e73;
-        margin-bottom: 1rem;
+        margin-bottom: 0.4rem;
     }
 
     .nv-geo-cities {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.35rem;
-        justify-content: center;
+        gap: 0.25rem;
     }
 
     .nv-geo-cities span {
-        font-size: 0.72rem;
+        font-size: 0.64rem;
         font-weight: 600;
         color: #1e40af;
         background: #eff6ff;
         border: 1px solid rgba(37, 99, 235, 0.14);
         border-radius: 980px;
-        padding: 0.2rem 0.65rem;
+        padding: 0.08rem 0.45rem;
+        line-height: 1.5;
     }
 
     /* ---------- RESPONSIVE ---------- */
@@ -1558,20 +1561,19 @@
             <div class="nv-section-head">
                 <div class="nv-kicker">Beyond Borders</div>
                 <h2>Countries Our Services <span class="accent">Reach</span></h2>
-                <p class="text-muted">From our Nairobi base, we install, deliver and support POS and IT systems
-                    across the region — our service goes beyond Kenya's borders.</p>
             </div>
-            <div class="row g-4 justify-content-center">
+            <div class="row g-3 justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <div class="nv-geo-card">
                         <div class="nv-geo-flag">
                             <img src="{% static 'images/flags/ke.png' %}" alt="Flag of Kenya" loading="lazy">
                         </div>
-                        <div class="nv-geo-name">Kenya</div>
-                        <div class="nv-geo-tag">Home Ground &middot; Full Installation &amp; Support</div>
-                        <p class="nv-geo-desc">Same-week on-site POS setup, networking and CCTV installs, plus 47-county delivery.</p>
-                        <div class="nv-geo-cities">
-                            <span>Nairobi</span><span>Mombasa</span><span>Kisumu</span><span>Nakuru</span><span>Eldoret</span><span>Thika</span>
+                        <div class="nv-geo-body">
+                            <div class="nv-geo-name">Kenya</div>
+                            <div class="nv-geo-tag">Home Ground &middot; Full Installation &amp; Support</div>
+                            <div class="nv-geo-cities">
+                                <span>Nairobi</span><span>Mombasa</span><span>Kisumu</span><span>Nakuru</span><span>Eldoret</span><span>Thika</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1580,11 +1582,12 @@
                         <div class="nv-geo-flag">
                             <img src="{% static 'images/flags/ug.png' %}" alt="Flag of Uganda" loading="lazy">
                         </div>
-                        <div class="nv-geo-name">Uganda</div>
-                        <div class="nv-geo-tag">Active Coverage &middot; Kampala &amp; Beyond</div>
-                        <p class="nv-geo-desc">Cross-border delivery of hardware and software with remote configuration and training.</p>
-                        <div class="nv-geo-cities">
-                            <span>Kampala</span><span>Entebbe</span><span>Jinja</span><span>Mbarara</span>
+                        <div class="nv-geo-body">
+                            <div class="nv-geo-name">Uganda</div>
+                            <div class="nv-geo-tag">Active Coverage &middot; Kampala &amp; Beyond</div>
+                            <div class="nv-geo-cities">
+                                <span>Kampala</span><span>Entebbe</span><span>Jinja</span><span>Mbarara</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1593,18 +1596,19 @@
                         <div class="nv-geo-flag">
                             <img src="{% static 'images/flags/tz.png' %}" alt="Flag of Tanzania" loading="lazy">
                         </div>
-                        <div class="nv-geo-name">Tanzania</div>
-                        <div class="nv-geo-tag">Active Coverage &middot; Dar &amp; the North</div>
-                        <p class="nv-geo-desc">POS bundles, printers and accessories shipped with full customs and cross-border handling.</p>
-                        <div class="nv-geo-cities">
-                            <span>Dar es Salaam</span><span>Arusha</span><span>Mwanza</span><span>Dodoma</span>
+                        <div class="nv-geo-body">
+                            <div class="nv-geo-name">Tanzania</div>
+                            <div class="nv-geo-tag">Active Coverage &middot; Dar &amp; the North</div>
+                            <div class="nv-geo-cities">
+                                <span>Dar es Salaam</span><span>Arusha</span><span>Mwanza</span><span>Dodoma</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-4">
-                <a href="{% url 'core:services' %}#coverage" class="btn btn-sm px-4 py-2 rounded-pill"
-                   style="background:#eff6ff;color:#1e40af;border:1px solid rgba(37,99,235,.18);font-weight:600;">
+            <div class="text-center mt-3">
+                <a href="{% url 'core:services' %}#coverage" class="btn btn-sm px-3 py-1 rounded-pill"
+                   style="background:#eff6ff;color:#1e40af;border:1px solid rgba(37,99,235,.18);font-weight:600;font-size:.78rem;">
                     <i class="bi bi-geo-alt me-1"></i> See full delivery &amp; coverage details
                 </a>
             </div>
