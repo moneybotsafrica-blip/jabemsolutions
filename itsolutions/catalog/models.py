@@ -87,14 +87,6 @@ class Product(models.Model):
     reorder_level = models.PositiveIntegerField(
         default=5, help_text="Trigger a low-stock flag at/below this quantity."
     )
-    # SHOP_SLOT_CHOICES = [
-    #     ("", "— Not in a shop section —"),
-    #     ("new_arrival", "New Arrivals"),
-    # ]
-    # shop_slot = models.CharField(
-    #     "Shop section", max_length=12, choices=SHOP_SLOT_CHOICES, blank=True, default="",
-    #     help_text="Show this product in a themed section on the shop page.",
-    # )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
