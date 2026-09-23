@@ -16,7 +16,7 @@
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}">
     <meta name="twitter:card" content="summary">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Jabem Solutions Limited","url":"{{ request.scheme }}://{{ request.get_host }}","logo":"{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}","telephone":"+254736794594","email":"jabemsolutionsltd@gmail.com","areaServed":["Kenya","Uganda","Tanzania"],"description":"POS software, POS hardware, inventory systems and business technology services for businesses across East Africa."}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Jabem Solutions Limited","url":"{{ request.scheme }}://{{ request.get_host }}","logo":"{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}","email":"jabemsolutionsltd@gmail.com","areaServed":["Kenya","Uganda","Tanzania"],"description":"POS software, POS hardware, inventory systems and business technology services for businesses across East Africa."}</script>
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32.png' %}">
@@ -442,9 +442,9 @@
             <div class="col-lg-4 col-md-12">
                 <h6 class="footer-heading">Contact &amp; Newsletter</h6>
                 <div class="footer-contact-compact mb-2">
-                    <a href="tel:{{ COMPANY_PHONE|cut:' ' }}" class="contact-compact-item me-3 text-decoration-none">
+                    {% if COMPANY_PHONE %}<a href="tel:{{ COMPANY_PHONE|cut:' ' }}" class="contact-compact-item me-3 text-decoration-none">
                         <i class="bi bi-telephone-fill text-success me-1"></i>{{ COMPANY_PHONE }}
-                    </a>
+                    </a>{% endif %}
                     <a href="mailto:{{ COMPANY_EMAIL }}" class="contact-compact-item me-3 text-decoration-none">
                         <i class="bi bi-envelope-fill text-success me-1"></i>{{ COMPANY_EMAIL }}
                     </a>

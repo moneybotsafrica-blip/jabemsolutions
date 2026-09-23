@@ -461,14 +461,14 @@
 <section class="ct-section pb-0">
     <div class="container">
         <div class="row g-3 g-lg-4">
-            <div class="col-6 col-lg-3">
+            {% if COMPANY_PHONE %}<div class="col-6 col-lg-3">
                 <a class="ct-tile" href="tel:{{ COMPANY_PHONE|cut:' '|cut:'+' }}">
                     <span class="ct-tile-icon"><i class="bi bi-telephone"></i></span>
                     <strong>Call Us</strong>
                     <span>{{ COMPANY_PHONE }}</span>
                     <small>Mon–Sat, 8am–6pm</small>
                 </a>
-            </div>
+            </div>{% endif %}
             <div class="col-6 col-lg-3">
                 <a class="ct-tile" href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions%2C%20I%20need%20assistance" target="_blank" rel="noopener noreferrer">
                     <span class="ct-tile-icon"><i class="bi bi-whatsapp"></i></span>
@@ -543,18 +543,18 @@
                 <div class="ct-direct">
                     <h3>Reach us directly</h3>
                     <p>Prefer a human on the line? Any of these work.</p>
-                    <div class="ct-direct-row">
+                    {% if COMPANY_PHONE %}<div class="ct-direct-row">
                         <span class="ct-direct-icon"><i class="bi bi-telephone"></i></span>
                         <div>
                             <strong>Phone</strong>
                             <a href="tel:{{ COMPANY_PHONE|cut:' '|cut:'+' }}">{{ COMPANY_PHONE }}</a>
                         </div>
-                    </div>
+                    </div>{% endif %}
                     <div class="ct-direct-row">
                         <span class="ct-direct-icon"><i class="bi bi-whatsapp"></i></span>
                         <div>
                             <strong>WhatsApp</strong>
-                            <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer">+254 736 794594</a>
+                            <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp</a>
                         </div>
                     </div>
                     <div class="ct-direct-row">
@@ -581,7 +581,7 @@
                     <div class="ct-direct-social">
                         <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
                         <a href="mailto:{{ COMPANY_EMAIL }}" aria-label="Email"><i class="bi bi-envelope"></i></a>
-                        <a href="tel:{{ COMPANY_PHONE|cut:' '|cut:'+' }}" aria-label="Call"><i class="bi bi-telephone"></i></a>
+                        {% if COMPANY_PHONE %}<a href="tel:{{ COMPANY_PHONE|cut:' '|cut:'+' }}" aria-label="Call"><i class="bi bi-telephone"></i></a>{% endif %}
                     </div>
                 </div>
                 <div class="ct-map">

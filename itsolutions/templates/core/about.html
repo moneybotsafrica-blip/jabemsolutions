@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Get in touch</h6>
-                    <p class="small mb-1"><i class="bi bi-telephone me-1"></i>{{ COMPANY_PHONE }}</p>
+                    {% if COMPANY_PHONE %}<p class="small mb-1"><i class="bi bi-telephone me-1"></i>{{ COMPANY_PHONE }}</p>{% endif %}
                     <p class="small mb-1"><i class="bi bi-envelope me-1"></i>{{ COMPANY_EMAIL }}</p>
                     <p class="small mb-0"><i class="bi bi-geo-alt me-1"></i>{{ COMPANY_ADDRESS }}</p>
                 </div>

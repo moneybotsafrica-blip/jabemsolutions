@@ -292,7 +292,7 @@
             </div>
             <div class="d-flex flex-wrap gap-3">
                 <a href="{{ wa_link }}" target="_blank" class="btn btn-sp-wa"><i class="bi bi-whatsapp me-2"></i>WhatsApp Us</a>
-                <a href="tel:{{ COMPANY_PHONE }}" class="btn btn-sp-ghost"><i class="bi bi-telephone me-2"></i>{{ COMPANY_PHONE }}</a>
+                {% if COMPANY_PHONE %}<a href="tel:{{ COMPANY_PHONE }}" class="btn btn-sp-ghost"><i class="bi bi-telephone me-2"></i>{{ COMPANY_PHONE }}</a>{% endif %}
             </div>
         </div>
     </div>

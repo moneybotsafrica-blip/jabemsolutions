@@ -170,7 +170,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "no-reply@jabemsolutions.co.ke"
 
 SITE_NAME = "Jabem Solutions Ltd"
-COMPANY_PHONE = "+254 736 794594"
+COMPANY_PHONE = ""
 COMPANY_EMAIL = "info@jabemsolutions.co.ke"
 COMPANY_ADDRESS = "Nairobi, Kenya"
 
