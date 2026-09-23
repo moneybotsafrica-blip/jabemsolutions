@@ -6,9 +6,26 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.db import transaction
-from django.db.models import Q, Count
+from django.db.models import Case, Count, F, IntegerField, Q, Value, When, Window
+from django.db.models.functions import RowNumber
 from decimal import Decimal
 from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct, Quote, QuoteSettings # , ShopPromo
+
+# Showcase sections used to mix the default shop page: (rank, keywords) — first match wins.
+SHOP_SECTIONS = [
+    (0, ("laptop", "notebook")),
+    (1, ("desktop", "workstation", "all-in-one", "all in one")),
+    (2, ("monitor",)),
+    (3, ("pos", "point of sale")),
+    (4, ("receipt", "thermal")),
+    (5, ("printer",)),
+    (6, ("router", "switch", "mesh")),
+    (7, ("cctv", "camera", "surveillance", "dvr")),
+    (8, ("ups", "inverter", "power bank", "battery")),
+    (9, ("ssd", "hdd", "storage", "flash disk", "memory card")),
+    (10, ("headset", "headphone", "earphone")),
+    (11, ("cover", "case", "screen protector")),
+]
 
 
 @staff_member_required
@@ -112,8 +129,28 @@ class ProductListView(ListView):
             for term in exclude:
                 qs = qs.exclude(name__icontains=term)
         sort = self.request.GET.get("sort", "")
-        sort_map = {"price_asc": "price", "price_desc": "-price", "name_az": "name"}
-        qs = qs.order_by(sort_map.get(sort, "-created_at"))
+        sort_map = {"price_asc": "price", "price_desc": "-price", "name_az": "name", "newest": "-created_at"}
+        if sort in sort_map:
+            qs = qs.order_by(sort_map[sort])
+        else:
+            # Default view: interleave sections so page 1 showcases one of the
+            # newest products from each area instead of the latest bulk import.
+            whens = [
+                When(Q(name__icontains=kw), then=Value(rank))
+                for rank, kws in SHOP_SECTIONS
+                for kw in kws
+            ]
+            qs = (
+                qs.annotate(section_rank=Case(*whens, default=Value(99), output_field=IntegerField()))
+                .annotate(
+                    section_pos=Window(
+                        expression=RowNumber(),
+                        partition_by=[F("section_rank")],
+                        order_by=F("created_at").desc(),
+                    )
+                )
+                .order_by("section_pos", "section_rank", "-created_at")
+            )
         return qs
 
     def _url_without(self, *keys):

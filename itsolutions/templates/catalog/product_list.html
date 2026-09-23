@@ -340,9 +340,9 @@
             <a class="gp-cat" href="?q=pos"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_pos.jpg' %}" alt="POS Terminals" loading="lazy"></div><span class="gp-cat-label">POS Terminals</span></a>
             <a class="gp-cat" href="?q=printer+-thermal"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_printer.jpg' %}" alt="Printers" loading="lazy"></div><span class="gp-cat-label">Printers</span></a>
             <a class="gp-cat" href="?q=thermal"><div class="gp-cat-ring"><img src="{% static 'images/products/prod_thermal_printer.jpg' %}" alt="Receipt Printers" loading="lazy"></div><span class="gp-cat-label">Receipt Printers</span></a>
-            <a class="gp-cat" href="?q=router"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_networking.jpg' %}" alt="Routers &amp; Switches" loading="lazy"></div><span class="gp-cat-label">Routers &amp; Switches</span></a>
+            <a class="gp-cat" href="?q=router switch"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_networking.jpg' %}" alt="Routers &amp; Switches" loading="lazy"></div><span class="gp-cat-label">Routers &amp; Switches</span></a>
             <a class="gp-cat" href="?q=camera"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_surveillance.jpg' %}" alt="CCTV Cameras" loading="lazy"></div><span class="gp-cat-label">CCTV Cameras</span></a>
-            <a class="gp-cat" href="?q=ups"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_power.jpg' %}" alt="Power &amp; UPS" loading="lazy"></div><span class="gp-cat-label">Power &amp; UPS</span></a>
+            <a class="gp-cat" href="?q=ups inverter"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_power.jpg' %}" alt="Power &amp; UPS" loading="lazy"></div><span class="gp-cat-label">Power &amp; UPS</span></a>
             <a class="gp-cat" href="?q=ssd"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_storage.jpg' %}" alt="Storage" loading="lazy"></div><span class="gp-cat-label">Storage</span></a>
             <a class="gp-cat" href="{% url 'core:office_supplies' %}"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_business.jpg' %}" alt="Office Supplies" loading="lazy"></div><span class="gp-cat-label">Office Supplies</span></a>
             <a class="gp-cat" href="{% url 'core:school_supplies' %}"><div class="gp-cat-ring"><img src="{% static 'images/categories/cat_student.jpg' %}" alt="School Supplies" loading="lazy"></div><span class="gp-cat-label">School Supplies</span></a>
@@ -371,7 +371,8 @@
                 {% if price_min %}<input type="hidden" name="price_min" value="{{ price_min }}">{% endif %}
                 {% if price_max %}<input type="hidden" name="price_max" value="{{ price_max }}">{% endif %}
                 <select name="sort" onchange="this.form.submit()">
-                    <option value="">Newest first</option>
+                    <option value="" {% if not selected_sort %}selected{% endif %}>Featured &mdash; top of every section</option>
+                    <option value="newest" {% if selected_sort == "newest" %}selected{% endif %}>Newest first</option>
                     <option value="price_asc" {% if selected_sort == "price_asc" %}selected{% endif %}>Price: Low &rarr; High</option>
                     <option value="price_desc" {% if selected_sort == "price_desc" %}selected{% endif %}>Price: High &rarr; Low</option>
                     <option value="name_az" {% if selected_sort == "name_az" %}selected{% endif %}>Name: A &rarr; Z</option>
