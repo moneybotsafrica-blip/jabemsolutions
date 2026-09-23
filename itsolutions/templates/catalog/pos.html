@@ -1,1686 +1,247 @@
 {% extends "base.html" %}
-
-{% block title %}POS System{% endblock %}
-
-{% block extra_head %}
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<style>
-/* Mobile responsiveness - Complete mobile-first approach */
-@media (max-width: 768px) {
-    .pos-container {
-        padding: 8px !important;
-        min-height: 100vh !important;
-        padding-bottom: 80px !important;
-    }
-    
-    .pos-header {
-        padding: 12px !important;
-        flex-direction: column !important;
-        gap: 8px !important;
-        margin-bottom: 12px !important;
-    }
-    
-    .pos-header h2 {
-        font-size: 1.1rem !important;
-        margin: 0 !important;
-    }
-    
-    .mode-indicator {
-        flex-direction: row !important;
-        gap: 8px !important;
-    }
-    
-    .mode-indicator i {
-        font-size: 1.5rem !important;
-    }
-    
-    .mode-nav {
-        width: 100% !important;
-        justify-content: space-between !important;
-    }
-    
-    .nav-btn {
-        width: 36px !important;
-        height: 36px !important;
-        font-size: 1rem !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-    }
-    
-    .mode-dots {
-        gap: 6px !important;
-    }
-    
-    .mode-dot {
-        width: 8px !important;
-        height: 8px !important;
-        min-width: 8px !important;
-        min-height: 8px !important;
-    }
-    
-    /* Mobile category scroll */
-    .pos-categories {
-        padding: 8px 4px !important;
-        gap: 8px !important;
-        margin-bottom: 12px !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        -webkit-overflow-scrolling: touch !important;
-        scroll-snap-type: x mandatory !important;
-    }
-    
-    .category-card {
-        min-width: 70px !important;
-        padding: 8px 6px !important;
-        border-radius: 8px !important;
-        scroll-snap-align: start !important;
-        flex-shrink: 0 !important;
-        min-height: 70px !important;
-    }
-    
-    .category-card i {
-        font-size: 1.3rem !important;
-        margin-bottom: 4px !important;
-    }
-    
-    .category-card span {
-        font-size: 0.7rem !important;
-        font-weight: 500 !important;
-    }
-    
-    /* Mobile main content layout */
-    .pos-main-content {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 12px !important;
-    }
-    
-    .pos-products {
-        order: 1 !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 8px !important;
-    }
-    
-    /* Mobile product cards */
-    .product-card {
-        padding: 10px !important;
-        border-radius: 10px !important;
-        min-height: 140px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        min-height: 140px !important;
-    }
-    
-    .product-image {
-        width: 50px !important;
-        height: 50px !important;
-        margin: 0 auto 8px !important;
-        border-radius: 8px !important;
-    }
-    
-    .product-icon {
-        width: 50px !important;
-        height: 50px !important;
-        font-size: 1.5rem !important;
-        margin: 0 auto 8px !important;
-    }
-    
-    .product-info {
-        text-align: center !important;
-        flex-grow: 1 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-    }
-    
-    .product-info h4 {
-        font-size: 0.8rem !important;
-        margin: 0 0 4px 0 !important;
-        line-height: 1.2 !important;
-        max-height: 2.4em !important;
-        overflow: hidden !important;
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2 !important;
-        -webkit-box-orient: vertical !important;
-    }
-    
-    .product-description {
-        display: none !important;
-    }
-    
-    .product-price {
-        font-size: 0.9rem !important;
-        font-weight: 600 !important;
-        margin: 4px 0 !important;
-    }
-    
-    .product-stock {
-        font-size: 0.65rem !important;
-        color: #666 !important;
-        margin: 0 !important;
-    }
-    
-    /* Mobile order card - fixed at bottom */
-    .current-order-card {
-        order: 2 !important;
-        padding: 12px !important;
-        border-radius: 12px !important;
-        position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 1000 !important;
-        margin: 0 !important;
-        max-height: 70vh !important;
-        overflow-y: auto !important;
-        border-radius: 16px 16px 0 0 !important;
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
-    }
-    
-    .current-order-card h6 {
-        font-size: 0.85rem !important;
-        margin-bottom: 8px !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-    }
-    
-    .table-responsive {
-        max-height: 120px !important;
-        margin-bottom: 8px !important;
-    }
-    
-    .order-table {
-        font-size: 0.7rem !important;
-    }
-    
-    .order-table th,
-    .order-table td {
-        padding: 4px 6px !important;
-    }
-    
-    .form-control, .form-select {
-        font-size: 0.75rem !important;
-        padding: 6px 8px !important;
-        border-radius: 6px !important;
-    }
-    
-    .btn-sm {
-        font-size: 0.7rem !important;
-        padding: 6px 8px !important;
-        border-radius: 6px !important;
-    }
-    
-    .row.g-2 {
-        gap: 6px !important;
-    }
-    
-    .order-divider {
-        margin: 8px 0 !important;
-    }
-    
-    /* Mobile-specific button adjustments */
-    .btn-hold, .btn-resume, .btn-clear, .btn-checkout {
-        padding: 8px 4px !important;
-        font-size: 0.7rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 2px !important;
-        min-height: 40px !important;
-    }
-    
-    .btn-hold i, .btn-resume i, .btn-clear i, .btn-checkout i {
-        font-size: 0.9rem !important;
-    }
-    
-    /* Add bottom padding to prevent content from being hidden behind order card */
-    .pos-products {
-        padding-bottom: 320px !important;
-    }
-}
-
-@media (max-width: 576px) {
-    .pos-container {
-        padding: 4px !important;
-        padding-bottom: 80px !important;
-    }
-    
-    .pos-header {
-        padding: 10px !important;
-        margin-bottom: 8px !important;
-    }
-    
-    .pos-header h2 {
-        font-size: 1rem !important;
-    }
-    
-    .mode-indicator i {
-        font-size: 1.3rem !important;
-    }
-    
-    .nav-btn {
-        width: 32px !important;
-        height: 32px !important;
-        font-size: 0.9rem !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-    }
-    
-    .pos-categories {
-        gap: 6px !important;
-        padding: 6px 4px !important;
-    }
-    
-    .category-card {
-        min-width: 60px !important;
-        padding: 6px 4px !important;
-        border-radius: 6px !important;
-        min-height: 60px !important;
-    }
-    
-    .category-card i {
-        font-size: 1.1rem !important;
-        margin-bottom: 3px !important;
-    }
-    
-    .category-card span {
-        font-size: 0.65rem !important;
-    }
-    
-    .pos-products {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 6px !important;
-        padding-bottom: 340px !important;
-    }
-    
-    .product-card {
-        padding: 8px !important;
-        min-height: 120px !important;
-        border-radius: 8px !important;
-    }
-    
-    .product-image {
-        width: 40px !important;
-        height: 40px !important;
-        margin: 0 auto 6px !important;
-        border-radius: 6px !important;
-    }
-    
-    .product-icon {
-        width: 40px !important;
-        height: 40px !important;
-        font-size: 1.2rem !important;
-        margin: 0 auto 6px !important;
-    }
-    
-    .product-info h4 {
-        font-size: 0.75rem !important;
-        max-height: 2em !important;
-        -webkit-line-clamp: 2 !important;
-    }
-    
-    .product-price {
-        font-size: 0.85rem !important;
-        margin: 3px 0 !important;
-    }
-    
-    .product-stock {
-        font-size: 0.6rem !important;
-    }
-    
-    .current-order-card {
-        padding: 10px !important;
-        border-radius: 12px 12px 0 0 !important;
-        max-height: 65vh !important;
-    }
-    
-    .current-order-card h6 {
-        font-size: 0.8rem !important;
-    }
-    
-    .table-responsive {
-        max-height: 100px !important;
-    }
-    
-    .order-table {
-        font-size: 0.65rem !important;
-    }
-    
-    .order-table th,
-    .order-table td {
-        padding: 3px 4px !important;
-    }
-    
-    .form-control, .form-select {
-        font-size: 0.7rem !important;
-        padding: 5px 6px !important;
-    }
-    
-    .btn-sm {
-        font-size: 0.65rem !important;
-        padding: 5px 6px !important;
-    }
-    
-    .btn-hold, .btn-resume, .btn-clear, .btn-checkout {
-        padding: 6px 3px !important;
-        font-size: 0.65rem !important;
-        min-height: 36px !important;
-    }
-    
-    .btn-hold i, .btn-resume i, .btn-clear i, .btn-checkout i {
-        font-size: 0.8rem !important;
-    }
-    
-    .row.g-2 {
-        gap: 4px !important;
-    }
-    
-    .order-divider {
-        margin: 6px 0 !important;
-    }
-    
-    /* Make order card collapsible on very small screens */
-    .current-order-card {
-        max-height: 60vh !important;
-    }
-    
-    /* Add mobile order card toggle button */
-    .mobile-order-toggle {
-        display: flex !important;
-        position: fixed !important;
-        bottom: 16px !important;
-        right: 16px !important;
-        width: 56px !important;
-        height: 56px !important;
-        border-radius: 50% !important;
-        background: var(--mode-primary, #667eea) !important;
-        color: white !important;
-        border: none !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-        z-index: 999 !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 1.5rem !important;
-    }
-    
-    .mobile-order-toggle.d-none {
-        display: none !important;
-    }
-    
-    .mobile-order-toggle:hover {
-        transform: scale(1.1) !important;
-    }
-    
-    .mobile-order-toggle:active {
-        transform: scale(0.95) !important;
-    }
-    
-    .current-order-card.hidden-mobile {
-        transform: translateY(100%) !important;
-        transition: transform 0.3s ease !important;
-    }
-    
-    .current-order-card.visible-mobile {
-        transform: translateY(0) !important;
-        transition: transform 0.3s ease !important;
-    }
-}
-</style>
-<style>
-/* Force Current Order card to use venue theme colors */
-#currentOrderCard {
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
-    background-color: transparent !important;
-}
-
-/* Mode-specific backgrounds */
-.pos-container[data-mode="restaurant"] #currentOrderCard {
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%) !important;
-    background-color: transparent !important;
-}
-
-.pos-container[data-mode="club"] #currentOrderCard {
-    background: linear-gradient(135deg, #000000 0%, #dc3545 100%) !important;
-    background-color: transparent !important;
-}
-
-.pos-container[data-mode="supermarket"] #currentOrderCard {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
-    background-color: transparent !important;
-}
-
-.pos-container[data-mode="coffeeshop"] #currentOrderCard {
-    background: linear-gradient(135deg, #d35400 0%, #e67e22 100%) !important;
-    background-color: transparent !important;
-}
-
-.pos-container[data-mode="cafe"] #currentOrderCard {
-    background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%) !important;
-    background-color: transparent !important;
-}
-
-/* Override Bootstrap dark classes */
-#currentOrderCard.bg-dark,
-#currentOrderCard[class*="bg-"],
-#currentOrderCard .bg-dark,
-#currentOrderCard .table-dark {
-    background: transparent !important;
-    background-color: transparent !important;
-}
-
-/* Force transparent backgrounds for children */
-#currentOrderCard table,
-#currentOrderCard .table,
-#currentOrderCard .form-control,
-#currentOrderCard .form-select {
-    background-color: transparent !important;
-    background-image: none !important;
-}
-</style>
-{% endblock %}
-
+{% load static %}
+{% block title %}POS Systems for Retail, Restaurants &amp; Clubs | {{ SITE_NAME }}{% endblock %}
 {% block content %}
-<div class="pos-container" id="posContainer" data-mode="{{ current_mode }}">
-    <!-- Mode Switcher Header -->
-    <div class="pos-header">
-        <div class="mode-indicator">
-            <i class="bi {{ current_mode_icon }}"></i>
-            <h2 id="currentModeName">{{ current_mode_name }}</h2>
-        </div>
-        <div class="mode-nav">
-            <button class="nav-btn" id="prevMode" title="Previous Mode (Left Arrow)">
-                <i class="bi bi-arrow-left"></i>
-            </button>
-            <div class="mode-dots" id="modeDots">
-                {% for mode in modes %}
-                <span class="mode-dot {% if mode.key == current_mode %}active{% endif %}" data-mode="{{ mode.key }}"></span>
-                {% endfor %}
-            </div>
-            <button class="nav-btn" id="nextMode" title="Next Mode (Right Arrow)">
-                <i class="bi bi-arrow-right"></i>
-            </button>
+<section class="posx-hero scroll-animate">
+    <div class="container">
+        <span class="posx-pill"><span class="dot"></span>Jabem POS Software</span>
+        <h1>One till. Every answer.<br><span class="accent">Your business, under control.</span></h1>
+        <p class="lead">Fast checkout, live sales reports, stock control and M-PESA tracking — for retail, restaurants, cafes, clubs and pharmacies across East Africa.</p>
+        <div class="posx-actions">
+            <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20want%20a%20POS%20system%20for%20my%20business" target="_blank" class="posx-btn primary"><i class="bi bi-whatsapp"></i> Get a POS quote</a>
+            <a href="{% url 'catalog:product_list' %}?type=hardware" class="posx-btn ghost"><i class="bi bi-pc-display"></i> Shop POS hardware</a>
         </div>
     </div>
-
-    <!-- Categories -->
-    <div class="pos-categories">
-        <div class="category-card selected" data-category="all">
-            <i class="bi bi-grid"></i>
-            <span>All</span>
-        </div>
-        {% for category in categories %}
-        <div class="category-card" data-category="{{ category.slug }}">
-            <i class="bi {{ category.icon }}"></i>
-            <span>{{ category.name }}</span>
-        </div>
-        {% endfor %}
-    </div>
-
-    <!-- Mobile Order Toggle Button -->
-    <button class="mobile-order-toggle d-none" id="mobileOrderToggle">
-        <i class="bi bi-cart3"></i>
-    </button>
-
-    <!-- Main Content Area -->
-    <div class="pos-main-content">
-        <!-- Products Grid -->
-        <div class="pos-products">
-            {% for product in products %}
-            <div class="product-card" data-product="{{ product.id }}" data-category="{{ product.category.slug }}">
-                <div class="product-image">
-                    {% if product.get_display_image %}
-                    <img src="{{ product.get_display_image }}" alt="{{ product.name }}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="product-icon" style="display: none;">
-                        <i class="bi {{ product.icon|default:'bi-box-seam' }}"></i>
-                    </div>
-                    {% else %}
-                    <div class="product-icon">
-                        <i class="bi {{ product.icon|default:'bi-box-seam' }}"></i>
-                    </div>
-                    {% endif %}
-                </div>
-                <div class="product-info">
-                    <h4>{{ product.name }}</h4>
-                    <p class="product-description">{{ product.description|default:"" }}</p>
-                    {% if product.price %}<p class="product-price">KES {{ product.price }}</p>{% endif %}
-                    <p class="product-stock">Stock: {{ product.stock_quantity }}</p>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        <!-- Current Order Card -->
-        <div class="current-order-card" id="currentOrderCard" style="background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important; background-color: transparent !important;" class="!bg-transparent">
-            <h6 class="mb-2"><i class="bi bi-cart3 me-2"></i>Current Order</h6>
-            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
-                <table class="table table-sm mb-0 order-table" style="background: transparent !important; color: white !important; border-color: rgba(255,255,255,0.2) !important;">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-end">Price</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="pos-cart-items"><tr><td colspan="4" class="text-center text-muted small">No items added</td></tr></tbody>
-                </table>
-            </div>
-            <hr class="my-2 order-divider">
-            <div class="d-flex justify-content-between mb-1">
-                <span class="small">Subtotal:</span>
-                <span class="small" id="pos-subtotal">KES 0</span>
-            </div>
-            <div class="d-flex justify-content-between mb-1">
-                <span class="small">Discount:</span>
-                <div class="d-flex gap-1">
-                    <select class="form-select form-select-sm discount-select" style="width: 80px;" id="pos-discount-type">
-                        <option value="fixed">KES</option>
-                        <option value="percent">%</option>
-                    </select>
-                    <input type="number" class="form-control form-control-sm discount-input" style="width: 70px;" id="pos-discount" value="0" min="0">
-                </div>
-            </div>
-            <div class="d-flex justify-content-between mb-1">
-                <span class="small">Tax (16%):</span>
-                <span class="small" id="pos-tax">KES 0</span>
-            </div>
-            <div class="d-flex justify-content-between mb-2">
-                <span class="fw-bold">Total:</span>
-                <span class="fw-bold total-text" id="pos-total">KES 0</span>
-            </div>
-            <div class="mb-2">
-                <label class="form-label small mb-1">Order Notes:</label>
-                <textarea class="form-control form-control-sm order-input" id="pos-notes" rows="1" placeholder="Add notes..."></textarea>
-            </div>
-            <div class="mb-2">
-                <label class="form-label small mb-1">Customer:</label>
-                <select class="form-select form-select-sm order-select" id="pos-customer">
-                    <option value="">Walk-in Customer</option>
-                    <option value="1">John Kamau</option>
-                    <option value="2">Mary Wanjiku</option>
-                    <option value="3">Peter Ochieng</option>
-                    <option value="4">Grace Akinyi</option>
-                </select>
-            </div>
-            <div class="mb-2">
-                <label class="form-label small mb-1">Payment Method:</label>
-                <select class="form-select form-select-sm order-select" id="pos-payment">
-                    <option value="cash">Cash</option>
-                    <option value="card">Card</option>
-                    <option value="mpesa">M-Pesa</option>
-                    <option value="bank">Bank Transfer</option>
-                    <option value="split">Split Payment</option>
-                </select>
-            </div>
-            <div class="mb-2 d-none" id="split-payment-section">
-                <label class="form-label small mb-1">Split Payment:</label>
-                <div class="row g-1 mb-1">
-                    <div class="col-4">
-                        <input type="number" class="form-control form-control-sm split-input" data-method="Cash" placeholder="Cash">
-                    </div>
-                    <div class="col-4">
-                        <input type="number" class="form-control form-control-sm split-input" data-method="Card" placeholder="Card">
-                    </div>
-                    <div class="col-4">
-                        <input type="number" class="form-control form-control-sm split-input" data-method="M-Pesa" placeholder="M-Pesa">
-                    </div>
-                </div>
-                <small class="text-muted" id="split-remaining">Remaining: KES 0</small>
-            </div>
-            <div class="row g-2 mb-2">
-                <div class="col-3">
-                    <button class="btn btn-sm w-100 btn-hold" id="pos-hold" disabled="">
-                        <i class="bi bi-pause me-1"></i>Hold
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button class="btn btn-sm w-100 btn-resume" id="pos-resume" disabled="">
-                        <i class="bi bi-play me-1"></i>Resume
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button class="btn btn-sm w-100 btn-clear" id="pos-clear">
-                        <i class="bi bi-trash me-1"></i>Clear
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button class="btn btn-sm w-100 btn-checkout" id="pos-checkout" disabled="">
-                        <i class="bi bi-printer me-1"></i>Pay
-                    </button>
-                </div>
-            </div>
-            <div class="mb-2">
-                <small class="text-muted">Held Orders:</small>
-                <div id="held-orders-list" class="d-flex flex-wrap gap-1 mt-1"></div>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
 <style>
-.pos-container {
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%);
-    padding: 20px;
-    transition: background 0.5s ease;
-}
-
-.pos-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px 30px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.mode-indicator {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.mode-indicator i {
-    font-size: 2.5rem;
-    color: var(--mode-primary, #667eea);
-}
-
-.mode-indicator h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: #333;
-}
-
-.mode-nav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    background: var(--mode-primary, #667eea);
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.nav-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.mode-dots {
-    display: flex;
-    gap: 10px;
-}
-
-.mode-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ddd;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.mode-dot.active {
-    background: var(--mode-primary, #667eea);
-    transform: scale(1.3);
-}
-
-.pos-categories {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    overflow-x: auto;
-    padding: 10px 0;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.pos-categories::-webkit-scrollbar {
-    display: none;
-}
-
-.category-card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 12px;
-    min-width: 120px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-}
-
-.category-card:hover,
-.category-card:active {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.category-card.selected {
-    background: var(--mode-primary, #667eea);
-    color: white;
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.category-card.selected i,
-.category-card.selected span {
-    color: white;
-}
-
-.category-card i {
-    font-size: 2rem;
-    color: var(--mode-primary, #667eea);
-    margin-bottom: 10px;
-}
-
-.category-card span {
-    font-weight: 600;
-    color: #333;
-}
-
-.pos-main-content {
-    display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 20px;
-}
-
-/* Responsive grid by default */
-@media (max-width: 992px) {
-    .pos-main-content {
-        grid-template-columns: 1fr 300px;
+    .posx-hero {
+        background: linear-gradient(118deg, #060d24 0%, #0c1e4b 55%, #12306e 100%);
+        color: #ffffff;
+        padding: 5.4rem 0 4.4rem;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
     }
-}
-
-.pos-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-}
-
-.current-order-card {
-    background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important;
-    background-color: transparent !important;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    height: fit-content;
-    position: sticky;
-    top: 20px;
-    color: white !important;
-}
-
-/* Override Bootstrap dark classes - Maximum specificity */
-div#currentOrderCard.current-order-card,
-div#currentOrderCard,
-#currentOrderCard.current-order-card,
-#currentOrderCard {
-    background: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important;
-    background-color: transparent !important;
-    background-image: linear-gradient(135deg, var(--mode-primary, #667eea) 0%, var(--mode-secondary, #764ba2) 100%) !important;
-}
-
-/* Force override any Bootstrap background utilities within order card */
-div#currentOrderCard .bg-dark,
-div#currentOrderCard [class*="bg-"],
-div#currentOrderCard .table-dark,
-div#currentOrderCard table[class*="table-dark"] {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-}
-
-/* Override all possible Bootstrap dark theme classes globally */
-div#currentOrderCard .bg-dark,
-div#currentOrderCard .table-dark,
-div#currentOrderCard .text-dark,
-div#currentOrderCard [class*="bg-"] {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-}
-
-/* Specific override for table elements */
-div#currentOrderCard table,
-div#currentOrderCard .table {
-    background: transparent !important;
-    background-color: transparent !important;
-}
-
-div#currentOrderCard table th,
-div#currentOrderCard table td {
-    background: transparent !important;
-    background-color: transparent !important;
-}
-
-.current-order-card .table-dark,
-.current-order-card table[class*="table-dark"] {
-    background-color: transparent !important;
-    color: white !important;
-}
-
-.current-order-card .table-dark th,
-.current-order-card .table-dark td,
-.current-order-card table[class*="table-dark"] th,
-.current-order-card table[class*="table-dark"] td {
-    background-color: transparent !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-.current-order-card .form-control,
-.current-order-card .form-select,
-.current-order-card input,
-.current-order-card select,
-.current-order-card textarea {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-}
-
-.current-order-card .form-control:focus,
-.current-order-card .form-select:focus,
-.current-order-card input:focus,
-.current-order-card select:focus,
-.current-order-card textarea:focus {
-    background-color: rgba(255, 255, 255, 0.2) !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-.current-order-card h6 {
-    color: white;
-    font-weight: 600;
-}
-
-.order-table {
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    background-color: transparent !important;
-}
-
-.order-table.table-dark {
-    background-color: transparent !important;
-    color: white !important;
-}
-
-.order-table.table-dark th,
-.order-table.table-dark td {
-    background-color: transparent !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-.order-table thead th {
-    border-color: rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.order-table tbody tr {
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.order-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.order-divider {
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.discount-select,
-.discount-input,
-.order-input,
-.order-select,
-.split-input {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    color: white !important;
-    background-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-.discount-select:focus,
-.discount-input:focus,
-.order-input:focus,
-.order-select:focus,
-.split-input:focus {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: white;
-}
-
-.discount-select option,
-.order-select option {
-    background: var(--mode-primary, #667eea);
-    color: white;
-}
-
-.total-text {
-    color: #4ade80 !important;
-}
-
-.btn-hold,
-.btn-resume,
-.btn-clear {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-}
-
-.btn-hold:hover,
-.btn-resume:hover,
-.btn-clear:hover {
-    background: rgba(255, 255, 255, 0.25);
-    color: white;
-}
-
-.btn-checkout {
-    background: #4ade80;
-    border-color: #4ade80;
-    color: #000;
-}
-
-.btn-checkout:hover {
-    background: #22c55e;
-    border-color: #22c55e;
-    color: #000;
-}
-
-.btn-checkout:disabled {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.order-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.order-header h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.order-header h3 i {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.order-id {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.order-items {
-    min-height: 200px;
-    max-height: 400px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
-
-.empty-order {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    color: #999;
-}
-
-.empty-order i {
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
-
-.empty-order p {
-    margin: 0;
-    font-size: 1rem;
-}
-
-.order-summary {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-}
-
-.summary-row:last-child {
-    margin-bottom: 0;
-}
-
-.summary-row.total {
-    border-top: 2px solid rgba(255, 255, 255, 0.3);
-    padding-top: 10px;
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-
-.summary-row.total span:last-child {
-    color: white;
-}
-
-.order-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.btn-clear,
-.btn-checkout {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-}
-
-.btn-clear {
-    background: #e0e0e0;
-    color: #333;
-}
-
-.btn-clear:hover {
-    background: #d0d0d0;
-}
-
-.btn-checkout {
-    background: var(--mode-primary, #667eea);
-    color: white;
-}
-
-.btn-checkout:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.product-card {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 25px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-}
-
-.product-card:hover,
-.product-card:active {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-}
-
-.product-card.selected {
-    background: var(--mode-primary, #667eea);
-    color: white;
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-}
-
-.product-card.selected .product-info h4,
-.product-card.selected .product-price,
-.product-card.selected .product-stock {
-    color: white;
-}
-
-.product-image {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 15px;
-    border-radius: 15px;
-    overflow: hidden;
-    background: var(--mode-primary, #667eea);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.product-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    background: var(--mode-primary, #667eea);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-icon i {
-    font-size: 2.5rem;
-    color: white;
-}
-
-.product-info h4 {
-    margin: 0 0 10px;
-    font-size: 1.1rem;
-    color: #333;
-    text-align: center;
-}
-
-.product-price {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: var(--mode-primary, #667eea);
-    text-align: center;
-    margin: 5px 0;
-}
-
-.product-stock {
-    font-size: 0.9rem;
-    color: #666;
-    text-align: center;
-    margin: 5px 0 0;
-}
-
-.product-description {
-    font-size: 0.8rem;
-    color: #666;
-    text-align: center;
-    margin: 5px 0;
-    line-height: 1.3;
-    max-height: 3.9em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-}
-
-/* Mode-specific themes */
-.pos-container[data-mode="restaurant"] {
-    --mode-primary: #ff6b35;
-    --mode-secondary: #f7931e;
-}
-
-.pos-container[data-mode="club"] {
-    --mode-primary: #000000;
-    --mode-secondary: #dc3545;
-}
-
-.pos-container[data-mode="supermarket"] {
-    --mode-primary: #007bff;
-    --mode-secondary: #0056b3;
-}
-
-.pos-container[data-mode="coffeeshop"] {
-    --mode-primary: #d35400;
-    --mode-secondary: #e67e22;
-}
-
-.pos-container[data-mode="cafe"] {
-    --mode-primary: #8B4513;
-    --mode-secondary: #A0522D;
-}
+    .posx-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(147, 197, 253, 0.14) 1px, transparent 1px);
+        background-size: 26px 26px;
+        -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 70%);
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 70%);
+        pointer-events: none;
+    }
+    .posx-hero .container { position: relative; z-index: 1; }
+    .posx-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #bfdbfe;
+        background: rgba(37, 99, 235, 0.16);
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        border-radius: 980px;
+        padding: 0.42rem 1.1rem;
+        margin-bottom: 1.3rem;
+    }
+    .posx-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18); }
+    .posx-hero h1 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); font-weight: 850; letter-spacing: -0.03em; color: #fff; margin-bottom: 1rem; }
+    .posx-hero h1 .accent { background: linear-gradient(100deg, #60a5fa, #93c5fd); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .posx-hero .lead { color: #c7d7f5; max-width: 640px; margin: 0 auto 2rem; font-size: 1.02rem; }
+    .posx-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+    .posx-btn {
+        display: inline-flex; align-items: center; gap: 0.45rem;
+        font-weight: 700; font-size: 0.9rem; border-radius: 980px; padding: 0.72rem 1.55rem;
+        text-decoration: none; transition: all 0.2s ease;
+    }
+    .posx-btn.primary { background: #fff; color: #1d4ed8; }
+    .posx-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(2, 8, 28, 0.3); color: #1d4ed8; }
+    .posx-btn.ghost { border: 1.5px solid rgba(255, 255, 255, 0.65); color: #fff; }
+    .posx-btn.ghost:hover { background: rgba(255, 255, 255, 0.14); border-color: #fff; color: #fff; }
+
+    .posx-section { padding: 4.25rem 0; }
+    .posx-section.tint { background: #f4f7ff; }
+    .posx-head { text-align: center; max-width: 660px; margin: 0 auto 2.8rem; }
+    .posx-kicker {
+        display: inline-flex; align-items: center; gap: 0.7rem;
+        color: #2563eb; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.2em;
+        text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    .posx-kicker::before, .posx-kicker::after { content: ''; width: 30px; height: 2px; background: currentColor; opacity: 0.5; border-radius: 2px; }
+    .posx-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 850; letter-spacing: -0.025em; color: #0f1d3a; }
+    .posx-head h2 .accent { color: #2563eb; }
+    .posx-head .sub { color: #5b6b8c; margin-bottom: 0; }
+
+    .posx-shot {
+        background: #ffffff;
+        border: 1px solid #e3eaf8;
+        border-radius: 18px;
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 14px 32px rgba(15, 32, 68, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .posx-shot:hover { transform: translateY(-6px); box-shadow: 0 26px 52px rgba(15, 32, 68, 0.14); }
+    .posx-shot img { width: 100%; display: block; }
+    .posx-shot .body { padding: 1.15rem 1.3rem 1.35rem; }
+    .posx-shot h3 { font-size: 1.02rem; font-weight: 800; color: #0f1d3a; margin-bottom: 0.35rem; }
+    .posx-shot p { font-size: 0.84rem; color: #5b6b8c; line-height: 1.65; margin-bottom: 0; }
+
+    .posx-feat {
+        background: #ffffff;
+        border: 1px solid #e3eaf8;
+        border-radius: 14px;
+        padding: 1.35rem 1.25rem;
+        height: 100%;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .posx-feat:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(15, 32, 68, 0.08); }
+    .posx-feat i {
+        font-size: 1.3rem; color: #2563eb;
+        width: 46px; height: 46px; flex: 0 0 auto;
+        background: #eff6ff; border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 0.8rem;
+    }
+    .posx-feat strong { display: block; font-size: 0.93rem; color: #0f1d3a; margin-bottom: 0.3rem; }
+    .posx-feat p { font-size: 0.8rem; color: #5b6b8c; line-height: 1.6; margin-bottom: 0; }
+
+    .posx-band {
+        background: linear-gradient(120deg, #2563eb, #1d4ed8);
+        border-radius: 24px;
+        padding: 2.8rem 2.4rem;
+        display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+        gap: 1.4rem;
+        box-shadow: 0 26px 54px rgba(37, 99, 235, 0.3);
+    }
+    .posx-band h2 { color: #fff; font-weight: 850; font-size: clamp(1.35rem, 2.6vw, 1.9rem); margin-bottom: 0.4rem; }
+    .posx-band p { color: #dbeafe; margin-bottom: 0; }
 </style>
 
-<script>
-const modes = [
-    { key: 'restaurant', name: 'Restaurant', icon: 'bi-utensils' },
-    { key: 'club', name: 'Club', icon: 'bi-music-note' },
-    { key: 'supermarket', name: 'Supermarket', icon: 'bi-cart' },
-    { key: 'coffeeshop', name: 'Coffee Shop', icon: 'bi-cup-hot' },
-    { key: 'cafe', name: 'Cafe', icon: 'bi-cup-straw' }
-];
-
-let currentModeIndex = modes.findIndex(m => m.key === '{{ current_mode }}');
-if (currentModeIndex === -1) currentModeIndex = 0;
-
-function updateMode() {
-    const mode = modes[currentModeIndex];
-    const container = document.getElementById('posContainer');
-    const modeName = document.getElementById('currentModeName');
-    const modeIndicator = document.querySelector('.mode-indicator i');
-    const dots = document.querySelectorAll('.mode-dot');
-    const orderCard = document.getElementById('currentOrderCard');
-    
-    // Get mode colors
-    let primaryColor, secondaryColor;
-    switch(mode.key) {
-        case 'restaurant':
-            primaryColor = '#ff6b35';
-            secondaryColor = '#f7931e';
-            break;
-        case 'club':
-            primaryColor = '#000000';
-            secondaryColor = '#dc3545';
-            break;
-        case 'supermarket':
-            primaryColor = '#007bff';
-            secondaryColor = '#0056b3';
-            break;
-        case 'coffeeshop':
-            primaryColor = '#d35400';
-            secondaryColor = '#e67e22';
-            break;
-        case 'cafe':
-            primaryColor = '#8B4513';
-            secondaryColor = '#A0522D';
-            break;
-        default:
-            primaryColor = '#667eea';
-            secondaryColor = '#764ba2';
-    }
-    
-    container.setAttribute('data-mode', mode.key);
-    modeName.textContent = mode.name;
-    modeIndicator.className = `bi ${mode.icon}`;
-    
-    // Force update order card background with inline style
-    if (orderCard) {
-        orderCard.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
-        orderCard.style.backgroundColor = 'transparent';
-        orderCard.style.setProperty('--mode-primary', primaryColor);
-        orderCard.style.setProperty('--mode-secondary', secondaryColor);
-        
-        // Remove any dark classes
-        orderCard.classList.remove('bg-dark', 'text-dark');
-        
-        // Force override on all children
-        const allChildren = orderCard.querySelectorAll('*');
-        allChildren.forEach(child => {
-            if (child.classList.contains('bg-dark') || child.classList.contains('table-dark')) {
-                child.classList.remove('bg-dark', 'table-dark');
-                child.style.backgroundColor = 'transparent';
-            }
-        });
-    }
-    
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentModeIndex);
-    });
-    
-    // Update URL without page reload
-    const newUrl = `${window.location.pathname}?mode=${mode.key}`;
-    window.history.pushState({ mode: mode.key }, '', newUrl);
-    
-    // Reload page to get new products
-    window.location.href = newUrl;
-}
-
-function nextMode() {
-    currentModeIndex = (currentModeIndex + 1) % modes.length;
-    updateMode();
-}
-
-function prevMode() {
-    currentModeIndex = (currentModeIndex - 1 + modes.length) % modes.length;
-    updateMode();
-}
-
-// Button click handlers
-document.getElementById('nextMode').addEventListener('click', nextMode);
-document.getElementById('prevMode').addEventListener('click', prevMode);
-
-// Dot click handlers
-document.querySelectorAll('.mode-dot').forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        currentModeIndex = index;
-        updateMode();
-    });
-});
-
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        nextMode();
-    } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        prevMode();
-    }
-});
-
-// Initialize
-updateMode();
-
-// Mobile order toggle functionality
-const mobileOrderToggle = document.getElementById('mobileOrderToggle');
-const currentOrderCard = document.getElementById('currentOrderCard');
-let orderCardVisible = true;
-
-if (mobileOrderToggle && currentOrderCard) {
-    // Show the toggle button on mobile
-    if (window.innerWidth <= 576) {
-        mobileOrderToggle.classList.remove('d-none');
-        currentOrderCard.classList.add('visible-mobile');
-    }
-
-    mobileOrderToggle.addEventListener('click', function() {
-        orderCardVisible = !orderCardVisible;
-        
-        if (orderCardVisible) {
-            currentOrderCard.classList.remove('hidden-mobile');
-            currentOrderCard.classList.add('visible-mobile');
-            mobileOrderToggle.innerHTML = '<i class="bi bi-cart3"></i>';
-        } else {
-            currentOrderCard.classList.remove('visible-mobile');
-            currentOrderCard.classList.add('hidden-mobile');
-            mobileOrderToggle.innerHTML = '<i class="bi bi-cart-x"></i>';
-        }
-    });
-
-    // Update toggle button on window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth <= 576) {
-            mobileOrderToggle.classList.remove('d-none');
-        } else {
-            mobileOrderToggle.classList.add('d-none');
-            currentOrderCard.classList.remove('hidden-mobile', 'visible-mobile');
-        }
-    });
-}
-
-// Category selection functionality
-const categoryCards = document.querySelectorAll('.category-card');
-categoryCards.forEach(card => {
-    card.addEventListener('click', function() {
-        // Remove selected class from all categories
-        categoryCards.forEach(c => c.classList.remove('selected'));
-        // Add selected class to clicked category
-        this.classList.add('selected');
-        
-        // Filter products by category
-        const categorySlug = this.getAttribute('data-category');
-        const productCards = document.querySelectorAll('.product-card');
-        
-        productCards.forEach(product => {
-            if (categorySlug === 'all') {
-                product.style.display = '';
-            } else {
-                const productCategory = product.getAttribute('data-category');
-                if (productCategory === categorySlug) {
-                    product.style.display = '';
-                } else {
-                    product.style.display = 'none';
-                }
-            }
-        });
-    });
-});
-
-// Product selection functionality
-const productCards = document.querySelectorAll('.product-card');
-productCards.forEach(card => {
-    card.addEventListener('click', function() {
-        // Visual feedback
-        this.classList.add('selected');
-        setTimeout(() => {
-            this.classList.remove('selected');
-        }, 200);
-        
-        // Add to cart logic would go here
-        const productId = this.getAttribute('data-product');
-        const productName = this.querySelector('h4').textContent;
-        const productPrice = this.querySelector('.product-price').textContent;
-        
-        // Add visual feedback that item was added
-        console.log(`Added ${productName} (${productPrice}) to cart`);
-    });
-});
-
-// Force initial background set
-document.addEventListener('DOMContentLoaded', function() {
-    const orderCard = document.getElementById('currentOrderCard');
-    if (orderCard) {
-        // Remove any Bootstrap dark classes
-        orderCard.classList.remove('bg-dark', 'text-white', 'table-dark');
-        
-        const container = document.getElementById('posContainer');
-        const currentMode = container.getAttribute('data-mode') || 'restaurant';
-        
-        let primaryColor, secondaryColor;
-        switch(currentMode) {
-            case 'restaurant':
-                primaryColor = '#ff6b35';
-                secondaryColor = '#f7931e';
-                break;
-            case 'club':
-                primaryColor = '#000000';
-                secondaryColor = '#dc3545';
-                break;
-            case 'supermarket':
-                primaryColor = '#007bff';
-                secondaryColor = '#0056b3';
-                break;
-            case 'coffeeshop':
-                primaryColor = '#d35400';
-                secondaryColor = '#e67e22';
-                break;
-            case 'cafe':
-                primaryColor = '#8B4513';
-                secondaryColor = '#A0522D';
-                break;
-            default:
-                primaryColor = '#667eea';
-                secondaryColor = '#764ba2';
-        }
-        
-        // Force inline style with maximum priority
-        orderCard.style.cssText = `background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; background-color: transparent !important; --mode-primary: ${primaryColor} !important; --mode-secondary: ${secondaryColor} !important;`;
-        
-        // Remove any dark classes from children
-        const darkElements = orderCard.querySelectorAll('.bg-dark, .table-dark, [class*="bg-dark"]');
-        darkElements.forEach(el => {
-            el.classList.remove('bg-dark', 'table-dark');
-            el.style.setProperty('background-color', 'transparent', 'important');
-        });
-        
-        // Use MutationObserver to prevent Bootstrap from re-adding dark classes
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.attributeName === 'class') {
-                    if (orderCard.classList.contains('bg-dark') || orderCard.classList.contains('table-dark')) {
-                        orderCard.classList.remove('bg-dark', 'table-dark');
-                        orderCard.style.cssText = `background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; background-color: transparent !important; --mode-primary: ${primaryColor} !important; --mode-secondary: ${secondaryColor} !important;`;
-                    }
-                }
-            });
-        });
-        
-        observer.observe(orderCard, { attributes: true });
-        
-        // Periodically check and fix
-        setInterval(function() {
-            if (orderCard.classList.contains('bg-dark') || orderCard.classList.contains('table-dark')) {
-                orderCard.classList.remove('bg-dark', 'table-dark');
-                orderCard.style.cssText = `background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; background-color: transparent !important; --mode-primary: ${primaryColor} !important; --mode-secondary: ${secondaryColor} !important;`;
-            }
-        }, 100);
-    }
-});
-
-// Receipt printing function with QR code
-function printReceipt() {
-    const orderItems = document.getElementById('pos-cart-items');
-    const subtotal = document.getElementById('pos-subtotal').textContent;
-    const tax = document.getElementById('pos-tax').textContent;
-    const total = document.getElementById('pos-total').textContent;
-    const customer = document.getElementById('pos-customer');
-    const payment = document.getElementById('pos-payment');
-    const notes = document.getElementById('pos-notes').value;
-    
-    const customerName = customer.options[customer.selectedIndex].text;
-    const paymentMethod = payment.options[payment.selectedIndex].text;
-    
-    // Generate QR code
-    const qrData = `Order: ${new Date().toISOString()}\nTotal: ${total}\nCustomer: ${customerName}\nPayment: ${paymentMethod}`;
-    
-    // Create receipt HTML
-    const receiptWindow = window.open('', '_blank');
-    receiptWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Receipt</title>
-            <style>
-                body {
-                    font-family: 'Courier New', monospace;
-                    max-width: 300px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    text-align: center;
-                }
-                .qr-code {
-                    margin: 20px auto;
-                    display: flex;
-                    justify-content: center;
-                }
-                .header {
-                    font-size: 18px;
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                }
-                .divider {
-                    border-top: 1px dashed #000;
-                    margin: 10px 0;
-                }
-                .item {
-                    display: flex;
-                    justify-content: space-between;
-                    margin: 5px 0;
-                }
-                .total {
-                    font-weight: bold;
-                    font-size: 16px;
-                }
-                .footer {
-                    margin-top: 20px;
-                    font-size: 12px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="header">Jabem Solutions Ltd</div>
-            <div class="header" style="font-size: 14px;">POS Receipt</div>
-            <div class="divider"></div>
-            <div style="text-align: left; margin: 10px 0;">
-                <div>Date: ${new Date().toLocaleString()}</div>
-                <div>Customer: ${customerName}</div>
-                <div>Payment: ${paymentMethod}</div>
+<!-- SCREENSHOTS -->
+<section class="posx-section tint">
+    <div class="container">
+        <div class="posx-head">
+            <span class="posx-kicker">See it in action</span>
+            <h2>Built for the Way <span class="accent">Your Business Actually Runs</span></h2>
+            <p class="sub">Clean screens your staff learn in an hour — and reports you'll actually read.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="posx-shot">
+                    <img src="{% static 'images/pos-software/pos_till.png' %}" alt="Jabem POS till screen with products and checkout" loading="lazy">
+                    <div class="body">
+                        <h3><i class="bi bi-cash-stack text-primary me-2"></i>Lightning-fast till</h3>
+                        <p>Tap to sell, split bills, hold tables and print receipts in seconds — works offline when the internet doesn't.</p>
+                    </div>
+                </div>
             </div>
-            <div class="divider"></div>
-            <div id="qr-code" class="qr-code"></div>
-            <div class="divider"></div>
-            <div style="text-align: left;">
-                ${Array.from(orderItems.querySelectorAll('tr')).map(row => {
-                    if (row.querySelector('td[colspan]')) return '';
-                    const cells = row.querySelectorAll('td');
-                    return `<div class="item"><span>${cells[0].textContent}</span><span>${cells[2].textContent}</span></div>`;
-                }).join('')}
+            <div class="col-lg-4">
+                <div class="posx-shot">
+                    <img src="{% static 'images/pos-software/pos_dash.png' %}" alt="Jabem POS sales dashboard with revenue and top sellers" loading="lazy">
+                    <div class="body">
+                        <h3><i class="bi bi-graph-up-arrow text-primary me-2"></i>Live sales dashboard</h3>
+                        <p>Revenue, orders and top sellers by the hour, across every branch — from your phone, anywhere.</p>
+                    </div>
+                </div>
             </div>
-            <div class="divider"></div>
-            <div style="text-align: left;">
-                <div class="item"><span>Subtotal:</span><span>${subtotal}</span></div>
-                <div class="item"><span>Tax (16%):</span><span>${tax}</span></div>
-                <div class="item total"><span>TOTAL:</span><span>${total}</span></div>
+            <div class="col-lg-4">
+                <div class="posx-shot">
+                    <img src="{% static 'images/pos-software/pos_stock.png' %}" alt="Jabem POS stock control table with reorder alerts" loading="lazy">
+                    <div class="body">
+                        <h3><i class="bi bi-box-seam text-primary me-2"></i>Stock that never surprises you</h3>
+                        <p>Automatic deductions on every sale, low-stock alerts and reorder lists so you never lose a sale to stock-outs.</p>
+                    </div>
+                </div>
             </div>
-            ${notes ? `<div class="divider"></div><div style="text-align: left; font-size: 12px;">Notes: ${notes}</div>` : ''}
-            <div class="footer">
-                <div>Thank you for your business!</div>
-                <div>Contact: +254 736 794594</div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="posx-section">
+    <div class="container">
+        <div class="posx-head">
+            <span class="posx-kicker">Everything included</span>
+            <h2>One System, <span class="accent">Every Feature You Need</span></h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-lightning-charge-fill"></i><strong>Offline-first checkout</strong><p>Keep selling through internet outages — everything syncs automatically when you're back online.</p></div>
             </div>
-        </body>
-        </html>
-    `);
-    
-    receiptWindow.document.close();
-    
-    // Generate QR code after the DOM is ready
-    setTimeout(() => {
-        const qrContainer = receiptWindow.document.getElementById('qr-code');
-        QRCode.toCanvas(qrData, { width: 100 }, function(error, canvas) {
-            if (error) {
-                console.error(error);
-                return;
-            }
-            qrContainer.appendChild(canvas);
-        });
-    }, 100);
-}
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-phone"></i><strong>M-PESA &amp; cash tracking</strong><p>Every payment method reconciled to the cent, with STDP confirmation and till reports.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-receipt"></i><strong>KRA-ready receipts</strong><p>VAT invoices, branded receipts and credit slips printed or sent by WhatsApp and email.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-people-fill"></i><strong>Staff roles &amp; audit trail</strong><p>Limit who discounts, refunds and sees costs — every action logged against a user.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-buildings"></i><strong>Multi-branch control</strong><p>Run shops, outlets and warehouses from one account with branch-level reporting.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-cloud-arrow-up-fill"></i><strong>Cloud backup</strong><p>Your sales data encrypted and backed up every day — safe even if hardware fails.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-graduation-cap-fill"></i><strong>Training included</strong><p>On-site or online sessions until your whole team is confident — no extra charge.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="posx-feat"><i class="bi bi-headset"></i><strong>24/7 support</strong><p>Call-out support across Nairobi and remote assistance anywhere in East Africa.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-// Add checkout button handler
-document.getElementById('pos-checkout').addEventListener('click', function() {
-    if (!this.disabled) {
-        printReceipt();
-    }
-});
+<!-- WHO IT'S FOR -->
+<section class="posx-section tint">
+    <div class="container">
+        <div class="posx-head">
+            <span class="posx-kicker">Who it's for</span>
+            <h2>Tuned for <span class="accent">Your Trade</span></h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-sm-6 col-lg-2">
+                <div class="posx-feat text-center"><i class="bi bi-shop mx-auto"></i><strong>Retail &amp; Supermarkets</strong><p>Barcodes, weight items, promotions &amp; loyalty.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <div class="posx-feat text-center"><i class="bi bi-egg-fried mx-auto"></i><strong>Restaurants</strong><p>Tables, courses, kitchen printing &amp; split bills.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <div class="posx-feat text-center"><i class="bi bi-cup-hot mx-auto"></i><strong>Cafés &amp; Bakeries</strong><p>Quick order &amp; pay, customisations, pre-orders.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <div class="posx-feat text-center"><i class="bi bi-music-note-beamed mx-auto"></i><strong>Clubs &amp; Bars</strong><p>Speed billing, tabs, stock counts per shift.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <div class="posx-feat text-center"><i class="bi bi-capsule mx-auto"></i><strong>Pharmacies</strong><p>Expiry tracking, batch control &amp; prescriptions.</p></div>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <div class="posx-feat text-center"><i class="bi bi-tools mx-auto"></i><strong>Service Businesses</strong><p>Appointments, job cards &amp; invoicing.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-// Mobile order card toggle functionality
-const mobileOrderToggle = document.getElementById('mobileOrderToggle');
-const currentOrderCard = document.getElementById('currentOrderCard');
-
-if (mobileOrderToggle && currentOrderCard) {
-    // Show toggle button on mobile
-    if (window.innerWidth <= 576) {
-        mobileOrderToggle.classList.remove('d-none');
-        currentOrderCard.classList.add('hidden-mobile');
-    }
-    
-    mobileOrderToggle.addEventListener('click', function() {
-        currentOrderCard.classList.toggle('hidden-mobile');
-        currentOrderCard.classList.toggle('visible-mobile');
-    });
-}
-
-// Handle window resize
-window.addEventListener('resize', function() {
-    if (mobileOrderToggle && currentOrderCard) {
-        if (window.innerWidth <= 576) {
-            mobileOrderToggle.classList.remove('d-none');
-            currentOrderCard.classList.add('hidden-mobile');
-        } else {
-            mobileOrderToggle.classList.add('d-none');
-            currentOrderCard.classList.remove('hidden-mobile', 'visible-mobile');
-        }
-    }
-});
-</script>
+<!-- CTA -->
+<section class="posx-section">
+    <div class="container">
+        <div class="posx-band">
+            <div>
+                <h2>Ready to see it on your counter?</h2>
+                <p>We supply, install, configure and train — usually within 48 hours.</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20want%20a%20POS%20system%20for%20my%20business" target="_blank" class="posx-btn primary"><i class="bi bi-whatsapp"></i> Book a demo</a>
+                <a href="{% url 'core:services' %}#pos" class="posx-btn ghost"><i class="bi bi-arrow-right-circle"></i> POS installation service</a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

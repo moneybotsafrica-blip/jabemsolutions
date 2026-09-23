@@ -416,12 +416,12 @@
             <div class="col-lg-2 col-md-3 col-6">
                 <h6 class="footer-heading">POS &amp; Products</h6>
                 <ul class="footer-nav-list list-unstyled">
-                    <li><a href="{% url 'catalog:product_list' %}"><i class="bi bi-chevron-right"></i>All Products</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?type=hardware"><i class="bi bi-chevron-right"></i>POS Hardware</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?type=software"><i class="bi bi-chevron-right"></i>POS Software</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?q=printer"><i class="bi bi-chevron-right"></i>Thermal Printers</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?q=scanner"><i class="bi bi-chevron-right"></i>Barcode Scanners</a></li>
-                    <li><a href="{% url 'catalog:pos' %}"><i class="bi bi-chevron-right"></i>POS Live Demo</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}" data-tip="Browse the full catalogue of POS, computing and networking gear."><i class="bi bi-chevron-right"></i>All Products</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?type=hardware" data-tip="Tills, printers, scanners and drawers ready to deploy."><i class="bi bi-chevron-right"></i>POS Hardware</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?type=software" data-tip="Licenced POS apps with cloud backup and free updates."><i class="bi bi-chevron-right"></i>POS Software</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?q=printer" data-tip="Receipt printers for every till line — Epson, Xprinter &amp; more."><i class="bi bi-chevron-right"></i>Thermal Printers</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?q=scanner" data-tip="Handheld and presentation scanners for fast checkout."><i class="bi bi-chevron-right"></i>Barcode Scanners</a></li>
+                    <li><a href="{% url 'catalog:pos' %}" data-tip="See the POS software screens: till, reports and stock control."><i class="bi bi-chevron-right"></i>POS Software</a></li>
                 </ul>
             </div>
 
@@ -429,12 +429,12 @@
             <div class="col-lg-2 col-md-3 col-6">
                 <h6 class="footer-heading">Company</h6>
                 <ul class="footer-nav-list list-unstyled">
-                    <li><a href="{% url 'core:about' %}"><i class="bi bi-chevron-right"></i>About Us</a></li>
-                    <li><a href="{% url 'core:services' %}"><i class="bi bi-chevron-right"></i>Services</a></li>
-                    <li><a href="{% url 'core:contact' %}"><i class="bi bi-chevron-right"></i>Contact Us</a></li>
-                    <li><a href="{% url 'catalog:cart' %}"><i class="bi bi-chevron-right"></i>Shopping Cart</a></li>
-                    <li><a href="{% url 'core:services' %}"><i class="bi bi-chevron-right"></i>Maintenance</a></li>
-                    <li><a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20would%20like%20to%20request%20a%20quote" target="_blank" rel="noopener noreferrer"><i class="bi bi-chevron-right"></i>Request Quote</a></li>
+                    <li><a href="{% url 'core:about' %}" data-tip="Who we are and how we got here."><i class="bi bi-chevron-right"></i>About Us</a></li>
+                    <li><a href="{% url 'core:services' %}" data-tip="POS design, networking, CCTV, branding and training."><i class="bi bi-chevron-right"></i>Services</a></li>
+                    <li><a href="{% url 'core:contact' %}" data-tip="Call, email or visit us — we reply fast."><i class="bi bi-chevron-right"></i>Contact Us</a></li>
+                    <li><a href="{% url 'catalog:cart' %}" data-tip="Review the items you're about to order."><i class="bi bi-chevron-right"></i>Shopping Cart</a></li>
+                    <li><a href="{% url 'core:services' %}" data-tip="Support contracts and preventive IT maintenance."><i class="bi bi-chevron-right"></i>Maintenance</a></li>
+                    <li><a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20would%20like%20to%20request%20a%20quote" target="_blank" rel="noopener noreferrer" data-tip="Send your requirements on WhatsApp for quick pricing."><i class="bi bi-chevron-right"></i>Request Quote</a></li>
                 </ul>
             </div>
 

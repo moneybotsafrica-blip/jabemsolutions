@@ -9,7 +9,7 @@ from django.db import transaction
 from django.db.models import Case, Count, F, IntegerField, Q, Value, When, Window
 from django.db.models.functions import RowNumber
 from decimal import Decimal
-from .models import Product, Category, Cart, CartItem, Order, OrderItem, POSCategory, POSProduct, Quote, QuoteSettings # , ShopPromo
+from .models import Product, Category, Cart, CartItem, Order, OrderItem, Quote, QuoteSettings # , ShopPromo
 
 # Showcase sections used to mix the default shop page: (rank, keywords) — first match wins.
 SHOP_SECTIONS = [
@@ -362,25 +362,4 @@ def whatsapp_checkout(request):
 
 class POSView(TemplateView):
     template_name = "catalog/pos.html"
-    
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        mode = self.request.GET.get('mode', 'restaurant')
-        
-        modes = [
-            {'key': 'restaurant', 'name': 'Restaurant', 'icon': 'bi-utensils'},
-            {'key': 'club', 'name': 'Club', 'icon': 'bi-music-note'},
-            {'key': 'supermarket', 'name': 'Supermarket', 'icon': 'bi-cart'},
-            {'key': 'coffeeshop', 'name': 'Coffee Shop', 'icon': 'bi-cup-hot'},
-            {'key': 'cafe', 'name': 'Cafe', 'icon': 'bi-cup-straw'},
-        ]
-        
-        current_mode_data = next((m for m in modes if m['key'] == mode), modes[0])
-        
-        ctx['current_mode'] = mode
-        ctx['current_mode_name'] = current_mode_data['name']
-        ctx['current_mode_icon'] = current_mode_data['icon']
-        ctx['modes'] = modes
-        ctx['categories'] = POSCategory.objects.filter(mode=mode, is_active=True).order_by('order')
-        ctx['products'] = POSProduct.objects.filter(category__mode=mode, is_active=True).select_related('category').order_by('order')
-        return ctx
+

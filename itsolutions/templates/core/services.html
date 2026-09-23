@@ -17,7 +17,7 @@
             <a class="svc-hero-chip" href="#hardware"><i class="bi bi-pc-display"></i> Hardware</a>
             <a class="svc-hero-chip" href="#networking"><i class="bi bi-diagram-3"></i> Networking</a>
             <a class="svc-hero-chip" href="#cctv"><i class="bi bi-camera-video"></i> CCTV</a>
-            <a class="svc-hero-chip" href="#branding"><i class="bi bi-palette"></i> Branding</a>
+            <a class="svc-hero-chip" href="#branding-studio"><i class="bi bi-palette"></i> Branding</a>
             <a class="svc-hero-chip" href="#training"><i class="bi bi-mortarboard"></i> Training</a>
         </div>
     </div>
@@ -184,6 +184,7 @@
     .svc-detail-card {
         background: #ffffff;
         border: 1px solid #e3eaf8;
+        border-top: 3px solid var(--svc-accent, #2563eb);
         border-radius: 18px;
         padding: 2rem 1.6rem;
         height: 100%;
@@ -192,26 +193,33 @@
     .svc-detail-card:hover {
         transform: translateY(-6px);
         border-color: rgba(37, 99, 235, 0.35);
+        border-top-color: var(--svc-accent, #2563eb);
         box-shadow: 0 22px 44px rgba(15, 32, 68, 0.1);
     }
     .svc-detail-icon {
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        background: #eff6ff;
-        border: 1px solid #dbe6fb;
+        background: var(--svc-soft, #eff6ff);
+        border: 1px solid var(--svc-soft-border, #dbe6fb);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #2563eb;
+        color: var(--svc-accent, #2563eb);
         font-size: 1.65rem;
         margin-bottom: 1.1rem;
         transition: background 0.25s ease, color 0.25s ease;
     }
     .svc-detail-card:hover .svc-detail-icon {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        background: linear-gradient(135deg, var(--svc-accent, #2563eb), var(--svc-accent-2, #1d4ed8));
         color: #ffffff;
     }
+    #pos { --svc-accent: #2563eb; --svc-accent-2: #1d4ed8; --svc-soft: #eff6ff; --svc-soft-border: #dbe6fb; }
+    #hardware { --svc-accent: #0891b2; --svc-accent-2: #0e7490; --svc-soft: #ecfeff; --svc-soft-border: #a5f3fc; }
+    #networking { --svc-accent: #4f46e5; --svc-accent-2: #4338ca; --svc-soft: #eef2ff; --svc-soft-border: #c7d2fe; }
+    #cctv { --svc-accent: #7c3aed; --svc-accent-2: #6d28d9; --svc-soft: #f5f3ff; --svc-soft-border: #ddd6fe; }
+    #branding { --svc-accent: #db2777; --svc-accent-2: #be185d; --svc-soft: #fdf2f8; --svc-soft-border: #fbcfe8; }
+    #training { --svc-accent: #d97706; --svc-accent-2: #b45309; --svc-soft: #fffbeb; --svc-soft-border: #fde68a; }
     .svc-detail-card h3 { font-size: 1.05rem; font-weight: 800; color: #0f1d3a; margin-bottom: 0.6rem; }
     .svc-detail-card p { font-size: 0.88rem; line-height: 1.7; color: #5b6b8c; margin-bottom: 0.9rem; }
     .svc-detail-card ul { list-style: none; padding: 0; margin: 0; }
@@ -226,8 +234,100 @@
         font-family: 'bootstrap-icons';
         position: absolute;
         left: 0;
-        color: #2563eb;
+        color: var(--svc-accent, #2563eb);
         font-size: 0.8rem;
+    }
+
+    /* Print & Branding studio showcase */
+    .svc-studio {
+        padding: 4.75rem 0;
+        background: linear-gradient(160deg, #fdf2f8 0%, #eef2ff 45%, #ecfeff 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .svc-studio::before, .svc-studio::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .svc-studio::before {
+        width: 380px;
+        height: 380px;
+        left: -140px;
+        top: -140px;
+        background: radial-gradient(circle, rgba(219, 39, 119, 0.14), transparent 70%);
+    }
+    .svc-studio::after {
+        width: 420px;
+        height: 420px;
+        right: -160px;
+        bottom: -160px;
+        background: radial-gradient(circle, rgba(124, 58, 237, 0.14), transparent 70%);
+    }
+    .svc-studio .container { position: relative; z-index: 1; }
+    .svc-studio .svc-kicker { color: #db2777; }
+    .svc-studio .svc-head h2 .accent {
+        background: linear-gradient(100deg, #db2777, #7c3aed 55%, #2563eb);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .svc-studio-card {
+        background: #ffffff;
+        border: 1px solid #f1e4ee;
+        border-radius: 18px;
+        overflow: hidden;
+        height: 100%;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 12px 28px rgba(60, 30, 90, 0.07);
+    }
+    .svc-studio-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 24px 48px rgba(60, 30, 90, 0.14);
+    }
+    .svc-studio-card img {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+        display: block;
+    }
+    .svc-studio-card .body { padding: 1.15rem 1.25rem 1.3rem; }
+    .svc-studio-card h3 { font-size: 1rem; font-weight: 800; color: #0f1d3a; margin-bottom: 0.35rem; }
+    .svc-studio-card p { font-size: 0.83rem; color: #5b6b8c; margin-bottom: 0.75rem; line-height: 1.65; }
+    .svc-studio-tag {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 980px;
+        padding: 0.28rem 0.8rem;
+        margin: 0 0.35rem 0.35rem 0;
+    }
+    .tag-pink { background: #fdf2f8; color: #db2777; }
+    .tag-violet { background: #f5f3ff; color: #7c3aed; }
+    .tag-blue { background: #eff6ff; color: #2563eb; }
+    .tag-amber { background: #fffbeb; color: #d97706; }
+    .tag-cyan { background: #ecfeff; color: #0891b2; }
+    .btn-svc-rainbow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(100deg, #db2777, #7c3aed 50%, #2563eb);
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border-radius: 980px;
+        padding: 0.75rem 1.7rem;
+        text-decoration: none;
+        box-shadow: 0 16px 32px rgba(219, 39, 119, 0.28);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-svc-rainbow:hover {
+        transform: translateY(-2px);
+        color: #ffffff;
+        box-shadow: 0 22px 42px rgba(124, 58, 237, 0.35);
     }
 
     /* Industries */
@@ -477,6 +577,58 @@
                     </ul>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- 1b. PRINT & BRANDING STUDIO -->
+<section class="svc-studio" id="branding-studio">
+    <div class="container">
+        <div class="svc-head">
+            <span class="svc-kicker">Print &amp; Branding Studio</span>
+            <h2>Make Your Brand <span class="accent">Impossible to Miss</span></h2>
+            <p class="sub">From business cards to storefront signage, we design, print and deliver everything that carries your name.</p>
+        </div>
+        <div class="row g-4 align-items-stretch">
+            <div class="col-md-4">
+                <div class="svc-studio-card">
+                    <img src="{% static 'images/branding/cards.png' %}" alt="Branded business cards" loading="lazy">
+                    <div class="body">
+                        <h3>Business Cards &amp; Stationery</h3>
+                        <p>Matte, gloss, spot-UV and foil finishes — plus letterheads, invoices and compliment slips.</p>
+                        <span class="svc-studio-tag tag-pink">Foil</span>
+                        <span class="svc-studio-tag tag-violet">Spot UV</span>
+                        <span class="svc-studio-tag tag-blue">Same-week delivery</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="svc-studio-card">
+                    <img src="{% static 'images/branding/banner.png' %}" alt="Roll-up banners and storefront signage" loading="lazy">
+                    <div class="body">
+                        <h3>Banners &amp; Signage</h3>
+                        <p>Roll-up stands, backdrops, 3D letters, acrylic boards and light boxes installed by our team.</p>
+                        <span class="svc-studio-tag tag-amber">Large format</span>
+                        <span class="svc-studio-tag tag-pink">Installation</span>
+                        <span class="svc-studio-tag tag-cyan">Design included</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="svc-studio-card">
+                    <img src="{% static 'images/branding/merch.png' %}" alt="Custom branded merchandise" loading="lazy">
+                    <div class="body">
+                        <h3>Custom Merchandise</h3>
+                        <p>Mugs, T-shirts, caps, pens, notebooks, tote bags and lanyards branded with your logo.</p>
+                        <span class="svc-studio-tag tag-violet">Corporate gifts</span>
+                        <span class="svc-studio-tag tag-blue">Bulk pricing</span>
+                        <span class="svc-studio-tag tag-amber">Branded receipts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4 pt-2">
+            <a href="https://wa.me/254736794594" target="_blank" class="btn-svc-rainbow"><i class="bi bi-whatsapp"></i> Get a branding quote</a>
         </div>
     </div>
 </section>
