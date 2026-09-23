@@ -66,7 +66,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 50
     prepopulated_fields = {"slug": ("name",)}
     inlines = [StockInline]
-    actions = ['bulk_enable_tracking', 'bulk_disable_tracking', 'bulk_set_reorder_level']
+    actions = ['bulk_enable_tracking', 'bulk_disable_tracking', 'bulk_set_reorder_level', 'delete_prices']
     
     fieldsets = (
         ('Basic Information', {
@@ -142,6 +142,12 @@ class ProductAdmin(admin.ModelAdmin):
         request.session['bulk_reorder_ids'] = list(queryset.values_list('id', flat=True))
         return redirect('admin:bulk_reorder_level')
     bulk_set_reorder_level.short_description = "Set Reorder Level"
+
+    def delete_prices(self, request, queryset):
+        from django.contrib import messages
+        updated = queryset.exclude(price=0).update(price=0)
+        messages.success(request, f"Price removed from {updated} product(s). They now show 'Price on request'.")
+    delete_prices.short_description = "Delete prices (set to 0 / hide on site)"
 
 
 @admin.register(Stock)
