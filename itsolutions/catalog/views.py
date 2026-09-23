@@ -196,6 +196,23 @@ class ProductDetailView(DetailView):
     def get_queryset(self):
         return Product.objects.filter(is_active=True).select_related("category", "brand", "stock")
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        product = self.object
+        related = Product.objects.filter(is_active=True).exclude(pk=product.pk)
+        if product.category:
+            same_cat = related.filter(category=product.category)
+            if same_cat.exists():
+                related = same_cat
+            else:
+                related = related.exclude(category=product.category)
+        if product.brand:
+            same_brand = related.filter(brand=product.brand)
+            if same_brand.exists():
+                related = same_brand
+        ctx["related_products"] = related.select_related("category", "brand")[:8]
+        return ctx
+
 
 def get_or_create_cart(user):
     cart, created = Cart.objects.get_or_create(user=user)
@@ -216,6 +233,11 @@ def add_to_cart(request, product_id):
     if not created:
         cart_item.quantity += 1
         cart_item.save()
+    else:
+        requested = int(request.POST.get("quantity", 1) or 1)
+        if requested > 1:
+            cart_item.quantity = min(requested, 99)
+            cart_item.save()
     
     messages.success(request, f"{product.name} added to cart")
     return redirect('catalog:product_detail', slug=product.slug)

@@ -183,7 +183,7 @@
                         <li><a class="dropdown-item" href="{% url 'core:services' %}#branding"><i class="bi bi-brush me-2"></i>Branding &amp; Print</a></li>
                         <li><a class="dropdown-item" href="{% url 'core:services' %}#training"><i class="bi bi-person-video me-2"></i>Training</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'core:services' %}#plans"><i class="bi bi-headset me-2"></i>Support Plans</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}"><i class="bi bi-headset me-2"></i>Support Plans</a></li>
                         <li><a class="dropdown-item" href="{% url 'core:services' %}#faq"><i class="bi bi-question-circle me-2"></i>FAQs</a></li>
                     </ul>
                 </li>
@@ -199,16 +199,14 @@
             <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-sm me-3">
                 <i class="bi bi-cart-fill me-1"></i>Shop
             </a>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav flex-row align-items-center" style="gap: 0.55rem;">
                 <li class="nav-item">
-                    <a class="nav-link text-dark position-relative" href="{% url 'catalog:cart' %}" aria-label="Shopping cart">
-                        <i class="bi bi-cart fs-5"></i>
+                    <a class="nav-ic" href="{% url 'catalog:cart' %}" aria-label="Shopping cart" title="Cart">
+                        <i class="bi bi-cart-fill"></i>
                         {% if user.is_authenticated %}
                             {% with cart_count=user.cart.total_items %}
                                 {% if cart_count > 0 %}
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem;">
-                                    {{ cart_count }}
-                                </span>
+                                <span class="nav-ic-badge">{{ cart_count }}</span>
                                 {% endif %}
                             {% endwith %}
                         {% endif %}
@@ -216,16 +214,19 @@
                 </li>
                 {% if user.is_authenticated %}
                     {% if user.is_staff %}
-                    <li class="nav-item"><a class="nav-link text-dark" href="{% url 'admin:index' %}"><i class="bi bi-gear me-1"></i>Admin</a></li>
+                    <li class="nav-item"><a class="nav-ic" href="{% url 'admin:index' %}" aria-label="Admin panel" title="Admin panel"><i class="bi bi-sliders2"></i></a></li>
                     {% endif %}
                     <li class="nav-item">
-                        <form method="post" action="{% url 'accounts:logout' %}" class="d-inline">
+                        <span class="d-none d-lg-inline-flex align-items-center" style="font-size:.78rem;font-weight:600;color:#0f1d3a;white-space:nowrap;">Hi, {{ user.first_name|default:user.username }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'accounts:logout' %}" class="d-inline m-0">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-dark btn-sm ms-2">Logout</button>
+                            <button type="submit" class="nav-logout"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
                         </form>
                     </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link text-dark" href="{% url 'accounts:login' %}" aria-label="Login"><i class="bi bi-person-circle fs-5"></i></a></li>
+                    <li class="nav-item"><a class="nav-ic" href="{% url 'accounts:login' %}" aria-label="Login" title="Account"><i class="bi bi-person-fill"></i></a></li>
                 {% endif %}
             </ul>
         </div>

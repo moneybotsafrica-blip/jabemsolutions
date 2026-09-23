@@ -453,7 +453,7 @@
                                 <span class="gp-card-view">View details</span>
                             </div>
                             <div class="gp-card-body">
-                                <div class="gp-card-price">KES {{ product.price|floatformat:0|intcomma }}</div>
+                                {% if product.price %}<div class="gp-card-price">KES {{ product.price|floatformat:0|intcomma }}</div>{% endif %}
                                 <h3 class="gp-card-name">{{ product.name }}</h3>
                                 <div class="gp-card-meta">
                                     <span class="loc"><i class="bi bi-geo-alt-fill"></i> Nairobi</span>

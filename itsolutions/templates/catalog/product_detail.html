@@ -1,119 +1,296 @@
 {% extends "base.html" %}
+{% load static humanize %}
 {% block title %}{{ product.name }} — {{ SITE_NAME }}{% endblock %}
 {% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 0.5rem !important;
-    }
-    h1 {
-        font-size: 1.3rem !important;
-    }
-    h3 {
-        font-size: 1.2rem !important;
-    }
-    .img-fluid {
-        max-height: 250px !important;
-        object-fit: contain !important;
-    }
-    .btn {
-        font-size: 0.85rem !important;
-        padding: 0.4rem 0.8rem !important;
-    }
-    .btn-lg {
-        font-size: 0.9rem !important;
-        padding: 0.5rem 1rem !important;
-    }
-}
+    .pd-wrap { font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; background: #f6f9ff; }
+    .pd-crumbs { font-size: .78rem; color: #5b6b8c; padding: 1rem 0 .25rem; }
+    .pd-crumbs a { color: #5b6b8c; text-decoration: none; }
+    .pd-crumbs a:hover { color: #2563eb; }
+    .pd-crumbs .sep { margin: 0 .35rem; color: #b6c2d9; }
+    .pd-crumbs .cur { color: #0f1d3a; font-weight: 600; }
 
-@media (max-width: 576px) {
-    .container {
-        padding: 0 0.3rem !important;
+    .pd-card { background: #fff; border: 1px solid #e3eaf8; border-radius: 16px; box-shadow: 0 6px 18px rgba(6,13,36,.05); }
+
+    .pd-gallery { padding: 1.5rem; display: flex; flex-direction: column; gap: .8rem; align-items: center; }
+    .pd-slider-viewport { position: relative; width: 100%; }
+    .pd-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; width: 100%; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .pd-slider::-webkit-scrollbar { display: none; }
+    .pd-slide { flex: 0 0 100%; scroll-snap-align: center; display: flex; align-items: center; justify-content: center; min-height: 300px; }
+    .pd-slide-desc { flex-direction: column; align-items: stretch; justify-content: flex-start; background: #f8fafd; border: 1px solid #e3eaf8; border-radius: 12px; padding: 1.1rem 1.2rem; font-size: .82rem; color: #33415e; overflow-y: auto; }
+    .pd-slide-desc h6 { font-weight: 800; color: #0f1d3a; font-size: .85rem; margin-bottom: .5rem; }
+    .pd-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #e3eaf8; background: rgba(255,255,255,.92); color: #1d4ed8; font-weight: 800; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(6,13,36,.12); }
+    .pd-arrow:hover { background: #2563eb; color: #fff; }
+    .pd-arrow.prev { left: -6px; }
+    .pd-arrow.next { right: -6px; }
+    .pd-dots { display: flex; gap: .4rem; justify-content: center; margin-top: .2rem; }
+    .pd-dot { width: 8px; height: 8px; border-radius: 50%; background: #c9d6ee; border: 0; padding: 0; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+    .pd-dot.on { background: #2563eb; transform: scale(1.25); }
+    .pd-main-img { max-height: 380px; max-width: 100%; object-fit: contain; border-radius: 12px; background: #fff; }
+    .pd-img-ph { width: 100%; height: 320px; display: flex; align-items: center; justify-content: center; color: #8fa0c0; background: #f8fafd; border-radius: 12px; }
+    .pd-img-ph i { font-size: 3.4rem; }
+    .pd-badges { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+    .pd-flag { font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 980px; padding: .28rem .8rem; }
+    .pd-flag.blue { background: rgba(37,99,235,.1); color: #1d4ed8; }
+    .pd-flag.green { background: rgba(13,148,136,.12); color: #0d9488; }
+    .pd-flag.amber { background: rgba(217,119,6,.12); color: #b45309; }
+    .pd-flag.grey { background: #eef2f9; color: #5b6b8c; }
+
+    .pd-info { padding: 1.6rem 1.7rem; }
+    .pd-title { font-size: 1.35rem; font-weight: 800; color: #0f1d3a; line-height: 1.35; }
+    .pd-meta { font-size: .78rem; color: #8fa0c0; margin: .35rem 0 1rem; }
+    .pd-meta a { color: #2563eb; text-decoration: none; }
+    .pd-price { font-size: 1.9rem; font-weight: 800; color: #0f1d3a; }
+    .pd-price small { font-size: .95rem; font-weight: 600; color: #5b6b8c; margin-right: .3rem; }
+    .pd-pricereq { font-size: 1.05rem; font-weight: 700; color: #1d4ed8; background: rgba(37,99,235,.07); border: 1px dashed rgba(37,99,235,.35); border-radius: 12px; padding: .65rem .9rem; }
+    .pd-stock { font-size: .8rem; font-weight: 600; margin-top: .2rem; }
+    .pd-stock.ok { color: #0d9488; }
+    .pd-stock.low { color: #b45309; }
+    .pd-stock.out { color: #dc2626; }
+    .pd-div { border-top: 1px dashed #dbe4f3; margin: 1.1rem 0; }
+
+    .pd-qty-row { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; }
+    .pd-qty { display: inline-flex; align-items: center; border: 1.5px solid #dbe4f3; border-radius: 980px; overflow: hidden; background: #fff; }
+    .pd-qty button { width: 38px; height: 38px; border: 0; background: transparent; color: #1d4ed8; font-size: 1.1rem; font-weight: 700; cursor: pointer; }
+    .pd-qty button:hover { background: #eef4ff; }
+    .pd-qty input { width: 46px; border: 0; text-align: center; font-weight: 700; color: #0f1d3a; font-size: .95rem; outline: none; }
+    .pd-qty-label { font-size: .8rem; color: #5b6b8c; font-weight: 600; }
+
+    .pd-btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; border-radius: 980px; font-weight: 700; font-size: .95rem; padding: .8rem 1.6rem; text-decoration: none; border: 0; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; width: 100%; }
+    .pd-btn:hover { transform: translateY(-2px); }
+    .pd-btn.primary { background: linear-gradient(90deg, #2563eb, #1d4ed8); color: #fff; box-shadow: 0 10px 22px rgba(37,99,235,.28); }
+    .pd-btn.wa { background: #25d366; color: #06341a; box-shadow: 0 10px 22px rgba(37,211,102,.25); }
+    .pd-btn.ghost { background: #fff; color: #1d4ed8; border: 1.5px solid #2563eb; }
+
+    .pd-perks { margin-top: 1.2rem; display: grid; gap: .65rem; }
+    .pd-perk { display: flex; gap: .7rem; align-items: flex-start; font-size: .8rem; color: #33415e; }
+    .pd-perk i { color: #2563eb; font-size: 1.05rem; margin-top: .05rem; }
+    .pd-perk strong { display: block; color: #0f1d3a; font-size: .82rem; }
+
+    .pd-sec-title { font-size: 1.02rem; font-weight: 800; color: #0f1d3a; margin-bottom: .9rem; }
+    .pd-overview { padding: 1.5rem 1.7rem; }
+    .pd-overview p { font-size: .88rem; color: #33415e; }
+    .pd-spec td { font-size: .84rem; padding: .6rem .9rem; border-bottom: 1px solid #eef2f9; color: #33415e; }
+    .pd-spec td:first-child { color: #8fa0c0; font-weight: 600; width: 38%; background: #f8fafd; }
+    .pd-spec tr:last-child td { border-bottom: 0; }
+
+    .pd-side-card { padding: 1.2rem 1.3rem; margin-bottom: 1rem; }
+    .pd-side-card h6 { font-weight: 800; color: #0f1d3a; font-size: .88rem; margin-bottom: .8rem; }
+    .pd-side-card ul { list-style: none; padding: 0; margin: 0; }
+    .pd-side-card li { font-size: .8rem; padding: .32rem 0; }
+    .pd-side-card li a { color: #2563eb; text-decoration: none; }
+    .pd-side-card li a:hover { text-decoration: underline; }
+    .pd-help-box { background: linear-gradient(150deg, #060d24, #12306e); border-radius: 16px; padding: 1.3rem; color: #fff; text-align: center; }
+    .pd-help-box p { font-size: .78rem; color: #c7d7f5; margin: .3rem 0 .9rem; }
+    .pd-help-box h6 { color: #fff; font-weight: 800; font-size: .95rem; margin: 0; }
+
+    .pd-rel { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: .6rem; scrollbar-width: thin; }
+    .pd-rel-card { flex: 0 0 172px; background: #fff; border: 1px solid #e3eaf8; border-radius: 14px; padding: .8rem; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease; }
+    .pd-rel-card:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(6,13,36,.12); }
+    .pd-rel-card img, .pd-rel-card .ph { width: 100%; height: 120px; object-fit: contain; border-radius: 8px; background: #f8fafd; }
+    .pd-rel-card .ph { display: flex; align-items: center; justify-content: center; color: #b6c2d9; font-size: 1.8rem; }
+    .pd-rel-name { font-size: .76rem; font-weight: 600; color: #0f1d3a; margin: .5rem 0 .2rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.2em; }
+    .pd-rel-price { font-size: .84rem; font-weight: 800; color: #1d4ed8; }
+
+    @media (max-width: 768px) {
+        .pd-info { padding: 1.2rem; }
+        .pd-title { font-size: 1.1rem; }
+        .pd-price { font-size: 1.55rem; }
+        .pd-main-img { max-height: 300px; }
     }
-    h1 {
-        font-size: 1.1rem !important;
-    }
-    h3 {
-        font-size: 1rem !important;
-    }
-    .img-fluid {
-        max-height: 200px !important;
-    }
-    .btn {
-        font-size: 0.8rem !important;
-        padding: 0.3rem 0.6rem !important;
-    }
-    .btn-lg {
-        font-size: 0.85rem !important;
-        padding: 0.4rem 0.8rem !important;
-    }
-    .mt-4 .btn {
-        display: block;
-        width: 100%;
-        margin: 0.3rem 0 !important;
-    }
-}
+    @media (prefers-reduced-motion: reduce) { .pd-btn, .pd-rel-card { transition: none; } }
 </style>
 {% endblock %}
 {% block content %}
-<section class="container py-5">
-    <a href="{% url 'catalog:product_list' %}" class="text-decoration-none small"><i class="bi bi-arrow-left"></i> Back to products</a>
-    <div class="row mt-3 g-4">
-        <div class="col-md-5">
-            {% if product.get_image_url %}
-            <img src="{{ product.get_image_url }}" class="img-fluid rounded border" alt="{{ product.name }}">
-            {% else %}
-            <div class="border rounded d-flex align-items-center justify-content-center text-secondary" style="height:320px;">
-                <i class="bi bi-image" style="font-size:3rem"></i>
-            </div>
-            {% endif %}
-        </div>
-        <div class="col-md-7">
-            <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2">{{ product.get_product_type_display }}</span>
-            <h1 class="h2">{{ product.name }}</h1>
-            <p class="text-muted small">SKU: {{ product.sku }} {% if product.brand %}&middot; {{ product.brand.name }}{% endif %}</p>
-            <h3 class="text-primary">KES {{ product.price|floatformat:0 }}</h3>
+<div class="pd-wrap">
+    <section class="container pb-5">
+        <nav class="pd-crumbs">
+            <a href="{% url 'core:home' %}">Home</a><span class="sep">/</span>
+            <a href="{% url 'catalog:product_list' %}">Products</a>
+            {% if product.category %}<span class="sep">/</span><a href="{% url 'catalog:product_list' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>{% endif %}
+            <span class="sep">/</span><span class="cur">{{ product.name|truncatechars:48 }}</span>
+        </nav>
 
-            {% if product.track_inventory %}
-                {% if product.is_low_stock and product.in_stock %}
-                <p><span class="badge badge-stock-low">Low stock — {{ product.quantity_on_hand }} left</span></p>
-                {% elif product.in_stock %}
-                <p><span class="badge badge-stock-ok">In stock — {{ product.quantity_on_hand }} available</span></p>
-                {% else %}
-                <p><span class="badge badge-stock-low">Out of stock</span></p>
-                {% endif %}
-            {% endif %}
-
-            <p class="mt-3 small">{{ product.description|linebreaks }}</p>
-
-            <div class="mt-4">
-                <div class="d-grid gap-2 d-md-block">
-                    {% if user.is_authenticated %}
-                        {% if product.in_stock %}
-                        <form method="post" action="{% url 'catalog:add_to_cart' product.id %}" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary btn-lg w-100 me-md-2">
-                                <i class="bi bi-cart-plus me-1"></i> Add to Cart
-                            </button>
-                        </form>
-                        {% else %}
-                        <button class="btn btn-secondary btn-lg w-100 me-md-2" disabled>Out of Stock</button>
+        <div class="row g-3 mt-1">
+            <div class="col-lg-5">
+                <div class="pd-card pd-gallery">
+                    <div class="pd-slider-viewport">
+                        {% if product.get_image_url and product.description %}
+                        <button class="pd-arrow prev" type="button" onclick="pdSlide(-1)" aria-label="Previous slide"><i class="bi bi-chevron-left"></i></button>
+                        <button class="pd-arrow next" type="button" onclick="pdSlide(1)" aria-label="Next slide"><i class="bi bi-chevron-right"></i></button>
                         {% endif %}
+                        <div class="pd-slider" id="pd-slider">
+                            {% if product.get_image_url %}
+                            <div class="pd-slide"><img src="{{ product.get_image_url }}" class="pd-main-img" alt="{{ product.name }}"></div>
+                            {% else %}
+                            <div class="pd-slide"><div class="pd-img-ph"><i class="bi bi-image"></i></div></div>
+                            {% endif %}
+                            {% if product.description %}
+                            <div class="pd-slide pd-slide-desc">
+                                <h6><i class="bi bi-card-text me-1"></i>Description</h6>
+                                {{ product.description|linebreaks }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if product.get_image_url and product.description %}
+                    <div class="pd-dots" id="pd-dots">
+                        <button class="pd-dot on" type="button" onclick="pdGoTo(0)" aria-label="Go to image"></button>
+                        <button class="pd-dot" type="button" onclick="pdGoTo(1)" aria-label="Go to description"></button>
+                    </div>
+                    {% endif %}
+                    <div class="pd-badges">
+                        <span class="pd-flag blue">{{ product.get_product_type_display }}</span>
+                        {% if product.brand %}<span class="pd-flag grey">{{ product.brand.name }}</span>{% endif %}
+                        {% if product.track_inventory and product.in_stock %}<span class="pd-flag green">In stock</span>{% endif %}
+                        {% if product.track_inventory and not product.in_stock %}<span class="pd-flag amber">Made to order</span>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="pd-card pd-info">
+                    <h1 class="pd-title">{{ product.name }}</h1>
+                    <p class="pd-meta">SKU: {{ product.sku }}{% if product.brand %} &middot; <a href="{% url 'catalog:product_list' %}?q={{ product.brand.name }}">{{ product.brand.name }}</a>{% endif %}</p>
+                    {% if product.price %}
+                    <div class="pd-price"><small>KES</small>{{ product.price|floatformat:0|intcomma }}</div>
                     {% else %}
-                    <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-lg w-100 me-md-2">
-                        <i class="bi bi-cart-plus me-1"></i> Add to Cart
-                    </a>
+                    <div class="pd-pricereq"><i class="bi bi-chat-dots me-1"></i>Price on request — ask us for the current price</div>
                     {% endif %}
-                    <a href="https://wa.me/254736794594" target="_blank" class="btn btn-success btn-lg w-100 me-md-2 quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}">
-                        <i class="bi bi-chat-dots me-1"></i> Request Quote
-                    </a>
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'core:contact' %}" class="btn btn-outline-secondary btn-lg w-100">Request Service</a>
+                    {% if product.track_inventory %}
+                        {% if product.is_low_stock and product.in_stock %}
+                        <div class="pd-stock low"><i class="bi bi-exclamation-triangle-fill me-1"></i>Hurry — only {{ product.quantity_on_hand }} left</div>
+                        {% elif product.in_stock %}
+                        <div class="pd-stock ok"><i class="bi bi-check-circle-fill me-1"></i>In stock — {{ product.quantity_on_hand }} available</div>
+                        {% else %}
+                        <div class="pd-stock out"><i class="bi bi-dash-circle-fill me-1"></i>Out of stock — contact us to order</div>
+                        {% endif %}
                     {% endif %}
+                    <div class="pd-div"></div>
+                    <div class="pd-qty-row">
+                        <span class="pd-qty-label">Quantity</span>
+                        <div class="pd-qty">
+                            <button type="button" onclick="pdQty(-1)" aria-label="Decrease quantity">&minus;</button>
+                            <input type="number" id="pd-qty" value="1" min="1" max="99">
+                            <button type="button" onclick="pdQty(1)" aria-label="Increase quantity">+</button>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-3">
+                        {% if user.is_authenticated %}
+                            {% if product.in_stock or not product.track_inventory %}
+                            <form method="post" action="{% url 'catalog:add_to_cart' product.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1" id="pd-qty-input">
+                                <button type="submit" class="pd-btn primary" onclick="document.getElementById('pd-qty-input').value=document.getElementById('pd-qty').value">
+                                    <i class="bi bi-cart-plus"></i> Add to cart
+                                </button>
+                            </form>
+                            {% else %}
+                            <button class="pd-btn primary" disabled>Out of stock</button>
+                            {% endif %}
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}" class="pd-btn primary"><i class="bi bi-cart-plus"></i> Add to cart</a>
+                        {% endif %}
+                        <a href="https://wa.me/254736794594" target="_blank" class="pd-btn wa quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}">
+                            <i class="bi bi-whatsapp"></i> Order / Request Quote
+                        </a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'core:contact' %}" class="pd-btn ghost"><i class="bi bi-tools"></i> Request Service</a>
+                        {% endif %}
+                    </div>
+                    <div class="pd-perks">
+                        <div class="pd-perk"><i class="bi bi-truck"></i><span><strong>Nationwide delivery</strong>Nairobi within 24h, upcountry 2–4 days</span></div>
+                        <div class="pd-perk"><i class="bi bi-patch-check"></i><span><strong>Genuine products</strong>All items come with manufacturer warranty support</span></div>
+                        <div class="pd-perk"><i class="bi bi-headset"></i><span><strong>Local support</strong>Free setup guidance &amp; installation quotes</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="pd-card pd-side-card">
+                    <h6>Shop {{ product.category.name|default:"by section" }}</h6>
+                    <ul>
+                        <li><a href="{% url 'catalog:product_list' %}?q=laptop">Laptops</a></li>
+                        <li><a href="{% url 'catalog:product_list' %}?q=monitor">Monitors</a></li>
+                        <li><a href="{% url 'catalog:product_list' %}?q=pos">POS Terminals</a></li>
+                        <li><a href="{% url 'catalog:product_list' %}?q=router switch">Routers &amp; Switches</a></li>
+                        <li><a href="{% url 'catalog:product_list' %}?q=camera">CCTV Cameras</a></li>
+                        <li><a href="{% url 'catalog:product_list' %}?q=ups inverter">Power &amp; UPS</a></li>
+                    </ul>
+                </div>
+                <div class="pd-help-box">
+                    <h6>Need help choosing?</h6>
+                    <p>Our team will recommend the right product for your business.</p>
+                    <a href="https://wa.me/254736794594" target="_blank" class="pd-btn wa" style="padding:.6rem 1rem;"><i class="bi bi-whatsapp"></i> Chat with us</a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+
+        <div class="row g-3 mt-1">
+            <div class="col-lg-9">
+                <div class="pd-card pd-overview mb-3">
+                    <div class="pd-sec-title">Overview</div>
+                    {% if product.description %}
+                    {{ product.description|linebreaks }}
+                    {% else %}
+                    <p class="mb-0 text-muted">No detailed description yet for this product — contact us on WhatsApp for specifications and availability.</p>
+                    {% endif %}
+                </div>
+                <div class="pd-card pd-overview">
+                    <div class="pd-sec-title">Specifications</div>
+                    <table class="pd-spec w-100">
+                        <tr><td>SKU</td><td>{{ product.sku }}</td></tr>
+                        {% if product.brand %}<tr><td>Brand</td><td>{{ product.brand.name }}</td></tr>{% endif %}
+                        {% if product.category %}<tr><td>Category</td><td>{{ product.category.name }}</td></tr>{% endif %}
+                        <tr><td>Product type</td><td>{{ product.get_product_type_display }}</td></tr>
+                        {% if product.track_inventory %}<tr><td>Availability</td><td>{% if product.in_stock %}In stock ({{ product.quantity_on_hand }} units){% else %}Contact us{% endif %}</td></tr>{% endif %}
+                        <tr><td>Warranty</td><td>Manufacturer warranty supported by Jabem Solutions</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% if related_products %}
+        <div class="mt-4">
+            <div class="pd-sec-title">You may also like</div>
+            <div class="pd-rel">
+                {% for rel in related_products %}
+                <a class="pd-rel-card" href="{% url 'catalog:product_detail' rel.slug %}">
+                    {% if rel.get_image_url %}<img src="{{ rel.get_image_url }}" alt="{{ rel.name }}" loading="lazy">{% else %}<div class="ph"><i class="bi bi-image"></i></div>{% endif %}
+                    <div class="pd-rel-name">{{ rel.name }}</div>
+                    {% if rel.price %}<div class="pd-rel-price">KES {{ rel.price|floatformat:0|intcomma }}</div>{% endif %}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+<script>
+    function pdQty(d) {
+        var input = document.getElementById('pd-qty');
+        var v = Math.min(99, Math.max(1, (parseInt(input.value, 10) || 1) + d));
+        input.value = v;
+    }
+    (function () {
+        var slider = document.getElementById('pd-slider');
+        if (!slider) return;
+        var dots = document.querySelectorAll('#pd-dots .pd-dot');
+        function idx() {
+            var w = slider.clientWidth;
+            return w ? Math.round(slider.scrollLeft / w) : 0;
+        }
+        window.pdSlide = function (d) {
+            slider.scrollBy({ left: d * slider.clientWidth, behavior: 'smooth' });
+        };
+        window.pdGoTo = function (i) {
+            slider.scrollTo({ left: i * slider.clientWidth, behavior: 'smooth' });
+        };
+        slider.addEventListener('scroll', function () {
+            var active = idx();
+            dots.forEach(function (dot, i) { dot.classList.toggle('on', i === active); });
+        }, { passive: true });
+    })();
+</script>
 {% endblock %}

@@ -4888,3 +4888,10 @@ p { color: #47474c; }
     transform: translateY(-2px);
     box-shadow: 0 8px 18px rgba(37, 99, 235, 0.4);
 }
+
+/* Premium navbar icon buttons */
+.nav-ic { width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(37, 99, 235, 0.08); color: #1d4ed8; text-decoration: none; position: relative; transition: all 0.2s ease; border: 1px solid rgba(37, 99, 235, 0.14); font-size: 1.05rem; }
+.nav-ic:hover { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35); transform: translateY(-1px); }
+.nav-ic .nav-ic-badge { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 980px; background: linear-gradient(135deg, #ef4444, #dc2626); color: #ffffff; font-size: 0.62rem; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #ffffff; }
+.nav-logout { border: 1.5px solid #1d4ed8; color: #1d4ed8; background: transparent; border-radius: 980px; padding: 0.38rem 1.05rem; font-size: 0.8rem; font-weight: 700; transition: all 0.2s ease; }
+.nav-logout:hover { background: #1d4ed8; color: #ffffff; }
