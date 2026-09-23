@@ -14,6 +14,11 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 allowed_hosts_env = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,jabemsolutions.vercel.app,jabemsolutions-9m6egd5ej-moneybotsafrica-blip.vercel.app,jabeesolutions.vercel.app,https://jabemsolutions.vercel.app")
 ALLOWED_HOSTS = allowed_hosts_env.split(",")
 
+# Always allow the custom production domain
+for _domain in ("jabemsolutions.co.ke", "www.jabemsolutions.co.ke"):
+    if _domain not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_domain)
+
 # For Vercel deployment, add dynamic Vercel domains
 if os.environ.get("VERCEL"):
     # Add the current Vercel deployment URL

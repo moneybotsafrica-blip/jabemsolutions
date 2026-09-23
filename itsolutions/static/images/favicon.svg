@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#1e3fa0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="32" fill="url(#g)"/>
+  <circle cx="32" cy="32" r="28.5" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="1.6"/>
+  <text x="32" y="41" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="25" letter-spacing="0.5" fill="#ffffff">JSL</text>
+  <circle cx="46.5" cy="49.5" r="2.1" fill="#93c5fd"/>
+  <circle cx="51.8" cy="45.6" r="1.7" fill="#60a5fa"/>
+  <circle cx="55.4" cy="40.4" r="1.25" fill="#3b82f6"/>
+  <circle cx="41.3" cy="52.4" r="1.4" fill="#60a5fa"/>
+</svg>

@@ -111,7 +111,18 @@ class ProductListView(ListView):
                 qs = qs.filter(clauses)
             for term in exclude:
                 qs = qs.exclude(name__icontains=term)
+        sort = self.request.GET.get("sort", "")
+        sort_map = {"price_asc": "price", "price_desc": "-price", "name_az": "name"}
+        qs = qs.order_by(sort_map.get(sort, "-created_at"))
         return qs
+
+    def _url_without(self, *keys):
+        params = self.request.GET.copy()
+        for key in keys:
+            params.pop(key, None)
+        params.pop("page", None)
+        query = params.urlencode()
+        return "?" + query if query else self.request.path
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -125,6 +136,14 @@ class ProductListView(ListView):
         ctx["query"] = self.request.GET.get("q", "")
         ctx["price_min"] = self.request.GET.get("price_min", "")
         ctx["price_max"] = self.request.GET.get("price_max", "")
+        ctx["selected_sort"] = self.request.GET.get("sort", "")
+        ctx["clear_q"] = self._url_without("q")
+        ctx["clear_type"] = self._url_without("type")
+        ctx["clear_category"] = self._url_without("category")
+        ctx["clear_price"] = self._url_without("price_min", "price_max")
+        params = self.request.GET.copy()
+        params.pop("page", None)
+        ctx["base_query"] = params.urlencode()
         # ctx["shop_promos"] = ShopPromo.objects.filter(is_active=True)
         ctx["shop_promos"] = []  # Temporary: disable ShopPromo
         return ctx

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static humanize %}
 {% block title %}Products — {{ SITE_NAME }}{% endblock %}
 {% block extra_head %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -211,6 +211,26 @@
         text-decoration: none; background: #fff; transition: background 0.2s, color 0.2s;
     }
     .gp-cart-btn:hover { background: #2563eb; color: #fff; }
+    .gp-tools { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+    .gp-sort {
+        display: inline-flex; align-items: center; gap: 0.4rem; background: #fff;
+        border: 1px solid rgba(37, 99, 235, 0.25); border-radius: 980px; padding: 0.32rem 0.85rem;
+        color: #2563eb; position: relative;
+    }
+    .gp-sort i { pointer-events: none; }
+    .gp-sort select {
+        border: none; background: transparent; font-size: 0.85rem; font-weight: 600; color: #1d4ed8;
+        padding-right: 0.2rem; cursor: pointer; appearance: auto;
+    }
+    .gp-sort select:focus { outline: none; }
+    .gp-active { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .gp-xchip {
+        display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.74rem; font-weight: 600;
+        color: #1d4ed8; background: #eff6ff; border: 1px solid rgba(37, 99, 235, 0.2);
+        border-radius: 980px; padding: 0.22rem 0.7rem; text-decoration: none; transition: background 0.15s ease;
+    }
+    .gp-xchip:hover { background: #dbeafe; color: #1e40af; }
+    .gp-xchip i { font-size: 0.62rem; }
     .gp-card {
         position: relative; height: 100%; background: #fff;
         border: 1px solid rgba(6, 13, 36, 0.08); border-radius: 12px; overflow: hidden;
@@ -229,6 +249,14 @@
         letter-spacing: 0.04em; text-transform: uppercase; color: #fff;
         background: rgba(29, 78, 216, 0.92); border-radius: 6px; padding: 0.18rem 0.5rem;
     }
+    .gp-card-type.is-software { background: rgba(13, 148, 136, 0.92); }
+    .gp-card-view {
+        position: absolute; left: 50%; bottom: 0.55rem; transform: translate(-50%, 8px); opacity: 0;
+        font-size: 0.7rem; font-weight: 700; color: #061336; background: rgba(255, 255, 255, 0.95);
+        border-radius: 980px; padding: 0.3rem 0.85rem; text-decoration: none; white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(6, 13, 36, 0.25); transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .gp-card:hover .gp-card-view { opacity: 1; transform: translate(-50%, 0); }
     .gp-fav {
         position: absolute; top: 0.5rem; right: 0.5rem; z-index: 2; width: 32px; height: 32px;
         border-radius: 50%; background: rgba(255, 255, 255, 0.92); border: none; color: #9aa6bd;
@@ -255,6 +283,16 @@
     .gp-empty { text-align: center; padding: 3.5rem 1rem; border: 1.5px dashed rgba(37, 99, 235, 0.22); border-radius: 18px; background: #fbfcff; }
     .gp-empty i { font-size: 2.6rem; color: #b9c4dd; }
     .gp-empty p { color: #6e6e73; margin: 0.8rem 0 1.2rem; }
+    .gp-pager { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 1.7rem; }
+    .gp-page {
+        display: inline-flex; align-items: center; gap: 0.35rem; background: #fff;
+        border: 1px solid rgba(37, 99, 235, 0.22); border-radius: 980px; padding: 0.45rem 1.05rem;
+        font-size: 0.82rem; font-weight: 700; color: #2563eb; text-decoration: none;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+    .gp-page:hover { background: #eff6ff; color: #1d4ed8; }
+    .gp-page.is-current { background: linear-gradient(135deg, #2563eb, #1d4ed8); border-color: transparent; color: #fff; }
+    .gp-page.is-disabled { opacity: 0.4; pointer-events: none; }
     @media (prefers-reduced-motion: reduce) {
         .gp-cat-ring, .gp-cat-ring img, .gp-card, .gp-card-media img { transition: none; }
     }
@@ -315,13 +353,35 @@
 <section class="container pb-5">
     <div class="gp-toolbar">
         <div>
-            <h2>{% if query or selected_type or selected_category %}Filtered Results{% else %}All Products{% endif %}</h2>
-            <p class="gp-count">Showing <b>{{ paginator.count }}</b> product{{ paginator.count|pluralize }}{% if selected_type %} &middot; {{ selected_type|title }}{% endif %}{% if query %} &middot; &ldquo;{{ query }}&rdquo;{% endif %}</p>
+            <h2>{% if query or selected_type or selected_category or price_min or price_max %}Filtered Results{% else %}All Products{% endif %}</h2>
+            <p class="gp-count">Showing <b>{{ paginator.count }}</b> product{{ paginator.count|pluralize }}</p>
+            <div class="gp-active">
+                {% if query %}<a href="{{ clear_q }}" class="gp-xchip"><i class="bi bi-search"></i> &ldquo;{{ query }}&rdquo; <i class="bi bi-x-lg"></i></a>{% endif %}
+                {% if selected_type %}<a href="{{ clear_type }}" class="gp-xchip">{{ selected_type|title }} <i class="bi bi-x-lg"></i></a>{% endif %}
+                {% if selected_category %}<a href="{{ clear_category }}" class="gp-xchip">{{ selected_category|capfirst }} <i class="bi bi-x-lg"></i></a>{% endif %}
+                {% if price_min or price_max %}<a href="{{ clear_price }}" class="gp-xchip"><i class="bi bi-cash-stack"></i> KES {{ price_min|default:"0"|intcomma }}&ndash;{{ price_max|default:"∞" }} <i class="bi bi-x-lg"></i></a>{% endif %}
+            </div>
         </div>
-        <a href="{% url 'catalog:cart' %}" class="gp-cart-btn">
-            <i class="bi bi-bag-check"></i> View Cart
-            {% if cart_items %}<span class="badge rounded-pill bg-danger ms-1">{{ cart_items|length }}</span>{% endif %}
-        </a>
+        <div class="gp-tools">
+            <form method="get" class="gp-sort" aria-label="Sort products">
+                <i class="bi bi-sort-down"></i>
+                {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+                {% if selected_type %}<input type="hidden" name="type" value="{{ selected_type }}">{% endif %}
+                {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+                {% if price_min %}<input type="hidden" name="price_min" value="{{ price_min }}">{% endif %}
+                {% if price_max %}<input type="hidden" name="price_max" value="{{ price_max }}">{% endif %}
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="">Newest first</option>
+                    <option value="price_asc" {% if selected_sort == "price_asc" %}selected{% endif %}>Price: Low &rarr; High</option>
+                    <option value="price_desc" {% if selected_sort == "price_desc" %}selected{% endif %}>Price: High &rarr; Low</option>
+                    <option value="name_az" {% if selected_sort == "name_az" %}selected{% endif %}>Name: A &rarr; Z</option>
+                </select>
+            </form>
+            <a href="{% url 'catalog:cart' %}" class="gp-cart-btn">
+                <i class="bi bi-bag-check"></i> View Cart
+                {% if cart_items %}<span class="badge rounded-pill bg-danger ms-1">{{ cart_items|length }}</span>{% endif %}
+            </a>
+        </div>
     </div>
 
     <div class="row g-4">
@@ -382,16 +442,17 @@
                         <button class="gp-fav" type="button" aria-label="Save"><i class="bi bi-heart"></i></button>
                         <a class="gp-card-link" href="{% url 'catalog:product_detail' product.slug %}">
                             <div class="gp-card-media">
-                                <span class="gp-card-type">{{ product.get_product_type_display }}</span>
+                                <span class="gp-card-type {% if product.product_type == 'software' %}is-software{% endif %}">{{ product.get_product_type_display }}</span>
                                 {% if product.get_image_url %}
                                 <img src="{{ product.get_image_url }}" alt="{{ product.name }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                                 <i class="bi bi-image gp-ph" style="display:none"></i>
                                 {% else %}
                                 <i class="bi bi-image gp-ph"></i>
                                 {% endif %}
+                                <span class="gp-card-view">View details</span>
                             </div>
                             <div class="gp-card-body">
-                                <div class="gp-card-price">KES {{ product.price|floatformat:0 }}</div>
+                                <div class="gp-card-price">KES {{ product.price|floatformat:0|intcomma }}</div>
                                 <h3 class="gp-card-name">{{ product.name }}</h3>
                                 <div class="gp-card-meta">
                                     <span class="loc"><i class="bi bi-geo-alt-fill"></i> Nairobi</span>
@@ -418,16 +479,18 @@
             </div>
 
             {% if is_paginated %}
-            <nav class="mt-4" aria-label="Product pages">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
-                    {% endif %}
-                    <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
-                    {% if page_obj.has_next %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
-                    {% endif %}
-                </ul>
+            <nav class="gp-pager" aria-label="Product pages">
+                {% if page_obj.has_previous %}
+                <a class="gp-page" href="?{% if base_query %}{{ base_query }}&{% endif %}page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i> Prev</a>
+                {% else %}
+                <span class="gp-page is-disabled"><i class="bi bi-chevron-left"></i> Prev</span>
+                {% endif %}
+                <span class="gp-page is-current">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                <a class="gp-page" href="?{% if base_query %}{{ base_query }}&{% endif %}page={{ page_obj.next_page_number }}">Next <i class="bi bi-chevron-right"></i></a>
+                {% else %}
+                <span class="gp-page is-disabled">Next <i class="bi bi-chevron-right"></i></span>
+                {% endif %}
             </nav>
             {% endif %}
         </div>
@@ -452,8 +515,13 @@
     update();
     var here = window.location.search;
     if (here) {
+        var current = new URLSearchParams(here);
         rail.querySelectorAll('.gp-cat').forEach(function (a) {
-            if (a.search === here) a.classList.add('active');
+            if (!a.search) return;
+            var u = new URL(a.href);
+            var match = true;
+            u.searchParams.forEach(function (v, k) { if (current.get(k) !== v) match = false; });
+            if (match) a.classList.add('active');
         });
     }
 })();
