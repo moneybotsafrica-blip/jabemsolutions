@@ -71,10 +71,10 @@
                             <div style="min-width:0;">
                                 <a class="ct-name" href="{% url 'catalog:product_detail' item.product.slug %}">{{ item.product.name }}</a>
                                 <p class="ct-sku">SKU: {{ item.product.sku }}</p>
-                                {% if item.product.price %}<span class="ct-price d-md-none">KES {{ item.product.price|floatformat:0|intcomma }}</span>{% else %}<span class="ct-price d-md-none">Price on request</span>{% endif %}
+                                {% if item.product.price %}<span class="ct-price d-md-none">KES {{ item.product.price|floatformat:0|intcomma }}</span>{% endif %}
                             </div>
                         </div>
-                        {% if item.product.price %}<span class="ct-price d-none d-md-block" style="width:110px;">KES {{ item.product.price|floatformat:0|intcomma }}</span>{% else %}<span class="ct-price d-none d-md-block" style="width:110px;">Price on request</span>{% endif %}
+                        {% if item.product.price %}<span class="ct-price d-none d-md-block" style="width:110px;">KES {{ item.product.price|floatformat:0|intcomma }}</span>{% else %}<span class="ct-price d-none d-md-block" style="width:110px;"></span>{% endif %}
                         <form method="post" action="{% url 'catalog:update_cart' item.id %}" class="m-0">
                             {% csrf_token %}
                             <div class="ct-qty">

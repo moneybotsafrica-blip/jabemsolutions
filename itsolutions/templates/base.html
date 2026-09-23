@@ -189,7 +189,7 @@
                 </li>
             </ul>
             <form class="d-flex me-3" action="{% url 'catalog:product_list' %}" method="get">
-                <div class="input-group" style="width: 520px; max-width: 100%; min-width: 200px;">
+                <div class="input-group" style="width: 100%; max-width: 350px; min-width: 200px;">
                     <input type="text" class="form-control form-control-sm" name="q" placeholder="Search products..." aria-label="Search">
                     <button class="btn btn-outline-dark btn-sm" type="submit">
                         <i class="bi bi-search"></i>
@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const message = [
                 "Hello, I'm interested in requesting a quote for: " + link.dataset.quoteName,
                 "SKU: " + link.dataset.quoteSku,
-                "Price: KES " + link.dataset.quotePrice,
+                link.dataset.quotePrice && parseFloat(link.dataset.quotePrice) > 0 ? "Price: KES " + link.dataset.quotePrice : '',
                 image ? "Product image: " + image : ''
             ].filter(Boolean).join("\n");
             link.href = "https://wa.me/254736794594?text=" + encodeURIComponent(message);

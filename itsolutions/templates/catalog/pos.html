@@ -543,7 +543,7 @@
                 <div class="product-info">
                     <h4>{{ product.name }}</h4>
                     <p class="product-description">{{ product.description|default:"" }}</p>
-                    <p class="product-price">KES {{ product.price }}</p>
+                    {% if product.price %}<p class="product-price">KES {{ product.price }}</p>{% endif %}
                     <p class="product-stock">Stock: {{ product.stock_quantity }}</p>
                 </div>
             </div>
