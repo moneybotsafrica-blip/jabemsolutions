@@ -1,17 +1,150 @@
 {% extends "base.html" %}
 {% block title %}About Us — {{ SITE_NAME }}{% endblock %}
 {% block content %}
-<section class="page-hero scroll-animate">
+<style>
+    .ab-hero {
+        background: linear-gradient(118deg, #060d24 0%, #0c1e4b 55%, #12306e 100%);
+        color: #ffffff;
+        padding: 5.8rem 0 4.6rem;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+    .ab-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(147, 197, 253, 0.14) 1px, transparent 1px);
+        background-size: 26px 26px;
+        -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 70%);
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 70%);
+        pointer-events: none;
+    }
+    .ab-hero::after {
+        content: '';
+        position: absolute;
+        left: -140px;
+        bottom: -180px;
+        width: 460px;
+        height: 460px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(37, 99, 235, 0.35) 0%, rgba(37, 99, 235, 0) 68%);
+        pointer-events: none;
+    }
+    .ab-hero .container { position: relative; z-index: 1; }
+    .ab-hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #bfdbfe;
+        background: rgba(37, 99, 235, 0.16);
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        border-radius: 980px;
+        padding: 0.42rem 1.1rem;
+        margin-bottom: 1.3rem;
+    }
+    .ab-hero-pill .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #4ade80;
+        box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18);
+    }
+    .ab-hero h1 {
+        font-size: clamp(1.9rem, 4.4vw, 3.05rem);
+        font-weight: 850;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+        margin-bottom: 1rem;
+    }
+    .ab-hero h1 .accent {
+        background: linear-gradient(100deg, #60a5fa, #93c5fd);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .ab-hero .ab-hero-lead {
+        color: #c7d7f5;
+        max-width: 700px;
+        margin: 0 auto 1rem;
+        font-size: 1.02rem;
+        line-height: 1.75;
+    }
+    .ab-hero .ab-hero-sub {
+        color: #93a9d6;
+        max-width: 700px;
+        margin: 0 auto 2.1rem;
+        font-size: 0.93rem;
+        line-height: 1.75;
+    }
+    .ab-hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+    .btn-ab-white {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: #ffffff;
+        color: #1d4ed8;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border-radius: 980px;
+        padding: 0.7rem 1.5rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    .btn-ab-white:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(2, 8, 28, 0.25); color: #1d4ed8; }
+    .btn-ab-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        border: 1.5px solid rgba(255, 255, 255, 0.65);
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border-radius: 980px;
+        padding: 0.7rem 1.5rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    .btn-ab-ghost:hover { background: rgba(255, 255, 255, 0.14); border-color: #ffffff; color: #ffffff; }
+    @media (max-width: 575.98px) {
+        .ab-hero { padding: 4.2rem 0 3.4rem; }
+    }
+</style>
+<section class="ab-hero">
     <div class="container">
-        <span class="hero-kicker d-block">Who we are</span>
-        <h1 class="h2 mb-2">About {{ SITE_NAME }}</h1>
-        <p class="mb-0">Kenya's trusted partner for POS systems, business technology, and expert support.</p>
+        <span class="ab-hero-pill"><span class="dot"></span>Who we are</span>
+        <h1>About {{ SITE_NAME }} <span class="accent">Kenya</span></h1>
+        <p class="ab-hero-lead">{{ SITE_NAME }} is Kenya's trusted partner for IT services, POS systems,
+            business technology, and expert technical support. We help businesses streamline their operations,
+            improve efficiency, and adopt reliable technology solutions tailored to their needs.</p>
+        <p class="ab-hero-sub">From point-of-sale systems and business software to IT support and technology
+            consulting, we provide practical, dependable solutions designed to help Kenyan businesses grow.</p>
+        <div class="ab-hero-actions">
+            <a class="btn-ab-white" href="{% url 'core:services' %}"><i class="bi bi-grid"></i> Explore our services</a>
+            <a class="btn-ab-ghost" href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i> Chat with us</a>
+        </div>
     </div>
 </section>
 <section class="container py-5">
     <div class="row">
         <div class="col-lg-8">
-            <p class="lead">We supply, install, and support IT-related hardware and solutions for retailers,
+            <p class="lead">{{ SITE_NAME }} is Kenya's trusted partner for IT services, POS systems,
+                business technology, and expert technical support. We help businesses streamline their
+                operations, improve efficiency, and adopt reliable technology solutions tailored to their
+                needs.</p>
+            <p>From point-of-sale systems and business software to IT support and technology consulting,
+                {{ SITE_NAME }} provides practical, dependable solutions designed to help Kenyan businesses
+                grow.</p>
+            <p>We supply, install, and support IT-related hardware and solutions for retailers,
                 restaurants, and service businesses across Kenya, Uganda and Tanzania.</p>
             <p>Our team handles everything from hardware procurement — terminals, printers, scanners, and
                 cash drawers — to POS software licensing, configuration, and staff training. Once you're live,
