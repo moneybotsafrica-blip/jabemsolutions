@@ -25,44 +25,9 @@
         position: relative;
         overflow: hidden;
         background:
-            linear-gradient(180deg, rgba(6, 13, 36, 0) 62%, rgba(6, 13, 36, 0.92) 100%),
-            linear-gradient(100deg, rgba(6, 13, 36, 0.97) 0%, rgba(10, 17, 40, 0.93) 38%, rgba(10, 17, 40, 0.62) 62%, rgba(12, 30, 75, 0.38) 100%),
             url('{% static "images/hero_banner.jpg" %}') 68% center / cover no-repeat;
         color: #ffffff;
         padding: 5.5rem 0 0;
-    }
-
-    /* Soft blue glow for depth */
-    .nv-hero::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(700px 340px at 84% 22%, rgba(96, 165, 250, 0.16), transparent 70%);
-        pointer-events: none;
-    }
-
-    .nv-orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(70px);
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    .nv-orb-1 {
-        width: 320px;
-        height: 320px;
-        top: -110px;
-        right: 8%;
-        background: rgba(37, 99, 235, 0.28);
-    }
-
-    .nv-orb-2 {
-        width: 260px;
-        height: 260px;
-        bottom: -120px;
-        left: -80px;
-        background: rgba(96, 165, 250, 0.18);
     }
 
     .nv-hero-grid {
@@ -1271,8 +1236,6 @@
         .nv-hero {
             padding-top: 3.5rem;
             background:
-                linear-gradient(180deg, rgba(6, 13, 36, 0) 55%, rgba(6, 13, 36, 0.92) 100%),
-                linear-gradient(100deg, rgba(6, 13, 36, 0.97) 0%, rgba(10, 17, 40, 0.9) 55%, rgba(10, 17, 40, 0.72) 100%),
                 url('{% static "images/hero_banner.jpg" %}') 72% center / cover no-repeat;
         }
         .nv-hero-grid { grid-template-columns: 1fr; min-height: 0; padding-bottom: 2.5rem; }
@@ -1289,8 +1252,6 @@
 
     <!-- 1. HERO -->
     <section class="nv-hero">
-        <div class="nv-orb nv-orb-1"></div>
-        <div class="nv-orb nv-orb-2"></div>
         <div class="container">
             <div class="nv-hero-grid">
                 <div>
