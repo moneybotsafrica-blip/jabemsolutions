@@ -66,6 +66,11 @@
         justify-content: center;
     }
 
+    .nv-hero .nv-kicker {
+        color: #dbeafe;
+        text-shadow: 0 1px 4px rgba(2, 8, 28, 0.8), 0 3px 14px rgba(2, 8, 28, 0.6);
+    }
+
     .nv-section-head .nv-kicker::before {
         content: '';
         width: 34px;
@@ -82,7 +87,7 @@
         font-weight: 850;
         color: #ffffff;
         margin-bottom: 1.3rem;
-        text-shadow: 0 4px 30px rgba(2, 8, 28, 0.55);
+        text-shadow: 0 2px 6px rgba(2, 8, 28, 0.6), 0 6px 28px rgba(2, 8, 28, 0.55);
     }
 
     .nv-hero h1 .accent {
@@ -90,14 +95,16 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+        filter: drop-shadow(0 2px 5px rgba(2, 8, 28, 0.65));
     }
 
     .nv-hero p.lead-text {
-        color: #b6c2dd;
+        color: #ffffff;
         font-size: 1.02rem;
         line-height: 1.7;
         max-width: 32rem;
         margin-bottom: 2rem;
+        text-shadow: 0 1px 4px rgba(2, 8, 28, 0.75), 0 4px 18px rgba(2, 8, 28, 0.6);
     }
 
     .nv-hero-actions {
@@ -133,15 +140,17 @@
         display: inline-flex;
         align-items: center;
         gap: 0.55rem;
-        background: transparent;
+        background: rgba(6, 13, 36, 0.45);
+        backdrop-filter: blur(4px);
         color: #ffffff !important;
-        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        border: 1.5px solid rgba(255, 255, 255, 0.55);
         border-radius: 980px;
         padding: 0.75rem 1.7rem;
         font-weight: 700;
         font-size: 0.92rem;
         text-decoration: none;
         transition: border-color 0.2s ease, background 0.2s ease;
+        text-shadow: 0 1px 3px rgba(2, 8, 28, 0.7);
     }
 
     .btn-nv-outline:hover {
@@ -996,15 +1005,17 @@
         display: inline-flex;
         align-items: center;
         gap: 0.55rem;
-        background: rgba(37, 99, 235, 0.14);
-        border: 1px solid rgba(96, 165, 250, 0.35);
-        color: #bfdbfe;
+        background: rgba(6, 13, 36, 0.6);
+        border: 1px solid rgba(96, 165, 250, 0.5);
+        backdrop-filter: blur(6px);
+        color: #dbeafe;
         border-radius: 980px;
         padding: 0.42rem 0.95rem;
         font-size: 0.78rem;
         font-weight: 700;
         letter-spacing: 0.02em;
         margin-bottom: 1.1rem;
+        text-shadow: 0 1px 3px rgba(2, 8, 28, 0.7);
     }
 
     .nv-hero-pill .dot {
