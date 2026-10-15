@@ -351,10 +351,20 @@
         background: #ffffff;
         border: 1px solid var(--line);
         border-radius: 16px;
-        padding: 2rem 1.4rem;
+        padding: 0 1.4rem 2rem;
         height: 100%;
         text-align: center;
+        overflow: hidden;
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .nv-service-photo {
+        display: block;
+        width: calc(100% + 2.8rem);
+        height: 150px;
+        margin: 0 -1.4rem 0.4rem;
+        object-fit: cover;
+        object-position: center;
     }
 
     a.nv-service-card { display: block; height: 100%; color: inherit; text-decoration: none; }
@@ -365,17 +375,20 @@
     }
 
     .nv-service-icon {
-        width: 64px;
-        height: 64px;
-        margin: 0 auto 1.1rem;
+        width: 52px;
+        height: 52px;
+        margin: -26px auto 0.9rem;
         border-radius: 50%;
-        background: var(--tint);
+        background: #ffffff;
         border: 1px solid var(--line);
+        box-shadow: 0 8px 20px rgba(15, 32, 68, 0.14);
         display: flex;
         align-items: center;
         justify-content: center;
         color: var(--blue);
-        font-size: 1.7rem;
+        font-size: 1.4rem;
+        position: relative;
+        z-index: 2;
         transition: background 0.25s ease, color 0.25s ease;
     }
 
@@ -1054,18 +1067,20 @@
 
     .nv-service-num {
         position: absolute;
-        top: 14px;
-        right: 18px;
-        font-size: 1.9rem;
+        top: 12px;
+        right: 16px;
+        z-index: 2;
+        font-size: 1.5rem;
         font-weight: 850;
         line-height: 1;
-        color: #dde6f7;
+        color: rgba(255, 255, 255, 0.92);
         letter-spacing: -0.03em;
+        text-shadow: 0 2px 8px rgba(2, 8, 28, 0.55);
         transition: color 0.25s ease;
     }
 
     .nv-service-card:hover .nv-service-num {
-        color: rgba(37, 99, 235, 0.35);
+        color: #ffffff;
     }
 
     /* ---------- 1f. ABOUT MINI CARD ---------- */
@@ -1307,6 +1322,7 @@
                 <div class="nv-services-track">
                     <div class="nv-service-slide">
                         <a class="nv-service-card" href="{% url 'core:services' %}#pos">
+                            <img class="nv-service-photo" src="{% static 'images/categories/cat_pos.jpg' %}" alt="POS terminal with receipt printer" loading="lazy">
                             <span class="nv-service-num">01</span>
                             <div class="nv-service-icon"><i class="bi bi-cash-stack"></i></div>
                             <h3>POS &amp; Business Systems</h3>
@@ -1315,6 +1331,7 @@
                     </div>
                     <div class="nv-service-slide">
                         <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
+                            <img class="nv-service-photo" src="{% static 'images/products/prod_macbook_air.jpg' %}" alt="Business laptop and hardware" loading="lazy">
                             <span class="nv-service-num">02</span>
                             <div class="nv-service-icon"><i class="bi bi-laptop"></i></div>
                             <h3>Hardware Supply</h3>
@@ -1323,6 +1340,7 @@
                     </div>
                     <div class="nv-service-slide">
                         <a class="nv-service-card" href="{% url 'core:services' %}#networking">
+                            <img class="nv-service-photo" src="{% static 'images/categories/cat_networking.jpg' %}" alt="Network switches and cabling" loading="lazy">
                             <span class="nv-service-num">03</span>
                             <div class="nv-service-icon"><i class="bi bi-hdd-network"></i></div>
                             <h3>Networking &amp; Infrastructure</h3>
@@ -1331,6 +1349,7 @@
                     </div>
                     <div class="nv-service-slide">
                         <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
+                            <img class="nv-service-photo" src="{% static 'images/products/prod_thermal_printer.jpg' %}" alt="Thermal and office printers" loading="lazy">
                             <span class="nv-service-num">04</span>
                             <div class="nv-service-icon"><i class="bi bi-printer"></i></div>
                             <h3>Printers &amp; Office Tech</h3>
@@ -1339,6 +1358,7 @@
                     </div>
                     <div class="nv-service-slide">
                         <a class="nv-service-card" href="{% url 'core:services' %}#cctv">
+                            <img class="nv-service-photo" src="{% static 'images/categories/cat_surveillance.jpg' %}" alt="CCTV security cameras" loading="lazy">
                             <span class="nv-service-num">05</span>
                             <div class="nv-service-icon"><i class="bi bi-camera-video"></i></div>
                             <h3>CCTV &amp; Security</h3>
@@ -1347,6 +1367,7 @@
                     </div>
                     <div class="nv-service-slide">
                         <a class="nv-service-card" href="{% url 'core:services' %}#branding">
+                            <img class="nv-service-photo" src="{% static 'images/branding/banner.png' %}" alt="Branded banners and merchandise" loading="lazy">
                             <span class="nv-service-num">06</span>
                             <div class="nv-service-icon"><i class="bi bi-brush"></i></div>
                             <h3>Branding &amp; Support</h3>
@@ -1356,6 +1377,7 @@
                     <!-- Duplicate set for seamless loop -->
                     <div class="nv-service-slide" aria-hidden="true">
                         <a class="nv-service-card" href="{% url 'core:services' %}#pos">
+                            <img class="nv-service-photo" src="{% static 'images/categories/cat_pos.jpg' %}" alt="POS terminal with receipt printer" loading="lazy">
                             <span class="nv-service-num">01</span>
                             <div class="nv-service-icon"><i class="bi bi-cash-stack"></i></div>
                             <h3>POS &amp; Business Systems</h3>
@@ -1364,6 +1386,7 @@
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
                         <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
+                            <img class="nv-service-photo" src="{% static 'images/products/prod_macbook_air.jpg' %}" alt="Business laptop and hardware" loading="lazy">
                             <span class="nv-service-num">02</span>
                             <div class="nv-service-icon"><i class="bi bi-laptop"></i></div>
                             <h3>Hardware Supply</h3>
@@ -1372,6 +1395,7 @@
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
                         <a class="nv-service-card" href="{% url 'core:services' %}#networking">
+                            <img class="nv-service-photo" src="{% static 'images/categories/cat_networking.jpg' %}" alt="Network switches and cabling" loading="lazy">
                             <span class="nv-service-num">03</span>
                             <div class="nv-service-icon"><i class="bi bi-hdd-network"></i></div>
                             <h3>Networking &amp; Infrastructure</h3>
@@ -1380,6 +1404,7 @@
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
                         <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
+                            <img class="nv-service-photo" src="{% static 'images/products/prod_thermal_printer.jpg' %}" alt="Thermal and office printers" loading="lazy">
                             <span class="nv-service-num">04</span>
                             <div class="nv-service-icon"><i class="bi bi-printer"></i></div>
                             <h3>Printers &amp; Office Tech</h3>
@@ -1388,6 +1413,7 @@
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
                         <a class="nv-service-card" href="{% url 'core:services' %}#cctv">
+                            <img class="nv-service-photo" src="{% static 'images/categories/cat_surveillance.jpg' %}" alt="CCTV security cameras" loading="lazy">
                             <span class="nv-service-num">05</span>
                             <div class="nv-service-icon"><i class="bi bi-camera-video"></i></div>
                             <h3>CCTV &amp; Security</h3>
@@ -1396,6 +1422,7 @@
                     </div>
                     <div class="nv-service-slide" aria-hidden="true">
                         <a class="nv-service-card" href="{% url 'core:services' %}#branding">
+                            <img class="nv-service-photo" src="{% static 'images/branding/banner.png' %}" alt="Branded banners and merchandise" loading="lazy">
                             <span class="nv-service-num">06</span>
                             <div class="nv-service-icon"><i class="bi bi-brush"></i></div>
                             <h3>Branding &amp; Support</h3>
