@@ -165,13 +165,30 @@ LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "core:home"
 LOGOUT_REDIRECT_URL = "core:home"
 
-# Email (console backend for dev; swap to SMTP in production)
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "no-reply@jabemsolutions.co.ke"
+# Email — Zoho Mail SMTP (https://help.zoho.com imap.zoho.com / smtp.zoho.com).
+# Set ZOHO_EMAIL_USER + ZOHO_EMAIL_PASSWORD (app-specific password) in the
+# environment; without them Django falls back to the console backend (dev).
+ZOHO_EMAIL_USER = os.environ.get("ZOHO_EMAIL_USER", "sales@jabemsolutions.co.ke")
+ZOHO_EMAIL_PASSWORD = os.environ.get("ZOHO_EMAIL_PASSWORD", "")
+if ZOHO_EMAIL_PASSWORD:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.zoho.com"
+    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "465"))
+    if EMAIL_PORT == 465:
+        EMAIL_USE_SSL = True
+    else:  # 587
+        EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = ZOHO_EMAIL_USER
+    EMAIL_HOST_PASSWORD = ZOHO_EMAIL_PASSWORD
+    EMAIL_TIMEOUT = 30
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = ZOHO_EMAIL_USER
+SERVER_EMAIL = ZOHO_EMAIL_USER
 
 SITE_NAME = "Jabem Solutions Ltd"
 COMPANY_PHONE = ""
-COMPANY_EMAIL = "info@jabemsolutions.co.ke"
+COMPANY_EMAIL = "sales@jabemsolutions.co.ke"
 COMPANY_ADDRESS = "Nairobi, Kenya"
 
 # Production hardening — only applied when DEBUG is off, so local dev over
