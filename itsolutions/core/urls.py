@@ -5,9 +5,9 @@ from . import views
 app_name = "core"
 
 urlpatterns = [
-    # TEMPORARY maintenance page at the site root — to restore the homepage, delete
+    # TEMPORARY greeting page at the site root — to restore the homepage, delete
     # the next line and change the "home/" path back to "".
-    path("", TemplateView.as_view(template_name="core/maintenance.html"), name="maintenance"),
+    path("", TemplateView.as_view(template_name="core/greeting.html"), name="greeting"),
     path("home/", views.home, name="home"),
     path("about/", views.about, name="about"),
     path("services/", views.services, name="services"),
