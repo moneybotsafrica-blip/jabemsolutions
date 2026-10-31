@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from django.utils.html import escape
 
 from .forms import ContactForm
 from .models import ContactMessage
@@ -91,18 +92,49 @@ def supplies(request, kind):
 
 
 def robots_txt(request):
-    sitemap_url = request.build_absolute_uri("/sitemap.xml")
-    return HttpResponse(
-        f"User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /accounts/\nDisallow: /cart/\nSitemap: {sitemap_url}\n",
-        content_type="text/plain",
-    )
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin/",
+        "Disallow: /accounts/",
+        "Disallow: /products/cart/",
+        "Disallow: /products/checkout/",
+        "Disallow: /products/order/",
+        "Disallow: /products/pos/",
+        "Disallow: /products/quotes/",
+        f"Sitemap: {settings.SITE_URL}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
+
+
+SITEMAP_PAGES = [
+    ("/", "daily", "1.0"),
+    ("/products/", "daily", "0.9"),
+    ("/services/", "weekly", "0.9"),
+    ("/about/", "monthly", "0.7"),
+    ("/contact/", "monthly", "0.8"),
+    ("/school-supplies/", "weekly", "0.7"),
+    ("/office-supplies/", "weekly", "0.7"),
+]
 
 
 def sitemap_xml(request):
-    urls = ["/", "/about/", "/services/", "/school-supplies/", "/office-supplies/", "/contact/", "/products/"]
-    body = "".join(f"<url><loc>{request.build_absolute_uri(path)}</loc><changefreq>weekly</changefreq></url>" for path in urls)
+    entries = [
+        f"<url><loc>{settings.SITE_URL}{path}</loc><changefreq>{freq}</changefreq><priority>{prio}</priority></url>"
+        for path, freq, prio in SITEMAP_PAGES
+    ]
+    products = Product.objects.filter(is_active=True).only("slug", "updated_at").order_by("-updated_at")
+    for product in products:
+        if not product.slug:
+            continue
+        entries.append(
+            f"<url><loc>{escape(settings.SITE_URL + product.get_absolute_url())}</loc>"
+            f"<lastmod>{product.updated_at.date().isoformat()}</lastmod>"
+            "<changefreq>weekly</changefreq><priority>0.6</priority></url>"
+        )
     return HttpResponse(
-        f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>',
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(entries) + "</urlset>",
         content_type="application/xml",
     )
 

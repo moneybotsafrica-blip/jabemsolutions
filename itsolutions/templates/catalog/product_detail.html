@@ -1,6 +1,47 @@
 {% extends "base.html" %}
 {% load static humanize %}
-{% block title %}{{ product.name }} — {{ SITE_NAME }}{% endblock %}
+{% block title %}{{ product.name }} Price in Kenya | Jabem Solutions{% endblock %}
+{% block meta_description %}Buy {{ product.name }}{% if product.brand %} by {{ product.brand.name }}{% endif %} in Kenya at KES {{ product.price|floatformat:0 }}. {% if product.short_description %}{{ product.short_description|striptags|truncatechars:90 }} — {% endif %}Delivery from Nairobi by Jabem Solutions.{% endblock %}
+{% block og_type %}product{% endblock %}
+{% block og_title %}{{ product.name }} — Jabem Solutions Kenya{% endblock %}
+{% block og_image %}{% if product.get_image_url %}{% if product.get_image_url|slice:':4' == 'http' %}{{ product.get_image_url }}{% else %}{{ SITE_URL }}{{ product.get_image_url }}{% endif %}{% else %}{{ SITE_URL }}{% static 'images/logo.png' %}{% endif %}{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "name": "{{ product.name|escapejs }}",
+      "sku": "{{ product.sku|escapejs }}",
+      "url": "{{ CANONICAL_URL }}",
+      {% with img=product.get_image_url %}{% if img %}"image": "{% if img|slice:':4' != 'http' %}{{ SITE_URL }}{% endif %}{{ img|escapejs }}",{% endif %}{% endwith %}
+      "description": "{{ product.short_description|default:product.description|striptags|truncatechars:300|escapejs }}",
+      {% if product.brand %}"brand": {"@type": "Brand", "name": "{{ product.brand.name|escapejs }}"},{% endif %}
+      {% if product.category %}"category": "{{ product.category.name|escapejs }}",{% endif %}
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ CANONICAL_URL }}",
+        "priceCurrency": "KES",
+        "price": "{{ product.price|stringformat:'.2f' }}",
+        "availability": "https://schema.org/{% if product.in_stock %}InStock{% else %}OutOfStock{% endif %}",
+        "itemCondition": "https://schema.org/NewCondition",
+        "areaServed": "KE",
+        "seller": {"@id": "{{ SITE_URL }}/#organization"}
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ SITE_URL }}/"},
+        {"@type": "ListItem", "position": 2, "name": "Products", "item": "{{ SITE_URL }}{% url 'catalog:product_list' %}"},
+        {"@type": "ListItem", "position": 3, "name": "{{ product.name|escapejs }}", "item": "{{ CANONICAL_URL }}"}
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block extra_head %}
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>

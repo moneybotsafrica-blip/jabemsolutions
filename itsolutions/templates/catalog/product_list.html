@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static humanize %}
-{% block title %}Products — {{ SITE_NAME }}{% endblock %}
+{% block title %}{% if request.GET.q %}{{ request.GET.q|title }} — {% endif %}Shop POS Hardware, Computers & Supplies in Kenya | Jabem Solutions{% endblock %}
+{% block meta_description %}Buy POS machines, receipt printers, barcode scanners, cash drawers, computers, networking gear and office supplies online in Kenya. Competitive prices and delivery from Nairobi.{% endblock %}
 {% block extra_head %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

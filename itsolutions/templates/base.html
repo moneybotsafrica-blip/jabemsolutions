@@ -1,23 +1,89 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-KE">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jabem Solutions Limited provides POS software, POS terminals, printers, networking, inventory systems, installation, training and support for businesses across Kenya, Uganda and Tanzania.">
-    <meta name="keywords" content="Jabem Solutions, POS systems Kenya, POS software Nairobi, inventory management, receipt printers, business technology Kenya">
+    <meta name="description" content="{% block meta_description %}Jabem Solutions Kenya — POS systems, POS software, receipt printers, computers, networking and IT support in Nairobi. Supplying and installing business technology across Kenya, Uganda and Tanzania.{% endblock %}">
+    <meta name="keywords" content="Jabem Solutions, Jabem Solutions Kenya, Jabem Solutions Nairobi, Jabem Solutions Ltd, POS systems Kenya, POS software Nairobi, POS machines Kenya, receipt printers Kenya, barcode scanners Nairobi, inventory management Kenya, IT solutions Nairobi, office supplies Kenya, school supplies Nairobi">
     <meta name="author" content="Jabem Solutions Limited">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Jabem Solutions Limited">
-    <meta property="og:title" content="{% block og_title %}{{ SITE_NAME }} — POS Software & Hardware Solutions{% endblock %}">
-    <meta property="og:description" content="POS software, hardware, inventory systems and business technology services for businesses across Kenya, Uganda and Tanzania.">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}">
-    <meta name="twitter:card" content="summary">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Jabem Solutions Limited","url":"{{ request.scheme }}://{{ request.get_host }}","logo":"{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}","email":"jabemsolutionsltd@gmail.com","areaServed":["Kenya","Uganda","Tanzania"],"description":"POS software, POS hardware, inventory systems and business technology services for businesses across East Africa."}</script>
-    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+    <meta name="robots" content="{% block meta_robots %}index, follow, max-image-preview:large{% endblock %}">
+    {% if GOOGLE_SITE_VERIFICATION %}<meta name="google-site-verification" content="{{ GOOGLE_SITE_VERIFICATION }}">{% endif %}
+    <meta name="geo.region" content="KE-30">
+    <meta name="geo.placename" content="Nairobi, Kenya">
+    <link rel="canonical" href="{{ CANONICAL_URL }}">
+    <link rel="alternate" hreflang="en-KE" href="{{ CANONICAL_URL }}">
+    <link rel="alternate" hreflang="x-default" href="{{ CANONICAL_URL }}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:locale" content="en_KE">
+    <meta property="og:site_name" content="Jabem Solutions Kenya">
+    <meta property="og:title" content="{% block og_title %}Jabem Solutions Kenya — POS Systems & IT Solutions in Nairobi{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}POS systems, POS software, printers, computers, networking and IT support for businesses in Nairobi and across Kenya.{% endblock %}">
+    <meta property="og:url" content="{{ CANONICAL_URL }}">
+    <meta property="og:image" content="{% block og_image %}{{ SITE_URL }}{% static 'images/logo.png' %}{% endblock %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": ["Organization", "ElectronicsStore"],
+          "@id": "{{ SITE_URL }}/#organization",
+          "name": "Jabem Solutions Limited",
+          "alternateName": ["Jabem Solutions", "Jabem Solutions Kenya", "Jabem Solutions Ltd"],
+          "url": "{{ SITE_URL }}/",
+          "logo": "{{ SITE_URL }}{% static 'images/logo.png' %}",
+          "image": "{{ SITE_URL }}{% static 'images/logo.png' %}",
+          "description": "POS systems, POS software, receipt printers, computers, networking, office and school supplies, installation and IT support for businesses in Nairobi and across Kenya.",
+          "email": "{{ COMPANY_EMAIL }}",
+          "telephone": "{{ COMPANY_WHATSAPP }}",
+          "priceRange": "KES",
+          "currenciesAccepted": "KES",
+          "paymentAccepted": "Cash, M-Pesa, Bank Transfer",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nairobi",
+            "addressRegion": "Nairobi County",
+            "addressCountry": "KE"
+          },
+          "areaServed": [
+            {"@type": "Country", "name": "Kenya"},
+            {"@type": "Country", "name": "Uganda"},
+            {"@type": "Country", "name": "Tanzania"}
+          ],
+          "openingHoursSpecification": [{
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "08:00",
+            "closes": "18:00"
+          }],
+          "contactPoint": [{
+            "@type": "ContactPoint",
+            "contactType": "sales",
+            "telephone": "{{ COMPANY_WHATSAPP }}",
+            "email": "{{ COMPANY_EMAIL }}",
+            "areaServed": "KE",
+            "availableLanguage": ["English", "Swahili"]
+          }]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ SITE_URL }}/#website",
+          "url": "{{ SITE_URL }}/",
+          "name": "Jabem Solutions Kenya",
+          "inLanguage": "en-KE",
+          "publisher": {"@id": "{{ SITE_URL }}/#organization"},
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ SITE_URL }}/products/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
+    {% block structured_data %}{% endblock %}
+    <title>{% block title %}{{ SITE_NAME }} Kenya{% endblock %}</title>
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32.png' %}">
     <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">

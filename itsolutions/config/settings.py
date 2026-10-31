@@ -190,6 +190,13 @@ SITE_NAME = "Jabem Solutions Ltd"
 COMPANY_PHONE = ""
 COMPANY_EMAIL = "sales@jabemsolutions.co.ke"
 COMPANY_ADDRESS = "Nairobi, Kenya"
+COMPANY_WHATSAPP = "+254736794594"
+
+# Canonical public origin used for SEO (canonical links, sitemap, structured
+# data) so preview hosts like *.vercel.app don't compete with the real domain.
+SITE_URL = os.environ.get("SITE_URL", "https://jabemsolutions.co.ke").rstrip("/")
+# Token from Google Search Console's "HTML tag" verification method.
+GOOGLE_SITE_VERIFICATION = os.environ.get("GOOGLE_SITE_VERIFICATION", "")
 
 # Production hardening — only applied when DEBUG is off, so local dev over
 # plain http keeps working without extra setup.
