@@ -91,6 +91,11 @@ def supplies(request, kind):
     })
 
 
+# Let Vercel's edge cache crawler files so Googlebot never waits on a cold
+# serverless start; stale copies are served while a fresh one is rebuilt.
+CRAWLER_CACHE_CONTROL = "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400"
+
+
 def robots_txt(request):
     lines = [
         "User-agent: *",
@@ -104,7 +109,9 @@ def robots_txt(request):
         "Disallow: /products/quotes/",
         f"Sitemap: {settings.SITE_URL}/sitemap.xml",
     ]
-    return HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
+    response = HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
+    response["Cache-Control"] = CRAWLER_CACHE_CONTROL
+    return response
 
 
 SITEMAP_PAGES = [
@@ -132,11 +139,13 @@ def sitemap_xml(request):
             f"<lastmod>{product.updated_at.date().isoformat()}</lastmod>"
             "<changefreq>weekly</changefreq><priority>0.6</priority></url>"
         )
-    return HttpResponse(
+    response = HttpResponse(
         '<?xml version="1.0" encoding="UTF-8"?>'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(entries) + "</urlset>",
         content_type="application/xml",
     )
+    response["Cache-Control"] = CRAWLER_CACHE_CONTROL
+    return response
 
 
 def contact(request):
