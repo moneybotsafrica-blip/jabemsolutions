@@ -114,6 +114,16 @@ def robots_txt(request):
     return response
 
 
+FAVICON_PATH = settings.BASE_DIR / "static" / "images" / "favicon.ico"
+
+
+def favicon_ico(request):
+    # Google and browsers request /favicon.ico at the site root.
+    response = HttpResponse(FAVICON_PATH.read_bytes(), content_type="image/x-icon")
+    response["Cache-Control"] = "public, max-age=604800, s-maxage=604800"
+    return response
+
+
 SITEMAP_PAGES = [
     ("/", "daily", "1.0"),
     ("/products/", "daily", "0.9"),
