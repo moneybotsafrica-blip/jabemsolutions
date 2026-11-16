@@ -36,6 +36,56 @@ def services(request):
     return render(request, "core/services.html")
 
 
+def syrve(request):
+    """Syrve restaurant POS landing page with its own demo-booking form."""
+    from . import syrve_content
+
+    errors, values = {}, {}
+    if request.method == "POST":
+        values = {k: request.POST.get(k, "").strip() for k in ("name", "email", "phone", "restaurant")}
+        if not values["name"]:
+            errors["name"] = "Please enter your name."
+        if not values["email"] or "@" not in values["email"]:
+            errors["email"] = "Please enter a valid email address."
+        digits = "".join(ch for ch in values["phone"] if ch.isdigit())
+        if len(digits) < 7:
+            errors["phone"] = "Please enter a valid phone number."
+        if request.POST.get("consent") != "on":
+            errors["consent"] = "Please agree to be contacted about your demo request."
+        if not errors:
+            phone = "+254 " + values["phone"].lstrip("0")
+            restaurant = values["restaurant"] or "-"
+            msg = ContactMessage.objects.create(
+                name=values["name"][:200],
+                email=values["email"],
+                phone=phone[:20],
+                subject="Syrve demo request",
+                message=f"Syrve demo request\nRestaurant: {restaurant}",
+            )
+            send_mail(
+                subject=f"[Syrve demo] {values['name']} - {restaurant}",
+                message=(
+                    f"From: {values['name']} <{values['email']}>\n"
+                    f"Phone: {phone}\nRestaurant: {restaurant}\n"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.COMPANY_EMAIL],
+                fail_silently=True,
+            )
+            return redirect(f"{request.path}?ref=SYR-{msg.pk:05d}#demo")
+
+    return render(request, "core/syrve.html", {
+        "tabs": syrve_content.TABS,
+        "innovations": syrve_content.INNOVATIONS,
+        "faq": syrve_content.FAQ,
+        "offer_note": syrve_content.OFFER_NOTE,
+        "errors": errors,
+        "values": values,
+        "reference": request.GET.get("ref", "")[:20],
+        "wa_link": "https://wa.me/254736794594?text=Hello%2C%20I%20would%20like%20to%20book%20a%20Syrve%20demo.",
+    })
+
+
 SUPPLIES_PAGES = {
     "school": {
         "title": "School Supplies",
@@ -130,6 +180,7 @@ SITEMAP_PAGES = [
     ("/services/", "weekly", "0.9"),
     ("/about/", "monthly", "0.7"),
     ("/contact/", "monthly", "0.8"),
+    ("/syrve/", "weekly", "0.8"),
     ("/school-supplies/", "weekly", "0.7"),
     ("/office-supplies/", "weekly", "0.7"),
 ]

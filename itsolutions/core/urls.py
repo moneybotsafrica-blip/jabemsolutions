@@ -10,6 +10,7 @@ urlpatterns = [
     path("school-supplies/", views.supplies, {"kind": "school"}, name="school_supplies"),
     path("office-supplies/", views.supplies, {"kind": "office"}, name="office_supplies"),
     path("contact/", views.contact, name="contact"),
+    path("syrve/", views.syrve, name="syrve"),
     path("robots.txt", views.robots_txt, name="robots_txt"),
     path("sitemap.xml", views.sitemap_xml, name="sitemap_xml"),
     path("favicon.ico", views.favicon_ico, name="favicon_ico"),
