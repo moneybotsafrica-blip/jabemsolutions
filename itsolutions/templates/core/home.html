@@ -286,6 +286,58 @@
     }
 
     /* ---------- 2. SERVICES ---------- */
+    /* ---------- 1b. SHOP ---------- */
+    .nv-shop { background: #ffffff; padding: 4.5rem 0 4rem; }
+    .nv-shop-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+    .nv-shop-head .nv-kicker { color: var(--blue); margin-bottom: 0.5rem; }
+    .nv-shop-head h2 { font-size: clamp(1.7rem, 3vw, 2.25rem); font-weight: 850; letter-spacing: -0.02em; color: var(--ink); margin: 0; }
+    .nv-shop-head h2 .accent { color: var(--blue); }
+    .nv-shop-tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--tint); border: 1px solid var(--line); border-radius: 980px; }
+    .nv-shop-tab { border: 0; background: transparent; border-radius: 980px; padding: 0.5rem 1.1rem; font-size: 0.85rem; font-weight: 700; color: var(--muted); transition: background 0.2s ease, color 0.2s ease; }
+    .nv-shop-tab:hover { color: var(--ink); }
+    .nv-shop-tab[aria-selected="true"] { background: var(--blue); color: #ffffff; box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28); }
+    .nv-shop [role="tabpanel"][hidden] { display: none; }
+    .nv-shop-foot { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.8rem 1.6rem; margin-top: 2.2rem; }
+    .nv-shop-wa { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--ink); font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+    .nv-shop-wa i { color: #25d366; font-size: 1.1rem; }
+    .nv-shop-wa:hover { color: var(--blue); }
+
+    /* ---------- 1c. SYRVE BAND ---------- */
+    .nv-syrve {
+        position: relative;
+        overflow: hidden;
+        padding: 4.5rem 0;
+        color: #dbe4f7;
+        background:
+            radial-gradient(600px 300px at 90% 10%, rgba(96, 165, 250, 0.18), transparent 60%),
+            linear-gradient(115deg, #060d24 0%, var(--nv-bg) 55%, var(--nv-bg-2) 100%);
+    }
+    .nv-syrve-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 3rem; align-items: center; }
+    .nv-syrve-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.9rem; border-radius: 980px; background: rgba(96, 165, 250, 0.14); border: 1px solid rgba(147, 197, 253, 0.35); color: #ffffff; font-size: 0.78rem; font-weight: 700; }
+    .nv-syrve-badge i { color: var(--blue-soft); }
+    .nv-syrve h2 { color: #ffffff; font-size: clamp(1.8rem, 3.2vw, 2.5rem); font-weight: 850; letter-spacing: -0.02em; margin: 1.1rem 0 0.9rem; }
+    .nv-syrve h2 .accent { color: var(--blue-soft); }
+    .nv-syrve p { color: #aebadb; font-size: 1rem; line-height: 1.65; max-width: 560px; margin: 0; }
+    .nv-syrve-points { list-style: none; padding: 0; margin: 1.4rem 0 0; display: grid; gap: 0.65rem; }
+    .nv-syrve-points li { display: flex; align-items: flex-start; gap: 0.6rem; color: #e2e8f5; font-size: 0.95rem; }
+    .nv-syrve-points i { color: var(--blue-soft); margin-top: 0.15rem; }
+    .nv-syrve-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.9rem; }
+    .nv-syrve-ghost { display: inline-flex; align-items: center; gap: 0.5rem; border: 1.5px solid rgba(255, 255, 255, 0.45); color: #ffffff; border-radius: 980px; padding: 0.75rem 1.5rem; font-weight: 700; font-size: 0.92rem; text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease; }
+    .nv-syrve-ghost:hover { border-color: var(--blue-soft); background: rgba(37, 99, 235, 0.15); color: #ffffff; }
+    .nv-syrve-media img { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.45)); transition: transform 0.3s ease; }
+    .nv-syrve-media:hover img { transform: translateY(-4px); }
+    @media (max-width: 991.98px) {
+        .nv-syrve-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+        .nv-syrve-media { max-width: 520px; margin: 0 auto; }
+    }
+    @media (max-width: 575.98px) {
+        .nv-shop, .nv-syrve { padding: 3.2rem 0; }
+        .nv-shop-head { align-items: flex-start; }
+        .nv-shop-tabs { width: 100%; }
+        .nv-shop-tab { flex: 1; }
+        .nv-syrve-actions a { flex: 1 1 100%; justify-content: center; }
+    }
+
     .nv-services {
         background: var(--tint);
         padding: 4.5rem 0 4rem;
@@ -1315,6 +1367,66 @@
         </div>
     </section>
 
+    {% if featured_products %}
+    <!-- 1b. SHOP: product tabs -->
+    {% include "catalog/_product_card_assets.html" %}
+    <section class="nv-shop" id="shop">
+        <div class="container">
+            <div class="nv-shop-head">
+                <div>
+                    <div class="nv-kicker">Shop Online</div>
+                    <h2>Shop Our <span class="accent">Latest Stock</span></h2>
+                </div>
+                <div class="nv-shop-tabs" role="tablist" aria-label="Product lists">
+                    <button type="button" role="tab" class="nv-shop-tab" id="shop-tab-new" aria-controls="shop-panel-new" aria-selected="true">New arrivals</button>
+                    {% if latest_products %}<button type="button" role="tab" class="nv-shop-tab" id="shop-tab-more" aria-controls="shop-panel-more" aria-selected="false" tabindex="-1">More to explore</button>{% endif %}
+                </div>
+            </div>
+            <div class="row g-3 g-lg-4" role="tabpanel" id="shop-panel-new" aria-labelledby="shop-tab-new">
+                {% for product in featured_products %}
+                <div class="col-6 col-md-4 col-xl-3">{% include "catalog/_product_card.html" %}</div>
+                {% endfor %}
+            </div>
+            {% if latest_products %}
+            <div class="row g-3 g-lg-4" role="tabpanel" id="shop-panel-more" aria-labelledby="shop-tab-more" hidden>
+                {% for product in latest_products %}
+                <div class="col-6 col-md-4 col-xl-3">{% include "catalog/_product_card.html" %}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="nv-shop-foot">
+                <a href="{% url 'catalog:product_list' %}" class="btn-nv-primary">View all products <i class="bi bi-arrow-right"></i></a>
+                <a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions%2C%20I%20am%20looking%20for%20a%20product" target="_blank" rel="noopener noreferrer" class="nv-shop-wa"><i class="bi bi-whatsapp"></i> Can&rsquo;t find it? Ask us on WhatsApp</a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- 1c. SYRVE: official distributor band -->
+    <section class="nv-syrve" aria-labelledby="nv-syrve-title">
+        <div class="container">
+            <div class="nv-syrve-grid">
+                <div>
+                    <span class="nv-syrve-badge"><i class="bi bi-patch-check-fill"></i> Official Syrve Distributor in East Africa</span>
+                    <h2 id="nv-syrve-title">Run your restaurant on <span class="accent">Syrve</span></h2>
+                    <p>The all-in-one restaurant POS trusted by 10,000+ restaurants in 50+ countries, now supplied, installed and supported by Jabem Solutions across Kenya and East Africa.</p>
+                    <ul class="nv-syrve-points">
+                        <li><i class="bi bi-check-circle-fill"></i> POS, waiter app and kitchen display in one system</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Stock, recipe costing and supplier orders</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Delivery, loyalty and live reports for every outlet</li>
+                    </ul>
+                    <div class="nv-syrve-actions">
+                        <a href="{% url 'core:syrve' %}" class="btn-nv-primary">Explore Syrve <i class="bi bi-arrow-right"></i></a>
+                        <a href="{% url 'core:syrve' %}#contacts" class="nv-syrve-ghost"><i class="bi bi-telephone"></i> Book a free demo</a>
+                    </div>
+                </div>
+                <a href="{% url 'core:syrve' %}" class="nv-syrve-media" aria-hidden="true" tabindex="-1">
+                    <img src="{% static 'images/syrve/syrve-pos-devices.webp' %}" alt="" width="955" height="790" loading="lazy">
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- 2. OUR IT SERVICES -->
     <section class="nv-services" id="what-we-do">
         <div class="container">
@@ -1713,6 +1825,28 @@
 
 {% block extra_scripts %}
 <script>
+    // Shop section tabs (arrow keys move between tabs).
+    (function () {
+        var tabs = [].slice.call(document.querySelectorAll('.nv-shop-tab'));
+        function select(tab) {
+            tabs.forEach(function (t) {
+                var on = t === tab;
+                t.setAttribute('aria-selected', on);
+                t.tabIndex = on ? 0 : -1;
+                document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+            });
+        }
+        tabs.forEach(function (tab, i) {
+            tab.addEventListener('click', function () { select(tab); });
+            tab.addEventListener('keydown', function (e) {
+                var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+                if (!d) return;
+                var next = tabs[(i + d + tabs.length) % tabs.length];
+                select(next); next.focus(); e.preventDefault();
+            });
+        });
+    })();
+
     (function () {
         var revealEls = document.querySelectorAll('.nv-reveal');
         var countEls = document.querySelectorAll('.nv-count');

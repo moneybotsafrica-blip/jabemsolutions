@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    .gp-cats, .gp-ads, .gp-toolbar, .gp-flt-card, .gp-flt-card *, .gp-card { font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; }
+    .gp-cats, .gp-ads, .gp-toolbar, .gp-flt-card, .gp-flt-card * { font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif; }
     /* ---------- SHOP BY CATEGORY — sliding circular rail (compact) ---------- */
     .gp-cats { padding: 1.1rem 0 0.2rem; }
     .gp-cats-head { margin-bottom: 0.6rem; text-align: center; }
@@ -232,55 +232,6 @@
     }
     .gp-xchip:hover { background: #dbeafe; color: #1e40af; }
     .gp-xchip i { font-size: 0.62rem; }
-    .gp-card {
-        position: relative; height: 100%; background: #fff;
-        border: 1px solid rgba(6, 13, 36, 0.08); border-radius: 12px; overflow: hidden;
-        box-shadow: 0 1px 3px rgba(6, 13, 36, 0.05);
-        transition: transform 0.18s ease, box-shadow 0.18s ease;
-        display: flex; flex-direction: column;
-    }
-    .gp-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(37, 99, 235, 0.15); }
-    .gp-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; }
-    .gp-card-media { position: relative; aspect-ratio: 4 / 3; background: #eef2fb; overflow: hidden; }
-    .gp-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
-    .gp-card:hover .gp-card-media img { transform: scale(1.05); }
-    .gp-card-media .gp-ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: #b9c4dd; font-size: 2rem; }
-    .gp-card-type {
-        position: absolute; top: 0.55rem; left: 0.55rem; font-size: 0.6rem; font-weight: 700;
-        letter-spacing: 0.04em; text-transform: uppercase; color: #fff;
-        background: rgba(29, 78, 216, 0.92); border-radius: 6px; padding: 0.18rem 0.5rem;
-    }
-    .gp-card-type.is-software { background: rgba(13, 148, 136, 0.92); }
-    .gp-card-view {
-        position: absolute; left: 50%; bottom: 0.55rem; transform: translate(-50%, 8px); opacity: 0;
-        font-size: 0.7rem; font-weight: 700; color: #061336; background: rgba(255, 255, 255, 0.95);
-        border-radius: 980px; padding: 0.3rem 0.85rem; text-decoration: none; white-space: nowrap;
-        box-shadow: 0 4px 12px rgba(6, 13, 36, 0.25); transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-    .gp-card:hover .gp-card-view { opacity: 1; transform: translate(-50%, 0); }
-    .gp-fav {
-        position: absolute; top: 0.5rem; right: 0.5rem; z-index: 2; width: 32px; height: 32px;
-        border-radius: 50%; background: rgba(255, 255, 255, 0.92); border: none; color: #9aa6bd;
-        display: flex; align-items: center; justify-content: center; cursor: pointer;
-        box-shadow: 0 2px 6px rgba(6, 13, 36, 0.14); transition: color 0.15s ease, transform 0.15s ease;
-    }
-    .gp-fav:hover { transform: scale(1.08); }
-    .gp-fav.active { color: #e0245e; }
-    .gp-card-body { padding: 0.7rem 0.8rem 0.85rem; display: flex; flex-direction: column; flex: 1; }
-    .gp-card-price { font-size: 1.08rem; font-weight: 800; color: #1d4ed8; margin-bottom: 0.28rem; }
-    .gp-card-name {
-        font-size: 0.86rem; font-weight: 600; color: #2b2f38; line-height: 1.3; margin: 0 0 0.55rem;
-        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.25em;
-    }
-    .gp-card-meta { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; font-size: 0.7rem; color: #8a93a6; }
-    .gp-card-meta .loc { display: inline-flex; align-items: center; gap: 0.2rem; }
-    .gp-card-actions { display: flex; gap: 0.45rem; padding: 0 0.8rem 0.85rem; }
-    .gp-quote {
-        flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
-        border: none; border-radius: 9px; font-weight: 700; font-size: 0.8rem; padding: 0.5rem 0.6rem;
-        color: #fff; background: linear-gradient(135deg, #2563eb, #1d4ed8); text-decoration: none;
-    }
-    .gp-quote:hover { color: #fff; filter: brightness(1.07); }
     .gp-empty { text-align: center; padding: 3.5rem 1rem; border: 1.5px dashed rgba(37, 99, 235, 0.22); border-radius: 18px; background: #fbfcff; }
     .gp-empty i { font-size: 2.6rem; color: #b9c4dd; }
     .gp-empty p { color: #6e6e73; margin: 0.8rem 0 1.2rem; }
@@ -295,9 +246,10 @@
     .gp-page.is-current { background: linear-gradient(135deg, #2563eb, #1d4ed8); border-color: transparent; color: #fff; }
     .gp-page.is-disabled { opacity: 0.4; pointer-events: none; }
     @media (prefers-reduced-motion: reduce) {
-        .gp-cat-ring, .gp-cat-ring img, .gp-card, .gp-card-media img { transition: none; }
+        .gp-cat-ring, .gp-cat-ring img { transition: none; }
     }
 </style>
+{% include "catalog/_product_card_assets.html" %}
 {% endblock %}
 {% block content %}
 {% if shop_promos %}
@@ -440,34 +392,7 @@
             <div class="row g-3 g-lg-4">
                 {% for product in products %}
                 <div class="col-6 col-md-4 col-xl-3">
-                    <div class="gp-card">
-                        <button class="gp-fav" type="button" aria-label="Save"><i class="bi bi-heart"></i></button>
-                        <a class="gp-card-link" href="{% url 'catalog:product_detail' product.slug %}">
-                            <div class="gp-card-media">
-                                <span class="gp-card-type {% if product.product_type == 'software' %}is-software{% endif %}">{{ product.get_product_type_display }}</span>
-                                {% if product.get_image_url %}
-                                <img src="{{ product.get_image_url }}" alt="{{ product.name }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                                <i class="bi bi-image gp-ph" style="display:none"></i>
-                                {% else %}
-                                <i class="bi bi-image gp-ph"></i>
-                                {% endif %}
-                                <span class="gp-card-view">View details</span>
-                            </div>
-                            <div class="gp-card-body">
-                                {% if product.price %}<div class="gp-card-price">KES {{ product.price|floatformat:0|intcomma }}</div>{% endif %}
-                                <h3 class="gp-card-name">{{ product.name }}</h3>
-                                <div class="gp-card-meta">
-                                    <span class="loc"><i class="bi bi-geo-alt-fill"></i> Nairobi</span>
-                                    <span>{{ product.created_at|timesince }} ago</span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="gp-card-actions">
-                            <a href="https://wa.me/254736794594" target="_blank" class="gp-quote quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}">
-                                <i class="bi bi-whatsapp"></i> Chat to order
-                            </a>
-                        </div>
-                    </div>
+                    {% include "catalog/_product_card.html" %}
                 </div>
                 {% empty %}
                 <div class="col-12">
@@ -527,13 +452,5 @@
         });
     }
 })();
-document.addEventListener('click', function (e) {
-    var fav = e.target.closest('.gp-fav');
-    if (!fav) return;
-    e.preventDefault();
-    fav.classList.toggle('active');
-    var icon = fav.querySelector('i');
-    if (icon) icon.className = fav.classList.contains('active') ? 'bi bi-heart-fill' : 'bi bi-heart';
-});
 </script>
 {% endblock %}

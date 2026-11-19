@@ -1,0 +1,29 @@
+{% load humanize %}{# Product card shared by the shop page and the homepage; needs _product_card_assets.html once per page. #}
+<div class="gp-card">
+    <button class="gp-fav" type="button" aria-label="Save"><i class="bi bi-heart"></i></button>
+    <a class="gp-card-link" href="{% url 'catalog:product_detail' product.slug %}">
+        <div class="gp-card-media">
+            <span class="gp-card-type {% if product.product_type == 'software' %}is-software{% endif %}">{{ product.get_product_type_display }}</span>
+            {% if product.get_image_url %}
+            <img src="{{ product.get_image_url }}" alt="{{ product.name }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <i class="bi bi-image gp-ph" style="display:none"></i>
+            {% else %}
+            <i class="bi bi-image gp-ph"></i>
+            {% endif %}
+            <span class="gp-card-view">View details</span>
+        </div>
+        <div class="gp-card-body">
+            {% if product.price %}<div class="gp-card-price">KES {{ product.price|floatformat:0|intcomma }}</div>{% endif %}
+            <h3 class="gp-card-name">{{ product.name }}</h3>
+            <div class="gp-card-meta">
+                <span class="loc"><i class="bi bi-geo-alt-fill"></i> Nairobi</span>
+                <span>{{ product.created_at|timesince }} ago</span>
+            </div>
+        </div>
+    </a>
+    <div class="gp-card-actions">
+        <a href="https://wa.me/254736794594" target="_blank" class="gp-quote quote-link" data-quote-name="{{ product.name }}" data-quote-sku="{{ product.sku }}" data-quote-price="{{ product.price|floatformat:0 }}" data-quote-image="{{ product.get_image_url }}">
+            <i class="bi bi-whatsapp"></i> Chat to order
+        </a>
+    </div>
+</div>
