@@ -285,7 +285,6 @@
         transform: translateY(-2px);
     }
 
-    /* ---------- 2. SERVICES ---------- */
     /* ---------- 1b. SHOP ---------- */
     .nv-shop { background: #ffffff; padding: 4.5rem 0 4rem; }
     .nv-shop-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
@@ -338,9 +337,103 @@
         .nv-syrve-actions a { flex: 1 1 100%; justify-content: center; }
     }
 
-    .nv-services {
-        background: var(--tint);
-        padding: 4.5rem 0 4rem;
+    /* ---------- 2. OUR IT SERVICES: bento grid ---------- */
+    .nv-services { background: var(--tint); padding: 4.5rem 0 4.6rem; }
+    .nv-svc-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .nv-svc-head .nv-kicker { color: var(--blue); margin-bottom: 0.5rem; }
+    .nv-svc-head h2 { font-size: clamp(1.7rem, 3vw, 2.25rem); font-weight: 850; letter-spacing: -0.02em; color: var(--ink); margin: 0; }
+    .nv-svc-head h2 .accent { color: var(--blue); }
+    .nv-svc-all { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--blue); font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .nv-svc-all:hover { color: var(--blue-hover); text-decoration: underline; }
+
+    .nv-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: auto; gap: 1.2rem; }
+
+    /* Feature card: POS, 2x2 */
+    .nv-bento-feature {
+        grid-column: span 2; grid-row: span 2; position: relative; isolation: isolate;
+        min-height: 520px; border-radius: 22px; overflow: hidden; color: #ffffff; text-decoration: none;
+        box-shadow: 0 18px 40px rgba(15, 29, 58, 0.16);
+    }
+    .nv-bento-feature img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .nv-bento-feature::before {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(180deg, rgba(6, 13, 36, 0.05) 25%, rgba(6, 13, 36, 0.55) 60%, rgba(6, 13, 36, 0.92) 100%);
+    }
+    .nv-bento-feature:hover img { transform: scale(1.04); }
+    .nv-bento-feature-copy { position: absolute; left: 0; right: 0; bottom: 0; padding: 2rem; }
+    .nv-bento-tag {
+        display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.8rem; border-radius: 999px;
+        background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.3); backdrop-filter: blur(6px);
+        font-size: 0.78rem; font-weight: 700; margin-bottom: 0.9rem;
+    }
+    .nv-bento-feature h3 { color: #ffffff; font-size: clamp(1.5rem, 2.4vw, 2rem); font-weight: 850; letter-spacing: -0.02em; margin: 0 0 0.6rem; }
+    .nv-bento-feature p { color: #dbe4f7; font-size: 0.98rem; line-height: 1.6; margin: 0 0 1.2rem; max-width: 480px; }
+    .nv-bento-cta {
+        display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.3rem; border-radius: 999px;
+        background: var(--blue); color: #ffffff; font-weight: 700; font-size: 0.9rem;
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.4); transition: background 0.2s ease;
+    }
+    .nv-bento-feature:hover .nv-bento-cta { background: var(--blue-hover); }
+
+    /* Small cards */
+    .nv-bento-card {
+        display: flex; flex-direction: column; background: #ffffff; border: 1px solid var(--line);
+        border-radius: 20px; overflow: hidden; text-decoration: none; color: inherit;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .nv-bento-card:hover { transform: translateY(-5px); border-color: #c7d6ee; box-shadow: 0 18px 36px rgba(15, 29, 58, 0.12); }
+    .nv-bento-media { position: relative; height: 130px; background: #eef2fb; }
+    .nv-bento-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .nv-bento-card:hover .nv-bento-media img { transform: scale(1.06); }
+    .nv-bento-icon {
+        position: absolute; left: 1rem; bottom: -20px; width: 44px; height: 44px; border-radius: 12px;
+        background: var(--blue); color: #ffffff; font-size: 1.15rem; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 0 4px #ffffff, 0 8px 18px rgba(37, 99, 235, 0.3);
+    }
+    .nv-bento-body { display: flex; flex-direction: column; flex: 1; padding: 1.7rem 1rem 1.1rem; }
+    .nv-bento-card h3 { color: var(--ink); font-size: 1.02rem; font-weight: 800; margin: 0 0 0.4rem; }
+    .nv-bento-card p { color: var(--muted); font-size: 0.86rem; line-height: 1.5; margin: 0 0 0.8rem; }
+    .nv-bento-link { margin-top: auto; display: inline-flex; align-items: center; gap: 0.35rem; color: var(--blue); font-weight: 700; font-size: 0.86rem; }
+    .nv-bento-link i { transition: transform 0.2s ease; }
+    .nv-bento-card:hover .nv-bento-link i { transform: translateX(3px); }
+
+    /* Wide strip: branding & support */
+    .nv-bento-wide {
+        grid-column: 1 / -1; display: flex; align-items: center; gap: 1.4rem 1.8rem; flex-wrap: wrap;
+        padding: 1.6rem 1.8rem; border-radius: 20px; color: #dbe4f7;
+        background: radial-gradient(500px 220px at 95% 0%, rgba(96, 165, 250, 0.22), transparent 60%), linear-gradient(115deg, #060d24 0%, var(--nv-bg) 55%, var(--nv-bg-2) 100%);
+    }
+    .nv-bento-wide-icon {
+        flex-shrink: 0; width: 56px; height: 56px; border-radius: 16px; background: rgba(96, 165, 250, 0.16);
+        border: 1px solid rgba(147, 197, 253, 0.35); color: #93c5fd; font-size: 1.5rem;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .nv-bento-wide-copy { flex: 1 1 360px; }
+    .nv-bento-wide h3 { color: #ffffff; font-size: 1.25rem; font-weight: 800; margin: 0 0 0.3rem; }
+    .nv-bento-wide p { color: #aebadb; font-size: 0.92rem; line-height: 1.55; margin: 0; }
+    .nv-bento-wide-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .nv-bento-ghost {
+        display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.75rem 1.4rem; border-radius: 980px;
+        border: 1.5px solid rgba(255, 255, 255, 0.45); color: #ffffff; font-weight: 700; font-size: 0.92rem; text-decoration: none;
+        transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .nv-bento-ghost:hover { border-color: var(--blue-soft); background: rgba(37, 99, 235, 0.15); color: #ffffff; }
+
+    @media (max-width: 991.98px) {
+        .nv-bento { grid-template-columns: repeat(2, 1fr); }
+        .nv-bento-feature { min-height: 420px; grid-row: auto; }
+    }
+    @media (max-width: 575.98px) {
+        .nv-services { padding: 3.2rem 0 3.4rem; }
+        .nv-bento { grid-template-columns: 1fr; gap: 1rem; }
+        .nv-bento-feature { grid-column: auto; min-height: 440px; }
+        .nv-bento-feature::before { background: linear-gradient(180deg, rgba(6, 13, 36, 0) 10%, rgba(6, 13, 36, 0.7) 45%, rgba(6, 13, 36, 0.95) 100%); }
+        .nv-bento-feature-copy { padding: 1.4rem; }
+        .nv-bento-wide { padding: 1.4rem; }
+        .nv-bento-wide-actions a { flex: 1 1 100%; justify-content: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .nv-bento-feature img, .nv-bento-media img, .nv-bento-card { transition: none; }
     }
 
     .nv-section-head {
@@ -362,114 +455,6 @@
 
     .nv-section-head h2 .accent {
         color: var(--blue);
-    }
-
-    .nv-services-marquee {
-        overflow: hidden;
-        margin: 0 calc(50% - 50vw);
-        padding: 0.6rem 0 1.2rem;
-        -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-        mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-    }
-
-    body { overflow-x: clip; }
-
-    .nv-services-track {
-        display: flex;
-        width: max-content;
-        animation: nv-marquee 45s linear infinite;
-    }
-
-    .nv-services-marquee:hover .nv-services-track {
-        animation-play-state: paused;
-    }
-
-    .nv-service-slide {
-        flex: 0 0 auto;
-        width: 335px;
-        padding-right: 1.5rem;
-        display: flex;
-    }
-
-    @keyframes nv-marquee {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .nv-services-track { animation: none; }
-    }
-
-    .nv-service-card {
-        background: #ffffff;
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 0 1.4rem 2rem;
-        height: 100%;
-        text-align: center;
-        overflow: hidden;
-        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-
-    .nv-service-photo {
-        display: block;
-        width: calc(100% + 2.8rem);
-        height: 150px;
-        margin: 0 -1.4rem 0.4rem;
-        object-fit: contain;
-        object-position: center;
-        background: #ffffff;
-        padding: 0.6rem 1.5rem 0;
-        box-sizing: border-box;
-    }
-
-    a.nv-service-card { display: block; height: 100%; color: inherit; text-decoration: none; }
-    .nv-service-card:hover {
-        transform: translateY(-6px);
-        border-color: rgba(37, 99, 235, 0.35);
-        box-shadow: 0 22px 44px rgba(15, 32, 68, 0.1);
-    }
-
-    .nv-service-icon {
-        width: 52px;
-        height: 52px;
-        margin: -26px auto 0.9rem;
-        border-radius: 50%;
-        background: #ffffff;
-        border: 1px solid var(--line);
-        box-shadow: 0 8px 20px rgba(15, 32, 68, 0.14);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--blue);
-        font-size: 1.4rem;
-        position: relative;
-        z-index: 2;
-        transition: background 0.25s ease, color 0.25s ease;
-    }
-
-    .nv-service-card:hover .nv-service-icon {
-        background: var(--blue);
-        color: #ffffff;
-    }
-
-    .nv-service-card h3 {
-        font-size: 1.02rem;
-        font-weight: 800;
-        color: var(--ink);
-        margin-bottom: 0.6rem;
-    }
-
-    .nv-service-card p {
-        font-size: 0.86rem;
-        line-height: 1.65;
-        color: var(--muted);
-        margin-bottom: 0;
-    }
-
-    .btn-nv-center-wrap {
-        text-align: center;
-        margin-top: 2.4rem;
     }
 
     /* ---------- 3. ABOUT: three photo tiles ---------- */
@@ -828,29 +813,6 @@
         .nv-hero-pill .dot { animation: none; }
     }
 
-    /* ---------- 1e. SERVICE CARD NUMBERING ---------- */
-    .nv-service-card {
-        position: relative;
-    }
-
-    .nv-service-num {
-        position: absolute;
-        top: 12px;
-        right: 16px;
-        z-index: 2;
-        font-size: 1.5rem;
-        font-weight: 850;
-        line-height: 1;
-        color: rgba(255, 255, 255, 0.92);
-        letter-spacing: -0.03em;
-        text-shadow: 0 2px 8px rgba(2, 8, 28, 0.55);
-        transition: color 0.25s ease;
-    }
-
-    .nv-service-card:hover .nv-service-num {
-        color: #ffffff;
-    }
-
     /* ---------- 1f. ABOUT MINI CARD ---------- */
     .nv-about-mini {
         position: absolute;
@@ -1130,128 +1092,69 @@
         </div>
     </section>
 
-    <!-- 2. OUR IT SERVICES -->
+    <!-- 2. OUR IT SERVICES: bento grid -->
     <section class="nv-services" id="what-we-do">
         <div class="container">
-            <div class="nv-section-head">
-                <div class="nv-kicker">What We Do</div>
-                <h2>Our IT <span class="accent">Services</span></h2>
+            <div class="nv-svc-head">
+                <div>
+                    <div class="nv-kicker">What We Do</div>
+                    <h2>Our IT <span class="accent">Services</span></h2>
+                </div>
+                <a href="{% url 'core:services' %}" class="nv-svc-all">View all services <i class="bi bi-arrow-right"></i></a>
             </div>
-            <div class="nv-services-marquee">
-                <div class="nv-services-track">
-                    <div class="nv-service-slide">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#pos">
-                            <img class="nv-service-photo" src="{% static 'images/categories/cat_pos.jpg' %}" alt="POS terminal with receipt printer" loading="lazy">
-                            <span class="nv-service-num">01</span>
-                            <div class="nv-service-icon"><i class="bi bi-cash-stack"></i></div>
-                            <h3>POS &amp; Business Systems</h3>
-                            <p>Supermarket, restaurant and retail checkout lines — terminals, printers, scanners and cash drawers, configured and installed.</p>
-                        </a>
+            <div class="nv-bento">
+                <a class="nv-bento-feature nv-reveal" href="{% url 'core:services' %}#pos">
+                    <img src="{% static 'images/categories/cat_pos.jpg' %}" alt="POS terminal with receipt printer" loading="lazy">
+                    <div class="nv-bento-feature-copy">
+                        <span class="nv-bento-tag"><i class="bi bi-cash-stack"></i> 01 &middot; Most requested</span>
+                        <h3>POS &amp; Business Systems</h3>
+                        <p>Supermarket, restaurant and retail checkout lines &mdash; terminals, printers, scanners and cash drawers, configured and installed.</p>
+                        <span class="nv-bento-cta">Explore POS systems <i class="bi bi-arrow-right"></i></span>
                     </div>
-                    <div class="nv-service-slide">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
-                            <img class="nv-service-photo" src="{% static 'images/products/prod_macbook_air.jpg' %}" alt="Business laptop and hardware" loading="lazy">
-                            <span class="nv-service-num">02</span>
-                            <div class="nv-service-icon"><i class="bi bi-laptop"></i></div>
-                            <h3>Hardware Supply</h3>
-                            <p>Genuine laptops, desktops and accessories from Dell, HP, Lenovo and more — sourced from authorised brands.</p>
-                        </a>
+                </a>
+                <a class="nv-bento-card nv-reveal" style="--nv-delay:.06s" href="{% url 'core:services' %}#hardware">
+                    <div class="nv-bento-media"><img src="{% static 'images/products/prod_macbook_air.jpg' %}" alt="Business laptop and hardware" loading="lazy"><span class="nv-bento-icon"><i class="bi bi-laptop"></i></span></div>
+                    <div class="nv-bento-body">
+                        <h3>Hardware Supply</h3>
+                        <p>Genuine laptops, desktops and accessories from Dell, HP, Lenovo and more.</p>
+                        <span class="nv-bento-link">Learn more <i class="bi bi-arrow-right"></i></span>
                     </div>
-                    <div class="nv-service-slide">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#networking">
-                            <img class="nv-service-photo" src="{% static 'images/categories/cat_networking.jpg' %}" alt="Network switches and cabling" loading="lazy">
-                            <span class="nv-service-num">03</span>
-                            <div class="nv-service-icon"><i class="bi bi-hdd-network"></i></div>
-                            <h3>Networking &amp; Infrastructure</h3>
-                            <p>Routers, switches, cabling and Wi-Fi setups engineered for reliable connectivity in offices and branches.</p>
-                        </a>
+                </a>
+                <a class="nv-bento-card nv-reveal" style="--nv-delay:.12s" href="{% url 'core:services' %}#networking">
+                    <div class="nv-bento-media"><img src="{% static 'images/categories/cat_networking.jpg' %}" alt="Network switches and cabling" loading="lazy"><span class="nv-bento-icon"><i class="bi bi-hdd-network"></i></span></div>
+                    <div class="nv-bento-body">
+                        <h3>Networking &amp; Infrastructure</h3>
+                        <p>Routers, switches, cabling and Wi-Fi built for reliable office and branch connectivity.</p>
+                        <span class="nv-bento-link">Learn more <i class="bi bi-arrow-right"></i></span>
                     </div>
-                    <div class="nv-service-slide">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
-                            <img class="nv-service-photo" src="{% static 'images/products/prod_thermal_printer.jpg' %}" alt="Thermal and office printers" loading="lazy">
-                            <span class="nv-service-num">04</span>
-                            <div class="nv-service-icon"><i class="bi bi-printer"></i></div>
-                            <h3>Printers &amp; Office Tech</h3>
-                            <p>Thermal, invoice and office printers plus consumables — supplied, installed and kept running by our team.</p>
-                        </a>
+                </a>
+                <a class="nv-bento-card nv-reveal" style="--nv-delay:.18s" href="{% url 'core:services' %}#hardware">
+                    <div class="nv-bento-media"><img src="{% static 'images/products/prod_thermal_printer.jpg' %}" alt="Thermal and office printers" loading="lazy"><span class="nv-bento-icon"><i class="bi bi-printer"></i></span></div>
+                    <div class="nv-bento-body">
+                        <h3>Printers &amp; Office Tech</h3>
+                        <p>Thermal, invoice and office printers plus consumables, installed and kept running.</p>
+                        <span class="nv-bento-link">Learn more <i class="bi bi-arrow-right"></i></span>
                     </div>
-                    <div class="nv-service-slide">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#cctv">
-                            <img class="nv-service-photo" src="{% static 'images/categories/cat_surveillance.jpg' %}" alt="CCTV security cameras" loading="lazy">
-                            <span class="nv-service-num">05</span>
-                            <div class="nv-service-icon"><i class="bi bi-camera-video"></i></div>
-                            <h3>CCTV &amp; Security</h3>
-                            <p>Cameras, surveillance and access control systems that keep your premises, stock and staff secure.</p>
-                        </a>
+                </a>
+                <a class="nv-bento-card nv-reveal" style="--nv-delay:.24s" href="{% url 'core:services' %}#cctv">
+                    <div class="nv-bento-media"><img src="{% static 'images/categories/cat_surveillance.jpg' %}" alt="CCTV security cameras" loading="lazy"><span class="nv-bento-icon"><i class="bi bi-camera-video"></i></span></div>
+                    <div class="nv-bento-body">
+                        <h3>CCTV &amp; Security</h3>
+                        <p>Cameras, surveillance and access control that keep premises, stock and staff secure.</p>
+                        <span class="nv-bento-link">Learn more <i class="bi bi-arrow-right"></i></span>
                     </div>
-                    <div class="nv-service-slide">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#branding">
-                            <img class="nv-service-photo" src="{% static 'images/branding/banner.png' %}" alt="Branded banners and merchandise" loading="lazy">
-                            <span class="nv-service-num">06</span>
-                            <div class="nv-service-icon"><i class="bi bi-brush"></i></div>
-                            <h3>Branding &amp; Support</h3>
-                            <p>Branded items that keep your business visible, plus maintenance contracts and 24/7 expert support.</p>
-                        </a>
+                </a>
+                <div class="nv-bento-wide nv-reveal" style="--nv-delay:.3s">
+                    <span class="nv-bento-wide-icon"><i class="bi bi-brush"></i></span>
+                    <div class="nv-bento-wide-copy">
+                        <h3>Branding &amp; 24/7 Support</h3>
+                        <p>Branded receipts, signage and merchandise that keep your business visible, plus maintenance contracts and round-the-clock expert support.</p>
                     </div>
-                    <!-- Duplicate set for seamless loop -->
-                    <div class="nv-service-slide" aria-hidden="true">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#pos">
-                            <img class="nv-service-photo" src="{% static 'images/categories/cat_pos.jpg' %}" alt="POS terminal with receipt printer" loading="lazy">
-                            <span class="nv-service-num">01</span>
-                            <div class="nv-service-icon"><i class="bi bi-cash-stack"></i></div>
-                            <h3>POS &amp; Business Systems</h3>
-                            <p>Supermarket, restaurant and retail checkout lines — terminals, printers, scanners and cash drawers, configured and installed.</p>
-                        </a>
-                    </div>
-                    <div class="nv-service-slide" aria-hidden="true">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
-                            <img class="nv-service-photo" src="{% static 'images/products/prod_macbook_air.jpg' %}" alt="Business laptop and hardware" loading="lazy">
-                            <span class="nv-service-num">02</span>
-                            <div class="nv-service-icon"><i class="bi bi-laptop"></i></div>
-                            <h3>Hardware Supply</h3>
-                            <p>Genuine laptops, desktops and accessories from Dell, HP, Lenovo and more — sourced from authorised brands.</p>
-                        </a>
-                    </div>
-                    <div class="nv-service-slide" aria-hidden="true">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#networking">
-                            <img class="nv-service-photo" src="{% static 'images/categories/cat_networking.jpg' %}" alt="Network switches and cabling" loading="lazy">
-                            <span class="nv-service-num">03</span>
-                            <div class="nv-service-icon"><i class="bi bi-hdd-network"></i></div>
-                            <h3>Networking &amp; Infrastructure</h3>
-                            <p>Routers, switches, cabling and Wi-Fi setups engineered for reliable connectivity in offices and branches.</p>
-                        </a>
-                    </div>
-                    <div class="nv-service-slide" aria-hidden="true">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#hardware">
-                            <img class="nv-service-photo" src="{% static 'images/products/prod_thermal_printer.jpg' %}" alt="Thermal and office printers" loading="lazy">
-                            <span class="nv-service-num">04</span>
-                            <div class="nv-service-icon"><i class="bi bi-printer"></i></div>
-                            <h3>Printers &amp; Office Tech</h3>
-                            <p>Thermal, invoice and office printers plus consumables — supplied, installed and kept running by our team.</p>
-                        </a>
-                    </div>
-                    <div class="nv-service-slide" aria-hidden="true">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#cctv">
-                            <img class="nv-service-photo" src="{% static 'images/categories/cat_surveillance.jpg' %}" alt="CCTV security cameras" loading="lazy">
-                            <span class="nv-service-num">05</span>
-                            <div class="nv-service-icon"><i class="bi bi-camera-video"></i></div>
-                            <h3>CCTV &amp; Security</h3>
-                            <p>Cameras, surveillance and access control systems that keep your premises, stock and staff secure.</p>
-                        </a>
-                    </div>
-                    <div class="nv-service-slide" aria-hidden="true">
-                        <a class="nv-service-card" href="{% url 'core:services' %}#branding">
-                            <img class="nv-service-photo" src="{% static 'images/branding/banner.png' %}" alt="Branded banners and merchandise" loading="lazy">
-                            <span class="nv-service-num">06</span>
-                            <div class="nv-service-icon"><i class="bi bi-brush"></i></div>
-                            <h3>Branding &amp; Support</h3>
-                            <p>Branded items that keep your business visible, plus maintenance contracts and 24/7 expert support.</p>
-                        </a>
+                    <div class="nv-bento-wide-actions">
+                        <a href="{% url 'core:services' %}#branding" class="btn-nv-primary">Branding &amp; print</a>
+                        <a href="{% url 'core:services' %}#faq" class="nv-bento-ghost">Support plans <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
-            </div>
-            <div class="btn-nv-center-wrap">
-                <a href="{% url 'core:services' %}" class="btn-nv-primary">View All Services <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
     </section>
