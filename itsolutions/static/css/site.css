@@ -4957,3 +4957,75 @@ p { color: #47474c; }
     visibility: visible;
     transform: translateY(0) rotate(45deg);
 }
+
+/* ==========================================================================
+   FOOTER REFRESH: Syrve pill, contact list, newsletter label
+   ========================================================================== */
+.footer-syrve-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(96, 165, 250, 0.12);
+    border: 1px solid rgba(147, 197, 253, 0.35);
+    color: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+.footer-syrve-pill i { color: #60a5fa; font-size: 0.95rem; }
+.footer-syrve-pill small { color: #93c5fd; font-weight: 500; margin-left: 0.15rem; }
+.footer-syrve-pill:hover {
+    background: rgba(96, 165, 250, 0.22);
+    border-color: #60a5fa;
+    color: #ffffff;
+}
+
+.footer-contact-list { margin: 0; padding: 0; }
+.footer-contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 0.55rem;
+    color: #aebadb;
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+.footer-contact-list li i {
+    color: #60a5fa;
+    width: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+}
+.footer-contact-list a {
+    color: #dbe4f7;
+    text-decoration: none;
+    word-break: break-word;
+    transition: color 0.2s ease;
+}
+.footer-contact-list a:hover { color: #ffffff; text-decoration: underline; }
+
+.footer-newsletter-label {
+    display: block;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+.footer-newsletter-form .newsletter-submit-btn:disabled { opacity: 0.6; }
+
+.footer-newsletter-form .newsletter-input { flex: 1 1 auto; min-width: 0; }
+.footer-newsletter-form .newsletter-submit-btn { flex-shrink: 0; white-space: nowrap; }
+
+@media (max-width: 991.98px) {
+    .site-footer .footer-contact-list li { font-size: 0.86rem; }
+    /* Site-wide tablet rules narrow .col-lg-3; brand and contact rows stay full width. */
+    .site-footer .row > .col-md-12 { flex: 0 0 100%; width: 100%; max-width: 100%; }
+}
+
+@media (max-width: 767.98px) {
+    /* A site-wide phone rule gives .col-lg-3 order:-1; keep footer columns in source order. */
+    .site-footer .row > [class*="col-"] { order: 0; }
+}

@@ -446,13 +446,13 @@
     </div>
 </div>
 
-<!-- Main Site Footer (Compact) -->
+<!-- Main Site Footer -->
 <footer class="site-footer footer-compact">
     <div class="footer-top-accent"></div>
     <div class="container py-4">
         <div class="row g-3 g-lg-4">
-            <!-- Col 1: Brand & Bio -->
-            <div class="col-lg-4 col-md-6">
+            <!-- Brand -->
+            <div class="col-lg-3 col-md-12">
                 <div class="footer-brand-wrap mb-2">
                     <a href="{% url 'core:home' %}" class="footer-logo-link text-decoration-none">
                         <span class="footer-logo-box me-2">
@@ -465,86 +465,90 @@
                         </span>
                     </a>
                 </div>
-                <p class="footer-about-text small mb-2">
-                    Point of Sale hardware, software, and IT infrastructure solutions for retailers and businesses across East Africa.
+                <p class="footer-about-text small mb-3">
+                    POS hardware, software and IT infrastructure for retailers, restaurants and businesses across East Africa.
                 </p>
-                <div class="footer-hours-compact mb-2">
-                    <i class="bi bi-clock me-1 text-success"></i>
-                    <span>Mon - Sat: 8:00 - 18:00 &bull; 24/7 Call-out</span>
-                </div>
+                <a href="{% url 'core:syrve' %}" class="footer-syrve-pill mb-3">
+                    <i class="bi bi-patch-check-fill"></i>
+                    <span>Official Syrve Distributor <small>East Africa</small></span>
+                </a>
                 <div class="footer-social-links">
-                    <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer" class="social-icon-btn whatsapp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn facebook" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn linkedin" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn twitter" aria-label="Twitter X"><i class="bi bi-twitter-x"></i></a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer" class="social-icon-btn whatsapp" aria-label="WhatsApp Jabem Solutions" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    <a href="tel:+254736794594" class="social-icon-btn" aria-label="Call Jabem Solutions" title="Call"><i class="bi bi-telephone-fill"></i></a>
+                    <a href="mailto:{{ COMPANY_EMAIL }}" class="social-icon-btn" aria-label="Email Jabem Solutions" title="Email"><i class="bi bi-envelope-fill"></i></a>
                 </div>
             </div>
 
-            <!-- Col 2: Products -->
-            <div class="col-lg-2 col-md-3 col-6">
-                <h6 class="footer-heading">POS &amp; Products</h6>
+            <!-- Products -->
+            <div class="col-lg-2 col-md-4 col-6">
+                <h6 class="footer-heading">Products</h6>
                 <ul class="footer-nav-list list-unstyled">
-                    <li><a href="{% url 'catalog:product_list' %}" data-tip="Browse the full catalogue of POS, computing and networking gear."><i class="bi bi-chevron-right"></i>All Products</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?type=hardware" data-tip="Tills, printers, scanners and drawers ready to deploy."><i class="bi bi-chevron-right"></i>POS Hardware</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?type=software" data-tip="Licenced POS apps with cloud backup and free updates."><i class="bi bi-chevron-right"></i>POS Software</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?q=printer" data-tip="Receipt printers for every till line — Epson, Xprinter &amp; more."><i class="bi bi-chevron-right"></i>Thermal Printers</a></li>
-                    <li><a href="{% url 'catalog:product_list' %}?q=scanner" data-tip="Handheld and presentation scanners for fast checkout."><i class="bi bi-chevron-right"></i>Barcode Scanners</a></li>
-                    <li><a href="{% url 'catalog:pos' %}" data-tip="See the POS software screens: till, reports and stock control."><i class="bi bi-chevron-right"></i>POS Software</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}"><i class="bi bi-chevron-right"></i>All Products</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?type=hardware"><i class="bi bi-chevron-right"></i>POS Hardware</a></li>
+                    <li><a href="{% url 'catalog:pos' %}"><i class="bi bi-chevron-right"></i>POS Software</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?q=printer"><i class="bi bi-chevron-right"></i>Receipt Printers</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?q=scanner"><i class="bi bi-chevron-right"></i>Barcode Scanners</a></li>
+                    <li><a href="{% url 'core:office_supplies' %}"><i class="bi bi-chevron-right"></i>Office Supplies</a></li>
+                    <li><a href="{% url 'core:school_supplies' %}"><i class="bi bi-chevron-right"></i>School Supplies</a></li>
                 </ul>
             </div>
 
-            <!-- Col 3: Company & Services -->
-            <div class="col-lg-2 col-md-3 col-6">
+            <!-- Services -->
+            <div class="col-lg-2 col-md-4 col-6">
+                <h6 class="footer-heading">Services</h6>
+                <ul class="footer-nav-list list-unstyled">
+                    <li><a href="{% url 'core:syrve' %}"><i class="bi bi-chevron-right"></i>Syrve Restaurant POS</a></li>
+                    <li><a href="{% url 'core:services' %}#pos"><i class="bi bi-chevron-right"></i>POS Installation</a></li>
+                    <li><a href="{% url 'core:services' %}#networking"><i class="bi bi-chevron-right"></i>Networking</a></li>
+                    <li><a href="{% url 'core:services' %}#cctv"><i class="bi bi-chevron-right"></i>CCTV &amp; Security</a></li>
+                    <li><a href="{% url 'core:services' %}#branding"><i class="bi bi-chevron-right"></i>Branding &amp; Print</a></li>
+                    <li><a href="{% url 'core:services' %}#training"><i class="bi bi-chevron-right"></i>Staff Training</a></li>
+                </ul>
+            </div>
+
+            <!-- Company -->
+            <div class="col-lg-2 col-md-4 col-6">
                 <h6 class="footer-heading">Company</h6>
                 <ul class="footer-nav-list list-unstyled">
-                    <li><a href="{% url 'core:about' %}" data-tip="Who we are and how we got here."><i class="bi bi-chevron-right"></i>About Us</a></li>
-                    <li><a href="{% url 'core:services' %}" data-tip="POS design, networking, CCTV, branding and training."><i class="bi bi-chevron-right"></i>Services</a></li>
-                    <li><a href="{% url 'core:contact' %}" data-tip="Call, email or visit us — we reply fast."><i class="bi bi-chevron-right"></i>Contact Us</a></li>
-                    <li><a href="{% url 'catalog:cart' %}" data-tip="Review the items you're about to order."><i class="bi bi-chevron-right"></i>Shopping Cart</a></li>
-                    <li><a href="{% url 'core:services' %}" data-tip="Support contracts and preventive IT maintenance."><i class="bi bi-chevron-right"></i>Maintenance</a></li>
-                    <li><a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20would%20like%20to%20request%20a%20quote" target="_blank" rel="noopener noreferrer" data-tip="Send your requirements on WhatsApp for quick pricing."><i class="bi bi-chevron-right"></i>Request Quote</a></li>
+                    <li><a href="{% url 'core:about' %}"><i class="bi bi-chevron-right"></i>About Us</a></li>
+                    <li><a href="{% url 'core:contact' %}"><i class="bi bi-chevron-right"></i>Contact Us</a></li>
+                    <li><a href="{% url 'core:services' %}#faq"><i class="bi bi-chevron-right"></i>FAQs</a></li>
+                    <li><a href="https://wa.me/254736794594?text=Hello%20Jabem%20Solutions,%20I%20would%20like%20to%20request%20a%20quote" target="_blank" rel="noopener noreferrer"><i class="bi bi-chevron-right"></i>Request a Quote</a></li>
+                    <li><a href="{% url 'accounts:login' %}"><i class="bi bi-chevron-right"></i>My Account</a></li>
                 </ul>
             </div>
 
-            <!-- Col 4: Contact & Newsletter -->
-            <div class="col-lg-4 col-md-12">
-                <h6 class="footer-heading">Contact &amp; Newsletter</h6>
-                <div class="footer-contact-compact mb-2">
-                    {% if COMPANY_PHONE %}<a href="tel:{{ COMPANY_PHONE|cut:' ' }}" class="contact-compact-item me-3 text-decoration-none">
-                        <i class="bi bi-telephone-fill text-success me-1"></i>{{ COMPANY_PHONE }}
-                    </a>{% endif %}
-                    <a href="mailto:{{ COMPANY_EMAIL }}" class="contact-compact-item me-3 text-decoration-none">
-                        <i class="bi bi-envelope-fill text-success me-1"></i>{{ COMPANY_EMAIL }}
-                    </a>
-                    <span class="contact-compact-item">
-                        <i class="bi bi-geo-alt-fill text-success me-1"></i>{{ COMPANY_ADDRESS }}
-                    </span>
-                </div>
-                <div class="footer-newsletter-compact mt-2">
-                    <form id="footerNewsletterForm" class="footer-newsletter-form" onsubmit="handleFooterNewsletter(event)">
-                        <div class="newsletter-input-group">
-                            <i class="bi bi-envelope newsletter-input-icon"></i>
-                            <label class="visually-hidden" for="newsletter-email">Email Address</label>
-                            <input id="newsletter-email" type="email" class="form-control newsletter-input" placeholder="Get updates &amp; offers..." required>
-                            <button type="submit" class="btn newsletter-submit-btn" aria-label="Subscribe">
-                                <span>Subscribe</span>
-                                <i class="bi bi-arrow-right"></i>
-                            </button>
-                        </div>
-                        <div id="newsletterSuccessMsg" class="newsletter-msg text-success mt-1 d-none small">
-                            <i class="bi bi-check-circle-fill me-1"></i> Subscribed successfully!
-                        </div>
-                    </form>
-                </div>
+            <!-- Contact & Newsletter -->
+            <div class="col-lg-3 col-md-12">
+                <h6 class="footer-heading">Get in Touch</h6>
+                <ul class="footer-contact-list list-unstyled">
+                    <li><i class="bi bi-telephone-fill"></i><a href="tel:+254736794594">+254 736 794 594</a></li>
+                    <li><i class="bi bi-whatsapp"></i><a href="https://wa.me/254736794594" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></li>
+                    <li><i class="bi bi-envelope-fill"></i><a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a></li>
+                    <li><i class="bi bi-geo-alt-fill"></i><span>{{ COMPANY_ADDRESS }}</span></li>
+                    <li><i class="bi bi-clock-fill"></i><span>Mon&ndash;Fri 8:00&ndash;18:00 &middot; Sat 9:00&ndash;15:00<br>24/7 emergency call-out</span></li>
+                </ul>
+                <form id="footerNewsletterForm" class="footer-newsletter-form mt-3" method="post" action="{% url 'core:newsletter_signup' %}" novalidate>
+                    {% csrf_token %}
+                    <label class="footer-newsletter-label" for="newsletter-email">Offers &amp; new stock, by email</label>
+                    <div class="newsletter-input-group">
+                        <i class="bi bi-envelope newsletter-input-icon"></i>
+                        <input id="newsletter-email" name="email" type="email" class="form-control newsletter-input" placeholder="Your email address" autocomplete="email" required>
+                        <button type="submit" class="btn newsletter-submit-btn" aria-label="Subscribe">
+                            <span>Subscribe</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div id="newsletterMsg" class="newsletter-msg mt-1 small" role="status" aria-live="polite"></div>
+                </form>
             </div>
         </div>
 
-        <!-- Payment & Trust Badges Strip (Compact) -->
+        <!-- Payments & trust -->
         <div class="footer-trust-row compact-trust-row">
             <div class="row align-items-center g-2">
-                <div class="col-lg-7 col-md-8 text-center text-md-start">
-                    <span class="trust-pill-label me-2">Payments:</span>
+                <div class="col-lg-8 col-md-8 text-center text-md-start">
+                    <span class="trust-pill-label me-2">We accept:</span>
                     <div class="payment-logos-wrap d-inline-flex flex-wrap gap-2 align-items-center">
                         <span class="payment-badge-card card-mpesa" title="Lipa na M-PESA (Safaricom)"><img src="{% static 'images/payments/mpesa.svg' %}" alt="M-PESA" loading="lazy"></span>
                         <span class="payment-badge-card card-airtel" title="Airtel Money"><img src="{% static 'images/payments/airtel.svg' %}" alt="Airtel Money" loading="lazy"></span>
@@ -554,16 +558,16 @@
                         <span class="payment-badge-card card-cash" title="Cash on Delivery"><img src="{% static 'images/payments/cash-delivery.svg' %}" alt="Cash on Delivery" loading="lazy"></span>
                     </div>
                 </div>
-                <div class="col-lg-5 col-md-4 text-center text-md-end">
-                    <div class="d-inline-flex align-items-center gap-2">
-                        <span class="security-badge small"><i class="bi bi-shield-shaded text-success me-1"></i>256-bit SSL</span>
-                        <span class="security-badge small"><i class="bi bi-patch-check-fill text-success me-1"></i>Verified Kenya Partner</span>
+                <div class="col-lg-4 col-md-4 text-center text-md-end">
+                    <div class="d-inline-flex align-items-center gap-2 flex-wrap justify-content-center">
+                        <span class="security-badge small"><i class="bi bi-shield-lock-fill text-success me-1"></i>Secure HTTPS checkout</span>
+                        <span class="security-badge small"><i class="bi bi-geo-alt-fill text-success me-1"></i>Nairobi, Kenya</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Copyright Bar (Compact) -->
+        <!-- Bottom bar -->
         <div class="footer-bottom-bar compact-bottom-bar">
             <div class="row align-items-center g-1">
                 <div class="col-md-6 text-center text-md-start">
@@ -578,8 +582,6 @@
                         <li class="list-inline-item"><a href="{% url 'core:services' %}">Services</a></li>
                         <li class="list-inline-item">&bull;</li>
                         <li class="list-inline-item"><a href="{% url 'core:contact' %}">Contact</a></li>
-                        <li class="list-inline-item">&bull;</li>
-                        <li class="list-inline-item"><a href="{% url 'core:sitemap_xml' %}">Sitemap</a></li>
                         <li class="list-inline-item">&bull;</li>
                         <li class="list-inline-item">
                             <button type="button" class="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Scroll to top">
@@ -693,20 +695,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function handleFooterNewsletter(event) {
-    event.preventDefault();
-    const input = document.getElementById('newsletter-email');
-    const msg = document.getElementById('newsletterSuccessMsg');
-    if (input && input.value) {
-        if (msg) {
-            msg.classList.remove('d-none');
-        }
-        input.value = '';
-        setTimeout(function() {
-            if (msg) msg.classList.add('d-none');
-        }, 6000);
+// Footer newsletter: posts to core:newsletter_signup and shows the real result.
+(function () {
+    var form = document.getElementById('footerNewsletterForm');
+    if (!form) return;
+    var msg = document.getElementById('newsletterMsg');
+    function show(text, ok) {
+        msg.textContent = text;
+        msg.className = 'newsletter-msg mt-1 small ' + (ok ? 'text-success' : 'text-warning');
     }
-}
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var email = form.email.value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { show('Please enter a valid email address.', false); return; }
+        var btn = form.querySelector('button[type=submit]');
+        btn.disabled = true;
+        fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+            .then(function (res) { show(res.d.message, res.ok); if (res.ok) form.reset(); })
+            .catch(function () { show('Could not subscribe right now. Please try again.', false); })
+            .finally(function () { btn.disabled = false; });
+    });
+})();
 </script>
 {% block extra_scripts %}{% endblock %}
 
