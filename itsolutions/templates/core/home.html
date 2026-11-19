@@ -472,95 +472,6 @@
         margin-top: 2.4rem;
     }
 
-    /* ---------- 2b. PROCESS ---------- */
-    .nv-process {
-        background: #ffffff;
-        padding: 4.5rem 0 4.75rem;
-        position: relative;
-    }
-
-    .nv-process-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.6rem;
-        position: relative;
-        margin-top: 2.6rem;
-    }
-
-    .nv-process-grid::before {
-        content: '';
-        position: absolute;
-        top: 44px;
-        left: 12.5%;
-        right: 12.5%;
-        border-top: 2px dashed rgba(37, 99, 235, 0.28);
-    }
-
-    .nv-step {
-        text-align: center;
-        position: relative;
-    }
-
-    .nv-step-icon {
-        width: 88px;
-        height: 88px;
-        margin: 0 auto 1.15rem;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        position: relative;
-        z-index: 1;
-        box-shadow: 0 14px 30px rgba(37, 99, 235, 0.32), 0 0 0 8px #eff6ff;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .nv-step:hover .nv-step-icon {
-        transform: translateY(-6px) scale(1.05);
-        box-shadow: 0 22px 40px rgba(37, 99, 235, 0.42), 0 0 0 8px #dbeafe;
-    }
-
-    .nv-step-num {
-        display: inline-block;
-        font-size: 0.68rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        color: var(--blue);
-        background: #eff6ff;
-        border: 1px solid rgba(37, 99, 235, 0.18);
-        border-radius: 980px;
-        padding: 0.15rem 0.7rem;
-        margin-bottom: 0.55rem;
-    }
-
-    .nv-step h3 {
-        font-size: 1.02rem;
-        font-weight: 800;
-        color: var(--ink);
-        margin-bottom: 0.5rem;
-    }
-
-    .nv-step p {
-        font-size: 0.85rem;
-        line-height: 1.65;
-        color: var(--muted);
-        max-width: 260px;
-        margin: 0 auto;
-    }
-
-    @media (max-width: 991.98px) {
-        .nv-process-grid { grid-template-columns: repeat(2, 1fr); gap: 2.2rem 1.2rem; }
-        .nv-process-grid::before { display: none; }
-    }
-
-    @media (max-width: 575.98px) {
-        .nv-process-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ---------- 3. ABOUT ---------- */
     /* ---------- 3. ABOUT: three photo tiles ---------- */
     .nv-about-tiles { background: #ffffff; padding: 4.5rem 0 0; }
     .nv-about-tiles-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
@@ -591,6 +502,48 @@
     }
     @media (prefers-reduced-motion: reduce) {
         .nv-tile img { transition: none; }
+    }
+
+    /* ---------- 3b. HOW WE WORK: illustrated steps ---------- */
+    .nv-how { background: var(--tint); padding: 4.5rem 0 4.8rem; }
+    .nv-how-steps {
+        list-style: none; margin: 0; padding: 0; position: relative;
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+    }
+    /* Dashed path linking the drawings on wide screens */
+    .nv-how-steps::before {
+        content: ""; position: absolute; left: 12%; right: 12%; top: 84px; height: 2px; z-index: 0;
+        background: repeating-linear-gradient(90deg, #93c5fd 0 10px, transparent 10px 20px);
+    }
+    .nv-how-step { position: relative; z-index: 1; text-align: center; }
+    .nv-how-art {
+        position: relative; width: 100%; max-width: 240px; margin: 0 auto 1.2rem;
+        background: #ffffff; border-radius: 24px; padding: 14px 10px 6px;
+        box-shadow: 0 14px 34px rgba(30, 58, 138, 0.10);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .nv-how-step:hover .nv-how-art { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 20px 40px rgba(30, 58, 138, 0.16); }
+    .nv-how-art svg { display: block; width: 100%; height: auto; }
+    .nv-how-num {
+        position: absolute; top: -14px; left: -10px; z-index: 2;
+        width: 44px; height: 44px; border-radius: 50%;
+        background: var(--blue); color: #ffffff; font-weight: 800; font-size: 0.95rem;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 0 5px var(--tint), 0 8px 18px rgba(37, 99, 235, 0.35);
+    }
+    .nv-how-step h3 { color: var(--ink); font-size: 1.12rem; font-weight: 800; margin: 0 0 0.45rem; }
+    .nv-how-step p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 0 auto; max-width: 260px; }
+    @media (max-width: 991.98px) {
+        .nv-how-steps { grid-template-columns: repeat(2, 1fr); row-gap: 2.6rem; }
+        .nv-how-steps::before { display: none; }
+    }
+    @media (max-width: 575.98px) {
+        .nv-how { padding: 3.2rem 0 3.4rem; }
+        .nv-how-steps { grid-template-columns: 1fr; row-gap: 2.2rem; }
+        .nv-how-art { max-width: 260px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .nv-how-art { transition: none; }
     }
 
     /* ---------- 4. STATS BAND ---------- */
@@ -1337,39 +1290,116 @@
         </div>
     </section>
 
-    <!-- 3b. HOW WE WORK -->
-    <section class="nv-process">
+    <!-- 3b. HOW WE WORK: illustrated steps -->
+    <section class="nv-how" aria-labelledby="nv-how-title">
         <div class="container">
             <div class="nv-section-head">
                 <div class="nv-kicker">Our Process</div>
-                <h2>How We <span class="accent">Work</span></h2>
+                <h2 id="nv-how-title">How We <span class="accent">Work</span></h2>
             </div>
-            <div class="nv-process-grid">
-                <div class="nv-step nv-reveal">
-                    <div class="nv-step-icon"><i class="bi bi-chat-left-text"></i></div>
-                    <span class="nv-step-num">Step 01</span>
+            <ol class="nv-how-steps">
+                <li class="nv-how-step nv-reveal">
+                    <div class="nv-how-art">
+                        <span class="nv-how-num">01</span>
+                        <svg viewBox="0 0 200 150" role="img" aria-label="Drawing of a shop front with a speech bubble and a magnifying glass">
+                            <ellipse cx="100" cy="82" rx="86" ry="58" fill="#e8f0ff"/>
+                            <ellipse cx="100" cy="128" rx="70" ry="6" fill="#c7d7f5"/>
+                            <rect x="44" y="62" width="88" height="62" rx="4" fill="#fff" stroke="#1e3a8a" stroke-width="3"/>
+                            <path d="M38 64 L48 44 H128 L138 64 Z" fill="#2563eb" stroke="#1e3a8a" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M58 44 L54 64 M78 44 L76 64 M98 44 L98 64 M118 44 L120 64" stroke="#93c5fd" stroke-width="5"/>
+                            <rect x="54" y="78" width="30" height="22" rx="2" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2.5"/>
+                            <rect x="96" y="80" width="24" height="44" rx="2" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2.5"/>
+                            <circle cx="115" cy="103" r="2" fill="#1e3a8a"/>
+                            <rect x="14" y="16" width="56" height="32" rx="12" fill="#f59e0b"/>
+                            <path d="M30 46 L26 58 L42 46 Z" fill="#f59e0b"/>
+                            <circle cx="30" cy="32" r="3.5" fill="#fff"/><circle cx="42" cy="32" r="3.5" fill="#fff"/><circle cx="54" cy="32" r="3.5" fill="#fff"/>
+                            <circle cx="146" cy="84" r="22" fill="#fff" fill-opacity=".85" stroke="#1e3a8a" stroke-width="5"/>
+                            <path d="M138 76 a11 11 0 0 1 12 -3" stroke="#93c5fd" stroke-width="4" fill="none" stroke-linecap="round"/>
+                            <path d="M162 100 L178 116" stroke="#1e3a8a" stroke-width="9" stroke-linecap="round"/>
+                        </svg>
+                    </div>
                     <h3>Talk &amp; Site Survey</h3>
                     <p>We listen to your requirements and visit your premises to understand the space, power and network setup.</p>
-                </div>
-                <div class="nv-step nv-reveal" style="--nv-delay:.12s">
-                    <div class="nv-step-icon"><i class="bi bi-clipboard-check"></i></div>
-                    <span class="nv-step-num">Step 02</span>
+                </li>
+                <li class="nv-how-step nv-reveal" style="--nv-delay:.12s">
+                    <div class="nv-how-art">
+                        <span class="nv-how-num">02</span>
+                        <svg viewBox="0 0 200 150" role="img" aria-label="Drawing of a quote document with a price tag and a green check mark">
+                            <ellipse cx="100" cy="82" rx="86" ry="58" fill="#e8f0ff"/>
+                            <ellipse cx="100" cy="134" rx="56" ry="5" fill="#c7d7f5"/>
+                            <rect x="66" y="22" width="72" height="106" rx="8" fill="#fff" stroke="#1e3a8a" stroke-width="3"/>
+                            <rect x="66" y="22" width="72" height="20" rx="8" fill="#2563eb"/>
+                            <rect x="66" y="34" width="72" height="8" fill="#2563eb"/>
+                            <rect x="76" y="29" width="30" height="6" rx="3" fill="#bfdbfe"/>
+                            <rect x="76" y="54" width="44" height="5" rx="2.5" fill="#cbd5e1"/>
+                            <rect x="76" y="66" width="52" height="5" rx="2.5" fill="#cbd5e1"/>
+                            <rect x="76" y="78" width="38" height="5" rx="2.5" fill="#cbd5e1"/>
+                            <rect x="76" y="90" width="48" height="5" rx="2.5" fill="#cbd5e1"/>
+                            <path d="M76 106 H128" stroke="#1e3a8a" stroke-width="2" stroke-dasharray="4 3"/>
+                            <rect x="96" y="112" width="32" height="7" rx="3.5" fill="#1e3a8a"/>
+                            <g transform="rotate(-14 44 72)">
+                                <path d="M24 60 H58 L68 72 L58 84 H24 Z" fill="#f59e0b" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/>
+                                <circle cx="58" cy="72" r="3" fill="#fff"/>
+                                <text x="40" y="76.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#fff">KES</text>
+                            </g>
+                            <circle cx="146" cy="112" r="17" fill="#22c55e" stroke="#fff" stroke-width="3"/>
+                            <path d="M138 112 L144 118 L155 106" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                     <h3>Proposal &amp; Quote</h3>
                     <p>You receive a clear itemised quote with genuine products, timelines and no hidden costs.</p>
-                </div>
-                <div class="nv-step nv-reveal" style="--nv-delay:.24s">
-                    <div class="nv-step-icon"><i class="bi bi-tools"></i></div>
-                    <span class="nv-step-num">Step 03</span>
+                </li>
+                <li class="nv-how-step nv-reveal" style="--nv-delay:.24s">
+                    <div class="nv-how-art">
+                        <span class="nv-how-num">03</span>
+                        <svg viewBox="0 0 200 150" role="img" aria-label="Drawing of a POS terminal and receipt printer on a counter with a wrench">
+                            <ellipse cx="100" cy="82" rx="86" ry="58" fill="#e8f0ff"/>
+                            <rect x="26" y="108" width="148" height="14" rx="4" fill="#1e3a8a"/>
+                            <rect x="34" y="122" width="132" height="8" rx="2" fill="#c7d7f5"/>
+                            <path d="M90 108 L94 90 H108 L112 108 Z" fill="#334155"/>
+                            <rect x="64" y="38" width="74" height="54" rx="7" fill="#1e3a8a"/>
+                            <rect x="70" y="44" width="62" height="42" rx="3" fill="#bfdbfe"/>
+                            <rect x="74" y="48" width="16" height="11" rx="2" fill="#2563eb"/><rect x="93" y="48" width="16" height="11" rx="2" fill="#60a5fa"/><rect x="112" y="48" width="16" height="11" rx="2" fill="#2563eb"/>
+                            <rect x="74" y="62" width="16" height="11" rx="2" fill="#60a5fa"/><rect x="93" y="62" width="16" height="11" rx="2" fill="#2563eb"/><rect x="112" y="62" width="16" height="11" rx="2" fill="#f59e0b"/>
+                            <rect x="74" y="76" width="54" height="6" rx="3" fill="#fff"/>
+                            <rect x="140" y="88" width="28" height="20" rx="4" fill="#fff" stroke="#1e3a8a" stroke-width="2.5"/>
+                            <path d="M146 88 V70 H162 V88" fill="#fff" stroke="#1e3a8a" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M150 76 H158 M150 81 H156" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+                            <g transform="rotate(-35 44 76)">
+                                <rect x="38" y="74" width="12" height="34" rx="5" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+                                <path d="M41 82 V100 M47 82 V100" stroke="#fcd34d" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="42" y="44" width="4" height="31" rx="1.5" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/>
+                                <path d="M41 46 L44 38 L47 46 Z" fill="#64748b"/>
+                            </g>
+                            <path d="M150 30 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z" fill="#f59e0b"/>
+                            <path d="M170 52 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2 Z" fill="#60a5fa"/>
+                        </svg>
+                    </div>
                     <h3>Install &amp; Train</h3>
                     <p>Our engineers deploy, configure and test everything, then train your staff until they are confident.</p>
-                </div>
-                <div class="nv-step nv-reveal" style="--nv-delay:.36s">
-                    <div class="nv-step-icon"><i class="bi bi-shield-check"></i></div>
-                    <span class="nv-step-num">Step 04</span>
+                </li>
+                <li class="nv-how-step nv-reveal" style="--nv-delay:.36s">
+                    <div class="nv-how-art">
+                        <span class="nv-how-num">04</span>
+                        <svg viewBox="0 0 200 150" role="img" aria-label="Drawing of a support headset with a 24/7 speech bubble and a shield">
+                            <ellipse cx="100" cy="82" rx="86" ry="58" fill="#e8f0ff"/>
+                            <ellipse cx="96" cy="132" rx="52" ry="5" fill="#c7d7f5"/>
+                            <path d="M56 92 V78 a40 40 0 0 1 80 0 V92" fill="none" stroke="#1e3a8a" stroke-width="9" stroke-linecap="round"/>
+                            <rect x="44" y="80" width="24" height="38" rx="10" fill="#2563eb" stroke="#1e3a8a" stroke-width="3"/>
+                            <rect x="124" y="80" width="24" height="38" rx="10" fill="#2563eb" stroke="#1e3a8a" stroke-width="3"/>
+                            <path d="M56 116 Q58 132 82 130" fill="none" stroke="#1e3a8a" stroke-width="4" stroke-linecap="round"/>
+                            <rect x="80" y="125" width="16" height="10" rx="5" fill="#1e3a8a"/>
+                            <rect x="126" y="12" width="58" height="34" rx="12" fill="#f59e0b"/>
+                            <path d="M138 44 L134 56 L150 44 Z" fill="#f59e0b"/>
+                            <text x="155" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="800" fill="#fff">24/7</text>
+                            <path d="M160 82 l18 6 v12 c0 12 -8 19 -18 23 c-10 -4 -18 -11 -18 -23 v-12 Z" fill="#22c55e" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M153 101 l5 5 9 -10" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                     <h3>Support &amp; Maintain</h3>
                     <p>24/7 call-out support, preventive maintenance contracts and fast replacement of faulty hardware.</p>
-                </div>
-            </div>
+                </li>
+            </ol>
         </div>
     </section>
 
