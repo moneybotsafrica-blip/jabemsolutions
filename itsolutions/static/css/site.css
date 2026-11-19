@@ -5029,3 +5029,211 @@ p { color: #47474c; }
     /* A site-wide phone rule gives .col-lg-3 order:-1; keep footer columns in source order. */
     .site-footer .row > [class*="col-"] { order: 0; }
 }
+
+/* ==========================================================================
+   HEADER ACTIONS: search, shop, cart, account (one consistent 40px system)
+   ========================================================================== */
+.hdr-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+.hdr-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 260px;
+    height: 40px;
+    margin: 0;
+    background: #f3f6fb;
+    border: 1px solid #e3e9f2;
+    border-radius: 999px;
+    transition: width 0.25s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.hdr-search:focus-within {
+    width: 300px;
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+.hdr-search__icon {
+    position: absolute;
+    left: 15px;
+    color: #8090a8;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+.hdr-search input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    padding: 0 0.4rem 0 2.4rem;
+    font-size: 0.875rem;
+    color: #0f1d3a;
+}
+.hdr-search input::placeholder { color: #8090a8; }
+.hdr-search input::-webkit-search-cancel-button { display: none; }
+.hdr-search__btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    margin-right: 3px;
+    border: 0;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.hdr-search__btn:hover { background: #1d4ed8; transform: translateX(1px); }
+
+.hdr-shop {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    height: 40px;
+    padding: 0 1.1rem;
+    border-radius: 999px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.hdr-shop:hover { background: #1d4ed8; color: #ffffff; box-shadow: 0 8px 18px rgba(37, 99, 235, 0.32); transform: translateY(-1px); }
+
+.hdr-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e3e9f2;
+    background: #ffffff;
+    color: #0f1d3a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+.hdr-icon:hover { border-color: #2563eb; color: #2563eb; background: #f5f8ff; }
+.hdr-icon__badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+}
+
+.hdr-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 40px;
+    padding: 0 0.75rem 0 4px;
+    border: 1px solid #e3e9f2;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #0f1d3a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.hdr-account:hover,
+.navbar .hdr-account.dropdown-toggle[aria-expanded="true"] { border-color: #2563eb; background: #f5f8ff; color: #0f1d3a !important; }
+.hdr-account__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.hdr-account__name { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.hdr-menu {
+    min-width: 220px;
+    margin-top: 0.5rem !important;
+    padding: 0.4rem;
+    border: 1px solid #e3e9f2;
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(15, 29, 58, 0.14);
+}
+.hdr-menu__head { padding: 0.5rem 0.75rem 0.35rem; display: flex; flex-direction: column; }
+.hdr-menu__label { font-size: 0.72rem; color: #8090a8; }
+.hdr-menu__head strong { font-size: 0.875rem; color: #0f1d3a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hdr-menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 9px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.85rem !important;
+    color: #0f1d3a;
+}
+.hdr-menu .dropdown-item i { color: #64748b; font-size: 1rem; }
+.hdr-menu .dropdown-item:hover { background: #f3f6fb; color: #1d4ed8; }
+.hdr-menu .dropdown-item:hover i { color: #1d4ed8; }
+.hdr-menu .hdr-menu__logout { color: #dc2626; }
+.hdr-menu .hdr-menu__logout i { color: #dc2626; }
+.hdr-menu .hdr-menu__logout:hover { background: #fef2f2; color: #b91c1c; }
+.hdr-menu .dropdown-divider { margin: 0.35rem 0; border-color: #edf1f6; }
+
+.hdr-signin {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 40px;
+    padding: 0 1rem;
+    border-radius: 999px;
+    border: 1px solid #e3e9f2;
+    color: #0f1d3a;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+.hdr-signin i { font-size: 1.05rem; }
+.hdr-signin:hover { border-color: #2563eb; color: #2563eb; background: #f5f8ff; }
+
+/* Narrow desktops: tighten before the menu collapses */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .hdr-search { width: 190px; }
+    .hdr-search:focus-within { width: 230px; }
+    .hdr-shop span, .hdr-account__name, .hdr-signin span { display: none; }
+    .hdr-shop, .hdr-signin { width: 40px; padding: 0; justify-content: center; }
+    .hdr-account { padding-right: 0.55rem; }
+}
+/* Collapsed (mobile/tablet) menu: search on its own row, buttons below */
+@media (max-width: 991.98px) {
+    .hdr-actions { flex-wrap: wrap; padding: 0.75rem 0 0.5rem; border-top: 1px solid #edf1f6; margin-top: 0.5rem; }
+    .hdr-search, .hdr-search:focus-within { width: 100%; height: 44px; }
+    .hdr-shop { flex: 1; justify-content: center; height: 44px; }
+    .hdr-icon, .hdr-account, .hdr-signin { height: 44px; }
+    .hdr-icon { width: 44px; }
+    .hdr-menu { position: absolute; }
+}
