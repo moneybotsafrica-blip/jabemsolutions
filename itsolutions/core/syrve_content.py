@@ -224,9 +224,14 @@ FAQ = [{'q': 'What is Syrve?',
   'a': 'Syrve is an all-in-one POS and restaurant management software that helps food and beverage '
        '(F&B) businesses increase performance and spend less time on routine administrative '
        'tasks.'},
- {'q': 'Who supplies and supports Syrve in Kenya?',
-  'a': "Your rollout and day-to-day support in Kenya come from Jabem Solutions, Syrve's authorised "
-       "partner, with Syrve's own team behind them."},
+ {'q': 'Who is the official Syrve distributor in Kenya and East Africa?',
+  'a': "Jabem Solutions is the official Syrve distributor for East Africa. We handle sales, rollout, "
+       "training and day-to-day support for Syrve in Kenya and across the region, with Syrve's own "
+       "team behind us."},
+ {'q': 'Is Syrve available in Uganda, Tanzania and Rwanda?',
+  'a': 'Yes. As the official Syrve distributor for East Africa, Jabem Solutions supplies and supports '
+       'Syrve for restaurants, hotels and chains in Uganda, Tanzania, Rwanda and the rest of East '
+       'Africa, not just Kenya.'},
  {'q': 'Which businesses is Syrve for?',
   'a': 'Restaurants, cafés and bakeries, quick-service restaurants, bars and pubs, hotels and '
        'hospitality businesses, and restaurant groups and chains.'},

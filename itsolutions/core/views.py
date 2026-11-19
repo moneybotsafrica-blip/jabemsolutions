@@ -1,3 +1,5 @@
+import json
+
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -5,6 +7,7 @@ from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.utils.html import escape
+from django.utils.safestring import mark_safe
 
 from .forms import ContactForm
 from .models import ContactMessage
@@ -74,7 +77,44 @@ def syrve(request):
             )
             return redirect(f"{request.path}?ref=SYR-{msg.pk:05d}#demo")
 
+    page_url = f"{settings.SITE_URL}/syrve/"
+    east_africa = ["Kenya", "Uganda", "Tanzania", "Rwanda", "Burundi", "South Sudan"]
+    structured = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Service",
+                "@id": f"{page_url}#service",
+                "name": "Syrve restaurant POS - Official Syrve Distributor in East Africa",
+                "alternateName": ["Syrve Kenya", "Syrve Africa", "Syrve East Africa"],
+                "serviceType": "Restaurant POS software supply, installation and support",
+                "description": (
+                    "Jabem Solutions is the official Syrve distributor in East Africa, supplying, "
+                    "installing and supporting Syrve restaurant POS and management software."
+                ),
+                "url": page_url,
+                "brand": {"@type": "Brand", "name": "Syrve"},
+                "provider": {"@id": f"{settings.SITE_URL}/#organization"},
+                "areaServed": [{"@type": "Country", "name": c} for c in east_africa],
+            },
+            {
+                "@type": "FAQPage",
+                "@id": f"{page_url}#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": item["q"],
+                        "acceptedAnswer": {"@type": "Answer", "text": item["a"]},
+                    }
+                    for item in syrve_content.FAQ
+                ],
+            },
+        ],
+    }
+
     return render(request, "core/syrve.html", {
+        # "</" is escaped so FAQ text can never close the <script> tag early.
+        "structured_data": mark_safe(json.dumps(structured, ensure_ascii=False).replace("</", "<\\/")),
         "tabs": syrve_content.TABS,
         "innovations": syrve_content.INNOVATIONS,
         "faq": syrve_content.FAQ,
@@ -180,7 +220,7 @@ SITEMAP_PAGES = [
     ("/services/", "weekly", "0.9"),
     ("/about/", "monthly", "0.7"),
     ("/contact/", "monthly", "0.8"),
-    ("/syrve/", "weekly", "0.8"),
+    ("/syrve/", "weekly", "0.9"),
     ("/school-supplies/", "weekly", "0.7"),
     ("/office-supplies/", "weekly", "0.7"),
 ]
