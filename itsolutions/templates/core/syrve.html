@@ -70,8 +70,8 @@
   <!-- Who it's for -->
   <section class="rs-section rs-section--soft" id="fits">
     <div class="rs-container rs-split">
-      <div class="rs-split__media">
-        <img src="{% static 'images/syrve/call-us.webp' %}" alt="Busy restaurant using Syrve. Call Jabem Solutions on +254 736 794 594" width="865" height="710" loading="lazy">
+      <div class="rs-split__media rs-split__media--device">
+        <img src="{% static 'images/syrve/syrve-pos-devices.webp' %}" alt="Syrve POS main screen on a touchscreen terminal and the Syrve waiter app on a phone" width="955" height="790" loading="lazy">
       </div>
       <div>
         <h2 class="rs-title">Who it's for</h2>
@@ -100,7 +100,7 @@
             <ul class="rs-pluslist">{% for c in tab.extras %}<li>{{ c }}</li>{% endfor %}</ul>
           </div>
         </div>
-        <img src="{% static 'images/syrve/profit-loss.webp' %}" alt="Syrve reports on screen for {{ tab.name|lower }} businesses" width="960" height="600" loading="lazy">
+        <img class="rs-device" src="{% static 'images/syrve/syrve-sales-forecast.webp' %}" alt="Syrve sales forecast screen for {{ tab.name|lower }} businesses" width="962" height="798" loading="lazy">
       </div>
       {% endfor %}
     </div>
@@ -122,8 +122,8 @@
         <h2 class="rs-title">Daily assistants</h2>
         <ul class="rs-checks">{% for item in assistants %}<li>{{ item }}</li>{% endfor %}</ul>
       </div>
-      <div class="rs-split__media">
-        <img src="{% static 'images/syrve/labour-overview.webp' %}" alt="Syrve POS terminal with the manager's labour overview" width="746" height="430" loading="lazy">
+      <div class="rs-split__media rs-split__media--device">
+        <img src="{% static 'images/syrve/syrve-kitchen-display.webp' %}" alt="Syrve kitchen display screen with orders by course, and the manager dashboard app on a phone" width="955" height="790" loading="lazy">
       </div>
     </div>
   </section>
@@ -131,8 +131,8 @@
   <!-- Loyalty -->
   <section class="rs-section rs-section--soft">
     <div class="rs-container rs-split rs-split--reverse">
-      <div class="rs-split__media">
-        <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Guest paying at a Syrve POS terminal" width="1920" height="1280" loading="lazy">
+      <div class="rs-split__media rs-split__media--device">
+        <img src="{% static 'images/syrve/syrve-loyalty-rfm.webp' %}" alt="Syrve Loyalty RFM report showing guest segments" width="962" height="798" loading="lazy">
       </div>
       <div>
         <h2 class="rs-title">Syrve Loyalty</h2>
@@ -148,8 +148,8 @@
         <h2 class="rs-title">Back office in the cloud</h2>
         <ul class="rs-checks">{% for item in back_office %}<li>{{ item }}</li>{% endfor %}</ul>
       </div>
-      <div class="rs-split__media">
-        <img src="{% static 'images/syrve/profit-loss.webp' %}" alt="Syrve profit and loss report" width="960" height="600" loading="lazy">
+      <div class="rs-split__media rs-split__media--device">
+        <img src="{% static 'images/syrve/syrve-web-backoffice.webp' %}" alt="Syrve web back office menu: forecasting, inventory, menus, loyalty, delivery and reports" width="962" height="798" loading="lazy">
       </div>
     </div>
   </section>
