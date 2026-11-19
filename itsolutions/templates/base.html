@@ -223,8 +223,9 @@
             <span class="site-title"><span class="site-title-main">Jabem</span><span class="site-title-sub">Solutions</span></span>
             <span class="visually-hidden"><i class="bi bi-cpu-fill me-1"></i>{{ SITE_NAME }}</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Open main menu">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler hdr-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Open main menu">
+            <i class="bi bi-list hdr-menu-btn__open" aria-hidden="true"></i>
+            <i class="bi bi-x-lg hdr-menu-btn__close" aria-hidden="true"></i>
             <span class="visually-hidden">Main menu</span>
         </button>
         <div class="collapse navbar-collapse" id="navMain">
@@ -408,14 +409,6 @@
 <main>
     {% block content %}{% endblock %}
 </main>
-
-<nav class="mobile-bottom-nav" aria-label="Mobile navigation">
-    <a href="{% url 'core:home' %}" class="mobile-nav-link"><i class="bi bi-house-door"></i><span>Home</span></a>
-    <a href="{% url 'catalog:product_list' %}" class="mobile-nav-link"><i class="bi bi-grid"></i><span>Shop</span></a>
-    <a href="{% url 'core:services' %}" class="mobile-nav-link"><i class="bi bi-tools"></i><span>Services</span></a>
-    <a href="{% url 'catalog:cart' %}" class="mobile-nav-link"><i class="bi bi-bag"></i><span>Cart</span></a>
-    <a href="{% url 'accounts:login' %}" class="mobile-nav-link"><i class="bi bi-person"></i><span>Account</span></a>
-</nav>
 
 <!-- Brands we supply -->
 <section class="brands-strip" aria-labelledby="brands-strip-title">
