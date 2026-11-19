@@ -417,6 +417,29 @@
     <a href="{% url 'accounts:login' %}" class="mobile-nav-link"><i class="bi bi-person"></i><span>Account</span></a>
 </nav>
 
+<!-- Brands we supply -->
+<section class="brands-strip" aria-labelledby="brands-strip-title">
+    <div class="container">
+        <h2 class="brands-strip__title" id="brands-strip-title">Brands we supply &amp; install</h2>
+        <ul class="brands-strip__grid">
+            {% with b="images/brands/grid/" %}
+            <li><a href="{% url 'catalog:product_list' %}?q=HP" class="brands-strip__card"><img src="{% static b|add:'hp.svg' %}" alt="HP" loading="lazy" class="is-round"></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Dell" class="brands-strip__card"><img src="{% static b|add:'dell.svg' %}" alt="Dell" loading="lazy" class="is-round"></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Lenovo" class="brands-strip__card"><img src="{% static b|add:'lenovo.svg' %}" alt="Lenovo" loading="lazy"></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Epson" class="brands-strip__card"><img src="{% static b|add:'epson.svg' %}" alt="Epson" loading="lazy"></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Samsung" class="brands-strip__card"><img src="{% static b|add:'samsung.svg' %}" alt="Samsung" loading="lazy"></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Logitech" class="brands-strip__card"><img src="{% static b|add:'logitech.svg' %}" alt="Logitech" loading="lazy" class="is-tall"></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Kyocera" class="brands-strip__card"><img src="{% static b|add:'kyocera.svg' %}" alt="" loading="lazy" class="is-mark"><span style="color:#DF0522">KYOCERA</span></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Cisco" class="brands-strip__card"><img src="{% static b|add:'cisco.svg' %}" alt="Cisco" loading="lazy" class="is-tall"></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Huawei" class="brands-strip__card"><img src="{% static b|add:'huawei.svg' %}" alt="" loading="lazy" class="is-mark"><span style="color:#111111">HUAWEI</span></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=TP-Link" class="brands-strip__card"><img src="{% static b|add:'tplink.svg' %}" alt="" loading="lazy" class="is-mark"><span style="color:#1f2937;text-transform:none">tp-link</span></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Mikrotik" class="brands-strip__card"><img src="{% static b|add:'mikrotik.svg' %}" alt="" loading="lazy" class="is-mark"><span style="color:#293239;text-transform:none">MikroTik</span></a></li>
+            <li><a href="{% url 'catalog:product_list' %}?q=Asus" class="brands-strip__card"><img src="{% static b|add:'asus.svg' %}" alt="ASUS" loading="lazy"></a></li>
+            {% endwith %}
+        </ul>
+    </div>
+</section>
+
 <!-- Pre-Footer Compact Highlights Strip -->
 <div class="footer-highlights-compact">
     <div class="container">

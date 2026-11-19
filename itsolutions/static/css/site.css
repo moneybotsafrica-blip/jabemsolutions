@@ -5373,3 +5373,40 @@ p { color: #47474c; }
     .ft-bottom-inner { flex-direction: column; text-align: center; }
     .wa-help { display: none; }
 }
+
+/* ==========================================================================
+   BRANDS STRIP (above footer): white logo cards in a 6-column grid
+   ========================================================================== */
+.brands-strip { background: #ffffff; padding: 3rem 0 3.4rem; border-top: 1px solid #eef2f7; }
+.brands-strip__title {
+    text-align: center; margin: 0 0 1.6rem; color: #4b5563;
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.brands-strip__grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px;
+}
+.brands-strip__card {
+    height: 92px; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    padding: 0 1rem; background: #ffffff; border: 1px solid #e5e9f0; border-radius: 12px;
+    text-decoration: none; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.brands-strip__card:hover { border-color: #c7d6ee; box-shadow: 0 10px 24px rgba(15, 29, 58, 0.08); transform: translateY(-2px); }
+.brands-strip__card img { height: 30px; width: auto; max-width: 78%; object-fit: contain; }
+.brands-strip__card img.is-round { height: 52px; }
+.brands-strip__card img.is-tall { height: 44px; }
+.brands-strip__card img.is-mark { height: 38px; max-width: none; }
+.brands-strip__card span { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; }
+@media (max-width: 991.98px) {
+    .brands-strip__grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 575.98px) {
+    .brands-strip { padding: 2.2rem 0 2.4rem; }
+    .brands-strip__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .brands-strip__card { height: 76px; }
+    .brands-strip__card img { height: 26px; }
+    .brands-strip__card img.is-round { height: 44px; }
+    .brands-strip__card img.is-tall { height: 36px; }
+    .brands-strip__card img.is-mark { height: 30px; }
+    .brands-strip__card span { font-size: 1.05rem; }
+}
