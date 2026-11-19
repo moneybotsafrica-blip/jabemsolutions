@@ -10,325 +10,242 @@
 {% block extra_head %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{% static 'css/syrve.css' %}">
-<style>
-  /* Anchor jumps clear the site's sticky navbar. */
-  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
-  /* The !important grid/flex utilities must not un-hide inactive tabs. */
-  .syrve-page [hidden][hidden] { display: none !important; }
-  /* Keep site-wide element styles (site.css h1-h6, p...) out of this page;
-     Syrve's own utility classes still win because they are !important. */
-  .syrve-page :where(h1, h2, h3, h4, h5, h6, p, label, li, small, strong, section) {
-    color: inherit; letter-spacing: inherit; font-family: inherit;
-    line-height: inherit; text-transform: none; text-shadow: none;
-  }
-</style>
+<style>html { scroll-behavior: smooth; }</style>
 {% endblock %}
 
 {% block content %}
-{% with btn="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 py-2 h-12 px-6 shadow-none" tabbase="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 px-4 py-2 h-auto min-h-11 whitespace-normal" topicbase="inline-flex items-center gap-2 rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 px-4 py-2 h-auto min-h-12 max-w-full justify-start whitespace-normal text-left" v_default="bg-primary text-primary-foreground shadow hover:bg-primary/90" v_secondary="bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80" v_outline="border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground" acc_btn="flex flex-1 items-center justify-between cursor-pointer transition-all text-left [&[data-state=open]>svg]:rotate-180 py-6 text-base font-bold hover:no-underline" %}
-<div class="syrve-page">
+<div class="rs-page">
 
-  <section id="top" class="hero-scene relative isolate overflow-hidden">
-    <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Hands taking an order on a Syrve restaurant POS terminal in Kenya" width="1920" height="1280" class="hero-photo absolute inset-0 -z-20 h-full w-full object-cover">
-    <div class="hero-wash absolute inset-0 -z-10"></div>
-    <div class="page-width py-16 lg:py-20">
-      <div class="max-w-xl">
-        <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-primary px-3 py-1 text-xs font-semibold text-primary">Official Syrve Distributor in East Africa</p>
-        <h1 class="text-[42px] font-extrabold leading-[1.12] sm:text-5xl lg:text-[56px]">The restaurant POS that <span class="text-primary">pays for itself.</span></h1>
-        <p class="mt-6 max-w-md text-base leading-7 text-muted-foreground">One system for your POS, kitchen, loyalty, inventory, deliveries and reports, built for restaurants and chains in Kenya and across East Africa.</p>
-        <p class="mt-5 text-sm">Trusted by over <strong>10,000+</strong> restaurants in <strong>50+</strong> countries.</p>
-        <div class="mt-7"><a href="#demo" class="{{ btn }}">Book a demo</a></div>
-        <div class="mt-8 border-l-2 border-primary pl-5">
-          <p class="text-xl font-bold">10% off your first year.</p>
-          <p class="mt-2 max-w-md text-sm leading-6 text-muted-foreground">{{ offer_note }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section aria-label="Our clients" class="border-y bg-background py-5">
-    <div class="page-width flex items-center gap-4">
-      <div class="client-marquee min-w-0 flex-1 overflow-hidden">
-        <div class="client-marquee-track" data-paused="false">
-          {% for copy in "01" %}
-          <ul class="client-marquee-group"{% if copy == "1" %} aria-hidden="true"{% endif %}>
-            <li class="flex h-28 w-44 shrink-0 items-center justify-center"><img src="{% static 'images/syrve/client-papa-johns.png' %}" alt="{% if copy == '0' %}Papa Johns{% endif %}" class="h-24 w-40 object-contain"></li>
-            <li class="flex h-28 w-44 shrink-0 items-center justify-center"><img src="{% static 'images/syrve/client-chicken-cottage.png' %}" alt="{% if copy == '0' %}Chicken Cottage{% endif %}" class="h-24 w-40 object-contain"></li>
-            <li class="flex h-28 w-44 shrink-0 items-center justify-center"><img src="{% static 'images/syrve/client-second-cup.png' %}" alt="{% if copy == '0' %}Second Cup{% endif %}" class="h-24 w-40 object-contain"></li>
-            <li class="flex h-28 w-44 shrink-0 items-center justify-center"><img src="{% static 'images/syrve/client-chicken-tonight.png' %}" alt="{% if copy == '0' %}Chicken Tonight{% endif %}" class="h-24 w-40 object-contain"></li>
-            <li class="flex h-28 w-44 shrink-0 items-center justify-center"><img src="{% static 'images/syrve/client-starlight.png' %}" alt="{% if copy == '0' %}Starlight Restaurant{% endif %}" class="h-24 w-40 object-contain"></li>
-            <li class="flex h-28 w-44 shrink-0 items-center justify-center"><img src="{% static 'images/syrve/client-pizza-station.png' %}" alt="{% if copy == '0' %}Pizza Station{% endif %}" class="h-24 w-40 object-contain"></li>
-          </ul>
-          {% endfor %}
-        </div>
-      </div>
-      <button type="button" id="syrve-marquee-toggle" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 w-9 client-marquee-toggle shrink-0" aria-label="Pause client logos" title="Pause client logos">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" data-icon="pause" aria-hidden="true"><rect x="14" y="3" width="5" height="18" rx="1"></rect><rect x="5" y="3" width="5" height="18" rx="1"></rect></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" data-icon="play" aria-hidden="true" hidden><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
-      </button>
-    </div>
-  </section>
-
-  <section id="platform" class="section-space bg-secondary">
-    <div class="page-width grid items-center gap-12 lg:grid-cols-2">
+  <!-- Hero -->
+  <section class="rs-hero" id="top">
+    <div class="rs-container rs-hero__grid">
       <div>
-        <h2 class="section-title">We exist to help F&amp;B businesses thrive and scale through cutting - edge automation and actionable insights.</h2>
-        <p class="mt-7 leading-7 text-muted-foreground">Syrve is your All-in-One POS &amp; Restaurant Management Software enables food and beverage (F&amp;B) businesses to increase performance and spend less time on routine administrative tasks.</p>
-        <p class="mt-9 leading-7 text-muted-foreground">We automate and transform virtually every aspect of your operation - increase speed of service, empower your kitchen team, manage staff, optimise stock take and ordering, simplify cost control, analyse performance and more.</p>
+        <span class="rs-badge"><i class="bi bi-patch-check-fill"></i>Official Syrve Distributor in East Africa</span>
+        <h1>Syrve Kenya &ndash; the restaurant POS that works for you</h1>
+        <p class="rs-hero__lead">Easy management, faster service, better margins. Syrve supplied, installed and supported by Jabem Solutions across Kenya and East Africa.</p>
+        <div class="rs-hero__actions">
+          <a href="#contacts" class="rs-btn rs-btn--blue">Contact us</a>
+          <a href="tel:+254736794594" class="rs-hero__call"><i class="bi bi-telephone-fill"></i>+254 736 794 594</a>
+        </div>
       </div>
-      <img src="{% static 'images/syrve/labour-overview.png' %}" alt="Syrve labour overview and POS terminal at a cafe counter in Kenya" width="746" height="430" loading="lazy" class="w-full rounded-lg">
+      <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Waiter taking an order on a Syrve restaurant POS terminal in Kenya" width="1920" height="1280" class="rs-hero__img">
     </div>
   </section>
 
-  <section id="features" class="section-space">
-    <div class="page-width">
-      <div role="tablist" aria-label="Restaurant capabilities" class="flex flex-wrap gap-2 border-b pb-5">
-        {% for tab in tabs %}
-        <button type="button" role="tab" id="category-{{ forloop.counter0 }}" aria-controls="capability-panel-{{ forloop.counter0 }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-syrve-tab="{{ forloop.counter0 }}" class="{{ tabbase }} {% if forloop.first %}{{ v_default }}{% else %}{{ v_secondary }}{% endif %}">{{ tab.name }}</button>
+  <!-- Why Syrve -->
+  <section class="rs-section" id="why">
+    <div class="rs-container">
+      <h2 class="rs-title rs-title--center">Why Syrve?</h2>
+      <ul class="rs-why">
+        {% for item in why %}
+        <li>
+          <div class="rs-why__icon"><i class="bi {{ item.icon }}"></i></div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.text }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="rs-section rs-section--soft" id="fits">
+    <div class="rs-container rs-split">
+      <div class="rs-split__media">
+        <img src="{% static 'images/syrve/call-us.png' %}" alt="Busy restaurant using Syrve. Call Jabem Solutions on +254 736 794 594" width="865" height="710" loading="lazy">
+      </div>
+      <div>
+        <h2 class="rs-title">Who it's for</h2>
+        <ul class="rs-checks rs-checks--lg">
+          {% for item in fits %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Functions -->
+  <section class="rs-section" id="func">
+    <div class="rs-container">
+      <h2 class="rs-title rs-title--center">Functions for every type of service</h2>
+      <div class="rs-tabs" role="tablist" aria-label="Type of business">
+        {% for tab in function_tabs %}
+        <button type="button" class="rs-tab" role="tab" id="rs-tab-{{ forloop.counter0 }}" aria-controls="rs-panel-{{ forloop.counter0 }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% if not forloop.first %} tabindex="-1"{% endif %}>{{ tab.name }}</button>
         {% endfor %}
       </div>
-      {% for tab in tabs %}
-      {% with ti=forloop.counter0 %}
-      <div role="tabpanel" id="capability-panel-{{ ti }}" aria-labelledby="category-{{ ti }}" data-syrve-panel="{{ ti }}" class="mt-9 grid items-start gap-9 lg:grid-cols-[220px_minmax(0,1fr)_minmax(0,1fr)]"{% if not forloop.first %} hidden{% endif %}>
-        <div class="flex min-w-0 flex-wrap gap-3 lg:flex-col" aria-label="Capability topics">
-          {% for topic in tab.topics %}
-          <button type="button" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" data-syrve-topic="{{ forloop.counter0 }}" class="{{ topicbase }} {% if forloop.first %}{{ v_outline }}{% else %}{{ v_secondary }}{% endif %}">{{ topic.label }}</button>
-          {% endfor %}
+      {% for tab in function_tabs %}
+      <div class="rs-panel" role="tabpanel" id="rs-panel-{{ forloop.counter0 }}" aria-labelledby="rs-tab-{{ forloop.counter0 }}"{% if not forloop.first %} hidden{% endif %}>
+        <div>
+          <h3>{{ tab.title }}</h3>
+          <div class="rs-panel__lists">
+            <ul class="rs-checklist">{% for c in tab.checks %}<li>{{ c }}</li>{% endfor %}</ul>
+            <ul class="rs-pluslist">{% for c in tab.extras %}<li>{{ c }}</li>{% endfor %}</ul>
+          </div>
         </div>
-        {% for topic in tab.topics %}
-        <div class="min-w-0" data-syrve-topic-body="{{ forloop.counter0 }}"{% if not forloop.first %} hidden{% endif %}>
-          <h2 class="text-2xl font-bold leading-snug">{{ topic.title }}</h2>
-          {% for para in topic.body %}
-          <p class="mt-5 leading-7 text-muted-foreground">{{ para }}{% if ti == 0 and forloop.parentloop.first %} <a href="#demo" class="font-bold text-primary underline">Learn more &gt;</a>{% endif %}</p>
-          {% endfor %}
-          <div class="mt-6"><a href="#demo" class="{{ btn }}">Get in Touch</a></div>
-        </div>
-        {% endfor %}
-        {% if ti == 0 %}
-        <img src="{% static 'images/syrve/profit-loss.png' %}" alt="Profit and loss report in Syrve restaurant management software" width="960" height="576" loading="lazy" class="w-full rounded-lg">
-        {% else %}
-        <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Syrve point-of-sale terminal for restaurants" width="960" height="576" loading="lazy" class="w-full rounded-lg">
-        {% endif %}
+        <img src="{% static 'images/syrve/profit-loss.png' %}" alt="Syrve reports on screen for {{ tab.name|lower }} businesses" width="960" height="600" loading="lazy">
       </div>
-      {% endwith %}
       {% endfor %}
     </div>
   </section>
 
-  <section id="stories" class="section-space bg-ink text-ink-foreground">
-    <div class="page-width text-center">
-      <h2 class="section-title">Trusted. Proven. Experienced.</h2>
-      <p class="mx-auto mt-6 max-w-3xl leading-7 text-ink-foreground/80">Trusted by over 10,000 F&amp;B businesses in 50+ countries, from single cafés to multi-country chains, Syrve runs the whole restaurant from one system.</p>
-      <div class="mt-8"><a href="#demo" class="{{ btn }}">Book a demo</a></div>
+  <!-- CTA 1 -->
+  <section class="rs-cta" id="try">
+    <div class="rs-container">
+      <h2>Do you want to try Syrve?</h2>
+      <p class="rs-cta__sub">Free demo and consultation from our team in Nairobi.</p>
+      {% include "core/_syrve_call_form.html" with source="top" %}
     </div>
   </section>
 
-  <section id="innovations" class="section-space bg-secondary">
-    <div class="page-width">
-      <h2 class="section-title mx-auto mb-12 max-w-3xl text-center">Ditch ineffective and outdated tech with Syrve innovations</h2>
-      <div class="grid items-center gap-12 lg:grid-cols-2">
-        <div data-orientation="vertical" data-syrve-accordion>
-          {% for item in innovations %}
-          <div data-state="closed" class="border-b" data-syrve-acc-item>
-            <h3 data-state="closed" class="flex">
-              <button type="button" aria-expanded="false" data-state="closed" id="innovation-btn-{{ forloop.counter0 }}" aria-controls="innovation-{{ forloop.counter0 }}" class="{{ acc_btn }}">{{ item.title }}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-            </h3>
-            <div data-state="closed" id="innovation-{{ forloop.counter0 }}" hidden role="region" aria-labelledby="innovation-btn-{{ forloop.counter0 }}" class="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down" style="--radix-accordion-content-height:var(--radix-collapsible-content-height)">
-              <div class="pb-4 pt-0 leading-7 text-muted-foreground">{{ item.body }}</div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Hands using a Syrve restaurant POS terminal" width="1920" height="1280" loading="lazy" class="w-full rounded-lg">
+  <!-- Daily assistants -->
+  <section class="rs-section">
+    <div class="rs-container rs-split">
+      <div>
+        <h2 class="rs-title">Daily assistants</h2>
+        <ul class="rs-checks">{% for item in assistants %}<li>{{ item }}</li>{% endfor %}</ul>
+      </div>
+      <div class="rs-split__media">
+        <img src="{% static 'images/syrve/labour-overview.png' %}" alt="Syrve POS terminal with the manager's labour overview" width="746" height="430" loading="lazy">
       </div>
     </div>
   </section>
 
-  <section id="integrations" class="section-space">
-    <div class="page-width">
-      <h2 class="section-title max-w-2xl">We will transform your point of sale to your point of success.</h2>
-      <img src="{% static 'images/syrve/transform-banner.png' %}" alt="Syrve restaurant management software on a tablet" width="1714" height="314" loading="lazy" class="mt-8 w-full rounded-lg">
-      <div class="mt-9 grid gap-10 md:grid-cols-2">
-        <div>
-          <h3 class="text-xl font-bold">Official Syrve Distributor in East Africa</h3>
-          <p class="mt-4 leading-7 text-muted-foreground">Jabem Solutions is the official Syrve distributor for East Africa. Your rollout and day-to-day support in Kenya, Uganda, Tanzania and Rwanda come from our local team, with Syrve's own team behind us.</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold">Works With the Tools You Already Use</h3>
-          <p class="mt-4 leading-7 text-muted-foreground">Syrve connects to delivery platforms, accounting software and payment providers through an open API, so the systems you already run keep working together with your POS.</p>
-          <div class="mt-6"><a href="#demo" class="{{ btn }}">Book a demo</a></div>
-        </div>
+  <!-- Loyalty -->
+  <section class="rs-section rs-section--soft">
+    <div class="rs-container rs-split rs-split--reverse">
+      <div class="rs-split__media">
+        <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Guest paying at a Syrve POS terminal" width="1920" height="1280" loading="lazy">
       </div>
-      <div class="mt-8 border-l-2 border-primary pl-5">
-        <p class="text-xl font-bold">10% off your first year.</p>
-        <p class="mt-2 max-w-md text-sm leading-6 text-muted-foreground">{{ offer_note }}</p>
+      <div>
+        <h2 class="rs-title">Syrve Loyalty</h2>
+        <ul class="rs-checks">{% for item in loyalty %}<li>{{ item }}</li>{% endfor %}</ul>
       </div>
     </div>
   </section>
 
-  <section id="faq" class="section-space">
-    <div class="page-width max-w-3xl">
-      <h2 class="section-title">Frequently asked questions</h2>
-      <div class="mt-9" data-orientation="vertical" data-syrve-accordion>
-        {% for item in faq %}
-        <div data-state="closed" class="border-b" data-syrve-acc-item>
-          <h3 data-state="closed" class="flex">
-            <button type="button" aria-expanded="false" data-state="closed" id="faq-btn-{{ forloop.counter0 }}" aria-controls="faq-{{ forloop.counter0 }}" class="{{ acc_btn }}">{{ item.q }}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-          </h3>
-          <div data-state="closed" id="faq-{{ forloop.counter0 }}" hidden role="region" aria-labelledby="faq-btn-{{ forloop.counter0 }}" class="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down" style="--radix-accordion-content-height:var(--radix-collapsible-content-height)">
-            <div class="pb-4 pt-0 leading-7 text-muted-foreground">{{ item.a }}</div>
-          </div>
+  <!-- Back office -->
+  <section class="rs-section">
+    <div class="rs-container rs-split">
+      <div>
+        <h2 class="rs-title">Back office in the cloud</h2>
+        <ul class="rs-checks">{% for item in back_office %}<li>{{ item }}</li>{% endfor %}</ul>
+      </div>
+      <div class="rs-split__media">
+        <img src="{% static 'images/syrve/profit-loss.png' %}" alt="Syrve profit and loss report" width="960" height="600" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Packages -->
+  <section class="rs-section rs-section--soft" id="price">
+    <div class="rs-container">
+      <h2 class="rs-title rs-title--center">Syrve packages</h2>
+      <div class="rs-prices">
+        {% for p in packages %}
+        <div class="rs-price{% if p.featured %} rs-price--featured{% endif %}">
+          <h3>{{ p.name }}</h3>
+          <p class="rs-price__for">{{ p.for }}</p>
+          <p class="rs-price__amount">Price on request</p>
+          <span class="rs-tag {{ p.tag_class }}">{{ p.tag }}</span>
+          <ul class="rs-checklist">{% for i in p.items %}<li>{{ i }}</li>{% endfor %}</ul>
+          <a href="#contacts" class="rs-btn {% if p.featured %}rs-btn--blue{% else %}rs-btn--outline{% endif %}">Get a quote</a>
         </div>
         {% endfor %}
       </div>
     </div>
   </section>
 
-  <section id="demo" class="section-space bg-secondary">
-    <div class="page-width grid gap-12 lg:grid-cols-2">
-      <a href="tel:+254736794594" aria-label="Call Jabem Solutions on +254 736 794 594" class="self-stretch">
-        <img src="{% static 'images/syrve/call-us.png' %}" alt="Transform your Point of Sale into a Point of Success. Call us! +254 736 794 594" width="865" height="693" loading="lazy" class="h-full max-h-[680px] w-full rounded-lg object-cover">
-      </a>
-      <div>
-        <h2 class="text-3xl font-bold">Book a demo today</h2>
-        <p class="mt-3 text-muted-foreground">to see what our POS is capable of</p>
-        {% if reference %}
-        <div role="status" class="mt-10 rounded-lg border bg-card p-7">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-9 text-success" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-          <h3 class="mt-5 text-xl font-bold">Your demo request is saved.</h3>
-          <p class="mt-3">Request reference: <strong>{{ reference }}</strong></p>
-          <a href="{% url 'core:syrve' %}#demo" class="mt-6 {{ btn }}">Done</a>
+  <!-- Services -->
+  <section class="rs-section" id="service">
+    <div class="rs-container">
+      <h2 class="rs-title" style="margin-bottom:48px">Our services</h2>
+      <div class="rs-services">
+        <div class="rs-collage">
+          <img src="{% static 'images/syrve/labour-overview.png' %}" alt="Syrve POS at a café counter" loading="lazy">
+          <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Staff using a Syrve POS terminal" loading="lazy">
+          <img src="{% static 'images/syrve/profit-loss.png' %}" alt="Syrve reporting dashboard" loading="lazy">
         </div>
-        {% else %}
-        <form method="post" action="{% url 'core:syrve' %}#demo" novalidate class="mt-7 space-y-5 border-t pt-6">
-          {% csrf_token %}
-          <div>
-            <label for="demo-name" class="text-sm font-bold">Name*</label>
-            <input id="demo-name" type="text" class="form-input" maxlength="100" autocomplete="name" name="name" value="{{ values.name }}" aria-invalid="{% if errors.name %}true{% else %}false{% endif %}">
-            {% if errors.name %}<p class="mt-2 text-xs text-destructive">{{ errors.name }}</p>{% endif %}
-          </div>
-          <div>
-            <label for="demo-email" class="text-sm font-bold">Email*</label>
-            <input id="demo-email" type="email" class="form-input" maxlength="254" autocomplete="email" name="email" value="{{ values.email }}" aria-invalid="{% if errors.email %}true{% else %}false{% endif %}">
-            {% if errors.email %}<p class="mt-2 text-xs text-destructive">{{ errors.email }}</p>{% endif %}
-          </div>
-          <div>
-            <label for="demo-phone" class="text-sm font-bold">Phone Number*</label>
-            <div class="mt-2 flex rounded-md border bg-background">
-              <span class="flex shrink-0 items-center border-r px-3 text-sm">🇰🇪 +254</span>
-              <input id="demo-phone" type="tel" autocomplete="tel-national" class="min-w-0 flex-1 bg-transparent px-3 py-3" maxlength="30" name="phone" value="{{ values.phone }}" aria-invalid="{% if errors.phone %}true{% else %}false{% endif %}">
-            </div>
-            {% if errors.phone %}<p class="mt-2 text-xs text-destructive">{{ errors.phone }}</p>{% endif %}
-          </div>
-          <div>
-            <label for="demo-restaurant" class="text-sm font-bold">Restaurant Name</label>
-            <input id="demo-restaurant" type="text" class="form-input" maxlength="100" autocomplete="organization" name="restaurant" value="{{ values.restaurant }}">
-          </div>
-          <label class="flex items-start gap-3 text-xs leading-6 text-muted-foreground">
-            <input type="checkbox" class="mt-1 size-4 accent-primary" name="consent"{% if values and not errors.consent %} checked{% endif %}>I agree to be contacted about my demo request.
-          </label>
-          {% if errors.consent %}<p class="text-xs text-destructive">{{ errors.consent }}</p>{% endif %}
-          <div class="flex justify-end">
-            <button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed bg-primary text-primary-foreground shadow hover:bg-primary/90 py-2 h-12 px-6">Book a demo</button>
-          </div>
-        </form>
-        {% endif %}
+        <ul class="rs-service-list">
+          {% for s in services %}
+          <li>
+            <span class="rs-service-list__num">{{ forloop.counter }}</span>
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.text }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="rs-section rs-section--soft" id="faq" style="padding-top:100px">
+    <div class="rs-container">
+      <h2 class="rs-title rs-title--center">FAQ</h2>
+      <div class="rs-faq">
+        {% for item in faq %}
+        <div class="rs-faq__item">
+          <h3 style="font-size:inherit"><button type="button" class="rs-faq__q" aria-expanded="false" aria-controls="rs-faq-{{ forloop.counter0 }}">{{ item.q }}<span class="rs-faq__icon" aria-hidden="true">+</span></button></h3>
+          <div class="rs-faq__a" id="rs-faq-{{ forloop.counter0 }}" hidden>{{ item.a }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA 2 + contacts -->
+  <section class="rs-cta" id="contacts">
+    <div class="rs-container">
+      <h2>Take your restaurant to the next level with Syrve!</h2>
+      <p class="rs-cta__sub">Leave your number and we will call you back, or reach us directly.</p>
+      {% include "core/_syrve_call_form.html" with source="bottom" %}
+      <div class="rs-contacts">
+        <a href="tel:+254736794594"><i class="bi bi-telephone-fill"></i>+254 736 794 594</a>
+        <a href="https://wa.me/254736794594?text=Hello%2C%20I%20would%20like%20a%20Syrve%20demo." target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i>WhatsApp</a>
+        <a href="mailto:{{ COMPANY_EMAIL }}"><i class="bi bi-envelope-fill"></i>{{ COMPANY_EMAIL }}</a>
+        <span><i class="bi bi-geo-alt-fill"></i>{{ COMPANY_ADDRESS }}</span>
       </div>
     </div>
   </section>
 
 </div>
-{% endwith %}
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
 (function () {
-  var root = document.querySelector('.syrve-page');
-  if (!root) return;
-  var V = {
-    def: 'bg-primary text-primary-foreground shadow hover:bg-primary/90'.split(' '),
-    sec: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80'.split(' '),
-    out: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'.split(' ')
-  };
-  function variant(el, on, active) {
-    el.classList.remove.apply(el.classList, V.def.concat(V.sec, V.out));
-    el.classList.add.apply(el.classList, on ? active : V.sec);
-  }
+  var page = document.querySelector('.rs-page');
+  if (!page) return;
 
-  // Capability tabs and their topic buttons.
-  function showTopic(panel, idx) {
-    panel.querySelectorAll('[data-syrve-topic]').forEach(function (b) {
-      var on = b.dataset.syrveTopic === String(idx);
-      b.setAttribute('aria-pressed', on);
-      variant(b, on, V.out);
-    });
-    panel.querySelectorAll('[data-syrve-topic-body]').forEach(function (d) {
-      d.hidden = d.dataset.syrveTopicBody !== String(idx);
+  // Function tabs (arrow keys move between tabs).
+  var tabs = [].slice.call(page.querySelectorAll('.rs-tab'));
+  function select(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
     });
   }
-  root.querySelectorAll('[data-syrve-tab]').forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      var idx = tab.dataset.syrveTab;
-      root.querySelectorAll('[data-syrve-tab]').forEach(function (t) {
-        var on = t === tab;
-        t.setAttribute('aria-selected', on);
-        variant(t, on, V.def);
-      });
-      root.querySelectorAll('[data-syrve-panel]').forEach(function (p) {
-        p.hidden = p.dataset.syrvePanel !== idx;
-        if (!p.hidden) showTopic(p, 0);
-      });
-    });
-  });
-  root.querySelectorAll('[data-syrve-panel]').forEach(function (panel) {
-    panel.querySelectorAll('[data-syrve-topic]').forEach(function (b) {
-      b.addEventListener('click', function () { showTopic(panel, b.dataset.syrveTopic); });
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { select(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      var next = tabs[(i + d + tabs.length) % tabs.length];
+      select(next); next.focus(); e.preventDefault();
     });
   });
 
-  // Single-open, collapsible accordions (innovations + FAQ).
-  function setState(item, open) {
-    var btn = item.querySelector('button');
-    var region = item.querySelector('[role=region]');
-    var state = open ? 'open' : 'closed';
-    [item, item.querySelector('h3'), btn, region].forEach(function (el) { el.dataset.state = state; });
-    btn.setAttribute('aria-expanded', open);
-    if (open) {
-      region.hidden = false;
-      region.style.setProperty('--radix-collapsible-content-height', region.scrollHeight + 'px');
-    } else if (!region.hidden) {
-      region.style.setProperty('--radix-collapsible-content-height', region.scrollHeight + 'px');
-      setTimeout(function () { if (region.dataset.state === 'closed') region.hidden = true; }, 200);
-    }
-  }
-  root.querySelectorAll('[data-syrve-accordion]').forEach(function (acc) {
-    var items = acc.querySelectorAll('[data-syrve-acc-item]');
-    items.forEach(function (item) {
-      item.querySelector('button').addEventListener('click', function () {
-        var opening = item.dataset.state !== 'open';
-        items.forEach(function (other) { if (other !== item && other.dataset.state === 'open') setState(other, false); });
-        setState(item, opening);
-      });
+  // FAQ accordion.
+  page.querySelectorAll('.rs-faq__q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', open);
+      document.getElementById(btn.getAttribute('aria-controls')).hidden = !open;
     });
   });
-
-  // Client logo marquee pause/play.
-  var toggle = document.getElementById('syrve-marquee-toggle');
-  var track = root.querySelector('.client-marquee-track');
-  if (toggle && track) {
-    toggle.addEventListener('click', function () {
-      var paused = track.dataset.paused !== 'true';
-      track.dataset.paused = paused;
-      var label = paused ? 'Play client logos' : 'Pause client logos';
-      toggle.setAttribute('aria-label', label);
-      toggle.title = label;
-      toggle.querySelector('[data-icon=pause]').hidden = paused;
-      toggle.querySelector('[data-icon=play]').hidden = !paused;
-    });
-  }
 })();
 </script>
 {% endblock %}

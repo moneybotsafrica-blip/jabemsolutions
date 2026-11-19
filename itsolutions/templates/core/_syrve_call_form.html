@@ -1,0 +1,17 @@
+{% if reference and source == "bottom" %}
+<div class="rs-cta__ok" role="status">
+  <strong>Thank you! We'll call you shortly.</strong><br>
+  Request reference: <strong>{{ reference }}</strong>
+</div>
+{% else %}
+<form method="post" action="{% url 'core:syrve' %}#{% if source == 'top' %}try{% else %}contacts{% endif %}" class="rs-cta__form" novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="source" value="{{ source }}">
+  <label class="rs-phone">
+    <span class="rs-phone__code">🇰🇪 +254</span>
+    <input type="tel" name="phone" inputmode="tel" autocomplete="tel-national" maxlength="30" placeholder="Enter your phone" aria-label="Your phone number" required{% if error_source == source %} value="{{ phone_value }}" aria-invalid="true"{% endif %}>
+  </label>
+  <button type="submit" class="rs-btn rs-btn--orange">Request a call</button>
+</form>
+{% if error and error_source == source %}<p class="rs-cta__error" role="alert">{{ error }}</p>{% endif %}
+{% endif %}

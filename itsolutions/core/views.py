@@ -65,42 +65,33 @@ def newsletter_signup(request):
 
 
 def syrve(request):
-    """Syrve restaurant POS landing page with its own demo-booking form."""
+    """Syrve restaurant POS landing page with "request a call" forms."""
     from . import syrve_content
 
-    errors, values = {}, {}
+    error, error_source, phone_value = "", "", ""
     if request.method == "POST":
-        values = {k: request.POST.get(k, "").strip() for k in ("name", "email", "phone", "restaurant")}
-        if not values["name"]:
-            errors["name"] = "Please enter your name."
-        if not values["email"] or "@" not in values["email"]:
-            errors["email"] = "Please enter a valid email address."
-        digits = "".join(ch for ch in values["phone"] if ch.isdigit())
+        phone_value = request.POST.get("phone", "").strip()[:30]
+        error_source = "top" if request.POST.get("source") == "top" else "bottom"
+        digits = "".join(ch for ch in phone_value if ch.isdigit())
         if len(digits) < 7:
-            errors["phone"] = "Please enter a valid phone number."
-        if request.POST.get("consent") != "on":
-            errors["consent"] = "Please agree to be contacted about your demo request."
-        if not errors:
-            phone = "+254 " + values["phone"].lstrip("0")
-            restaurant = values["restaurant"] or "-"
+            error = "Please enter a valid phone number."
+        else:
+            phone = "+254 " + phone_value.lstrip("0")
             msg = ContactMessage.objects.create(
-                name=values["name"][:200],
-                email=values["email"],
+                name="Syrve call request",
+                email="",
                 phone=phone[:20],
                 subject="Syrve demo request",
-                message=f"Syrve demo request\nRestaurant: {restaurant}",
+                message=f"Call-back request from the Syrve page ({error_source} form).",
             )
             send_mail(
-                subject=f"[Syrve demo] {values['name']} - {restaurant}",
-                message=(
-                    f"From: {values['name']} <{values['email']}>\n"
-                    f"Phone: {phone}\nRestaurant: {restaurant}\n"
-                ),
+                subject=f"[Syrve demo] Call back {phone}",
+                message=f"Please call {phone} about a Syrve demo (Syrve page, {error_source} form).",
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[settings.COMPANY_EMAIL],
                 fail_silently=True,
             )
-            return redirect(f"{request.path}?ref=SYR-{msg.pk:05d}#demo")
+            return redirect(f"{request.path}?ref=SYR-{msg.pk:05d}#contacts")
 
     page_url = f"{settings.SITE_URL}/syrve/"
     east_africa = ["Kenya", "Uganda", "Tanzania", "Rwanda", "Burundi", "South Sudan"]
@@ -140,14 +131,19 @@ def syrve(request):
     return render(request, "core/syrve.html", {
         # "</" is escaped so FAQ text can never close the <script> tag early.
         "structured_data": mark_safe(json.dumps(structured, ensure_ascii=False).replace("</", "<\\/")),
-        "tabs": syrve_content.TABS,
-        "innovations": syrve_content.INNOVATIONS,
+        "why": syrve_content.WHY,
+        "fits": syrve_content.FITS,
+        "function_tabs": syrve_content.FUNCTION_TABS,
+        "assistants": syrve_content.ASSISTANTS,
+        "loyalty": syrve_content.LOYALTY,
+        "back_office": syrve_content.BACK_OFFICE,
+        "packages": syrve_content.PACKAGES,
+        "services": syrve_content.SERVICES,
         "faq": syrve_content.FAQ,
-        "offer_note": syrve_content.OFFER_NOTE,
-        "errors": errors,
-        "values": values,
+        "error": error,
+        "error_source": error_source,
+        "phone_value": phone_value,
         "reference": request.GET.get("ref", "")[:20],
-        "wa_link": "https://wa.me/254736794594?text=Hello%2C%20I%20would%20like%20to%20book%20a%20Syrve%20demo.",
     })
 
 
