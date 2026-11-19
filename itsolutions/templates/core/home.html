@@ -561,186 +561,36 @@
     }
 
     /* ---------- 3. ABOUT ---------- */
-    .nv-about {
-        background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%);
-        padding: 4.75rem 0;
-        position: relative;
+    /* ---------- 3. ABOUT: three photo tiles ---------- */
+    .nv-about-tiles { background: #ffffff; padding: 4.5rem 0 0; }
+    .nv-about-tiles-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .nv-about-tiles-head .nv-kicker { color: var(--blue); margin-bottom: 0.5rem; }
+    .nv-about-tiles-head h2 { font-size: clamp(1.7rem, 3vw, 2.25rem); font-weight: 850; letter-spacing: -0.02em; color: var(--ink); margin: 0; max-width: 640px; }
+    .nv-about-tiles-head h2 .accent { color: var(--blue); }
+    .nv-about-tiles-more { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--blue); font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .nv-about-tiles-more:hover { color: var(--blue-hover); text-decoration: underline; }
+    .nv-tiles { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .nv-tile { position: relative; display: block; height: 430px; overflow: hidden; color: #ffffff; text-decoration: none; isolation: isolate; }
+    .nv-tile img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .nv-tile::before {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.35) 62%, rgba(0, 0, 0, 0.82) 100%);
     }
-
-    .nv-about::before {
-        content: '';
-        position: absolute;
-        width: 440px;
-        height: 440px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(37, 99, 235, 0.07), transparent 70%);
-        top: -140px;
-        left: -140px;
-        pointer-events: none;
+    .nv-tile:hover img { transform: scale(1.04); }
+    .nv-tile-copy { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 1.4rem 1.6rem; }
+    .nv-tile h3 { color: #ffffff; font-size: clamp(1.15rem, 1.6vw, 1.4rem); font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 0.7rem; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35); }
+    .nv-tile-link { display: inline-block; color: #ffffff; font-size: 0.92rem; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+    .nv-tile:hover .nv-tile-link { color: #93c5fd; }
+    @media (max-width: 991.98px) {
+        .nv-tiles { grid-template-columns: 1fr; }
+        .nv-tile { height: 360px; }
     }
-
-    .nv-about::after {
-        content: '';
-        position: absolute;
-        width: 380px;
-        height: 380px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(96, 165, 250, 0.09), transparent 70%);
-        bottom: -120px;
-        right: -100px;
-        pointer-events: none;
+    @media (max-width: 575.98px) {
+        .nv-about-tiles { padding-top: 3.2rem; }
+        .nv-tile { height: 320px; }
     }
-
-    .nv-about-photo {
-        position: relative;
-        border-radius: 20px;
-    }
-
-    /* Offset outline frame behind the photo */
-    .nv-about-photo::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border: 2px solid rgba(37, 99, 235, 0.28);
-        border-radius: 20px;
-        transform: translate(22px, 22px);
-        pointer-events: none;
-    }
-
-    .nv-about-dots {
-        position: absolute;
-        z-index: 0;
-        left: -36px;
-        bottom: -30px;
-        width: 120px;
-        height: 84px;
-        background-image: radial-gradient(rgba(37, 99, 235, 0.35) 2px, transparent 2px);
-        background-size: 14px 14px;
-        pointer-events: none;
-    }
-
-    .nv-about-photo img {
-        display: block;
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        height: 420px;
-        object-fit: cover;
-    }
-
-    .nv-about-badge {
-        position: absolute;
-        z-index: 3;
-        right: 18px;
-        bottom: 18px;
-        background: linear-gradient(135deg, var(--blue), var(--blue-hover));
-        color: #ffffff;
-        border-radius: 16px;
-        padding: 1.1rem 1.3rem;
-        text-align: center;
-        box-shadow: 0 16px 34px rgba(37, 99, 235, 0.45), 0 0 0 6px rgba(37, 99, 235, 0.14);
-    }
-
-    .nv-about-badge strong {
-        display: block;
-        font-size: 1.6rem;
-        font-weight: 850;
-        line-height: 1;
-    }
-
-    .nv-about-badge span {
-        font-size: 0.72rem;
-        font-weight: 600;
-        color: #dbeafe;
-    }
-
-    .nv-about-copy {
-        position: relative;
-    }
-
-    .nv-about .nv-kicker {
-        color: var(--blue);
-    }
-
-    .nv-about h2 {
-        font-size: clamp(1.7rem, 3vw, 2.3rem);
-        font-weight: 850;
-        letter-spacing: -0.025em;
-        line-height: 1.18;
-        color: var(--ink);
-        margin-bottom: 1.1rem;
-    }
-
-    .nv-about h2 .accent {
-        background: linear-gradient(92deg, var(--blue), var(--blue-soft));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-    }
-
-    .nv-about p.body {
-        color: var(--muted);
-        line-height: 1.75;
-        margin-bottom: 1.6rem;
-    }
-
-    .nv-check-list {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 1.9rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 1.4rem;
-        row-gap: 0.85rem;
-    }
-
-    .nv-check-list li {
-        display: flex;
-        align-items: center;
-        gap: 0.65rem;
-        font-weight: 600;
-        font-size: 0.93rem;
-        color: var(--ink);
-    }
-
-    .nv-check-list i {
-        width: 26px;
-        height: 26px;
-        flex: 0 0 26px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--blue), var(--blue-soft));
-        color: #ffffff;
-        font-size: 0.78rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28);
-    }
-
-    .nv-about-cta {
-        display: flex;
-        align-items: center;
-        gap: 1.6rem;
-        flex-wrap: wrap;
-    }
-
-    .nv-about-rate {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        font-size: 0.85rem;
-        color: var(--muted);
-    }
-
-    .nv-about-rate .stars {
-        color: #f59e0b;
-        font-size: 0.82rem;
-        letter-spacing: 0.06em;
-    }
-
-    .nv-about-rate strong {
-        color: var(--ink);
-        font-weight: 800;
+    @media (prefers-reduced-motion: reduce) {
+        .nv-tile img { transition: none; }
     }
 
     /* ---------- 4. STATS BAND ---------- */
@@ -1453,45 +1303,37 @@
         </div>
     </section>
 
-    <!-- 3. ABOUT -->
-    <section class="nv-about">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-6 nv-reveal">
-                    <div class="nv-about-photo">
-                        <div class="nv-about-dots"></div>
-                        <img src="{% static 'images/about-us-3d.png' %}" alt="Jabem Solutions building digital solutions for your business">
-                        <div class="nv-about-mini">
-                            <i class="bi bi-hand-thumbs-up-fill"></i>
-                            <div><strong>98%</strong><span>Client satisfaction</span></div>
-                        </div>
-                        <div class="nv-about-badge">
-                            <strong>10+</strong>
-                            <span>Years of<br>Experience</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 nv-reveal nv-about-copy" style="--nv-delay:.12s">
-                    <div class="nv-kicker">About Us</div>
-                    <h2>We Are Here to Grow Your Business <span class="accent">Exponentially</span></h2>
-                    <p class="body">Jabem Solutions is a Nairobi-based IT company equipping businesses across Kenya, Uganda and Tanzania with
-                        reliable technology. From a single receipt printer to a full supermarket checkout line,
-                        our engineers handle procurement, setup, staff training and ongoing support.</p>
-                    <ul class="nv-check-list">
-                        <li><i class="bi bi-check-circle-fill"></i> Experienced &amp; Skilled Team</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Genuine Branded Products</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Client-Centric Approach</li>
-                        <li><i class="bi bi-check-circle-fill"></i> On-time Delivery &amp; Support</li>
-                    </ul>
-                    <div class="nv-about-cta">
-                        <a href="{% url 'core:about' %}" class="btn-nv-primary">More About Us <i class="bi bi-arrow-right"></i></a>
-                        <div class="nv-about-rate">
-                            <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></span>
-                            <span><strong>4.9/5</strong> average client rating</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- 3. ABOUT: three photo tiles -->
+    <section class="nv-about-tiles" aria-labelledby="nv-about-title">
+        <div class="container nv-about-tiles-head">
+            <div>
+                <div class="nv-kicker">About Us</div>
+                <h2 id="nv-about-title">Technology that keeps <span class="accent">Kenyan businesses</span> running</h2>
             </div>
+            <a href="{% url 'core:about' %}" class="nv-about-tiles-more">More about us <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="nv-tiles">
+            <a href="{% url 'core:syrve' %}" class="nv-tile">
+                <img src="{% static 'images/about/bar-pos.webp' %}" alt="Bar attendant checking orders on her phone behind the counter" width="900" height="1125" loading="lazy" style="object-position: 50% 30%;">
+                <div class="nv-tile-copy">
+                    <h3>Serve faster with a POS that keeps up with your bar</h3>
+                    <span class="nv-tile-link">Explore Syrve restaurant POS</span>
+                </div>
+            </a>
+            <a href="{% url 'core:services' %}#pos" class="nv-tile">
+                <img src="{% static 'images/about/waiter-tablet.webp' %}" alt="Smiling waiter taking an order on a tablet in a busy restaurant" width="900" height="1125" loading="lazy" style="object-position: 50% 25%;">
+                <div class="nv-tile-copy">
+                    <h3>Take orders at the table and send them straight to the kitchen</h3>
+                    <span class="nv-tile-link">See our POS systems</span>
+                </div>
+            </a>
+            <a href="{% url 'catalog:product_list' %}?type=hardware" class="nv-tile">
+                <img src="{% static 'images/about/supermarket-checkout.webp' %}" alt="Cashier smiling at a supermarket checkout counter" width="235" height="132" loading="lazy" style="object-position: 50% 40%;">
+                <div class="nv-tile-copy">
+                    <h3>Keep your checkout moving, even on your busiest day</h3>
+                    <span class="nv-tile-link">Shop POS hardware</span>
+                </div>
+            </a>
         </div>
     </section>
 
