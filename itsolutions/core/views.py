@@ -71,7 +71,9 @@ def syrve(request):
     error, error_source, phone_value = "", "", ""
     if request.method == "POST":
         phone_value = request.POST.get("phone", "").strip()[:30]
-        error_source = "top" if request.POST.get("source") == "top" else "bottom"
+        error_source = request.POST.get("source")
+        if error_source not in ("hero", "top", "bottom"):
+            error_source = "bottom"
         digits = "".join(ch for ch in phone_value if ch.isdigit())
         if len(digits) < 7:
             error = "Please enter a valid phone number."
@@ -139,6 +141,7 @@ def syrve(request):
         "back_office": syrve_content.BACK_OFFICE,
         "packages": syrve_content.PACKAGES,
         "services": syrve_content.SERVICES,
+        "steps": syrve_content.STEPS,
         "faq": syrve_content.FAQ,
         "error": error,
         "error_source": error_source,

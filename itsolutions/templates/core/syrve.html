@@ -25,14 +25,31 @@
         <span class="rs-badge"><i class="bi bi-patch-check-fill"></i>Official Syrve Distributor in East Africa</span>
         <h1>Syrve Kenya &ndash; the restaurant POS that works for you</h1>
         <p class="rs-hero__lead">Easy management, faster service, better margins. Syrve supplied, installed and supported by Jabem Solutions across Kenya and East Africa.</p>
-        <div class="rs-hero__actions">
-          <a href="#contacts" class="rs-btn rs-btn--blue">Contact us</a>
-          <a href="tel:+254736794594" class="rs-hero__call"><i class="bi bi-telephone-fill"></i>+254 736 794 594</a>
-        </div>
+        <p class="rs-hero__formlabel">Get a free demo &ndash; we'll call you back</p>
+        {% include "core/_syrve_call_form.html" with source="hero" %}
+        <a href="tel:+254736794594" class="rs-hero__call"><i class="bi bi-telephone-fill"></i>Or call +254 736 794 594</a>
+        <ul class="rs-stats">
+          <li><strong>10,000+</strong><span>restaurants run on Syrve</span></li>
+          <li><strong>50+</strong><span>countries worldwide</span></li>
+          <li><strong>Nairobi</strong><span>local install &amp; support team</span></li>
+        </ul>
       </div>
-      <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Waiter taking an order on a Syrve restaurant POS terminal in Kenya" width="1920" height="1280" class="rs-hero__img">
+      <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Waiter taking an order on a Syrve restaurant POS terminal in Kenya" width="1920" height="1280" class="rs-hero__img" fetchpriority="high">
     </div>
   </section>
+
+  <!-- Section nav -->
+  <nav class="rs-subnav" aria-label="On this page">
+    <div class="rs-container rs-subnav__inner">
+      <a href="#why">Why Syrve</a>
+      <a href="#fits">Who it's for</a>
+      <a href="#func">Functions</a>
+      <a href="#price">Packages</a>
+      <a href="#service">Services</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacts" class="rs-subnav__cta">Contact</a>
+    </div>
+  </nav>
 
   <!-- Why Syrve -->
   <section class="rs-section" id="why">
@@ -40,7 +57,7 @@
       <h2 class="rs-title rs-title--center">Why Syrve?</h2>
       <ul class="rs-why">
         {% for item in why %}
-        <li>
+        <li class="rs-reveal">
           <div class="rs-why__icon"><i class="bi {{ item.icon }}"></i></div>
           <h3>{{ item.title }}</h3>
           <p>{{ item.text }}</p>
@@ -54,7 +71,7 @@
   <section class="rs-section rs-section--soft" id="fits">
     <div class="rs-container rs-split">
       <div class="rs-split__media">
-        <img src="{% static 'images/syrve/call-us.png' %}" alt="Busy restaurant using Syrve. Call Jabem Solutions on +254 736 794 594" width="865" height="710" loading="lazy">
+        <img src="{% static 'images/syrve/call-us.webp' %}" alt="Busy restaurant using Syrve. Call Jabem Solutions on +254 736 794 594" width="865" height="710" loading="lazy">
       </div>
       <div>
         <h2 class="rs-title">Who it's for</h2>
@@ -83,7 +100,7 @@
             <ul class="rs-pluslist">{% for c in tab.extras %}<li>{{ c }}</li>{% endfor %}</ul>
           </div>
         </div>
-        <img src="{% static 'images/syrve/profit-loss.png' %}" alt="Syrve reports on screen for {{ tab.name|lower }} businesses" width="960" height="600" loading="lazy">
+        <img src="{% static 'images/syrve/profit-loss.webp' %}" alt="Syrve reports on screen for {{ tab.name|lower }} businesses" width="960" height="600" loading="lazy">
       </div>
       {% endfor %}
     </div>
@@ -106,7 +123,7 @@
         <ul class="rs-checks">{% for item in assistants %}<li>{{ item }}</li>{% endfor %}</ul>
       </div>
       <div class="rs-split__media">
-        <img src="{% static 'images/syrve/labour-overview.png' %}" alt="Syrve POS terminal with the manager's labour overview" width="746" height="430" loading="lazy">
+        <img src="{% static 'images/syrve/labour-overview.webp' %}" alt="Syrve POS terminal with the manager's labour overview" width="746" height="430" loading="lazy">
       </div>
     </div>
   </section>
@@ -132,7 +149,7 @@
         <ul class="rs-checks">{% for item in back_office %}<li>{{ item }}</li>{% endfor %}</ul>
       </div>
       <div class="rs-split__media">
-        <img src="{% static 'images/syrve/profit-loss.png' %}" alt="Syrve profit and loss report" width="960" height="600" loading="lazy">
+        <img src="{% static 'images/syrve/profit-loss.webp' %}" alt="Syrve profit and loss report" width="960" height="600" loading="lazy">
       </div>
     </div>
   </section>
@@ -143,7 +160,7 @@
       <h2 class="rs-title rs-title--center">Syrve packages</h2>
       <div class="rs-prices">
         {% for p in packages %}
-        <div class="rs-price{% if p.featured %} rs-price--featured{% endif %}">
+        <div class="rs-price rs-reveal{% if p.featured %} rs-price--featured{% endif %}">
           <h3>{{ p.name }}</h3>
           <p class="rs-price__for">{{ p.for }}</p>
           <p class="rs-price__amount">Price on request</p>
@@ -162,13 +179,13 @@
       <h2 class="rs-title" style="margin-bottom:48px">Our services</h2>
       <div class="rs-services">
         <div class="rs-collage">
-          <img src="{% static 'images/syrve/labour-overview.png' %}" alt="Syrve POS at a café counter" loading="lazy">
+          <img src="{% static 'images/syrve/labour-overview.webp' %}" alt="Syrve POS at a café counter" loading="lazy">
           <img src="{% static 'images/syrve/pos-hands.webp' %}" alt="Staff using a Syrve POS terminal" loading="lazy">
-          <img src="{% static 'images/syrve/profit-loss.png' %}" alt="Syrve reporting dashboard" loading="lazy">
+          <img src="{% static 'images/syrve/profit-loss.webp' %}" alt="Syrve reporting dashboard" loading="lazy">
         </div>
         <ul class="rs-service-list">
           {% for s in services %}
-          <li>
+          <li class="rs-reveal">
             <span class="rs-service-list__num">{{ forloop.counter }}</span>
             <h3>{{ s.title }}</h3>
             <p>{{ s.text }}</p>
@@ -176,6 +193,23 @@
           {% endfor %}
         </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- How we get you running -->
+  <section class="rs-section rs-section--tight" id="steps">
+    <div class="rs-container">
+      <h2 class="rs-title rs-title--center">How we get you running</h2>
+      <ol class="rs-steps">
+        {% for step in steps %}
+        <li class="rs-reveal">
+          <span class="rs-steps__num">{{ forloop.counter }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.text }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+      <div class="rs-steps__cta"><a href="#contacts" class="rs-btn rs-btn--blue">Start with a free consultation</a></div>
     </div>
   </section>
 
@@ -217,6 +251,55 @@
 (function () {
   var page = document.querySelector('.rs-page');
   if (!page) return;
+  page.classList.add('rs-js');
+
+  // Park the section nav just under the site's own sticky navbar.
+  function setStickyTop() {
+    var bar = document.querySelector('nav.sticky-top');
+    var top = bar && getComputedStyle(bar).position === 'sticky' ? bar.getBoundingClientRect().height : 0;
+    page.style.setProperty('--rs-sticky-top', Math.round(top) + 'px');
+  }
+  setStickyTop();
+  window.addEventListener('resize', setStickyTop);
+
+  // Highlight the section nav link for the section in view.
+  var links = [].slice.call(page.querySelectorAll('.rs-subnav a'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function markActive() {
+    var line = (parseInt(getComputedStyle(page).getPropertyValue('--rs-sticky-top'), 10) || 0) + 120;
+    var current = -1;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) current = i; });
+    links.forEach(function (a, i) {
+      a.classList.toggle('is-active', i === current);
+      if (i === current) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    var active = links[current];
+    if (active && active.parentNode.scrollWidth > active.parentNode.clientWidth) {
+      var bar = active.parentNode, l = active.offsetLeft - 16;
+      if (l < bar.scrollLeft || active.offsetLeft + active.offsetWidth > bar.scrollLeft + bar.clientWidth) bar.scrollLeft = l;
+    }
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(function () { markActive(); ticking = false; }); }
+  }, { passive: true });
+  markActive();
+
+  // Fade cards in as they scroll into view.
+  var reveal = [].slice.call(page.querySelectorAll('.rs-reveal'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    reveal.forEach(function (el, i) {
+      el.style.transitionDelay = (i % 4) * 80 + 'ms';
+      io.observe(el);
+    });
+  } else {
+    reveal.forEach(function (el) { el.classList.add('is-visible'); });
+  }
 
   // Function tabs (arrow keys move between tabs).
   var tabs = [].slice.call(page.querySelectorAll('.rs-tab'));

@@ -4,7 +4,7 @@
   Request reference: <strong>{{ reference }}</strong>
 </div>
 {% else %}
-<form method="post" action="{% url 'core:syrve' %}#{% if source == 'top' %}try{% else %}contacts{% endif %}" class="rs-cta__form" novalidate>
+<form method="post" action="{% url 'core:syrve' %}#{% if source == 'hero' %}top{% elif source == 'top' %}try{% else %}contacts{% endif %}" class="rs-cta__form{% if source == 'hero' %} rs-cta__form--hero{% endif %}" novalidate>
   {% csrf_token %}
   <input type="hidden" name="source" value="{{ source }}">
   <label class="rs-phone">
@@ -13,5 +13,5 @@
   </label>
   <button type="submit" class="rs-btn rs-btn--orange">Request a call</button>
 </form>
-{% if error and error_source == source %}<p class="rs-cta__error" role="alert">{{ error }}</p>{% endif %}
+{% if error and error_source == source %}<p class="rs-cta__error{% if source == 'hero' %} rs-cta__error--hero{% endif %}" role="alert">{{ error }}</p>{% endif %}
 {% endif %}

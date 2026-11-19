@@ -56,7 +56,7 @@ FUNCTION_TABS = [
      "checks": ["Simple till that new staff learn in minutes",
                 "Loyalty stamps and member discounts",
                 "Stock alerts for milk, beans and bakery items",
-                "M-Pesa, card and cash payments"],
+                "Cash, card and split payments"],
      "extras": ["Online pre-orders for pick-up",
                 "Daily cash and sales summary",
                 "Cost of goods per drink"]},
@@ -109,6 +109,21 @@ SERVICES = [
     {"title": "POS hardware",
      "text": "Terminals, receipt printers, kitchen screens, cash drawers and networking from "
              "our own stock, installed and tested with Syrve."},
+]
+
+STEPS = [
+    {"title": "Free consultation",
+     "text": "We visit or call to understand your menu, service style, outlets and budget, "
+             "then recommend the right Syrve set-up."},
+    {"title": "Set-up and installation",
+     "text": "We configure Syrve with your menu, prices, printers and staff roles, and "
+             "install and test the hardware on site."},
+    {"title": "Staff training",
+     "text": "Waiters, cashiers, kitchen and managers each learn the screens they use, so "
+             "you go live with confidence."},
+    {"title": "Ongoing support",
+     "text": "Our Nairobi team stays on call by phone, WhatsApp and on site as your business "
+             "grows."},
 ]
 
 FAQ = [
