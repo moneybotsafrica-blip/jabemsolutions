@@ -5,10 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import redirect, render
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.http import require_POST
+from django.http import HttpResponse
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
@@ -40,28 +37,6 @@ def about(request):
 
 def services(request):
     return render(request, "core/services.html")
-
-
-NEWSLETTER_SUBJECT = "Newsletter subscription"
-
-
-@require_POST
-def newsletter_signup(request):
-    """Footer newsletter form; signups land in admin under Contact messages."""
-    email = request.POST.get("email", "").strip()
-    try:
-        validate_email(email)
-    except ValidationError:
-        return JsonResponse({"message": "Please enter a valid email address."}, status=400)
-    already = ContactMessage.objects.filter(subject=NEWSLETTER_SUBJECT, email__iexact=email).exists()
-    if not already:
-        ContactMessage.objects.create(
-            name=email.split("@")[0][:200],
-            email=email,
-            subject=NEWSLETTER_SUBJECT,
-            message="Subscribed from the website footer.",
-        )
-    return JsonResponse({"message": "Thanks! You're on the list for offers and new stock."})
 
 
 def syrve(request):

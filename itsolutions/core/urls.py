@@ -11,7 +11,6 @@ urlpatterns = [
     path("office-supplies/", views.supplies, {"kind": "office"}, name="office_supplies"),
     path("contact/", views.contact, name="contact"),
     path("syrve/", views.syrve, name="syrve"),
-    path("newsletter/", views.newsletter_signup, name="newsletter_signup"),
     path("robots.txt", views.robots_txt, name="robots_txt"),
     path("sitemap.xml", views.sitemap_xml, name="sitemap_xml"),
     path("favicon.ico", views.favicon_ico, name="favicon_ico"),
